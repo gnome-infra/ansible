@@ -1,0 +1,17 @@
+- hosts: redhat 
+  gather_facts: false
+  tasks:
+    - name: Import the script
+      copy: src="puppet-recert.sh" dest="/tmp/puppet-recert.sh" mode=0755
+      tags: import
+
+    - name: Run it!
+      shell: /tmp/puppet-recert.sh
+      register: recert
+      tags: check
+
+    - debug: var=recert.stdout_lines
+
+    - name: Remove the script
+      file: path=/tmp/puppet-recert.sh state=absent
+      tags: cleanup
