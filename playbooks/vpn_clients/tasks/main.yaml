@@ -1,12 +1,12 @@
-- hosts: vpnclients 
+- hosts: vpnclients
   tasks:
     - name: Restart openvpn client (RHEL 7)
-      command: /sbin/systemctl restart openvpn@client 
+      service: name=openvpn@client state=restarted
       when: (ansible_distribution == "RedHat" and ansible_distribution_major_version >= "7") or
             (ansible_distribution == "CentOS" and ansible_distribution_major_version >= "7") or
             (ansible_distribution == "Ubuntu")
 
-    - name: Restart openvpn client (RHEL 6) 
-      command: /sbin/service openvpn restart 
+    - name: Restart openvpn client (RHEL 6)
+      service: name=openvpn state=restarted
       when: (ansible_distribution == "RedHat" and ansible_distribution_major_version < "7")
             (ansible_distribution == "CentOS" and ansible_distribution_major_version < "7")
