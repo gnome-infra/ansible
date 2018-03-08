@@ -1,6 +1,10 @@
 - hosts: redhat 
   gather_facts: false
   tasks:
+    - name: Clean up the current certificate on the Puppet CA
+      command: /usr/bin/puppet cert clean {{ inventory_hostname }}
+      delegate_to: vpn.puppetmaster01.gnome.org
+
     - name: Import the script
       copy: src="puppet-recert.sh" dest="/tmp/puppet-recert.sh" mode=0755
       tags: import
