@@ -11,7 +11,6 @@ nsd03.gnome.org
 odrs.gnome.org
 view.gnome.org
 wiki.gnome.org
-notleg.gnome.org
 scale.gnome.org
 
 [phx2]
@@ -24,7 +23,6 @@ buildable.gnome.org
 vpn.cloud.gnome.org
 expander.gnome.org
 gitlab.gnome.org
-gitlab-test.gnome.org
 git.gnome.org
 vpn.ipsilon.gnome.org
 vpn.jenkins.gnome.org
@@ -65,7 +63,7 @@ odrs.gnome.org
 gnome-hispano.gnome.org
 signal.gnome.org
 wiki.gnome.org
-notleg.gnome.org
+socket.gnome.org
 
 [osuosl]
 gnome-hispano.gnome.org
