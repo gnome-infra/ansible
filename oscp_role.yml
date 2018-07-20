@@ -1,0 +1,6 @@
+---
+- hosts: oscp-all 
+  gather_facts: true 
+  roles:
+   - docker-storage-setup
+...

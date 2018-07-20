@@ -1,0 +1,71 @@
+---
+- name: stop docker
+  service: name=docker state=stopped
+  ignore_errors: yes
+
+- name: Double check whether docker storage has been provisioned already
+  shell: /usr/bin/lsblk -nl {{ docker_dev_part }} | grep "{{ container_root_lv_name }}"
+  ignore_errors: yes
+  register: storage_deployed
+
+- name: Umount the target volume generated during kickstart
+  shell: umount "{{ docker_dev_part }}"
+  ignore_errors: yes
+  when: storage_deployed.rc != 0
+
+- name: Identify docker LV UUID
+  shell: /usr/sbin/blkid | grep "{{ container_root_lv_name }}"
+  ignore_errors: yes
+  register: docker_uuid
+
+- name: Cleanup the former mount point from /etc/fstab
+  mount:
+    name: '/var/lib/docker'
+    state: absent
+  when: docker_uuid.rc != 0
+
+- name: remove any existing docker-storage config file
+  file:
+    path: /etc/sysconfig/docker-storage
+    state: absent
+
+- block:
+    - name: create the docker-storage-setup overlayfs config file
+      template:
+        src: "{{ role_path }}/templates/docker-storage-setup-overlayfs.j2"
+        dest: /etc/sysconfig/docker-storage-setup
+        owner: root
+        group: root
+        mode: 0644
+  when:
+    - ansible_distribution_version | version_compare('7.4', '>=')
+    - ansible_distribution == "RedHat"
+
+- block:
+    - name: create the docker-storage-setup devicemapper config file
+      template:
+        src: "{{ role_path }}/templates/docker-storage-setup-dm.j2"
+        dest: /etc/sysconfig/docker-storage-setup
+        owner: root
+        group: root
+        mode: 0644
+  when:
+    - ansible_distribution_version | version_compare('7.4', '<')
+    - ansible_distribution == "RedHat"
+
+- block:
+    - name: create the docker-storage-setup devicemapper config file for CentOS
+      template:
+        src: "{{ role_path }}/templates/docker-storage-setup-dm.j2"
+        dest: /etc/sysconfig/docker-storage-setup
+        owner: root
+        group: root
+        mode: 0644
+
+  # TODO(shadower): Find out which CentOS version supports overlayfs2
+  when:
+    - ansible_distribution == "CentOS"
+
+- name: start docker
+  service: name=docker state=restarted enabled=true
+...
