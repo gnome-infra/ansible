@@ -2,7 +2,6 @@
 oscp-masters
 oscp-routers
 oscp-nodes
-oscp-infrastructure
 
 [oscp-masters]
 oscp-master01.gnome.org
@@ -18,6 +17,3 @@ oscp-node01.gnome.org
 oscp-node02.gnome.org
 oscp-node03.gnome.org
 oscp-node04.gnome.org
-
-[oscp-infrastructure]
-oscp-infrastructure01.gnome.org
