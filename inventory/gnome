@@ -39,6 +39,8 @@ vpn.unbound01.gnome.org
 webapps2.gnome.org
 vpn.webapps3.gnome.org
 webapps.gnome.org
+vpn.puppetmaster01.gnome.org
+vpn.puppetmaster02.gnome.org
 
 [puppetmasters]
 vpn.puppetmaster01.gnome.org
