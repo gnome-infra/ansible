@@ -6,7 +6,7 @@
   tasks:
     - name: Determine if PV exists
       tags: pv
-      command: "oc get pv --namespace {{ oscp_project }} {{ oscp_project }}-volume"
+      command: "oc get pv --namespace {{ oscp_project }} {{ volume_name | mandatory }}-volume"
       register: pv_exists
       failed_when: false
       run_once: true
@@ -14,7 +14,7 @@
 
     - name: Determine if PVC exists
       tags: pvc
-      command: "oc get pvc --namespace {{ oscp_project }} {{ oscp_project }}-claim"
+      command: "oc get pvc --namespace {{ oscp_project }} {{ volume_name | mandatory }}-claim"
       register: pvc_exists
       failed_when: false
       run_once: true
@@ -32,8 +32,8 @@
       tags: pv
       template:
         src=templates/pv.j2
-        dest=/tmp/pv-{{ gluster_volume_name }}.yaml
-      when: "'not found' in gfsc_exists.stderr"
+        dest=/root/pv-{{ gluster_volume_name }}.yaml
+      when: "'not found' in pv_exists.stderr"
       run_once: true
       delegate_to: oscp-master01.gnome.org
 
@@ -41,15 +41,15 @@
       tags: pvc
       template:
         src=templates/pvc.j2
-        dest=/tmp/pvc-{{ gluster_volume_name }}.yaml
-      when: "'not found' in gfsc_exists.stderr"
+        dest=/root/pvc-{{ gluster_volume_name }}.yaml
+      when: "'not found' in pvc_exists.stderr"
       run_once: true
       delegate_to: oscp-master01.gnome.org
 
     - name: Copy glusterfs-cluster.yaml
       copy:
         src: glusterfs-cluster.yaml
-        dest: /tmp/glusterfs-cluster.yaml
+        dest: /root/glusterfs-cluster.yaml
         mode: 0600
       when: "'not found' in gfsc_exists.stderr"
       run_once: true
@@ -57,21 +57,21 @@
 
     - name: Create GlusterFS Cluster Service
       tags: gfsc
-      shell: "oc create -f /tmp/glusterfs-cluster.yaml --namespace {{ oscp_project }}"
+      shell: "oc create -f /root/glusterfs-cluster.yaml --namespace {{ oscp_project }}"
       when: "'not found' in gfsc_exists.stderr"
       run_once: true
       delegate_to: oscp-master01.gnome.org
 
     - name: Create Persistent Volume
       tags: pv
-      shell: "oc create -f /tmp/pv-{{ gluster_volume_name }}.yaml --namespace {{ oscp_project }}"
+      shell: "oc create -f /root/pv-{{ gluster_volume_name }}.yaml --namespace {{ oscp_project }}"
       when: "'not found' in pv_exists.stderr"
       run_once: true
       delegate_to: oscp-master01.gnome.org
 
     - name: Create Persistent Volume Claim
       tags: pvc
-      shell: "oc create -f /tmp/pvc-{{ gluster_volume_name }}.yaml --namespace {{ oscp_project }}"
+      shell: "oc create -f /root/pvc-{{ gluster_volume_name }}.yaml --namespace {{ oscp_project }}"
       when: "'not found' in pvc_exists.stderr"
       run_once: true
       delegate_to: oscp-master01.gnome.org

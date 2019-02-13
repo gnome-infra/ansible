@@ -4,5 +4,6 @@ Example command with related variables passed as extra vars:
 ansible-playbook -i inventory/oscp \
 playbooks/create_oscp_volume_definitions/tasks/main.yaml \
 -e "oscp_project=odoo logical_volume_size=5120 \ 
-oscp_volume_access_mode=ReadWriteOnce"`
+oscp_volume_access_mode=ReadWriteOnce \
+volume_name=odoo_postgresql"
 ```
