@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ oscp_project }}-claim" 
+  namespace: "{{ oscp_project }}"
+spec:
+  accessModes:
+    - "{{ oscp_volume_access_mode | mandatory }}"
+  resources:
+    requests:
+      storage: "{{ logical_volume_size }}m"
+  storageClassName: slow
