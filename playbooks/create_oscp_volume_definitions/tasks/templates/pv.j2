@@ -9,7 +9,7 @@ spec:
   accessModes:
     - "{{ oscp_volume_access_mode | mandatory }}"
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: slow
+  storageClassName: glusterfs
   glusterfs:
     endpoints: glusterfs-cluster
     path: "/{{ gluster_volume_name }}"
