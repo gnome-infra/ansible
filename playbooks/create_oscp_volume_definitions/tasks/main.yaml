@@ -33,6 +33,7 @@
       template:
         src=templates/pv.j2
         dest=/tmp/pv-{{ gluster_volume_name }}.yaml
+      when: "'not found' in gfsc_exists.stderr"
       run_once: true
       delegate_to: oscp-master01.gnome.org
 
@@ -41,6 +42,7 @@
       template:
         src=templates/pvc.j2
         dest=/tmp/pvc-{{ gluster_volume_name }}.yaml
+      when: "'not found' in gfsc_exists.stderr"
       run_once: true
       delegate_to: oscp-master01.gnome.org
 
@@ -49,6 +51,7 @@
         src: glusterfs-cluster.yaml
         dest: /tmp/glusterfs-cluster.yaml
         mode: 0600
+      when: "'not found' in gfsc_exists.stderr"
       run_once: true
       delegate_to: oscp-master01.gnome.org
 
