@@ -76,10 +76,12 @@ oscp-node02.gnome.org
 oscp-node03.gnome.org
 oscp-node04.gnome.org
 flowbox.gnome.org
+staff-mail.gnome.org
 
 [osuosl]
 gnome-hispano.gnome.org
 signal.gnome.org
+staff-mail.gnome.org
 
 [canonical]
 socket.gnome.org
