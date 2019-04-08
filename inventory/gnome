@@ -18,9 +18,7 @@ flowbox.gnome.org
 accelerator.gnome.org
 account.gnome.org
 bastion.gnome.org
-blogs.gnome.org
 bugzilla.gnome.org
-vpn.cloud.gnome.org
 expander.gnome.org
 gitlab.gnome.org
 vpn.ipsilon.gnome.org
@@ -38,7 +36,6 @@ spinner.gnome.org
 vpn.splunk01.gnome.org
 vpn.unbound01.gnome.org
 webapps2.gnome.org
-vpn.webapps3.gnome.org
 webapps.gnome.org
 vpn.puppetmaster01.gnome.org
 vpn.puppetmaster02.gnome.org
@@ -61,7 +58,6 @@ scale.gnome.org
 wiki.gnome.org
 unbound02.gnome.org
 sdkbuilder.gnome.org
-odrs.gnome.org
 gnome-hispano.gnome.org
 signal.gnome.org
 wiki.gnome.org
