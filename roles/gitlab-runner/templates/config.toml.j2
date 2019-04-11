@@ -20,7 +20,7 @@ executor = {{ runner['executor'] }}
   {% endif %}
   {% if 'machine' in runner %}
 [runners.machine]
-    {% for k,v in runner['docker'].items() %}
+    {% for k,v in runner['machine'].items() %}
 {{ k }} = {{ v }}
     {% endfor %}
   {% endif %}
