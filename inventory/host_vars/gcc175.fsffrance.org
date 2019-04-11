@@ -1,0 +1,45 @@
+---
+gitlab_runner_concurrent: 8
+gitlab_runner_check_interval: 0
+
+gitlab_runner_runners:
+  - name: "gcc175.osuosl.org"
+    output_limit: 32768
+    url: "https://gitlab.gnome.org"
+    token: !vault |
+           $ANSIBLE_VAULT;1.1;AES256
+           38306330613034316630333530663439346166656633323064393632646332613833636666646464
+           6362336330306232333638633066346435306665643839630a316535313832353462313939343630
+           30343033353037616636343335633435343832326135653430646530653263653235323537663932
+           3030333466663636380a396165313637623535663531383439646537393965323934376364636664
+           63383263333834306333633133353064323034343266643338363639633138313338
+    executor: "docker"
+    docker:
+      tls_verify: false
+      image: "fedora:29"
+      privileged: true
+      disable_entrypoint_overwrite: false
+      oom_kill_disable: false
+      disable_cache: true
+      volumes: '["/cache"]'
+      shm_size: 0
+  - name: "gcc175-gnome.osuosl.org"
+    output_limit: 32768
+    url: "https://gitlab.gnome.org"
+    token: !vault |
+           $ANSIBLE_VAULT;1.1;AES256
+           33396665373238303365313039323562373337353137333536353236636439373236346164656563
+           3531633435613832376234363361363531666537356530630a623132336462383964636666636464
+           33316534623931613262666538333834303234616232326630613839653466613337343539366266
+           6461303735326535300a633634363139353061663136626431343039636366663434393161663637
+           66653839383438326331323332356661363836666135383537383931326234636636
+    executor: "docker"
+    docker:
+      tls_verify: false
+      image: "fedora:29"
+      privileged: true
+      disable_entrypoint_overwrite: false
+      oom_kill_disable: false
+      disable_cache: true
+      volumes: '["/cache"]'
+      shm_size: 0
