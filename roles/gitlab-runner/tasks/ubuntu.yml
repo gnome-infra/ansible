@@ -1,0 +1,27 @@
+---
+- name: add packagecloud gpg key to apt keyring
+  apt_key:
+    url: https://packages.gitlab.com/runner/gitlab-runner/gpgkey
+    state: present
+
+- name: add gitlab-runner repository
+  apt_repository:
+    repo: "deb https://packages.gitlab.com/runner/gitlab-runner/ubuntu/ { ansible_distribution_release } main"
+    state: present
+
+- name: install docker
+  apt:
+    name: [docker.io, python-docker, python3-docker]
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: start gitlab-runner-docker-cleanup
+  docker_container:
+    name: gitlab-runner-docker-cleanup
+    image: quay.io/gitlab/gitlab-runner-docker-cleanup
+    state: started
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    env: "{{ gitlab_runner_docker_cleanup_env }}"
+    restart_policy: always

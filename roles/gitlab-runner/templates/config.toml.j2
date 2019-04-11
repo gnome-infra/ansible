@@ -1,0 +1,26 @@
+concurrent = {{ gitlab_runner_concurrent }}
+check_interval = {{ gitlab_runner_check_interval }}
+
+[session_server]
+  session_timeout = {{ gitlab_runner_session_timeout }}
+
+{% for runner in gitlab_runner_runners %}
+[[runners]]
+  name = {{ runner['name'] }}
+  output_limit = {{ runner['output_limit'] }} 
+  url = {{ runner['url'] }} 
+  token = {{ runner['token'] }} 
+  executor = {{ runner['executor'] }} 
+  {% if 'docker' in runner %}
+  [runners.docker]
+    {% for k,v in runner['docker'].items() %}
+    {{ k }} = {{ v }}
+    {% endfor %}
+  {% endif %}
+  {% if 'machine' in runner %}
+  [runners.machine]
+    {% for k,v in runner['docker'].items() %}
+    {{ k }} = {{ v }}
+    {% endfor %}
+  {% endif %}
+{% endfor %}

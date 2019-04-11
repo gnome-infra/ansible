@@ -1,0 +1,19 @@
+---
+- name: configure ssh keys for root
+  authorized_key:
+    user: root
+    state: present
+    exclusive: yes
+    key: "{{ lookup('pipe', 'cat ../files/sshkeys/*.pub') }}"
+
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- include_tasks: fedora.yml
+  when: ansible_distribution == "Fedora"
+
+- name: configure gitlab-runner
+  template:
+    src: config.toml.j2
+    dest: /etc/gitlab-runner/config.toml
+  notify: restart gitlab-runner

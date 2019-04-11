@@ -1,0 +1,11 @@
+
+module docker_gitlab_runner 1.0;
+
+require {
+	type init_t;
+	type container_runtime_t;
+	class unix_stream_socket connectto;
+}
+
+#============= init_t ==============
+allow init_t container_runtime_t:unix_stream_socket connectto;
