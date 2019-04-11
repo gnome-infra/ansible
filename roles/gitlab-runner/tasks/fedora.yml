@@ -1,4 +1,9 @@
 ---
+- name: set selinux to enforcing
+  selinux:
+    policy: targeted
+    state: enforcing
+
 - name: install python2-dnf
   yum: name=python2-dnf state=present
 
