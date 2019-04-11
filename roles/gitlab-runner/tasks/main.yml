@@ -1,10 +1,6 @@
 ---
-- name: configure ssh keys for root
-  authorized_key:
-    user: root
-    state: present
-    exclusive: yes
-    key: "{{ lookup('pipe', 'cat ../files/sshkeys/*.pub') }}"
+- name: add authorized keys for root
+  copy: src=authorized_keys dest=/root/.ssh/authorized_keys mode=0600 owner=root group=root
 
 - include_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"

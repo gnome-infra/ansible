@@ -1,3 +1,8 @@
+gitlab_runner_root_ssh_keys:
+    - av.pub
+    - bpiotrowski.pub
+    - jjardon.pub
+
 gitlab_runner_docker_cleanup_env:
     LOW_FREE_SPACE: 10G
     EXPECTED_FREE_SPACE: 20G
@@ -8,3 +13,4 @@ gitlab_runner_docker_cleanup_env:
 gitlab_runner_concurrent: 8
 gitlab_runner_check_interval: 0
 gitlab_runner_session_timeout: 1800
+
