@@ -1,0 +1,5 @@
+[gitlab-runners]
+progress.gnome.org
+gcc150.fsffrance.org ansible_port=45029
+gcc175.fsffrance.org ansible_port=45054
+gcc176.fsffrance.org ansible_port=45055
