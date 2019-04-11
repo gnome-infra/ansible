@@ -4,11 +4,11 @@ gitlab_runner_root_ssh_keys:
     - jjardon.pub
 
 gitlab_runner_docker_cleanup_env:
-    LOW_FREE_SPACE: 10G
-    EXPECTED_FREE_SPACE: 20G
-    LOW_FREE_FILES_COUNT: 1048576
-    EXPECTED_FREE_FILES_COUNT: 2097152
-    USE_DF: 1
+    LOW_FREE_SPACE: "10G"
+    EXPECTED_FREE_SPACE: "20G"
+    LOW_FREE_FILES_COUNT: "1048576"
+    EXPECTED_FREE_FILES_COUNT: "2097152"
+    USE_DF: "1"
 
 gitlab_runner_concurrent: 8
 gitlab_runner_check_interval: 0
