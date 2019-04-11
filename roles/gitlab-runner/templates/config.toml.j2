@@ -7,11 +7,11 @@ session_timeout = {{ gitlab_runner_session_timeout }}
 
 {% for runner in gitlab_runner_runners %}
 [[runners]]
-name = {{ runner['name'] }}
+name = "{{ runner['name'] }}"
 output_limit = {{ runner['output_limit'] }}
-url = {{ runner['url'] }}
-token = {{ runner['token'] }}
-executor = {{ runner['executor'] }}
+url = "{{ runner['url'] }}"
+token = "{{ runner['token'] }}"
+executor = "{{ runner['executor'] }}"
   {% if 'docker' in runner %}
 [runners.docker]
     {% for k,v in runner['docker'].items() %}

@@ -15,12 +15,12 @@ gitlab_runner_runners:
            33626237323862363561386535623466373764326239663066323637343130326330
     executor: "docker"
     docker:
-      tls_verify: false
-      image: "fedora:29"
-      privileged: true
-      disable_entrypoint_overwrite: false
-      oom_kill_disable: false
-      disable_cache: true
+      tls_verify: "false"
+      image: "\"fedora:29\""
+      privileged: "true"
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      disable_cache: "true"
       volumes: '["/cache"]'
       shm_size: 0
   - name: "gcc176-gnome.osuosl.org"
@@ -35,11 +35,11 @@ gitlab_runner_runners:
            64356533366563613763366432353730326437636639373635613535353230356230
     executor: "docker"
     docker:
-      tls_verify: false
-      image: "fedora:29"
-      privileged: true
-      disable_entrypoint_overwrite: false
-      oom_kill_disable: false
-      disable_cache: true
+      tls_verify: "false"
+      image: "\"fedora:29\""
+      privileged: "true"
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      disable_cache: "true"
       volumes: '["/cache"]'
       shm_size: 0
