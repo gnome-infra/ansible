@@ -24,6 +24,7 @@ gitlab_runner_runners:
       volumes: '["/cache"]'
       shm_size: 0
   - name: "GNOME-gcc150"
+    output_limit: 32768
     limit: 2
     url: "https://gitlab.com/"
     token: !vault |
