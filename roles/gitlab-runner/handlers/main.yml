@@ -1,3 +1,6 @@
 ---
 - name: restart gitlab-runner
   service: name=gitlab-runner state=restarted
+
+- name: daemon reload
+  systemd: daemon_reload=yes

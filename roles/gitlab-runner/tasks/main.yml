@@ -8,8 +8,27 @@
 - include_tasks: fedora.yml
   when: ansible_distribution == "Fedora"
 
+- name: start and enable docker
+  service: name=docker state=started enabled=true
+
 - name: configure gitlab-runner
   template:
     src: config.toml.j2
     dest: /etc/gitlab-runner/config.toml
   notify: restart gitlab-runner
+
+- name: install docker-gc
+  copy: >
+    src=files/docker-gc/docker-gc dest=/usr/local/bin/docker-gc
+    owner=root group=root mode=0700
+
+- name: install docker-gc systemd units
+  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }}
+  with_items:
+    - docker-gc.service
+    - docker-gc.timer
+  notify:
+    - daemon reload
+
+- name: start and enable docker-gc timer
+  service: name=docker-gc.timer enabled=yes state=started

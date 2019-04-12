@@ -15,13 +15,3 @@
     state: present
     update_cache: yes
     cache_valid_time: 3600
-
-- name: start gitlab-runner-docker-cleanup
-  docker_container:
-    name: gitlab-runner-docker-cleanup
-    image: quay.io/gitlab/gitlab-runner-docker-cleanup
-    state: started
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    env: "{{ gitlab_runner_docker_cleanup_env }}"
-    restart_policy: always

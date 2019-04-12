@@ -1,0 +1,10 @@
+[Unit]
+Description=Remove unneeded Docker containers and images
+
+[Timer]
+OnCalendar={{ gitlab_runner_gc_period }}
+AccuracySec=1h
+Persistent=yes
+
+[Install]
+WantedBy=timers.target
