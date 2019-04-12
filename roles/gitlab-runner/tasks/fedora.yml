@@ -18,6 +18,9 @@
     baseurl: https://packages.gitlab.com/runner/gitlab-runner/fedora/$releasever/$basearch
     gpgcheck: no
 
+- name: install selinux-policy-devel
+  yum: name=selinux-policy-devel state=present
+
 - name: copy docker_gitlab_runner.te file
   copy:
     src: docker_gitlab_runner.te
