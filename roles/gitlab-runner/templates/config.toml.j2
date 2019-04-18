@@ -8,7 +8,7 @@ session_timeout = {{ gitlab_runner_session_timeout }}
 {% for runner in gitlab_runner_runners %}
 [[runners]]
 name = "{{ runner['name'] }}"
-output_limit = {{ runner['output_limit'] }}
+output_limit = {{ runner['output_limit'] | default(16384) }}
 url = "{{ runner['url'] }}"
 token = "{{ runner['token'] }}"
 executor = "{{ runner['executor'] }}"
@@ -21,6 +21,18 @@ executor = "{{ runner['executor'] }}"
   {% if 'machine' in runner %}
 [runners.machine]
     {% for k,v in runner['machine'].items() %}
+{{ k }} = {{ v }}
+    {% endfor %}
+  {% endif %}
+  {% if 'cache' in runner %}
+[runners.cache]
+    {% for k,v in runner['cache'].items() %}
+{{ k }} = {{ v }}
+    {% endfor %}
+  {% endif %}
+  {% if 'cache.s3' in runner %}
+[runners.cache.s3]
+    {% for k,v in runner['cache.s3'].items() %}
 {{ k }} = {{ v }}
     {% endfor %}
   {% endif %}
