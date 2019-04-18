@@ -8,6 +8,9 @@
 - include_tasks: fedora.yml
   when: ansible_distribution == "Fedora"
 
+- include_tasks: debian.yml
+  when: ansible_distribution == "Debian"
+
 - name: start and enable docker
   service: name=docker state=started enabled=true
 

@@ -1,0 +1,24 @@
+---
+- name: install gitlab-runner
+  apt:
+    name: gitlab-runner
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: add docker gpg key to apt keyring
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: add docker repository
+  apt_repository:
+    repo: "deb https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: install docker
+  apt:
+    name: [docker-ce, docker-ce-cli, containerd.io]
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
