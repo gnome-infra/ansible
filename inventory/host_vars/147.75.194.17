@@ -1,0 +1,25 @@
+---
+gitlab_runner_concurrent: 12
+gitlab_runner_check_interval: 0
+
+gitlab_runner_runners:
+  - name: "m1-xlarge-x86.gnome.org"
+    output_limit: 32768
+    url: "https://gitlab.gnome.org"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39326536333035333165663761343664313866396334633764373965666163353239616639613661
+          3263326537626561653764643837616231333938373539650a646231343864613637353663343234
+          34363536343166386132383961323735653466623438343763653666333930303035656362326336
+          3031653435653133390a356236333230393238336139376663386230336439383131336239316336
+          38656131626666653138373063303765313639373234373365303438306635323733
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:29\""
+      privileged: "true"
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      disable_cache: "true"
+      volumes: '["/cache"]'
+      shm_size: 0

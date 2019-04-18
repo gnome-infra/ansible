@@ -1,0 +1,96 @@
+---
+gitlab_runner_concurrent: 6
+gitlab_runner_check_interval: 0
+
+gitlab_runner_runners:
+  - name: "armv7-gnome"
+    output_limit: 16384
+    url: "https://gitlab.gnome.org"
+    token: "266511283d2c1f273a49088c40d518"
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:29\""
+      privileged: "true"
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      disable_cache: "true"
+      volumes: '["/cache"]'
+      shm_size: 0
+
+  - name: "freedesktop-sdk-runner-armv7-codethink"
+    output_limit: 16384
+    url: "https://gitlab.freedesktop.org"
+    token: "a3d88f350a06ef25c5054a693c802b"
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:29\""
+      privileged: "true"
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      disable_cache: "true"
+      volumes: '["/cache"]'
+      shm_size: 0
+
+  - name: "c1-large-arm-xda.freedesktop-sdk.org"
+    output_limit: 16384
+    url: "https://gitlab.com/"
+    token: "7Z86yKfiehtKA2ZgYLZD"
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:29\""
+      privileged: "true"
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      disable_cache: "true"
+      volumes: '["/cache"]'
+      shm_size: 0
+    cache:
+      Type: "\"s3\""
+      Shared: "true"
+    cache.s3:
+      ServerAddress: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63363634636236383738306136316539666665326161303036663734653038353638656363653839
+          3966636638373038306438663230663639363863333139650a626132656434363761326566653634
+          64666164316562396230383134613538366165626134623331636136656133306135396334343464
+          3839343766653134390a383238313866663763613966386561336261356263373039313039313038
+          31346439393335633066343831383335623461396231643138646530323134336265
+      AccessKey: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          64653134323831306131333861613731313730656564316633313063656438656339396134613037
+          3330323435366162386439373432346164306638383739380a663737353433306437653764336239
+          31343935333630663764343333383465623831313936336433393339323836626531353130666139
+          3361336262663934360a323034303338663934633361383462636438316534356366636263393333
+          31373633356536343633313966396663336339613737393537613538366563356166
+      SecretKey: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          35313738343866643339333263383938316434616136656166653565326435366238393438663736
+          6363626133626331333639343561623164303861656434380a363437613335323831666336306631
+          38393130323065636133623266353234363761643537613730386263306563303139646530306663
+          3431343830363232310a663031313463363461353132653666376332653731383434316633396536
+          32343462323834616234616463636164616663303363643737623764393364623366313139333431
+          6231326239313738323833313765663737393662626536626432
+      BucketName: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          30306339396531313134373439313734656462666532343030646135323265663536393033343634
+          3963366563396139643134666437363338653934343033350a393330316533373235376339653766
+          64383238393262306233346435623733623737666362313934306334316666343134643031316535
+          3031656363653632640a656438333333666433383263353831393930323038343962373132636633
+          39633937666236333330613939343535303265663165623034616661386366363337
+
+  - name: "c1-large-arm-xda.freedesktop-sdk.org-updates"
+    url: "https://gitlab.com/"
+    token: "1jsoV-Sk21tGDV2zhomr"
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:29\""
+      privileged: "true"
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      disable_cache: "true"
+      volumes: '["/cache"]'
+      shm_size: 0
