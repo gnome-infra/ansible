@@ -1,0 +1,108 @@
+#!/usr/bin/env python3
+
+import argparse
+import ipaddress
+import pprint
+import socket
+import sys
+
+import requests
+
+
+class Runners(object):
+    def __init__(self, server, token):
+        self.url = f"https://{server}/api/v4/runners"
+        self.headers = {"PRIVATE-TOKEN": token}
+
+    def _get_runners(self):
+        resp = requests.get(self.url, headers=self.headers)
+        self.runners = resp.json()
+
+    def _get_runner_status(self, runner):
+        status = [x["active"] for x in self.runners if x["ip_address"] == runner]
+        return status
+
+    def _get_status(self, runners):
+        self._get_runners()
+        status = []
+        for runner in runners:
+            runner_status = self._get_runner_status(runner)
+            status.extend(runner_status)
+
+        return status
+
+    def _set_status(self, runner, active):
+        self._get_runners()
+        payload = {"active": active}
+        ids = [x["id"] for x in self.runners if x["ip_address"] == runner]
+
+        for id in ids:
+            url = f"{self.url}/{id}"
+            requests.put(url, headers=self.headers, data=payload)
+
+    def start(self, runners):
+        for runner in runners:
+            self._set_status(runner, True)
+
+    def stop(self, runners):
+        for runner in runners:
+            self._set_status(runner, False)
+
+    def is_active(self, runners):
+        status = self._get_status(runners)
+        return all(status)
+
+    def is_paused(self, runners):
+        status = self._get_status(runners)
+        return not all(status)
+
+    def status(self):
+        self._get_runners()
+        pprint.pprint(self.runners)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    commands = ["start", "stop", "is-active", "is-paused", "status"]
+    parser.add_argument("command", help="available commands", choices=commands)
+    parser.add_argument("runner", help="one or more runners to manage", nargs="*")
+    parser.add_argument("-t", "--token", help="API token", required=True)
+    parser.add_argument(
+        "-s", "--server", help="GitLab server hostname", default="gitlab.gnome.org"
+    )
+    args = parser.parse_args()
+
+    # resolve domain to IP to correctly find given runners via API
+    if args.runner:
+        for idx,runner in enumerate(args.runner):
+            try:
+                ipaddress.ip_address(runner)
+            except ValueError:
+                ip_address = socket.gethostbyname(runner)
+                args.runner[idx] = ip_address
+
+    runners = Runners(args.server, args.token)
+
+    if args.command == "start":
+        runners.start(args.runner)
+    elif args.command == "stop":
+        runners.stop(args.runner)
+    elif args.command == "is-active":
+        is_active = runners.is_active(args.runner)
+        if is_active:
+            print("active")
+        else:
+            print("paused")
+            sys.exit(1)
+    elif args.command == "is-paused":
+        is_paused = runners.is_paused(args.runner)
+        if is_paused:
+            print("paused")
+        else:
+            print("active")
+            sys.exit(1)
+    else:
+        # TODO: status command should limit output to specified runners
+        if not args.runner:
+            args.runner = ""
+        runners.status()
