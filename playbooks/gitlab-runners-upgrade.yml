@@ -1,6 +1,7 @@
 ---
 - hosts: gitlab-runners
   remote_user: root
+  serial: 1
   vars_prompt:
     - name: gitlab_token
       prompt: GitLab API token
