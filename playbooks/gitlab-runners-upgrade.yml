@@ -20,18 +20,21 @@
     - name: install updates
       apt: upgrade=safe update_cache=yes cache_valid_time=3600
       when: ansible_os_family == 'Debian'
+      register: installed_updates
 
     - name: install updates
       yum:
         name: '*'
         state: latest
       when: ansible_os_family == 'RedHat'
+      register: installed_updates
 
     - name: ensure runners are paused
       local_action: command ../misc/gitlab-runnerctl -t {{ gitlab_token }} is-paused {{ inventory_hostname }}
 
     - name: reboot {{ inventory_hostname }}
       reboot:
+      when: installed_updates.changed
 
     - name: start runners hosted on {{ inventory_hostname }}
       local_action: command ../misc/gitlab-runnerctl -t {{ gitlab_token }} start {{ inventory_hostname }}
