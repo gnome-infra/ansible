@@ -1,4 +1,8 @@
 ---
+- name: install helper packages for ansible
+  apt:
+    name: [python-apt, python3-apt, aptitude]
+
 - name: install gitlab-runner
   apt:
     name: gitlab-runner
