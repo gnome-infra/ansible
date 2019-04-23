@@ -35,7 +35,7 @@ gitlab_runner_runners:
            30656531393366313731343938393430663761343861363864623833646164666436
     executor: "docker+machine"
     docker:
-      tls_verify: false
+      tls_verify: "false"
       image: "\"fedora:28\""
       privileged: "true"
       disable_cache: "false"
@@ -82,7 +82,7 @@ gitlab_runner_runners:
            63336632343431623339313535356436316664663862363334353238336636653733
     executor: "docker+machine"
     docker:
-      tls_verify: false
+      tls_verify: "false"
       image: "\"fedora:28\""
       privileged: "true"
       disable_cache: "false"
