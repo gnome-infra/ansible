@@ -6,6 +6,14 @@
     - name: gitlab_token
       prompt: GitLab API token
   tasks:
+    - name: register running containers
+      shell: docker ps -q | wc -l
+      register: docker_containers
+
+    - name: exit if any containers are running
+      fail:
+      when: docker_containers.stdout != "0"
+
     - name: pause runners hosted on {{ inventory_hostname }}
       local_action: command ../misc/gitlab-runnerctl -t {{ gitlab_token }} stop {{ inventory_hostname }}
 
