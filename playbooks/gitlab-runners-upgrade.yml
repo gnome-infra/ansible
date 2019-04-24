@@ -39,4 +39,4 @@
 
         - name: ensure runners are running
           local_action: command ../misc/gitlab-runnerctl -t {{ gitlab_token }} is-active {{ inventory_hostname }}
-      when: docker_containers.stdout != "0"
+      when: docker_containers.stdout == "0"
