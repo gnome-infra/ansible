@@ -35,3 +35,6 @@
 
 - name: start and enable docker-gc timer
   service: name=docker-gc.timer enabled=yes state=started
+
+- name: copy increase-arp-table-size.conf in place
+  copy: src=increase-arp-table-size.conf dest=/etc/sysctl.d/increase-arp-table-size.conf mode=0644 owner=root group=root
