@@ -32,6 +32,7 @@
     - docker-gc.timer
   notify:
     - daemon reload
+  notify: restart docker-gc timer
 
 - name: start and enable docker-gc timer
   service: name=docker-gc.timer enabled=yes state=started
