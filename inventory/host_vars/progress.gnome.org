@@ -1,4 +1,6 @@
 ---
+gitlab_runner_gc_period: "daily"
+
 gitlab_runner_concurrent: 11
 gitlab_runner_check_interval: 0
 
@@ -15,7 +17,7 @@ gitlab_runner_runners:
            3763393335653561630a373033363162643631373230616362616434653832626539343462636239
            65316339653064613938623830353836646264333734343837356136666230623038
     executor: "docker"
-    docker: 
+    docker:
       tls_verify: "false"
       image: "\"fedora:28\""
       privileged: "true"
