@@ -15,7 +15,10 @@
 
 - name: install docker
   apt:
-    name: docker.io
+    name: docker.io,docker-containerd
     state: present
     update_cache: yes
     cache_valid_time: 3600
+
+- name: start and enable containerd
+  service: name=containerd enabled=yes state=started
