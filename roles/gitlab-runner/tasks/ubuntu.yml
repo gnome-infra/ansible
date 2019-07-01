@@ -15,10 +15,18 @@
 
 - name: install docker
   apt:
-    name: docker.io,docker-containerd
+    name: docker.io
     state: present
     update_cache: yes
     cache_valid_time: 3600
+
+- name: install containerd
+  apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release != 'xenial'
 
 - name: start and enable containerd
   service: name=containerd enabled=yes state=started
