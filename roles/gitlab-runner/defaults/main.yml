@@ -1,6 +1,6 @@
 gitlab_runner_gc_period: "weekly"
 gitlab_runner_gc_env:
-    MINIMUM_IMAGES_TO_SAVE: 10
+    MINIMUM_IMAGES_TO_SAVE: 1
     REMOVE_VOLUMES: 1
     FORCE_IMAGE_REMOVAL: 1
 
