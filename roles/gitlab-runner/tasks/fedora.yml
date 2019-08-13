@@ -10,13 +10,23 @@
 - name: install docker
   yum: name=docker state=present
 
-- name: Add gitlab-runner repository
+- name: Add gitlab-runner repository (Fedora)
   yum_repository:
     name: runner_gitlab-runner
     description: GitLab Runner repository
     file: runner_gitlab-runner
-    baseurl: "https://packages.gitlab.com/runner/gitlab-runner/{{ ansible_distribution|lower }}/$releasever/$basearch"
+    baseurl: https://packages.gitlab.com/runner/gitlab-runner/fedora/$releasever/$basearch
     gpgcheck: no
+  when: ansible_distribution == 'Fedora'
+
+- name: Add gitlab-runner repository (CentOS)
+  yum_repository:
+    name: runner_gitlab-runner
+    description: GitLab Runner repository
+    file: runner_gitlab-runner
+    baseurl: https://packages.gitlab.com/runner/gitlab-runner/el/$releasever/$basearch
+    gpgcheck: no
+  when: ansible_distribution == 'CentOS'
 
 - name: install selinux-policy-devel
   yum: name=selinux-policy-devel state=present
