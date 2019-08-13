@@ -9,6 +9,7 @@
 
 - name: install docker
   yum: name=docker state=present
+  tags: docker
 
 - name: Add gitlab-runner repository (Fedora)
   yum_repository:

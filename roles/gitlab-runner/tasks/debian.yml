@@ -19,6 +19,7 @@
   apt_repository:
     repo: "deb https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
     state: present
+  tags: docker
 
 - name: install docker
   apt:
@@ -26,3 +27,4 @@
     state: present
     update_cache: yes
     cache_valid_time: 3600
+  tags: docker
