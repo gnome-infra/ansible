@@ -15,7 +15,7 @@
     name: runner_gitlab-runner
     description: GitLab Runner repository
     file: runner_gitlab-runner
-    baseurl: https://packages.gitlab.com/runner/gitlab-runner/fedora/$releasever/$basearch
+    baseurl: "https://packages.gitlab.com/runner/gitlab-runner/{{ ansible_distribution|lower }}/$releasever/$basearch"
     gpgcheck: no
 
 - name: install selinux-policy-devel

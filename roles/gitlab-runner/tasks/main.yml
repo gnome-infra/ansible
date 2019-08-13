@@ -8,6 +8,9 @@
 - include_tasks: fedora.yml
   when: ansible_distribution == "Fedora"
 
+- include_tasks: fedora.yml
+  when: ansible_distribution == "CentOS"
+
 - include_tasks: debian.yml
   when: ansible_distribution == "Debian"
 
