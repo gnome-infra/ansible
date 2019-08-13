@@ -11,6 +11,11 @@
 - include_tasks: redhat.yml
   when: ansible_os_family == "RedHat"
 
+- name: configure docker
+  template: src=dockerd.json.j2 dest=/etc/docker/daemon.json
+  notify: restart docker
+  tags: docker
+
 - name: start and enable docker
   service: name=docker state=started enabled=true
   tags: docker
