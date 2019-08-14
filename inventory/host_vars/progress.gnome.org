@@ -1,6 +1,6 @@
 ---
 gitlab_runner_gc_period: "daily"
-gitlab_runner_concurrent: 11
+gitlab_runner_concurrent: 5
 gitlab_runner_check_interval: 0
 
 gitlab_runner_runners:
