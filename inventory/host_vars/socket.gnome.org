@@ -1,0 +1,25 @@
+---
+gitlab_runner_gc_period: "daily"
+gitlab_runner_concurrent: 5
+gitlab_runner_check_interval: 0
+
+gitlab_runner_runners:
+  - name: "socket.gnome.org"
+    limit: 1
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+           $ANSIBLE_VAULT;1.1;AES256
+           65356636363933376562386130306263646661616665333534373963633165396637633762643134
+           3364333833326231643564633836613935313561623839350a316334363764653236306461383562
+           66356662653263613836343531326566636635376635383639643965336139396664366165613239
+           6166623939343030610a613464343536656136363239396231386436333330333034336661656161
+           39336236303562323034613565653330666134613664356266663962323030303165
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:28\""
+      privileged: "true"
+      disable_cache: "true"
+      volumes: '["/cache"]'
+      shm_size: 0
