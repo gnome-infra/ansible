@@ -25,6 +25,7 @@
     src: config.toml.j2
     dest: /etc/gitlab-runner/config.toml
   notify: restart gitlab-runner
+  tags: gitlab-runner
 
 - name: install docker-gc
   copy: >
