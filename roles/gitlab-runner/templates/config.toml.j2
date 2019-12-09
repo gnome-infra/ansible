@@ -36,4 +36,10 @@ executor = "{{ runner['executor'] }}"
 {{ k }} = {{ v }}
     {% endfor %}
   {% endif %}
+  {% if 'ssh' in runner %}
+[runners.ssh]
+    {% for k,v in runner['ssh'].items() %}
+{{ k }} = {{ v }}
+    {% endfor %}
+  {% endif %}
 {% endfor %}
