@@ -46,14 +46,12 @@ bastion.gnome.org
 
 [vpnclients]
 view.gnome.org
-gnome-hispano.gnome.org
 nsd02.gnome.org
 nsd03.gnome.org
 gesture.gnome.org
 scale.gnome.org
 unbound02.gnome.org
 sdkbuilder.gnome.org
-gnome-hispano.gnome.org
 signal.gnome.org
 socket.gnome.org
 oscp-router01.gnome.org
@@ -70,7 +68,6 @@ flowbox.gnome.org
 staff-mail.gnome.org
 
 [osuosl]
-gnome-hispano.gnome.org
 signal.gnome.org
 staff-mail.gnome.org
 
