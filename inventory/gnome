@@ -6,11 +6,11 @@ rdu2
 nsd02.gnome.org
 unbound02.gnome.org
 gesture.gnome.org
-sdkbuilder.gnome.org
 nsd03.gnome.org
 view.gnome.org
 scale.gnome.org
 flowbox.gnome.org
+master.gnome.org
 
 [phx2]
 accelerator.gnome.org
@@ -19,7 +19,6 @@ bastion.gnome.org
 bugzilla.gnome.org
 expander.gnome.org
 gitlab.gnome.org
-master.gnome.org
 nsd01.gnome.org
 vpn.nsd04.gnome.org
 palette.gnome.org
@@ -66,10 +65,8 @@ oscp-node04.gnome.org
 oscp-node05.gnome.org
 flowbox.gnome.org
 staff-mail.gnome.org
+master.gnome.org
 
 [osuosl]
 signal.gnome.org
 staff-mail.gnome.org
-
-[canonical]
-socket.gnome.org
