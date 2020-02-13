@@ -23,4 +23,4 @@ gitlab_runner_runners:
       volumes: '["/cache"]'
       shm_size: 0
       privileged: "false"
-      security_opts: "seccomp=/etc/docker/flatpak.seccomp.json"
+      security_opts: "\"seccomp=/etc/docker/flatpak.seccomp.json\""
