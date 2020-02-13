@@ -19,7 +19,8 @@ gitlab_runner_runners:
     docker:
       tls_verify: "false"
       image: "\"fedora:30\""
-      privileged: "true"
       disable_cache: "true"
       volumes: '["/cache"]'
       shm_size: 0
+      privileged: "false"
+      security_opts: "seccomp=/etc/docker/flatpak.seccomp.json"
