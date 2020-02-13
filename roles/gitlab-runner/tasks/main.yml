@@ -31,6 +31,7 @@
   copy: >
     src=files/flatpak-docker-seccomp.json dest=/etc/docker/flatpak.seccomp.json
     owner=root group=root mode=0640
+  tags: gitlab-runner
 
 - name: install docker-gc
   copy: >
