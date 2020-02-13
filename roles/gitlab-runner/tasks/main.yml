@@ -27,6 +27,11 @@
   notify: restart gitlab-runner
   tags: gitlab-runner
 
+- name: install seccomp profile for flatpak
+  copy: >
+    src=files/flatpak-docker-seccomp.json dest=/etc/docker/flatpak.seccomp.json
+    owner=root group=root mode=0640
+
 - name: install docker-gc
   copy: >
     src=files/docker-gc/docker-gc dest=/usr/local/bin/docker-gc
