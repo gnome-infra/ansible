@@ -10,6 +10,7 @@
 
 - include_tasks: redhat.yml
   when: ansible_os_family == "RedHat"
+  tags: selinux
 
 - name: configure docker
   template: src=dockerd.json.j2 dest=/etc/docker/daemon.json
