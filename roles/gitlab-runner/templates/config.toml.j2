@@ -15,7 +15,11 @@ executor = "{{ runner['executor'] }}"
   {% if 'docker' in runner %}
 [runners.docker]
     {% for k,v in runner['docker'].items() %}
+      {% if k == "flatpak" and v == true %}
+security_opt = ["apparmor:unconfined", 'seccomp:{% include "./files/flatpak-docker-seccomp.json" %}']
+      {% else %}
 {{ k }} = {{ v }}
+      {% endif %}
     {% endfor %}
   {% endif %}
   {% if 'machine' in runner %}
