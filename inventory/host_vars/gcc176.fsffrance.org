@@ -22,8 +22,7 @@ gitlab_runner_runners:
       disable_cache: "true"
       volumes: '["/cache"]'
       shm_size: 0
-      privileged: "false"
-      security_opts: "\"seccomp=/etc/docker/flatpak.seccomp.json\""
+      privileged: "true"
   - name: "gcc176-gnome.osuosl.org"
     output_limit: 32768
     url: "https://gitlab.gnome.org"
@@ -44,3 +43,24 @@ gitlab_runner_runners:
       volumes: '["/cache"]'
       shm_size: 0
       privileged: "false"
+  - name: "flatpak-gcc176-osuosl.org"
+    limit: 1
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          37336231623036393931353239303138366266393430663763623761356332383035383466616361
+          6338613932313732316433343761333362646539316436370a333038653133633532623664343934
+          65326634396338613063363964346333326131643666383065363961313439396630626365343838
+          6437653166356262310a636239666437366662643661323538646530323766623539323165343263
+          61346636646333626265663235346364323862663031316564393630616234626234
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:28\""
+      disable_cache: "true"
+      shm_size: 0
+      privileged: "false"
+      cap_drop: '["all"]'
+      volumes: '["/proc:/host/proc"]'
+      flatpak: true

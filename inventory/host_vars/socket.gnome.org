@@ -22,5 +22,25 @@ gitlab_runner_runners:
       disable_cache: "true"
       volumes: '["/cache"]'
       shm_size: 0
+      privileged: "true"
+  - name: "flatpak-socket.gnome.org"
+    limit: 1
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39616335643366373661636466656337383863643739353463326164383534336230643833393661
+          3630383538343433613732386566353066383763326236640a643934653031376432396132613531
+          65396533663834646364306566636530356162353763613363373661316434373666636433626134
+          3664353465353932650a346532653163373766383834326633313865336137343639343830653633
+          34356263363131333835303535306565303633653133346539343865643765656366
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:28\""
+      disable_cache: "true"
+      shm_size: 0
       privileged: "false"
-      security_opts: "\"seccomp=/etc/docker/flatpak.seccomp.json\""
+      cap_drop: '["all"]'
+      volumes: '["/proc:/host/proc"]'
+      flatpak: true
