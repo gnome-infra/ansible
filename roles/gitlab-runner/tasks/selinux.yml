@@ -1,0 +1,21 @@
+---
+- name: copy te file
+  copy:
+    src: "{{ item }}.te"
+    dest: "/etc/selinux/targeted/{{ item }}.te"
+    mode: 0644
+  register: te
+
+- name: check for pp file
+  stat:
+    path: "/etc/selinux/targeted/{{ item }}.pp"
+  register: pp_check
+
+- name: compile selinux module
+  command: make -f /usr/share/selinux/devel/Makefile -C /etc/selinux/targeted/ {{ item }}.pp
+  register: pp
+  when: (te is changed) or (not pp_check.stat.exists)
+
+- name: install selinux module
+  command: semodule -i /etc/selinux/targeted/{{ item }}.pp
+  when: pp is changed

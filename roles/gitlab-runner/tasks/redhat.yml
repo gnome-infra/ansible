@@ -32,26 +32,12 @@
 - name: install selinux-policy-devel
   yum: name=selinux-policy-devel state=present
 
-- name: copy docker_gitlab_runner.te file
-  copy:
-    src: docker_gitlab_runner.te
-    dest: /etc/selinux/targeted/docker_gitlab_runner.te
-    mode: 0644
-  register: docker_gitlab_runner_te
-
-- name: check for docker_gitlab_runner.pp file
-  stat:
-    path: /etc/selinux/targeted/docker_gitlab_runner.pp
-  register: docker_gitlab_runner_pp_check
-
-- name: compile docker_gitlab_runner selinux module
-  command: make -f /usr/share/selinux/devel/Makefile -C /etc/selinux/targeted/ docker_gitlab_runner.pp
-  register: docker_gitlab_runner_pp
-  when: (docker_gitlab_runner_te is changed) or (not docker_gitlab_runner_pp_check.stat.exists)
-
-- name: install docker_gitlab_runner selinux module
-  command: semodule -i /etc/selinux/targeted/docker_gitlab_runner.pp
-  when: docker_gitlab_runner_pp is changed
+- name: configure selinux modules
+  include_tasks: selinux.yml
+  loop:
+    - docker_gitlab_runner
+    - flatpak_builder
+  tags: selinux
 
 - name: install gitlab-runner
   yum: name=gitlab-runner state=present
