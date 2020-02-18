@@ -1,0 +1,12 @@
+module flatpak_builder 1.0;
+
+require {
+	type tmpfs_t;
+	type container_t;
+	type fs_t;
+	class filesystem { mount remount };
+}
+
+#============= container_t ==============
+allow container_t fs_t:filesystem remount;
+allow container_t tmpfs_t:filesystem mount;
