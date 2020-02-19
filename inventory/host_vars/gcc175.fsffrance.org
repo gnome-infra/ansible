@@ -22,7 +22,7 @@ gitlab_runner_runners:
       disable_cache: "true"
       volumes: '["/cache"]'
       shm_size: 0
-      privileged: "true"
+      privileged: "false"
   - name: "flatpak-gcc175-osuosl.org"
     limit: 1
     output_limit: 16384
