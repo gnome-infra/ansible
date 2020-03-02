@@ -16,7 +16,7 @@ gitlab_runner_runners:
     executor: "docker"
     docker:
       tls_verify: "false"
-      image: "\"fedora:29\""
+      image: "\"fedora:31\""
       privileged: "true"
       disable_entrypoint_overwrite: "false"
       oom_kill_disable: "false"

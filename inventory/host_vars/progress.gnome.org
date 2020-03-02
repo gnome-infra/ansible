@@ -18,7 +18,7 @@ gitlab_runner_runners:
     executor: "docker"
     docker:
       tls_verify: "false"
-      image: "\"fedora:28\""
+      image: "\"fedora:31\""
       disable_cache: "true"
       volumes: '["/cache"]'
       shm_size: 0
@@ -37,7 +37,7 @@ gitlab_runner_runners:
     executor: "docker"
     docker:
       tls_verify: "false"
-      image: "\"fedora:28\""
+      image: "\"fedora:31\""
       disable_cache: "true"
       shm_size: 0
       privileged: "false"
