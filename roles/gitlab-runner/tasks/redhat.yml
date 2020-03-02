@@ -39,5 +39,10 @@
     - flatpak_builder
   tags: selinux
 
+- name: allow user namespaces
+  copy: src=max_user_namespaces.conf dest=/etc/sysctl.d/max_user_namespaces.conf mode=0644 owner=root group=root
+  notify: reload sysctl
+  tags: selinux
+
 - name: install gitlab-runner
   yum: name=gitlab-runner state=present
