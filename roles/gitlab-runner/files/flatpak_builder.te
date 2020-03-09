@@ -17,6 +17,7 @@ allow container_t container_runtime_tmpfs_t:dir mounton;
 allow container_t devpts_t:filesystem mount;
 allow container_t fs_t:filesystem remount;
 allow container_t proc_t:filesystem mount;
+allow container_t proc_t:filesystem remount;
 allow container_t tmpfs_t:filesystem mount;
 allow container_t tmpfs_t:filesystem remount;
 allow container_t tmpfs_t:filesystem unmount;
