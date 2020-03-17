@@ -1,0 +1,16 @@
+---
+- name: Land bashrc color prompt
+  copy:
+    src: color_prompt.sh
+    dest: /etc/profile.d/color_prompt.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Land default bashrc for root
+  copy:
+    src: bashrc
+    dest: /root/.bashrc
+    owner: root
+    group: root
+    mode: 0644

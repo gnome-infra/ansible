@@ -1,0 +1,15 @@
+---
+- name: Land backup root SSH keys
+  authorized_key:
+    user: root
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - public_keys/averi
+    - public_keys/bpiotrowski
+    - public_keys/backups
+
+- name: Set default root password
+  user:
+    name: root
+    password: "{{ root_password }}"

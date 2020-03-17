@@ -1,0 +1,19 @@
+rhsm_autosubscribe: true
+
+# IDM
+kerberos_realm: "GNOME.ORG"
+ipaclient_servers: 
+  - "view.gnome.org"
+
+# Chrony
+chrony_role_action: "all"
+chrony_ntp_servers:
+  - "ntp1.osci.io"
+  - "ntp2.osci.io"
+
+# IPtables
+firewall_allowed_tcp_ports:
+  - "22"
+
+firewall_additional_rules:
+  - "iptables -A INPUT -i eno3 -j ACCEPT"

@@ -1,0 +1,24 @@
+================================== ATTENTION ==================================
+
+        This is a PRIVATE computer system, unauthorized access is
+        strictly prohibited.
+
+This system is to be used for GNOME Project and related purposes only.  This
+is not your personal computing system.  Users who are unsure whether or not
+they have access to this system, don't have it and should log off immediately.
+
+There is no expectation of privacy of any kind on this system.  All questions
+concerning access should be directed to gnome-sysadmin@gnome.org
+
+===============================================================================
+
+This system is puppet managed!  Local changes may be overwritten!
+
+===============================================================================
+
+ Machine name: {{ ansible_nodename }}, OS: {{ ansible_os_family }} {{ ansible_distribution_version }}
+
+ Kernel: {{ ansible_kernel }}, Processors: {{ ansible_processor_cores }}, RAM: {{ (ansible_memtotal_mb * 0.001)|int }} GB
+
+ Sponsor: Red Hat
+

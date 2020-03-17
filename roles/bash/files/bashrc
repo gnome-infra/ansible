@@ -1,0 +1,14 @@
+# .bashrc
+
+export HISTSIZE=50000
+export HISTTIMEFORMAT="%F %T "
+export HISTCONTROL=ignoreboth
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi

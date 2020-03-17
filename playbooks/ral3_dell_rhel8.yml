@@ -1,0 +1,14 @@
+---
+- hosts: rhel8
+  gather_facts: true
+  remote_user: root
+  roles:
+   - redhat.subscription
+   - packages
+   - motd
+   - chrony
+   - iptables
+   - ipaclient.wrapper
+   - dell
+   - bash
+   - base_auth

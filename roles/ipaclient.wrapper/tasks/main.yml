@@ -1,0 +1,36 @@
+---
+- name: Install IPA Package
+  yum:
+    name: ipa-client
+    state: present
+
+- name: Load IPA CA certificate
+  copy:
+    src: ipa-ca.crt
+    dest: /etc/ipa/ca.crt
+    owner: root
+    group: root
+    mode: 0644
+
+- import_role:
+    name: ipaclient
+  vars:
+    # All IPA variables are defined at https://github.com/freeipa/ansible-freeipa/blob/master/roles/ipaclient/README.md
+
+    # base IPA config info, var is set in defaults
+    ipaclient_realm: "{{ kerberos_realm }}"
+    ipaclient_domain: "{{ kerberos_realm | lower }}"
+
+    # credentials required to join the IPA realm, please use your service account credentials when you requested an RBAC with IAM
+    ipaadmin_principal: "{{ ipa_host_enrollment_principal }}"
+    ipaadmin_password: "{{ ipa_host_enrollment_password }}"
+
+    #defines if a host already exists, it can join again
+    ipaclient_force_join: yes
+
+    # keep ipaclient from managing NTP, it does it poorly
+    ipaclient_no_ntp: yes
+    ipaclient_force_ntpd: yes
+
+    # ipaclient should care about the files after initial install
+    ipa_allow_repair: yes

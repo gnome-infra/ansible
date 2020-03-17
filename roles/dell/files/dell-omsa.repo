@@ -1,0 +1,21 @@
+[dell-omsa-indep]
+name=Dell OMSA repository - Hardware independent
+type=rpm-md
+mirrorlist=https://linux.dell.com/repo/hardware/latest/mirrors.cgi?osname=el$releasever&basearch=$basearch&native=1&dellsysidpluginver=$dellsysidpluginver
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-dell
+       file:///etc/pki/rpm-gpg/RPM-GPG-KEY-dell2
+       file:///etc/pki/rpm-gpg/RPM-GPG-KEY-libsmbios
+enabled=1
+failover=priority
+
+[dell-omsa-specific]
+name=Dell OMSA repository - Hardware specific
+type=rpm-md
+mirrorlist=https://linux.dell.com/repo/hardware/latest/mirrors.cgi?osname=el$releasever&basearch=$basearch&native=1&sys_ven_id=$sys_ven_id&sys_dev_id=$sys_dev_id&dellsysidpluginver=$dellsysidpluginver
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-dell
+       file:///etc/pki/rpm-gpg/RPM-GPG-KEY-dell2
+       file:///etc/pki/rpm-gpg/RPM-GPG-KEY-libsmbios
+enabled=1
+failover=priority

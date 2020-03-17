@@ -1,0 +1,61 @@
+---
+- name: Copy RPM GPG keys
+  copy:
+    src: RPM-GPG/
+    dest: /etc/pki/rpm-gpg/
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+
+- name: Trust RPM GPG keys
+  rpm_key:
+    state: present
+    key: "{{ item }}"
+  loop:
+    - /etc/pki/rpm-gpg/RPM-GPG-KEY-dell
+    - /etc/pki/rpm-gpg/RPM-GPG-KEY-dell2
+    - /etc/pki/rpm-gpg/RPM-GPG-KEY-libsmbios
+
+- name: Copy over Dell OMSA repository definition
+  copy:
+    src: dell-omsa.repo
+    dest: /etc/yum.repos.d/dell-omsa.repo
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable Code Ready (required by perl-Digest-SHA1)
+  rhsm_repository:
+    name: codeready-builder-for-rhel-8-x86_64-rpms
+
+- name: Install required Dell OMSA packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - srvadmin-idrac
+    - srvadmin-server-cli
+    - OpenIPMI
+    - net-snmp
+    - net-snmp-utils
+    - srvadmin-deng-snmp
+    - nagios-plugins-openmanage
+    - srvadmin-storageservices-snmp
+
+- name: Configure SNMPD
+  copy:
+    src: snmpd.conf
+    dest: /etc/snmp/snmpd.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify:
+    - "Restart SNMPD"
+
+- name: Enable srvadmin services at boot
+  command: /opt/dell/srvadmin/sbin/srvadmin-services.sh enable
+
+- name: Start srvadmin services
+  command: /opt/dell/srvadmin/sbin/srvadmin-services.sh start

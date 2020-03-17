@@ -1,0 +1,23 @@
+---
+- name: Enable EPEL 8
+  yum:
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
+    state: present
+
+- name: Drop epel-playground and epel-testing
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/yum.repos.d/epel-testing.repo
+    - /etc/yum.repos.d/epel-playground.repo
+
+- name: Install the default set of packages we need
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - net-tools
+    - policycoreutils-python-utils
+    - setools-console
+    - tmux
