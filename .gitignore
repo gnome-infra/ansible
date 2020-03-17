@@ -1,1 +1,5 @@
 *.retry
+roles/ipaclient
+roles/redhat.subscription
+roles/chrony
+roles/iptables
