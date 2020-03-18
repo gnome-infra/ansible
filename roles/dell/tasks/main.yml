@@ -54,6 +54,11 @@
   notify:
     - "Restart SNMPD"
 
+- name: Enable SNMPD at boot
+  service:
+    name: snmpd
+    enabled: true
+
 - name: Enable srvadmin services at boot
   command: /opt/dell/srvadmin/sbin/srvadmin-services.sh enable
 
