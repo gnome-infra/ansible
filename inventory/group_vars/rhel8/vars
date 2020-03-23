@@ -16,4 +16,4 @@ firewall_allowed_tcp_ports:
   - "22"
 
 firewall_additional_rules:
-  - "iptables -A INPUT -i eno3 -j ACCEPT"
+  - "iptables -A INPUT -i br0 -j ACCEPT"
