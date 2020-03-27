@@ -4,13 +4,14 @@
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
     state: present
 
-- name: Drop epel-playground and epel-testing
+- name: Drop repos we don't want on our systems
   file:
     path: "{{ item }}"
     state: absent
   loop:
     - /etc/yum.repos.d/epel-testing.repo
     - /etc/yum.repos.d/epel-playground.repo
+    - /etc/yum.repos.d/epel-testing-modular.repo
 
 - name: Install the default set of packages we need
   yum:
