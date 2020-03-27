@@ -1,0 +1,2 @@
+nrpe_custom_plugins:
+  - check_openmanage
