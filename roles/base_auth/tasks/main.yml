@@ -13,3 +13,18 @@
   user:
     name: root
     password: "{{ root_password }}"
+
+- name: PermitRootLogin with without-password
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^[#]*PermitRootLogin *"
+    line: "PermitRootLogin without-password"
+    state: present
+
+- name: No PasswordAuthentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^[#]*PasswordAuthentication *"
+    line: "PasswordAuthentication no"
+    state: present
+  notify: restart sshd
