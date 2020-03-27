@@ -1,0 +1,58 @@
+---
+- name: Install the default set of packages NRPE needs
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - nrpe
+    - nagios-plugins-disk
+    - nagios-plugins-users
+    - nagios-plugins-swap
+    - nagios-plugins-load
+    - nagios-plugins-ping
+    - nagios-plugins-procs
+    - nagios-plugins-http
+    - nagios-plugins-ntp
+    - nagios-plugins-ssh
+    - nagios-plugins-mysql
+    - nagios-plugins-nrpe
+
+- name: Land NRPE default conf file
+  template:
+    src: nrpe.cfg.j2
+    dest: /etc/nagios/nrpe.cfg
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Land NRPE default plugins
+  template:
+    src: "default/{{ item }}.cfg.j2"
+    dest: "/etc/nrpe.d/{{ item }}.cfg"
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - "{{ nrpe_default_plugins }}"
+
+- name: Land NRPE custom plugins
+  template:
+    src: "custom/{{ item }}.cfg.j2"
+    dest: "/etc/nrpe.d/{{ item }}.cfg"
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - "{{ nrpe_custom_plugins }}"
+  notify: "Restart NRPE"
+  when: nrpe_custom_plugins is defined and (nrpe_custom_plugins | type_debug == 'list')
+
+- name: Enable NRPE at boot
+  service:
+    name: nrpe
+    enabled: true
+
+- name: Start NRPE
+  service:
+    name: nrpe
+    state: started

@@ -1,0 +1,10 @@
+---
+nrpe_allowed_hosts:
+  - 127.0.0.1
+  - 140.211.167.18
+  - 10.8.0.3
+
+nrpe_default_plugins:
+  - check_ssh
+  - check_load
+  - check_ntp

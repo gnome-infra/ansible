@@ -1,0 +1,11 @@
+log_facility=daemon
+pid_file=/var/run/nrpe/nrpe.pid
+server_port=5666
+nrpe_user=nrpe
+nrpe_group=nrpe
+allowed_hosts="{{ nrpe_allowed_hosts | join(',') }}"
+dont_blame_nrpe=0
+debug=0
+command_timeout=60
+connection_timeout=300
+include_dir=/etc/nrpe.d

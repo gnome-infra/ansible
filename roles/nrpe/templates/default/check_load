@@ -1,0 +1,1 @@
+command[check_load]=/usr/lib64/nagios/plugins/check_load -w {{ ansible_processor_vcpus }} -c {{ ansible_processor_vcpus + 1 }}
