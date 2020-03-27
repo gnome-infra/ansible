@@ -1,0 +1,16 @@
+---
+- name: Land internal resolv.conf
+  template:
+    src: "resolv.conf.j2"
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Land customized /etc/hosts
+  template:
+    src: "hosts.j2"
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0644

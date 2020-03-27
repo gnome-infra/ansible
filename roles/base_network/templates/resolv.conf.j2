@@ -1,0 +1,5 @@
+search gnome.org
+
+{% for ip in dns_resolvers %}
+nameserver {{ ip }}
+{% endfor %}
