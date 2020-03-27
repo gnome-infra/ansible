@@ -32,8 +32,7 @@
     owner: root
     group: root
     mode: 0644
-  loop:
-    - "{{ nrpe_default_plugins }}"
+  loop: "{{ nrpe_default_plugins }}"
 
 - name: Land NRPE custom plugins
   template:
@@ -42,8 +41,7 @@
     owner: root
     group: root
     mode: 0644
-  loop:
-    - "{{ nrpe_custom_plugins }}"
+  loop: "{{ nrpe_custom_plugins }}"
   notify: "Restart NRPE"
   when: nrpe_custom_plugins is defined and (nrpe_custom_plugins | type_debug == 'list')
 

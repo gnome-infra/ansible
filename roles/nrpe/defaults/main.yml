@@ -5,6 +5,5 @@ nrpe_allowed_hosts:
   - 10.8.0.3
 
 nrpe_default_plugins:
-  - check_ssh
   - check_load
   - check_ntp
