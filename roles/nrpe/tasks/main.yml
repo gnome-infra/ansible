@@ -36,15 +36,15 @@
     mode: 0644
   loop: "{{ nrpe_default_plugins }}"
 
-- name: Land NRPE custom plugins
-  template:
-    src: "custom/{{ item }}.cfg.j2"
-    dest: "/etc/nrpe.d/{{ item }}.cfg"
-    owner: root
-    group: root
-    mode: 0644
+- name: Create directory for custom NRPE scripts
+  file:
+    dest: /usr/lib64/nagios/plugins/custom/
+    state: directory
+    mode: '0755'
+
+- name: install and configure custom NRPE checks
+  include_tasks: nrpe_custom_plugin.yml
   loop: "{{ nrpe_custom_plugins }}"
-  notify: "Restart NRPE"
   when: nrpe_custom_plugins is defined and (nrpe_custom_plugins | type_debug == 'list')
 
 - name: Start and enable NRPE

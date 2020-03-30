@@ -1,0 +1,21 @@
+---
+- name: Check if custom script for {{ item }} exists
+  stat: path="{{ role_path }}/files/{{ item }}"
+  delegate_to: localhost
+  register: nrpe_script
+
+- name: Install {{ item }}
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/lib64/nagios/plugins/custom/{{ item }}"
+    mode: "0750"
+  when: nrpe_script.stat.exists
+
+- name: Install NRPE config for {{ item }}
+  template:
+    src: "custom/{{ item }}.cfg.j2"
+    dest: "/etc/nrpe.d/{{ item }}.cfg"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: "Restart NRPE"
