@@ -8,7 +8,7 @@
   copy:
     src: "{{ item }}"
     dest: "/usr/lib64/nagios/plugins/custom/{{ item }}"
-    mode: "0750"
+    mode: "0755"
   when: nrpe_script.stat.exists
 
 - name: Install NRPE config for {{ item }}
