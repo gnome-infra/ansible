@@ -1,21 +1,22 @@
 ---
 - name: Install the default set of packages NRPE needs
   yum:
-    name: "{{ item }}"
+    name: "{{ nrpe_packages }}"
     state: present
-  loop:
-    - nrpe
-    - nagios-plugins-disk
-    - nagios-plugins-users
-    - nagios-plugins-swap
-    - nagios-plugins-load
-    - nagios-plugins-ping
-    - nagios-plugins-procs
-    - nagios-plugins-http
-    - nagios-plugins-ntp
-    - nagios-plugins-ssh
-    - nagios-plugins-mysql
-    - nagios-plugins-nrpe
+  vars:
+    nrpe_packages:
+      - nrpe
+      - nagios-plugins-disk
+      - nagios-plugins-users
+      - nagios-plugins-swap
+      - nagios-plugins-load
+      - nagios-plugins-ping
+      - nagios-plugins-procs
+      - nagios-plugins-http
+      - nagios-plugins-ntp
+      - nagios-plugins-ssh
+      - nagios-plugins-mysql
+      - nagios-plugins-nrpe
 
 - name: Land NRPE default conf file
   template:
