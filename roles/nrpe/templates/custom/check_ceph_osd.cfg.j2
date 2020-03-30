@@ -1,1 +1,1 @@
-command[check_ceph_osd]=/usr/lib64/nagios/plugins/custom/check_ceph_osd -H {{ inventory_hostname }}
+command[check_ceph_osd]=/usr/lib64/nagios/plugins/custom/check_ceph_osd --id nagios -H {{ inventory_hostname }}
