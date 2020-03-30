@@ -17,6 +17,7 @@
       - nagios-plugins-ssh
       - nagios-plugins-mysql
       - nagios-plugins-nrpe
+      - python2
 
 - name: Land NRPE default conf file
   template:
