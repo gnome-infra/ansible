@@ -46,12 +46,8 @@
   notify: "Restart NRPE"
   when: nrpe_custom_plugins is defined and (nrpe_custom_plugins | type_debug == 'list')
 
-- name: Enable NRPE at boot
-  service:
-    name: nrpe
-    enabled: true
-
-- name: Start NRPE
+- name: Start and enable NRPE
   service:
     name: nrpe
     state: started
+    enabled: true
