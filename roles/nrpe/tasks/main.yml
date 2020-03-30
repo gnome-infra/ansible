@@ -36,6 +36,10 @@
     mode: 0644
   loop: "{{ nrpe_default_plugins }}"
 
+- name: Generate Ceph token for checks
+  shell: /usr/bin/ceph auth get-or-create client.nagios mon 'allow r' > /etc/ceph/ceph.client.nagios.keyring creates=/etc/ceph/ceph.client.nagios.keyring
+  when: ('ceph' in group_names)
+
 - name: Create directory for custom NRPE scripts
   file:
     dest: /usr/lib64/nagios/plugins/custom/
