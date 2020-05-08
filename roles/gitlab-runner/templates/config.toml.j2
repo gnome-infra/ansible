@@ -14,13 +14,11 @@ token = "{{ runner['token'] }}"
 executor = "{{ runner['executor'] }}"
   {% if 'docker' in runner %}
 [runners.docker]
-    {% for k,v in runner['docker'].items() if k != "flatpak" %}
+    {% for k,v in runner['docker'].items()  %}
 {{ k }} = {{ v }}
     {% endfor %}
-    {% if "flatpak" in runner['docker'].items() %}
-security_opt = ["apparmor:unconfined", 'seccomp:{% include "./files/flatpak-docker-seccomp.json" %}']
-    {% else %}
-security_opt = ["apparmor:unconfined", 'seccomp:{% include "./files/buildah-docker-seccomp.json" %}']
+    {% if runner['seccomp'] is defined %}
+security_opt = ["apparmor:unconfined", 'seccomp:{% include "./files/" + runner['seccomp'] + "-docker-seccomp.json" %}']
     {% endif %}
   {% endif %}
   {% if 'machine' in runner %}
