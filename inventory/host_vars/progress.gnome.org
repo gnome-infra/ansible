@@ -16,6 +16,7 @@ gitlab_runner_runners:
            3763393335653561630a373033363162643631373230616362616434653832626539343462636239
            65316339653064613938623830353836646264333734343837356136666230623038
     executor: "docker"
+    seccomp: "buildah"
     docker:
       tls_verify: "false"
       image: "\"fedora:31\""
@@ -35,6 +36,7 @@ gitlab_runner_runners:
           6234653631313265610a303966313562383262393262383934323231623832336366323161616232
           34383435653935656133346430393238356462653030373561343361343265363838
     executor: "docker"
+    seccomp: "flatpak"
     docker:
       tls_verify: "false"
       image: "\"fedora:31\""
@@ -43,4 +45,3 @@ gitlab_runner_runners:
       privileged: "false"
       cap_drop: '["all"]'
       volumes: '["/proc:/host/proc"]'
-      flatpak: true

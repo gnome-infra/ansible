@@ -55,6 +55,7 @@ gitlab_runner_runners:
           6437653166356262310a636239666437366662643661323538646530323766623539323165343263
           61346636646333626265663235346364323862663031316564393630616234626234
     executor: "docker"
+    seccomp: "flatpak"
     docker:
       tls_verify: "false"
       image: "\"fedora:31\""
@@ -63,7 +64,6 @@ gitlab_runner_runners:
       privileged: "false"
       cap_drop: '["all"]'
       volumes: '["/proc:/host/proc"]'
-      flatpak: true
   - name: "gcc176-privileged"
     output_limit: 32768
     url: "https://gitlab.gnome.org/"

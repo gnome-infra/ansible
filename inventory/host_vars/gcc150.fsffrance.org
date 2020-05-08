@@ -56,6 +56,7 @@ gitlab_runner_runners:
           6633356132633337380a343239393134363364376331386336353033663536623735363032333965
           30316635336334303038323462336139376363343735386131653665666364646637
     executor: "docker"
+    seccomp: "flatpak"
     docker:
       tls_verify: "false"
       image: "\"fedora:31\""
@@ -64,4 +65,3 @@ gitlab_runner_runners:
       privileged: "false"
       cap_drop: '["all"]'
       volumes: '["/proc:/host/proc"]'
-      flatpak: true
