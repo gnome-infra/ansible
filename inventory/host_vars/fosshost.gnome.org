@@ -1,0 +1,47 @@
+---
+gitlab_runner_gc_period: "daily"
+gitlab_runner_concurrent: 4
+gitlab_runner_check_interval: 0
+
+gitlab_runner_runners:
+  - name: "fosshost.gnome.org"
+    limit: 1
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          65333433666432306139386339393130616462333061383537373562356434333937353766313561
+          6335303364363062323030376330333966643239613333370a653030366331326566333736393733
+          61313731343866653933366437393165313233353239356631306136396532623564313738363639
+          6365376239666461330a353432383231313334656263343036666238333865323631383339323938
+          37376630653861356333353665363433643738396161633435633934353832396334
+    executor: "docker"
+    seccomp: "buildah"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:31\""
+      disable_cache: "true"
+      volumes: '["/cache"]'
+      shm_size: 0
+      privileged: "false"
+  - name: "fosshost.gnome.org-flatpak"
+    limit: 1
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          36386334623539346239323964383534323331373633323038313031366438326433373463646365
+          3735623930633338316362666164386561323262383762630a653730323034623233663831343761
+          39323664353231626633353565646162643933353932666266613664323762356139316164323764
+          3833333032386166630a343863666535623463626435646436356630313433346337653163643862
+          31393538306661353766343563313664363437306366646466393634633739653130
+    executor: "docker"
+    seccomp: "flatpak"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:31\""
+      disable_cache: "true"
+      shm_size: 0
+      privileged: "false"
+      cap_drop: '["all"]'
+      volumes: '["/proc:/host/proc"]'
