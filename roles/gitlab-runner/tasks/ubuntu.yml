@@ -13,6 +13,13 @@
     repo: "deb https://packages.gitlab.com/runner/gitlab-runner/ubuntu/ {{ ansible_distribution_release }} main"
     state: present
 
+- name: install gitlab-runner
+  apt:
+    name: gitlab-runner
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
 - name: install docker
   apt:
     name: docker.io
