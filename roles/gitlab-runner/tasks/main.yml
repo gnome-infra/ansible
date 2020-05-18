@@ -21,6 +21,12 @@
   service: name=docker state=started enabled=true
   tags: docker
 
+- name: create gitlab-runner config directory
+  file:
+    path: /etc/gitlab-runner
+    state: directory
+    mode: '0750'
+
 - name: configure gitlab-runner
   template:
     src: config.toml.j2
