@@ -20,6 +20,7 @@ gitlab_runner_runners:
       disable_entrypoint_overwrite: "false"
       oom_kill_disable: "false"
       volumes: '["/cache"]'
+      disable_cache: "true"
       shm_size: 0
       privileged: "false"
     cache:
@@ -73,12 +74,3 @@ gitlab_runner_runners:
       privileged: "false"
       cap_drop: '["all"]'
       volumes: '["/proc:/host/proc"]'
-    cache:
-      Type: "\"s3\""
-      Shared: "true"
-    cache.s3:
-      ServerAddress: "\"s3.amazonaws.com\""
-      AccessKey: "{{ gitlab_runner_cache_access_key }}"
-      SecretKey: "{{ gitlab_runner_cache_secret_key }}"
-      BucketName: "{{ gitlab_runner_cache_bucket_name }}"
-      BucketLocation: "{{ gitlab_runner_cache_bucket_region }}"
