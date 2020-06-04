@@ -82,6 +82,7 @@ gitlab_runner_runners:
       privileged: "false"
       cap_drop: '["all"]'
       volumes: '["/proc:/host/proc"]'
+      disable_cache: "true"
 
   - name: "gcc176-privileged"
     output_limit: 32768
@@ -101,3 +102,4 @@ gitlab_runner_runners:
       oom_kill_disable: "false"
       shm_size: 0
       privileged: "true"
+      disable_cache: "true"

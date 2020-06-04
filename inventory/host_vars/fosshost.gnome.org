@@ -54,3 +54,4 @@ gitlab_runner_runners:
       privileged: "false"
       cap_drop: '["all"]'
       volumes: '["/proc:/host/proc"]'
+      disable_cache: "true"
