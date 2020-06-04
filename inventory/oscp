@@ -18,6 +18,8 @@ oscp-node02.gnome.org
 oscp-node03.gnome.org
 oscp-node04.gnome.org
 oscp-node05.gnome.org
+oscp-node06.gnome.org
+oscp-node07.gnome.org
 
 [oscp-gluster]
 scale.gnome.org
