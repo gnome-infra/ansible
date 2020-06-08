@@ -1,0 +1,5 @@
+---
+- hosts: ceph
+  remote_user: root
+  roles:
+   - libvirt
