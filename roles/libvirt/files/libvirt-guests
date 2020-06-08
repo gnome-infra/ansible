@@ -1,0 +1,5 @@
+# This DOES start hosts which are autostart configured, just not all guests which were up when the host went down
+ON_BOOT=ignore
+
+ON_SHUTDOWN=shutdown
+SHUTDOWN_TIMEOUT=120

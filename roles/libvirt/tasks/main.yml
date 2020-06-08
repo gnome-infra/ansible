@@ -1,0 +1,8 @@
+---
+- name: configure libvirt-guests service
+  copy:
+    src: libvirt-guests
+    dest: /etc/sysconfig/libvirt-guests
+    owner: root
+    group: root
+    mode: 0640
