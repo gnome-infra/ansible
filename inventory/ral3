@@ -7,3 +7,8 @@ ceph03.gnome.org
 ceph01.gnome.org
 ceph02.gnome.org
 ceph03.gnome.org
+
+[hypervisors]
+ceph01.gnome.org
+ceph02.gnome.org
+ceph03.gnome.org
