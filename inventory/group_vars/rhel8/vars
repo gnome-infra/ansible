@@ -3,8 +3,8 @@ rhsm_autosubscribe: true
 # IDM
 kerberos_realm: "GNOME.ORG"
 ipaclient_servers: 
-  - "account.gnome.org"
   - "view.gnome.org"
+  - "account.gnome.org"
 
 # Chrony
 chrony_role_action: "all"
