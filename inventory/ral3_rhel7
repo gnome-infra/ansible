@@ -3,9 +3,7 @@ ral3
 
 [ral3]
 nsd02.gnome.org
-unbound02.gnome.org
 gesture.gnome.org
-nsd03.gnome.org
 view.gnome.org
 scale.gnome.org
 flowbox.gnome.org
@@ -15,13 +13,11 @@ bastion.gnome.org
 bugzilla.gnome.org
 gitlab.gnome.org
 nsd01.gnome.org
-nsd04.gnome.org
 palette.gnome.org
 proxy01.gnome.org
 range.gnome.org
 restaurant.gnome.org
 splunk01.gnome.org
-unbound01.gnome.org
 puppetmaster01.gnome.org
 puppetmaster02.gnome.org
 gbm-builder.gnome.org
