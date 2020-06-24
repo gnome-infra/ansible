@@ -1,5 +1,5 @@
 ---
-- hosts: rhel8-vms
+- hosts: virtual-machines
   gather_facts: true
   remote_user: root
   roles:

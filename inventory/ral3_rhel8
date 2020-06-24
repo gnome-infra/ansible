@@ -1,4 +1,4 @@
-[rhel8-vms]
+[virtual-machines]
 ceph-metrics.gnome.org
 
 [ceph]
