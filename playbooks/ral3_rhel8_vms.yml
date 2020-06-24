@@ -1,5 +1,5 @@
 ---
-- hosts: hypervisors
+- hosts: rhel8-vms
   gather_facts: true
   remote_user: root
   roles:
@@ -9,7 +9,6 @@
    - chrony
    - iptables
    - ipaclient.wrapper
-   - dell
    - bash
    - base_auth
    - nrpe
