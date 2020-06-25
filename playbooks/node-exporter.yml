@@ -1,0 +1,6 @@
+---
+- hosts: ral3
+  gather_facts: true
+  remote_user: root
+  roles:
+   - node-exporter
