@@ -1,0 +1,68 @@
+---
+- name: create system group
+  group:
+    name: node_exporter
+    system: true
+    state: present
+
+- name: create system user
+  user:
+    name: node_exporter
+    system: true
+    shell: "/sbin/nologin"
+    group: node_exporter
+    createhome: false
+
+- name: create download directory
+  file:
+    path: /root/.ansible/tmp/node-exporter
+    state: directory
+
+- name: download {{ node_exporter_version }} for {{ ansible_architecture }}
+  get_url:
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-{{ node_exporter_arch }}.tar.gz"
+    dest: "/root/.ansible/tmp/node-exporter/node_exporter-{{ node_exporter_version }}.linux-{{ node_exporter_arch }}.tar.gz"
+    checksum: "{{ node_exporter_checksums[ansible_architecture] }}"
+
+- name: unpack binaries
+  unarchive:
+    src: "/root/.ansible/tmp/node-exporter/node_exporter-{{ node_exporter_version }}.linux-{{ node_exporter_arch }}.tar.gz"
+    dest: /root/.ansible/tmp/node-exporter/
+    creates: "/root/.ansible/tmp/node-exporter/node_exporter-{{ node_exporter_version }}.linux-{{ node_exporter_arch }}/node_exporter"
+    remote_src: true
+  check_mode: false
+
+- name: install binaries
+  copy:
+    src: "/root/.ansible/tmp/node-exporter/node_exporter-{{ node_exporter_version }}.linux-{{ node_exporter_arch }}/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: 0755
+    remote_src: true
+  with_items:
+    - node_exporter
+  notify: restart node-exporter
+
+- name: create textfile collector dir
+  file:
+    path: "{{ node_exporter_textfile_dir }}"
+    state: directory
+    owner: node_exporter
+    group: node_exporter
+    recurse: true
+    mode: u+rwX,g+rwX,o=rX
+
+- name: install systemd unit
+  template:
+    src: node-exporter.service.j2
+    dest: /etc/systemd/system/node-exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart node-exporter
+
+- name: start and enable systemd unit
+  systemd:
+    name: node-exporter
+    daemon-reload: yes
+    state: started
+    enabled: yes
