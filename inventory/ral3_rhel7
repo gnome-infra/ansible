@@ -15,7 +15,6 @@ gitlab.gnome.org
 nsd01.gnome.org
 palette.gnome.org
 proxy01.gnome.org
-range.gnome.org
 restaurant.gnome.org
 splunk01.gnome.org
 puppetmaster01.gnome.org
@@ -36,3 +35,9 @@ staff-mail.gnome.org
 [osuosl]
 signal.gnome.org
 staff-mail.gnome.org
+
+[prometheus-server]
+signal.gnome.org
+
+[alertmanager]
+signal.gnome.org
