@@ -21,13 +21,6 @@ groups:
       severity: critical
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} is under high CPU usage{% endraw %}"
-  - alert: System is not operational
-    expr: "node_systemd_system_running == 1"
-    for: 15m
-    labels:
-      severity: critical
-    annotations:
-      summary: "System is not operational for more than 15 minutes"
   - alert: Probe failed
     expr: probe_success == 0
     for: 5m
