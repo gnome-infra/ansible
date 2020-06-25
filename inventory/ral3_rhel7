@@ -19,7 +19,6 @@ restaurant.gnome.org
 splunk01.gnome.org
 puppetmaster01.gnome.org
 puppetmaster02.gnome.org
-gbm-builder.gnome.org
 
 [puppetmasters]
 vpn.puppetmaster01.gnome.org
