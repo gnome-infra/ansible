@@ -4,27 +4,19 @@ groups:
   - alert: Instance down
     expr: "up == 0"
     for: 5m
-    labels:
-      severity: critical
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} is down{% endraw %}"
   - alert: Instance rebooted
     expr: node_boot_time_seconds < 60
-    labels:
-      severity: warning
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} was rebooted{% endraw %}"
   - alert: High CPU usage
     expr: '1 - (avg by (instance) (irate(node_cpu_seconds_total{job="node",mode="idle"}[5m]))) > 0.9'
     for: 10m
-    labels:
-      severity: critical
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} is under high CPU usage{% endraw %}"
   - alert: Probe failed
     expr: probe_success == 0
     for: 5m
-    labels:
-      severity: critical
     annotations:
       summary: "{% raw %}Endpoint {{ $labels.instance }} is down for more than 10s{% endraw %}"
