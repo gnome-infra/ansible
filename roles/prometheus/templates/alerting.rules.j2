@@ -28,3 +28,7 @@ groups:
     expr: (node_filesystem_size_bytes - node_filesystem_avail_bytes) /  node_filesystem_size_bytes > 0.9
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} has less than 10% of free space available on {{ $labels.mountpoint }}{% endraw %}"
+  - alert: High inodes usage
+    expr: (node_filesystem_files - node_filesystem_files_free) / node_filesystem_files > 0.9
+    annotations:
+      summary: "{% raw %}Instance {{ $labels.instance }} has less than 10% of free inodes available on {{ $labels.mountpoint }}{% endraw %}"
