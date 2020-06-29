@@ -20,3 +20,7 @@ groups:
     for: 5m
     annotations:
       summary: "{% raw %}Endpoint {{ $labels.instance }} is down for more than 10s{% endraw %}"
+  - alert: High memory usage
+    expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes > 0.8
+    annotations:
+      summary: "{% raw %}Instance {{ $labels.instance }} has less than 20% of RAM available{% endraw %}"
