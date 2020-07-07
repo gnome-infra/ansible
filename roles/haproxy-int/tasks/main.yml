@@ -1,6 +1,16 @@
 ---
-- name: install haproxy and keepalived
-  yum: name=haproxy,keepalived
+- name: enable pgpool-II repo
+  copy:
+    src: pgdg.repo
+    dest: /etc/yum.repos.d/pgdg.repo
+
+- name: add pgpool-II repo key
+  rpm_key:
+    state: present
+    key: https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG-12
+
+- name: install packages
+  yum: name=haproxy,keepalived,pgpool-II-12
 
 - name: allow haproxy to connect to all TCP ports
   seboolean:
@@ -30,6 +40,19 @@
 - name: start and enable keepalived
   systemd:
     name: keepalived
+    daemon-reload: yes
+    state: started
+    enabled: yes
+
+- name: configure pgpool
+  template:
+    src: pgpool.conf.j2
+    dest: /etc/pgpool-II-12/pgpool.conf
+  notify: reload pgpool
+
+- name: start and enable pgpool-II-12
+  systemd:
+    name: pgpool-II-12
     daemon-reload: yes
     state: started
     enabled: yes

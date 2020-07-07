@@ -8,3 +8,8 @@
   systemd:
     name: keepalived
     state: reloaded
+
+- name: reload pgpool
+  systemd:
+    name: pgpool-II-12
+    state: reloaded
