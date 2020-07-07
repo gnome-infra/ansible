@@ -33,5 +33,6 @@ listen galera 0.0.0.0:3307
 listen pgpool 0.0.0.0:5434
     balance leastconn
 
-    server vip 172.31.2.250:5433 check inter 5s rise 3 fall 3
-    server gesture 172.31.2.2:5432 check inter 5s rise 3 fall 3 backup
+    server scale 172.31.2.1:5433 check inter 5s rise 3 fall 3
+    server gesture 172.31.2.2:5433 check inter 5s rise 3 fall 3
+    server gesture-psql 172.31.2.2:5432 check inter 5s rise 3 fall 3 backup
