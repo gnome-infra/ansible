@@ -42,6 +42,7 @@
     - srvadmin-deng-snmp
     - nagios-plugins-openmanage
     - srvadmin-storageservices-snmp
+    - srvadmin-storage-cli
 
 - name: Configure SNMPD
   copy:
