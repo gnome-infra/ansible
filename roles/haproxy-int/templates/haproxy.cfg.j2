@@ -15,14 +15,16 @@ defaults
     option redispatch
     retries 3
     timeout queue   1m
-    timeout connect 30m
-    timeout client  10800s
-    timeout server  10800s
+    timeout connect 10s
+    timeout client  5m
+    timeout server  5m
     timeout check   10s
     maxconn 3000
 
 listen galera 0.0.0.0:3307
     balance leastconn
+    timeout client 3h
+    timeout server 3h
     option httpchk
 
     server scale 172.31.2.1:3306 check port 9200 inter 5s rise 3 fall 3
