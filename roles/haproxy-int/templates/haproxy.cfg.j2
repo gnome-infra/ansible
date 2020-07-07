@@ -1,0 +1,30 @@
+global
+    log     127.0.0.1  local0 warning
+    maxconn 4096
+    chroot  /var/lib/haproxy
+    user    haproxy
+    group   haproxy
+    daemon
+    stats   socket /var/run/haproxy-stat user haproxy group nrpe mode 0664
+
+defaults
+    mode   tcp
+    log    global
+    option tcplog
+    option dontlognull
+    option redispatch
+    retries 3
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          1m
+    timeout server          1m
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn 3000
+
+listen galera 0.0.0.0:3307
+    balance roundrobin
+    option httpchk
+
+    server scale 172.31.2.1:3306 check port 9200 inter 5s rise 3 fall 3
+    server gesture 172.31.2.2:3306 check port 9200 inter 5s rise 3 fall 3

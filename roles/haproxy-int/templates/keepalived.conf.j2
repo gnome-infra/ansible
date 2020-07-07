@@ -1,0 +1,20 @@
+vrrp_script chk_haproxy {
+  script "killall -0 haproxy"
+  interval 2
+  weight 2
+}
+
+vrrp_instance VI_1 {
+  interface {{ keepalived_int }}
+  state {{ keepalived_role }}
+  virtual_router_id 51
+  priority {{ keepalived_priority }}
+  virtual_ipaddress {
+{%- for ipaddr in keepalived_virtual_ipaddresses -%}
+    {% ipaddr %}
+{%- endfor -%}
+  }
+  track_script {
+    chk_haproxy
+  }
+}

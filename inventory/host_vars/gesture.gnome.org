@@ -1,2 +1,5 @@
 volume_group_name: 'VolGroup01'
 logical_volume_size: 4096
+
+keepalived_priority: 101
+keepalived_role: MASTER
