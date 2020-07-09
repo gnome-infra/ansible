@@ -17,4 +17,4 @@
 - name: reload pgbouncer
   systemd:
     name: pgbouncer
-    state: reloaded
+    state: restarted
