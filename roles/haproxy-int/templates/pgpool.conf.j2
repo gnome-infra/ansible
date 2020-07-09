@@ -11,12 +11,12 @@ pcp_socket_dir = '/var/run/postgresql/'
 
 backend_hostname0 = '172.31.2.2'
 backend_port0 = 5432
-backend_weight0 = 0.4
+backend_weight0 = 0.3
 backend_flag0 = 'ALWAYS_MASTER'
 
 backend_hostname1 = '172.31.2.1'
 backend_port1 = 5432
-backend_weight1 = 0.6
+backend_weight1 = 0.7
 backend_flag1 = 'ALLOW_TO_FAILOVER'
 
 enable_pool_hba = off
@@ -26,7 +26,7 @@ allow_clear_text_frontend_auth = on
 ssl = off
 
 num_init_children = 25
-max_pool = 4
+max_pool = 5
 
 child_life_time = 300
 child_max_connections = 0
