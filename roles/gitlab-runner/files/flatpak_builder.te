@@ -1,6 +1,7 @@
 module flatpak_builder 1.0;
 
 require {
+	type autofs_t;
 	type container_runtime_tmpfs_t;
 	type container_t;
 	type devpts_t;
@@ -13,6 +14,7 @@ require {
 
 #============= container_t ==============
 
+allow container_t autofs_t:filesystem remount;
 allow container_t container_runtime_tmpfs_t:dir mounton;
 allow container_t devpts_t:filesystem mount;
 allow container_t fs_t:filesystem remount;
