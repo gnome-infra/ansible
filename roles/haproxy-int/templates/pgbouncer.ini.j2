@@ -1,0 +1,61 @@
+[databases]
+indico = host=172.31.2.2 dbname=indico
+gbm = host=172.31.2.2 dbname=gbm
+
+[pgbouncer]
+logfile = /var/log/pgbouncer/pgbouncer.log
+pidfile = /var/run/pgbouncer/pgbouncer.pid
+
+listen_addr = 0.0.0.0
+listen_port = 6432
+
+;;;
+;;; Authentication settings
+;;;
+
+;; any, trust, plain, md5, cert, hba, pam
+auth_type = md5
+auth_file = /etc/pgbouncer/userlist.txt
+
+admin_users = postgres
+stats_users = postgres
+
+;; When server connection is released back to pool:
+;;   session      - after client disconnects (default)
+;;   transaction  - after transaction finishes
+;;   statement    - after statement finishes
+;pool_mode = session
+
+;; Total number of clients that can connect
+;max_client_conn = 100
+
+;; Default pool size.  20 is good number when transaction pooling
+;; is in use, in session pooling it needs to be the number of
+;; max clients you want to handle at any moment
+;default_pool_size = 20
+
+;; Minimum number of server connections to keep in pool.
+;min_pool_size = 0
+
+; how many additional connection to allow in case of trouble
+;reserve_pool_size = 0
+
+;; If a clients needs to wait more than this many seconds, use reserve
+;; pool.
+;reserve_pool_timeout = 5
+
+;; Maximum number of server connections for a database
+;max_db_connections = 0
+
+;; Maximum number of server connections for a user
+;max_user_connections = 0
+
+;; If off, then server connections are reused in LIFO manner
+;server_round_robin = 0
+
+;; Close server connection if its been connected longer.
+;server_lifetime = 3600
+
+;; Close server connection if its not been used in this time.  Allows
+;; to clean unnecessary connections from pool after peak.
+;server_idle_timeout = 600

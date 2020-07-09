@@ -13,3 +13,8 @@
   systemd:
     name: pgpool-II-12
     state: reloaded
+
+- name: reload pgbouncer
+  systemd:
+    name: pgbouncer
+    state: reloaded
