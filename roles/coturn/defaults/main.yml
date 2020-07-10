@@ -1,0 +1,4 @@
+---
+coturn_domain: turn.gnome.org
+coturn_port: "3478"
+coturn_port_tls: "443"
