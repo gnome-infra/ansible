@@ -1,0 +1,21 @@
+---
+bbb_required_packages:
+  - language-pack-en
+  - software-properties-common
+  - haveged
+  - curl
+  - python3-apt
+  - python3-dev
+  - python3-setuptools
+  - python3-pip
+  - python3-wheel
+  - openjdk-8-jdk
+
+bbb_and_dependencies:
+  - mongodb-org
+  - bbb-check
+  - bbb-html5
+  - bigbluebutton
+
+bbb_webhooks:
+  - bbb-webhooks
