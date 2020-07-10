@@ -60,3 +60,6 @@
 
 - import_tasks: greenlight.yml
   when: bbb_greenlight_enable
+
+- import_tasks: gnome.yml
+  tags: gnome
