@@ -3,4 +3,5 @@ roles/ipaclient
 roles/redhat.subscription
 roles/chrony
 roles/iptables
+roles/geerlingguy.*
 vault

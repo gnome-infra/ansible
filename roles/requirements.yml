@@ -14,3 +14,6 @@
 - name: iptables
   src: https://github.com/geerlingguy/ansible-role-firewall.git
   scm: git
+  
+- geerlingguy.nodejs
+- geerlingguy.docker
