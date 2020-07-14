@@ -3,7 +3,7 @@ delta_generator_user: "deltagen"
 delta_generator_home: "/srv/deltagen"
 delta_generator_version: "0.3.3"
 delta_generator_checksum: sha256:3e3d93762aaf2c4a27f657699e2a0f934de9f68c05003358075bfb9efe07e64a
-delta_generator_manager_uri: http://nightly.gnome.org
+delta_generator_manager_uri: http://flat-manager.openshift.gnome.org
 delta_generator_token: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           30613739393031616661383934353635333037323364353335653966643038306164323232396263

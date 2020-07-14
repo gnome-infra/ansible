@@ -1,5 +1,5 @@
 ---
-- hosts: gitlab-runners-gbm
+- hosts: delta-generators
   gather_facts: true 
   remote_user: root
   roles:
