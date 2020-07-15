@@ -28,11 +28,15 @@ scrape_configs:
       labels:
         role: {{ hostgroup }}
 {% endfor %}
+    - targets:
+{% for target in prometheus_static_targets %}
+      - {{ target }}
+{% endfor %}
 
     relabel_configs:
-{% for host in groups['all'] %}
     - source_labels: [ __address__ ]
       target_label: instance
-      regex: vpn.{{ host }}:9100
-      replacement: {{ host }}
-{% endfor %}
+      regex: (.*):9100
+    - source_labels: [ __address__ ]
+      target_label: instance
+      regex: vpn.(.*):9100
