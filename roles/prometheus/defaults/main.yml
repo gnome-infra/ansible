@@ -5,3 +5,5 @@ prometheus_db_dir: /var/lib/prometheus
 prometheus_config_dir: /etc/prometheus
 prometheus_node_hostgroups:
   - ral3
+prometheus_static_targets:
+  - meet.gnome.org:9100
