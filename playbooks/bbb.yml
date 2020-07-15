@@ -3,7 +3,17 @@
   gather_facts: true
   remote_user: root
   roles:
-   - bigbluebutton
+    - bigbluebutton
+    - node-exporter
+  tasks:
+    - name: allow signal.g.o to access node-exporter
+      ufw:
+        rule: allow
+        proto: tcp
+        src: 140.211.167.18/32
+        port: '9100'
+        comment: node-exporter
+      tags: tasks
 
 - hosts: fosshost.gnome.org
   gather_facts: true
