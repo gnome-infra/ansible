@@ -29,3 +29,9 @@
     daemon-reload: yes
     state: started
     enabled: yes
+
+- name: configure postgres user to use tools from SCL
+  lineinfile:
+    path: /var/lib/pgsql/.bash_profile
+    regexp: '^source scl_source enable rh-postgresql12'
+    line: 'source scl_source enable rh-postgresql12'
