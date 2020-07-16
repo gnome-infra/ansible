@@ -1,0 +1,13 @@
+[Unit]
+Description=Backup PostgreSQL databases
+After=rh-postgresql12-postgresql.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/pg_backup -c /etc/pg_backup.conf
+
+Nice=19
+CPUSchedulingPolicy=batch
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+IOWeight=100

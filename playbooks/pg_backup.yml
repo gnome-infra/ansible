@@ -1,0 +1,5 @@
+---
+- hosts: scale.gnome.org
+  remote_user: root
+  roles:
+   - pg_backup

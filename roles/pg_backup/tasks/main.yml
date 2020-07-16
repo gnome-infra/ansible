@@ -1,0 +1,31 @@
+---
+- name: create backups directory
+  file:
+    path: "{{ pg_backup_dir }}"
+    owner: root
+    group: root
+    mode: '0750'
+    state: directory
+
+- name: install pg_backup script and units
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}/{{ item.src }}"
+    mode: "{{ item.mode }}"
+  loop:
+    - { src: pg_backup, dest: /usr/local/bin, mode: '0700' }
+    - { src: pg_backup.service, dest: /etc/systemd/system, mode: '0640' }
+    - { src: pg_backup.timer, dest: /etc/systemd/system, mode: '0640' }
+
+- name: add pg_backup configuration
+  template:
+    src: pg_backup.conf.j2
+    dest: /etc/pg_backup.conf
+    mode: '0700'
+
+- name: start and enable pg_backup timer
+  systemd:
+    name: pg_backup.timer
+    daemon-reload: yes
+    state: started
+    enabled: yes
