@@ -42,6 +42,3 @@ bbb_meteor:
     app:
       clientTitle: "GNOME Meet"
       mirrorOwnWebcam: true
-  note:
-    enabled: true
-    url: https://etherpad.gnome.org
