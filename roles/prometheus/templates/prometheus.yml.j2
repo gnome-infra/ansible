@@ -26,7 +26,7 @@ scrape_configs:
       - vpn.{{ host }}:9100
 {% endfor %}
       labels:
-        role: {{ hostgroup }}
+        hostgroup: {{ hostgroup }}
 {% endfor %}
     - targets:
 {% for target in prometheus_static_targets %}
