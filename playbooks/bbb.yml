@@ -6,13 +6,16 @@
     - bigbluebutton
     - node-exporter
   tasks:
-    - name: allow signal.g.o to access node-exporter
+    - name: allow signal.g.o to access exporters ports
       ufw:
         rule: allow
         proto: tcp
         src: 140.211.167.18/32
-        port: '9100'
+        port: "{{ item }}"
         comment: node-exporter
+      loop:
+        - "9100" # node_exporter
+        - "9688" # bbb-exporter
       tags: tasks
 
 - hosts: fosshost.gnome.org
