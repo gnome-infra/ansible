@@ -32,3 +32,15 @@ groups:
     expr: (node_filesystem_files - node_filesystem_files_free) / node_filesystem_files > 0.9
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} has less than 10% of free inodes available on {{ $labels.mountpoint }}{% endraw %}"
+- name: bbb
+  rules:
+  - alert: bbb-exporter is down
+    expr: "bbb_exporter == 0"
+    for: 15m
+    annotations:
+      summary: "{% raw %}The bbb_exporter service on {{ $labels.instance }} is down{% endraw %}"
+  - alert: BigBlueButton API is down
+    expr: "bbb_api_up == 0"
+    for: 15m
+    annotations:
+      summary: "{% raw %}BigBlueButton on {{ $labels.instance }} is down{% endraw %}"
