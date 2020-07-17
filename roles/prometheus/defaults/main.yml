@@ -8,3 +8,4 @@ prometheus_node_hostgroups:
   - osuosl
 prometheus_static_targets:
   - meet.gnome.org:9100
+  - meet.gnome.org:9688
