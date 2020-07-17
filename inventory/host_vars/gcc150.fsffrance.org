@@ -1,4 +1,6 @@
 ---
+ansible_port: 45029
+
 gitlab_runner_concurrent: 16
 gitlab_runner_check_interval: 0
 

@@ -1,7 +1,7 @@
 [gitlab-runners-gnome]
-gcc150.fsffrance.org ansible_port=45029
-gcc175.fsffrance.org ansible_port=45054
-gcc176.fsffrance.org ansible_port=45055
+gcc150.fsffrance.org
+gcc175.fsffrance.org
+gcc176.fsffrance.org
 
 [gitlab-runners-gbm]
 147.75.74.6

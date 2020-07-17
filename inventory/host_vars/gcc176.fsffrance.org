@@ -1,4 +1,6 @@
 ---
+ansible_port: 45055
+
 gitlab_runner_concurrent: 8
 gitlab_runner_check_interval: 0
 
@@ -27,7 +29,7 @@ gitlab_runner_runners:
       Type: "\"s3\""
       Shared: "true"
     cache.s3:
-      ServerAddress: "s3.amazonaws.com"
+      ServerAddress: "\"s3.amazonaws.com\""
       AccessKey: "{{ gitlab_runner_cache_access_key }}"
       SecretKey: "{{ gitlab_runner_cache_secret_key }}"
       BucketName: "{{ gitlab_runner_cache_bucket_name }}"
