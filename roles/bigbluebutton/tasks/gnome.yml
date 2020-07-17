@@ -1,4 +1,15 @@
 ---
+- name: allow signal.g.o to access exporters ports
+  ufw:
+    rule: allow
+    proto: tcp
+    src: 140.211.167.18/32
+    port: "{{ item }}"
+    comment: node-exporter
+  loop:
+    - "9100" # node_exporter
+    - "9688" # bbb-exporter
+
 # https://github.com/bigbluebutton/bigbluebutton/issues/8824
 - name: decrease timeout for microphone echo test
   blockinfile:
