@@ -1,0 +1,58 @@
+---
+ansible_port: 45058
+
+gitlab_runner_concurrent: 8
+gitlab_runner_check_interval: 0
+
+gitlab_runner_runners:
+  - name: "gcc179.osuosl.org"
+    output_limit: 32768
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63343231336330343337346235343564363630323638623737363236343332633963386535653865
+          6335663565643436633936343962643737306439653465360a393539353638363637663561323832
+          33383739346165633734376238373336653362353639333937313735363661376166353839363935
+          6436343364373964390a613661313332336632383664623164656237316537323334386366393965
+          64373638383739343031653962646138313638376635613263616164663061383765
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:31\""
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      volumes: '["/cache"]'
+      disable_cache: "true"
+      shm_size: 0
+      privileged: "false"
+    cache:
+      Type: "\"s3\""
+      Shared: "true"
+    cache.s3:
+      ServerAddress: "\"s3.amazonaws.com\""
+      AccessKey: "{{ gitlab_runner_cache_access_key }}"
+      SecretKey: "{{ gitlab_runner_cache_secret_key }}"
+      BucketName: "{{ gitlab_runner_cache_bucket_name }}"
+      BucketLocation: "{{ gitlab_runner_cache_bucket_region }}"
+
+  - name: "flatpak-gcc179"
+    limit: 1
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34336131316139633039303935316161306665386338313639643964346438353836633431306664
+          3363653533376434666539336132336238353561613261650a313930306566653563316261303739
+          36336134326139316537313732366638333232313465643233663432313164323666393437363534
+          6532323664646130380a303933303238613532363030393638353662363734376532613436616261
+          32323263303464636431646439343937656532366237363765653834336535353938
+    executor: "docker"
+    seccomp: "flatpak"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:31\""
+      shm_size: 0
+      privileged: "false"
+      cap_drop: '["all"]'
+      volumes: '["/proc:/host/proc"]'
+      disable_cache: "true"
