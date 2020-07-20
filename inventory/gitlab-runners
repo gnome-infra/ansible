@@ -12,7 +12,6 @@ gcc179.fsffrance.org
 [gitlab-runners-shared]
 socket.gnome.org
 progress.gnome.org
-fosshost.gnome.org
 
 [gitlab-runners:children]
 gitlab-runners-gnome
