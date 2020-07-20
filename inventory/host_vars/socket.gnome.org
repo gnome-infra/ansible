@@ -1,6 +1,6 @@
 ---
 gitlab_runner_gc_period: "daily"
-gitlab_runner_concurrent: 5
+gitlab_runner_concurrent: 4
 gitlab_runner_check_interval: 0
 
 gitlab_runner_runners:
@@ -55,3 +55,34 @@ gitlab_runner_runners:
       cap_drop: '["all"]'
       volumes: '["/proc:/host/proc"]'
       disable_cache: "true"
+
+  - name: "socket-asan"
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          30306432366430356134636430666232333361356637633334343364306131343833623136373738
+          3735313939653436346635653437303861623764333666630a333334343862393766393761363965
+          30323161663632303131623035646330323536326563326364666662343531383763343331323762
+          3064376630643062630a663034376335313034356132383137623736616235393666353837343566
+          31333335333735646366663366643430633035383834306362653339376136396434
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:31\""
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      volumes: '["/cache"]'
+      disable_cache: "true"
+      shm_size: 0
+      privileged: "false"
+      cap_add: ["SYS_PTRACE"]
+    cache:
+      Type: "\"s3\""
+      Shared: "true"
+    cache.s3:
+      ServerAddress: "\"s3.amazonaws.com\""
+      AccessKey: "{{ gitlab_runner_cache_access_key }}"
+      SecretKey: "{{ gitlab_runner_cache_secret_key }}"
+      BucketName: "{{ gitlab_runner_cache_bucket_name }}"
+      BucketLocation: "{{ gitlab_runner_cache_bucket_region }}"
