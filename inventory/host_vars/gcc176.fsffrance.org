@@ -55,23 +55,3 @@ gitlab_runner_runners:
       cap_drop: '["all"]'
       volumes: '["/proc:/host/proc"]'
       disable_cache: "true"
-
-  - name: "gcc176-privileged"
-    output_limit: 32768
-    url: "https://gitlab.gnome.org/"
-    token: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          34653261376233343732633233333863633064373638663564633234383864623030396638613265
-          6531356239376231616663356232326133383732363965650a333263623263333131333531396439
-          64343763383331366337303738626366366430616163336462386162313663333864663738363137
-          3865363661346436640a373335333365373233366534646562393238313666356337613165353063
-          31336331653864613639383263383062383639333861616663643864303235666533
-    executor: "docker"
-    docker:
-      tls_verify: "false"
-      image: "\"fedora:31\""
-      disable_entrypoint_overwrite: "false"
-      oom_kill_disable: "false"
-      shm_size: 0
-      privileged: "true"
-      disable_cache: "true"
