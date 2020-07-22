@@ -1,0 +1,20 @@
+---
+- name: install systemd timers for jobs
+  template:
+    src: "{{ item }}.timer"
+    dest: "/etc/systemd/system/{{ item }}.timer"
+  loop: "{{ gitlab_systemd_timers }}"
+
+- name: install systemd services for jobs
+  template:
+    src: "{{ item }}.service"
+    dest: "/etc/systemd/system/{{ item }}.service"
+  loop: "{{ gitlab_systemd_timers }}"
+
+- name: enable systemd timers
+  systemd:
+    name: "{{ item }}.timer"
+    daemon-reload: yes
+    state: started
+    enabled: yes
+  loop: "{{ gitlab_systemd_timers }}"

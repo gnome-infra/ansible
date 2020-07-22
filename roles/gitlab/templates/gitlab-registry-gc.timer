@@ -1,0 +1,9 @@
+[Unit]
+Description=Delete unreachable layers from OCI registry
+
+[Timer]
+OnCalendar=*-*-01 02:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

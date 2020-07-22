@@ -1,0 +1,3 @@
+gitlab_systemd_timers:
+  - gitlab-mirror2github
+  - gitlab-registry-gc

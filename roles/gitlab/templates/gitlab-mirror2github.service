@@ -1,0 +1,7 @@
+[Unit]
+Description=Mirror repositories to GitLab
+
+[Service]
+Type=oneshot
+User=sysadmin
+ExecStart=/home/admin/bin/gitlab/mirror2github
