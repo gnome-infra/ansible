@@ -33,6 +33,14 @@ scrape_configs:
       - {{ target }}
 {% endfor %}
 
+  - job_name: 'https'
+    scheme: https
+    static_configs:
+    - targets:
+{% for target in prometheus_https_targets %}
+      - {{ target }}
+{% endfor %}
+
     relabel_configs:
     - source_labels: [ __address__ ]
       target_label: instance
