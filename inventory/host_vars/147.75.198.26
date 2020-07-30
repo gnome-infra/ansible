@@ -18,6 +18,6 @@ gitlab_runner_runners:
       tls_verify: "false"
       image: "\"fedora:31\""
       privileged: "true"
-      disable_cache: "true"
-      volumes: '["/cache"]'
+      disable_cache: "false"
+      volumes: '["/mnt/cache:/cache"]'
       shm_size: 0
