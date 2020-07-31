@@ -10,7 +10,7 @@
     key: https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG-12
 
 - name: install packages
-  yum: name=haproxy,keepalived,pgpool-II-12,pgbouncer
+  yum: name=haproxy,keepalived,pgpool-II-12
 
 - name: allow haproxy to connect to all TCP ports
   seboolean:
@@ -53,25 +53,6 @@
 - name: start and enable pgpool-II-12
   systemd:
     name: pgpool-II-12
-    daemon-reload: yes
-    state: started
-    enabled: yes
-
-- name: configure pgbouncer
-  template:
-    src: pgbouncer.ini.j2
-    dest: /etc/pgbouncer/pgbouncer.ini
-  notify: reload pgbouncer
-
-- name: configure pgbouncer userlist
-  copy:
-    src: userlist.txt
-    dest: /etc/pgbouncer/userlist.txt
-  notify: reload pgbouncer
-
-- name: start and enable pgbouncer
-  systemd:
-    name: pgbouncer
     daemon-reload: yes
     state: started
     enabled: yes
