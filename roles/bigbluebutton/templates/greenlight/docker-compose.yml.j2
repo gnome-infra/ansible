@@ -3,7 +3,7 @@ version: '3'
 services:
   app:
     entrypoint: [bin/start]
-    image: bigbluebutton/greenlight:v2
+    image: registry.gitlab.gnome.org/infrastructure/bbb-greenlight:latest
     container_name: greenlight-v2
     env_file: .env
     restart: unless-stopped
@@ -13,6 +13,10 @@ services:
       - ./log:/usr/src/app/log
     links:
       - db
+    extra_hosts:
+      view.gnome.org: 172.31.2.9
+      mail.gnome.org: 172.31.2.36
+
   db:
     image: postgres:9.5
     restart: unless-stopped
