@@ -1,0 +1,13 @@
+[Unit]
+Description=Expose OpenVPN cert validity metric
+
+[Service]
+User=node_exporter
+Type=oneshot
+ExecStart=/usr/local/bin/node-exporter-openvpn-cert-notafter
+
+ProtectHome=true
+ProtectSystem=full
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true

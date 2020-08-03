@@ -53,3 +53,24 @@
       RECORDINGS_METRICS_READ_FROM_DISK: "true"
       API_SECRET: "{{ bbb_secret }}"
       API_BASE_URL: https://meet.gnome.org/bigbluebutton/api/
+
+- name: install node-exporter-openvpn-cert-notafter script
+  copy:
+    src: node-exporter-openvpn-cert-notafter
+    dest: /usr/local/bin/node-exporter-openvpn-cert-notafter
+    mode: "0755"
+
+- name: install node-exporter-openvpn-cert-notafter systemd unit and timer
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
+  loop:
+    - node-exporter-openvpn-cert-notafter.timer
+    - node-exporter-openvpn-cert-notafter.service
+
+- name: enable node-exporter-openvpn-cert-notafter timer
+  systemd:
+    name: node-exporter-openvpn-cert-notafter.timer
+    daemon-reload: yes
+    state: started
+    enabled: yes
