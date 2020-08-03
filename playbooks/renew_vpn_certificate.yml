@@ -1,4 +1,5 @@
 - hosts: vpnclients
+  remote_user: root
   tasks:
     - name: Revoke the existing certificate
       shell: echo -en 'yes' | /etc/openvpn/easy-rsa/easyrsa revoke non-phx2-machines-{{ ansible_hostname }}
