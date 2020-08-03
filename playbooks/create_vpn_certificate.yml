@@ -1,4 +1,5 @@
 - hosts: vpnclients
+  remote_user: root
   tasks:
     - name: Generate a new set of certificates
       command: "/etc/openvpn/easy-rsa/easyrsa build-client-full non-phx2-machines-{{ ansible_hostname }} nopass"
