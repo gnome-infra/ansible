@@ -38,7 +38,7 @@
       delegate_to: bastion.gnome.org
 
     - name: Clone the certificates repository locally under /tmp/certificates
-      git: clone=yes dest=/tmp/certificates repo="ssh://root@vpn.puppetmaster01.gnome.org/git/certificates"
+      git: clone=yes dest=/tmp/certificates repo="ssh://root@puppetmaster01.gnome.org/git/certificates"
       run_once: true
       delegate_to: 127.0.0.1
 
