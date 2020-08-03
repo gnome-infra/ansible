@@ -27,10 +27,6 @@ vpn.puppetmaster02.gnome.org
 [openvpn-server]
 bastion.gnome.org
 
-[vpnclients]
-signal.gnome.org
-staff-mail.gnome.org
-
 [osuosl]
 signal.gnome.org
 staff-mail.gnome.org
