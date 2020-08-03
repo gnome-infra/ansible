@@ -1,7 +1,0 @@
-Example command with related variables passed as extra vars:
-
-```
-ansible-playbook -i inventory/oscp \ 
-playbooks/create_oscp_logical_volume/tasks/main.yaml \
--e "oscp_project=odoo logical_volume_size=5120"
-```
