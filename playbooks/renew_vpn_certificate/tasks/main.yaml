@@ -1,10 +1,7 @@
 - hosts: vpnclients
   tasks:
     - name: Revoke the existing certificate
-      expect:
-        command: "/etc/openvpn/easy-rsa/easyrsa revoke non-phx2-machines-{{ ansible_hostname }}"
-        responses:
-          Continue with revocation: "yes"
+      shell: echo -en 'yes' | /etc/openvpn/easy-rsa/easyrsa revoke non-phx2-machines-{{ ansible_hostname }}
       args:
         chdir: /etc/openvpn/easy-rsa
       delegate_to: bastion.gnome.org
