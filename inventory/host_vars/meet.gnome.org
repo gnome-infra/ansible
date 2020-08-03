@@ -33,7 +33,7 @@ bbb_greenlight_db_password: !vault |
           37626337323931316163356431386261623431303134616162663461666532383334363630643962
           3538346132323537660a363739373732383832313631613937663465626165326462633163336366
           64356537356563623330373637386132396431356266623162653461666434643562
-bbb_greenlight_default_registration: approval
+bbb_greenlight_default_registration: open
 bbb_allow_mail_notifications: false
 bbb_letsencrypt_email: gnome-sysadmin@gnome.org
 bbb_freeswitch_ipv6: false
@@ -42,3 +42,11 @@ bbb_meteor:
     app:
       clientTitle: "GNOME Meet"
       mirrorOwnWebcam: true
+bbb_greenlight_ldap:
+  server: view.gnome.org
+  port: 636
+  method: ssl
+  uid: uid
+  base: cn=users,cn=accounts,dc=gnome,dc=org
+  auth: user
+bbb_greenlight_accounts: false
