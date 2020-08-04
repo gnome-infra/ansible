@@ -49,3 +49,8 @@ groups:
     for: 15m
     annotations:
       summary: "{% raw %}OpenVPN certificate used for {{ $labels.instance }} expires within 10 days{% endraw %}"
+  - alert: RAID disk failure
+    expr: 'node_md_disks{instance="meet.gnome.org:9100",job="node",state="failed"} > 0'
+    for: 5m
+    annotations:
+     summary: "{% raw %}At least one device in RAID array on {{ $labels.instance }} has failed {% endraw %}"
