@@ -35,3 +35,7 @@ location ~ /preupload_presentation$ {
   proxy_set_header    X-Forwarded-Proto $scheme;
   proxy_http_version  1.1;
 }
+
+location /rails/active_storage {
+    return 301 /b$request_uri;
+}
