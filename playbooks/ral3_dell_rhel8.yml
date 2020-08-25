@@ -3,15 +3,15 @@
   gather_facts: true
   remote_user: root
   roles:
-   # - redhat.subscription
-   # - packages
-   # - motd
-   # - chrony
-   # - iptables
-   # - ipaclient.wrapper
-   # - dell
-   # - bash
-   # - base_auth
-   # - nrpe
-   # - base_network
+   - redhat.subscription
+   - packages
+   - motd
+   - chrony
+   - iptables
+   - ipaclient.wrapper
+   - dell
+   - bash
+   - base_auth
+   - nrpe
+   - base_network
    - rsyslog
