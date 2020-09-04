@@ -11,6 +11,7 @@ oscp-master03.gnome.org
 [oscp-routers]
 oscp-router01.gnome.org
 oscp-router02.gnome.org
+oscp-router03.gnome.org
 
 [oscp-nodes]
 oscp-node01.gnome.org
