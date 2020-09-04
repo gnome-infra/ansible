@@ -21,8 +21,8 @@ puppetmaster01.gnome.org
 puppetmaster02.gnome.org
 
 [puppetmasters]
-vpn.puppetmaster01.gnome.org
-vpn.puppetmaster02.gnome.org
+puppetmaster01.gnome.org
+puppetmaster02.gnome.org
 
 [openvpn-server]
 bastion.gnome.org
