@@ -1,0 +1,56 @@
+---
+gitlab_runner_concurrent: 2
+gitlab_runner_check_interval: 0
+
+gitlab_runner_runners:
+  - name: "codethink-arm-3.zt.flathub.org"
+    output_limit: 32768
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          37366133633030303866303335646561643730386261653539336336663039656362316561643765
+          3036346465353431346337313533376361343635363866320a663962343866643032333537353336
+          61613831393237663765636532666265393034356134386335653662366362346332356238616433
+          3335366135303039660a626533313631343639333934666136653232356135643664626431373164
+          37396639326463383932383461636432313439646133303933653361316430396639
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:32\""
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      volumes: '["/cache"]'
+      disable_cache: "true"
+      shm_size: 0
+      privileged: "false"
+    cache:
+      Type: "\"s3\""
+      Shared: "true"
+    cache.s3:
+      ServerAddress: "\"s3.amazonaws.com\""
+      AccessKey: "{{ gitlab_runner_cache_access_key }}"
+      SecretKey: "{{ gitlab_runner_cache_secret_key }}"
+      BucketName: "{{ gitlab_runner_cache_bucket_name }}"
+      BucketLocation: "{{ gitlab_runner_cache_bucket_region }}"
+
+  - name: "codethink-arm-3.zt.flathub.org (flatpak)"
+    limit: 1
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34633262396635346363366238393666653163653765653437386233636664363536383538366166
+          3434366239326238363337653038306462373865366464340a316235383133373263626464343235
+          62313266336532643633343365323263326338353035303061613237303438353038663339343862
+          6539376431326435380a616634343561396665346662623433666336656530663966376565663032
+          37383630343137613937383835623032396232393438343166383466383737656435
+    executor: "docker"
+    seccomp: "flatpak"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:32\""
+      shm_size: 0
+      privileged: "false"
+      cap_drop: '["all"]'
+      volumes: '["/proc:/host/proc"]'
+      disable_cache: "true"
