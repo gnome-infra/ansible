@@ -10,23 +10,6 @@
     - "9100" # node_exporter
     - "9688" # bbb-exporter
 
-# https://github.com/bigbluebutton/bigbluebutton/issues/8824
-- name: decrease timeout for microphone echo test
-  blockinfile:
-    marker_begin: "      // Session parameters"
-    marker_end: "      turnServers: [],"
-    marker: "{mark}"
-    path: "{{ item }}"
-    block: |2
-            iceCheckingTimeout: 500,
-            noAnswerTimeout: 10,
-            stunServers: ['stun:turn.gnome.org:3478'],
-  loop:
-    - /usr/share/meteor/bundle/programs/web.browser/app/compatibility/sip.js
-    - /usr/share/meteor/bundle/programs/web.browser.legacy/app/compatibility/sip.js
-    - /var/www/bigbluebutton/client/lib/sip.js
-  notify: restart bigbluebutton
-
 - name: register bbb secret
   command: bbb-conf --secret
   changed_when: false
