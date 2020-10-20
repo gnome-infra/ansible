@@ -1,5 +1,5 @@
 ---
-gitlab_runner_concurrent: 2
+gitlab_runner_concurrent: 3
 gitlab_runner_check_interval: 0
 
 gitlab_runner_runners:
@@ -55,3 +55,24 @@ gitlab_runner_runners:
       cap_drop: '["all"]'
       volumes: '["/proc:/host/proc"]'
       disable_cache: "true"
+
+  - name: "codethink-arm-3.zt.flathub.org (gnome-build-meta)"
+    output_limit: 32768
+    url: "https://gitlab.gnome.org"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          31656561343065333833633237383934653663396136643035366337623436356330643234636161
+          3766316663656565636161323431346561363965373337610a393666316137303839643465383838
+          66323639333236323762323636666538626630363734653731333764366437306634316261613030
+          3434373838316163620a343637373033353534383739333066643862653238346232333034663664
+          63626564646532336434323564613730326136303466396237393633663664633765
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:32\""
+      privileged: "true"
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      disable_cache: "false"
+      volumes: '["/mnt/cache:/cache"]'
+      shm_size: 0
