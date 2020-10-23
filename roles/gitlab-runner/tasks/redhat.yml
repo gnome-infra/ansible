@@ -7,20 +7,23 @@
 - name: install python2-dnf
   yum: name=python2-dnf state=present
 
-- name: install docker
-  yum: name=docker state=present
+- name: remove CentOS docker packages
+  yum: name=docker,docker-common state=absent
   tags: docker
 
-- name: Add gitlab-runner repository (Fedora)
+- name: add docker repository
   yum_repository:
-    name: runner_gitlab-runner
-    description: GitLab Runner repository
-    file: runner_gitlab-runner
-    baseurl: https://packages.gitlab.com/runner/gitlab-runner/fedora/$releasever/$basearch
-    gpgcheck: no
-  when: ansible_distribution == 'Fedora'
+    name: docker-ce
+    description: Docker CE
+    file: docker-ce
+    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+    gpgkey: https://download.docker.com/linux/centos/gpg
+    gpgcheck: yes
 
-- name: Add gitlab-runner repository (CentOS)
+- name: install docker-ce
+  yum: name=docker-ce,docker-ce-cli,containerd.io state=present
+
+- name: add gitlab-runner repository
   yum_repository:
     name: runner_gitlab-runner
     description: GitLab Runner repository
