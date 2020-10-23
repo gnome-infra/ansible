@@ -5,9 +5,6 @@
 - name: daemon reload
   systemd: daemon_reload=yes
 
-- name: restart docker-gc timer
-  service: name=docker-gc.timer state=restarted
-
 - name: reload sysctl
   command: sysctl --system --load
 

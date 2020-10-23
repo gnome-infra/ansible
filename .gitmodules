@@ -1,3 +1,0 @@
-[submodule "roles/gitlab-runner/files/docker-gc"]
-	path = roles/gitlab-runner/files/docker-gc
-	url = https://github.com/mesosphere/docker-gc

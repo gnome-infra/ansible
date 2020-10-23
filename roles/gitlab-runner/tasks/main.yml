@@ -33,23 +33,6 @@
     dest: /etc/gitlab-runner/config.toml
   tags: gitlab-runner
 
-- name: install docker-gc
-  copy: >
-    src=files/docker-gc/docker-gc dest=/usr/local/bin/docker-gc
-    owner=root group=root mode=0700
-
-- name: install docker-gc systemd units
-  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }}
-  with_items:
-    - docker-gc.service
-    - docker-gc.timer
-  notify:
-    - daemon reload
-    - restart docker-gc timer
-
-- name: start and enable docker-gc timer
-  service: name=docker-gc.timer enabled=yes state=started
-
 - name: increase arp table size
   copy: src=increase-arp-table-size.conf dest=/etc/sysctl.d/increase-arp-table-size.conf mode=0644 owner=root group=root
   notify: reload sysctl
