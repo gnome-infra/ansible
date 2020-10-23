@@ -1,0 +1,85 @@
+---
+ansible_host: 157.230.3.16
+
+gitlab_runner_runners:
+  - name: "do-nyc1-gitlab-runner-01"
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          62346635623765656133373061653665303230663734326261616661616665346438316661613935
+          3062353635323736336166313035646238343839623538380a613632646139643636663932616133
+          62393465306166306165623862363233376636356432333834613165373933333430636366346365
+          6537346662363130300a643336653663363665656439316332616130363030663262366262333132
+          65656636333361303535356164656635383261633265386562346430376265306465
+    executor: "docker"
+    seccomp: "buildah"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:32\""
+      volumes: '["/cache"]'
+      disable_cache: "true"
+      shm_size: 0
+      privileged: "false"
+    cache:
+      Type: "\"s3\""
+      Shared: "true"
+    cache.s3:
+      ServerAddress: "\"s3.amazonaws.com\""
+      AccessKey: "{{ gitlab_runner_cache_access_key }}"
+      SecretKey: "{{ gitlab_runner_cache_secret_key }}"
+      BucketName: "{{ gitlab_runner_cache_bucket_name }}"
+      BucketLocation: "{{ gitlab_runner_cache_bucket_region }}"
+
+  - name: "do-nyc1-gitlab-runner-01 (flatpak)"
+    limit: 1
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          62376435633832373831326365616461346663333965313437386661336366623839343835303837
+          3364363633643066333436666632393066306130346336330a323933666437316235613430393131
+          36383333343963623165613465303931353932386339646533376666323164333838666436663730
+          6265623363316231620a333065653139616531636136303139363434626664323364383562336465
+          38316561656134333264313265356234376433313437376562366666346663663335
+    executor: "docker"
+    seccomp: "flatpak"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:32\""
+      shm_size: 0
+      privileged: "false"
+      cap_drop: '["all"]'
+      volumes: '["/proc:/host/proc"]'
+      disable_cache: "true"
+
+  - name: "do-nyc1-gitlab-runner-01 (asan)"
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63386133646238653361353336653065663530313732326230636232646636383933643230396331
+          3438333530396139646132663837366231656639373536340a386362646130373562383430313665
+          65623931363164626164373734626464306265326632613765363630396236613939313033653239
+          3737386165663765310a633435326439346539633034363339663833346532613332376463333431
+          63316265316461636364373766653164643531373335336563383734363665643463
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"fedora:32\""
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      volumes: '["/cache"]'
+      disable_cache: "true"
+      shm_size: 0
+      privileged: "false"
+      cap_add: ["SYS_PTRACE"]
+    cache:
+      Type: "\"s3\""
+      Shared: "true"
+    cache.s3:
+      ServerAddress: "\"s3.amazonaws.com\""
+      AccessKey: "{{ gitlab_runner_cache_access_key }}"
+      SecretKey: "{{ gitlab_runner_cache_secret_key }}"
+      BucketName: "{{ gitlab_runner_cache_bucket_name }}"
+      BucketLocation: "{{ gitlab_runner_cache_bucket_region }}"
