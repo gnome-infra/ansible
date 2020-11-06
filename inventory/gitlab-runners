@@ -1,6 +1,5 @@
 [gitlab-runners-gnome]
 gcc175.fsffrance.org
-gcc176.fsffrance.org
 
 [gitlab-runners-gbm]
 147.75.74.6
@@ -11,6 +10,7 @@ gcc176.fsffrance.org
 socket.gnome.org
 progress.gnome.org
 gcc150.fsffrance.org
+gcc176.fsffrance.org
 gcc179.fsffrance.org
 do-nyc1-gitlab-runner-01
 
