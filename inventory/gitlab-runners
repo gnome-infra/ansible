@@ -1,5 +1,6 @@
 [gitlab-runners-gnome]
 gcc175.fsffrance.org
+runner01.meet.gnome.org
 
 [gitlab-runners-gbm]
 147.75.74.6
