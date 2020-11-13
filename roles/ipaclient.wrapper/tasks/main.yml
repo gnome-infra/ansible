@@ -34,3 +34,5 @@
 
     # ipaclient should care about the files after initial install
     ipa_allow_repair: yes
+
+    ipaclient_ca_cert_file: '/etc/ipa/ca.crt'
