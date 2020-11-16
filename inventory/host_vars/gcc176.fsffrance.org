@@ -20,6 +20,7 @@ gitlab_runner_runners:
     docker:
       tls_verify: "false"
       image: "\"fedora:31\""
+      disable_cache: "true"
       disable_entrypoint_overwrite: "false"
       oom_kill_disable: "false"
       volumes: '["/cache"]'
