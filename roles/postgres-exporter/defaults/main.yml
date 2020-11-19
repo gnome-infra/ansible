@@ -1,0 +1,6 @@
+---
+postgres_exporter_version: 0.8.0
+postgres_exporter_checksum: sha256:272ed14d3c360579d6e231db34a568ec08f61d2e163cf111e713929ffb6db3f5
+postgres_exporter_arch: amd64
+postgres_exporter_tarball_basename: postgres_exporter_v{{ postgres_exporter_version }}_linux-{{ postgres_exporter_arch }}
+

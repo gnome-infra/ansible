@@ -44,3 +44,7 @@ scale.gnome.org
 [mysqld_exporter]
 gesture.gnome.org
 scale.gnome.org
+
+[postgres_exporter]
+gesture.gnome.org
+scale.gnome.org

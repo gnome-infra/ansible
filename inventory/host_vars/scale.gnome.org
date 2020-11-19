@@ -5,3 +5,4 @@ keepalived_priority: 100
 keepalived_role: BACKUP
 
 mysqld_exporter_host: 172.31.2.1
+postgres_exporter_host: 172.31.2.1

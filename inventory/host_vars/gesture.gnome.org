@@ -5,3 +5,4 @@ keepalived_priority: 101
 keepalived_role: MASTER
 
 mysqld_exporter_host: 172.31.2.2
+postgres_exporter_host: 172.31.2.2

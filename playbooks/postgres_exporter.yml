@@ -1,0 +1,6 @@
+---
+- hosts: postgres_exporter
+  gather_facts: true
+  remote_user: root
+  roles:
+    - postgres-exporter
