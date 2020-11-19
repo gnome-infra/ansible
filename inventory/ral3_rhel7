@@ -40,3 +40,7 @@ signal.gnome.org
 [haproxy-int]
 gesture.gnome.org
 scale.gnome.org
+
+[mysqld_exporter]
+gesture.gnome.org
+scale.gnome.org

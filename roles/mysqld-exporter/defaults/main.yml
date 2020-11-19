@@ -1,0 +1,4 @@
+---
+mysqld_exporter_version: 0.12.1
+mysqld_exporter_checksum: sha256:133b0c281e5c6f8a34076b69ade64ab6cac7298507d35b96808234c4aa26b351
+mysqld_exporter_arch: amd64

@@ -1,0 +1,59 @@
+---
+- name: create system group
+  group:
+    name: mysqld_exporter
+    system: true
+    state: present
+
+- name: create system user
+  user:
+    name: mysqld_exporter
+    system: true
+    shell: "/sbin/nologin"
+    group: mysqld_exporter
+    createhome: false
+
+- name: create download directory
+  file:
+    path: /root/.ansible/tmp/mysqld-exporter
+    state: directory
+
+- name: download {{ mysqld_exporter_version }} for {{ ansible_architecture }}
+  get_url:
+    url: "https://github.com/prometheus/mysqld_exporter/releases/download/v{{ mysqld_exporter_version }}/mysqld_exporter-{{ mysqld_exporter_version }}.linux-{{ mysqld_exporter_arch }}.tar.gz"
+    dest: "/root/.ansible/tmp/mysqld-exporter/mysqld_exporter-{{ mysqld_exporter_version }}.linux-{{ mysqld_exporter_arch }}.tar.gz"
+    checksum: "{{ mysqld_exporter_checksum }}"
+
+- name: unpack binaries
+  unarchive:
+    src: "/root/.ansible/tmp/mysqld-exporter/mysqld_exporter-{{ mysqld_exporter_version }}.linux-{{ mysqld_exporter_arch }}.tar.gz"
+    dest: /root/.ansible/tmp/mysqld-exporter/
+    creates: "/root/.ansible/tmp/mysqld-exporter/mysqld_exporter-{{ mysqld_exporter_version }}.linux-{{ mysqld_exporter_arch }}/mysqld_exporter"
+    remote_src: true
+  check_mode: false
+
+- name: install binaries
+  copy:
+    src: "/root/.ansible/tmp/mysqld-exporter/mysqld_exporter-{{ mysqld_exporter_version }}.linux-{{ mysqld_exporter_arch }}/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: 0755
+    remote_src: true
+  with_items:
+    - mysqld_exporter
+  notify: restart mysqld-exporter
+
+- name: install systemd unit
+  template:
+    src: mysqld-exporter.service.j2
+    dest: /etc/systemd/system/mysqld-exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart mysqld-exporter
+
+- name: start and enable systemd unit
+  systemd:
+    name: mysqld-exporter
+    daemon-reload: yes
+    state: started
+    enabled: yes
