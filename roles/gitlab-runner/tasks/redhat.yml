@@ -21,7 +21,7 @@
     gpgcheck: yes
 
 - name: install docker-ce
-  yum: name=docker-ce,docker-ce-cli,containerd.io state=present
+  yum: name=docker-ce,docker-ce-cli,containerd.io,python-docker-py state=present
 
 - name: add gitlab-runner repository
   yum_repository:
