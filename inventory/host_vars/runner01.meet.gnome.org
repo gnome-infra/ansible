@@ -1,7 +1,8 @@
 ---
 ansible_host: meet.gnome.org
 ansible_port: 22091
-gitlab_runner_concurrent: 1
+gitlab_runner_docuum_threshold: "150 GB"
+gitlab_runner_concurrent: 2
 
 gitlab_runner_runners:
   - name: "runner01.meet.gnome.org"

@@ -1,6 +1,7 @@
 ---
-gitlab_runner_concurrent: 1
 ansible_host: 157.230.3.16
+gitlab_runner_docuum_threshold: "100 GB"
+gitlab_runner_concurrent: 1
 
 gitlab_runner_runners:
   - name: "do-nyc1-gitlab-runner-01"

@@ -1,5 +1,5 @@
 ---
-gitlab_runner_gc_period: "daily"
+gitlab_runner_docuum_threshold: "400 GB"
 gitlab_runner_concurrent: 4
 gitlab_runner_check_interval: 0
 
