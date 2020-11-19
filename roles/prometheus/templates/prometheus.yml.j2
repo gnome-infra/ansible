@@ -45,6 +45,12 @@ scrape_configs:
       - gesture.gnome.org:9104
       - scale.gnome.org:9104
 
+  - job_name: 'postgres'
+    static_configs:
+    - targets:
+      - gesture.gnome.org:9187
+      - scale.gnome.org:9187
+
   - job_name: 'bbb'
     static_configs:
     - targets:
