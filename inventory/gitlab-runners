@@ -1,19 +1,19 @@
-[gitlab-runners-gnome]
-gcc175.fsffrance.org
+[gitlab-runners]
+do-nyc1-gitlab-runner-01
+progress.gnome.org
 runner01.meet.gnome.org
+socket.gnome.org
 
 [gitlab-runners-gbm]
-147.75.74.6
 147.75.194.17
 147.75.198.26
+147.75.74.6
 
-[gitlab-runners-shared]
-socket.gnome.org
-progress.gnome.org
+[gitlab-runners-osuosl]
 gcc150.fsffrance.org
+gcc175.fsffrance.org
 gcc176.fsffrance.org
 gcc179.fsffrance.org
-do-nyc1-gitlab-runner-01
 
 [gitlab-runners-aarch64]
 codethink-arm-1.zt.flathub.org
@@ -22,7 +22,6 @@ codethink-arm-3.zt.flathub.org
 codethink-arm-4.zt.flathub.org
 
 [gitlab-runners:children]
-gitlab-runners-gnome
-gitlab-runners-gbm
-gitlab-runners-shared
 gitlab-runners-aarch64
+gitlab-runners-gbm
+gitlab-runners-osuosl
