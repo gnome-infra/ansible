@@ -1,8 +1,4 @@
-gitlab_runner_gc_period: "weekly"
-gitlab_runner_gc_env:
-    MINIMUM_IMAGES_TO_SAVE: 1
-    REMOVE_VOLUMES: 1
-    FORCE_IMAGE_REMOVAL: 1
+gitlab_runner_enable_docuum: true
 
 gitlab_runner_concurrent: 8
 gitlab_runner_check_interval: 0
