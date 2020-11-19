@@ -6,10 +6,5 @@ prometheus_config_dir: /etc/prometheus
 prometheus_node_hostgroups:
   - ral3
   - osuosl
-prometheus_static_targets:
+prometheus_static_node_targets:
   - meet.gnome.org:9100
-  - meet.gnome.org:9688
-  - gesture.gnome.org:9104
-  - scale.gnome.org:9104
-prometheus_https_targets:
-  - rocketchat-exporter.openshift.gnome.org

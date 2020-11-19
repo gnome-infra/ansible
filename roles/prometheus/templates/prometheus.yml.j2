@@ -29,17 +29,26 @@ scrape_configs:
         hostgroup: {{ hostgroup }}
 {% endfor %}
     - targets:
-{% for target in prometheus_static_targets %}
+{% for target in prometheus_static_node_targets %}
       - {{ target }}
 {% endfor %}
 
-  - job_name: 'https'
+  - job_name: 'rocketchat'
     scheme: https
     static_configs:
     - targets:
-{% for target in prometheus_https_targets %}
-      - {{ target }}
-{% endfor %}
+      - rocketchat-exporter.openshift.gnome.org
+
+  - job_name: 'mysqld'
+    static_configs:
+    - targets:
+      - gesture.gnome.org:9104
+      - scale.gnome.org:9104
+
+  - job_name: 'bbb'
+    static_configs:
+    - targets:
+      - meet.gnome.org:9688
 
     relabel_configs:
     - source_labels: [ __address__ ]
