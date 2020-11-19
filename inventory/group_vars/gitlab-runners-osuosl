@@ -1,0 +1,8 @@
+---
+gitlab_runner_docuum_threshold: "344 GB"
+
+gitlab_runner_dockerd_config:
+  ipv6: true
+  fixed-cidr-v6: "2001:db8:1::/64"
+  registry-mirrors:
+    - "http://10.6.5.55:5000"
