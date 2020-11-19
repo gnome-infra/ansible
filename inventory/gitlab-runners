@@ -7,7 +7,6 @@ socket.gnome.org
 [gitlab-runners-gbm]
 147.75.194.17
 147.75.198.26
-147.75.74.6
 
 [gitlab-runners-osuosl]
 gcc150.fsffrance.org
