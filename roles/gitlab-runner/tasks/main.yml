@@ -41,3 +41,20 @@
   copy: src=increase-file-max.conf dest=/etc/sysctl.d/increase-file-max.conf mode=0644 owner=root group=root
   notify: reload sysctl
   tags: sysctl
+
+- name: create docuum container
+  docker_container:
+    name: docuum
+    image: stephanmisc/docuum:latest
+    state: present
+    restart_policy: on-failure
+    command: "--threshold '{{ gitlab_runner_docuum_threshold }}'"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  tags: docuum
+
+- name: start docuum
+  docker_container:
+    name: docuum
+    state: started
+  tags: docuum
