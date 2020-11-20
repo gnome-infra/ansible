@@ -9,6 +9,7 @@ Type=simple
 User=postgres_exporter
 Group=postgres_exporter
 Environment="DATA_SOURCE_NAME=postgresql://postgres_exporter:{{ postgres_exporter_password }}@{{ postgres_exporter_host }}:5432/postgres?sslmode=disable"
+Environment=PG_EXPORTER_EXTEND_QUERY_PATH=/etc/postgres_exporter.queries.yml
 ExecStart=/usr/local/bin/postgres_exporter
 
 SyslogIdentifier=postgres_exporter

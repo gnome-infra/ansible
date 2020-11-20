@@ -42,6 +42,13 @@
     - postgres_exporter
   notify: restart postgres-exporter
 
+- name: install queries config
+  copy:
+    src: queries.yaml
+    dest: /etc/postgres_exporter.queries.yml
+    mode: 0755
+  notify: restart postgres-exporter
+
 - name: install systemd unit
   template:
     src: postgres-exporter.service.j2
