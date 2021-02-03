@@ -6,12 +6,15 @@ require {
 	type http_port_t;
 	type container_t;
 	type container_runtime_t;
+	type container_runtime_exec_t;
+	type rpm_script_t;
+	class file entrypoint;
 	class unix_stream_socket connectto;
 	class tcp_socket name_connect;
 	class socket sendto;
 }
 
-#============= init_t ==============
 allow init_t container_runtime_t:unix_stream_socket connectto;
 allow init_t http_port_t:tcp_socket name_connect;
 allow container_t self:socket sendto;
+allow rpm_script_t container_runtime_exec_t:file entrypoint;
