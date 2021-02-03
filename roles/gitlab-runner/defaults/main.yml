@@ -8,4 +8,4 @@ gitlab_runner_dockerd_config:
   ipv6: true
   fixed-cidr-v6: "2001:db8:1::/64"
   registry-mirrors:
-    - ["https://dptr.openshift.gnome.org"]
+    - "https://dptr.openshift.gnome.org"
