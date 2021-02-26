@@ -32,6 +32,10 @@ scrape_configs:
 {% for target in prometheus_static_node_targets %}
       - {{ target }}
 {% endfor %}
+    relabel_configs:
+    - source_labels: [ __address__ ]
+      target_label: instance
+      regex: vpn.(.*)
 
   - job_name: 'rocketchat'
     scheme: https
