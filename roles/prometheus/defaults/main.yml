@@ -1,6 +1,6 @@
 ---
-prometheus_version: 2.19.2
-prometheus_checksum: sha256:68382959f73354b30479f9cc3e779cf80fd2e93010331652700dcc71f6b05586
+prometheus_version: 2.25.0
+prometheus_checksum: sha256:d163e41c56197425405e836222721ace8def3f120689fe352725fe5e3ba1a69d
 prometheus_db_dir: /var/lib/prometheus
 prometheus_config_dir: /etc/prometheus
 prometheus_node_hostgroups:
