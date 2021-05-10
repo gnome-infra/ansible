@@ -16,3 +16,4 @@ gitlab_runner_cache_secret_key: !vault |
           38633539303166653662393561626432326261313661356439653931343765346566
 gitlab_runner_cache_bucket_name: "\"runners-cache\""
 gitlab_runner_cache_bucket_region: "\"us-east-1\""
+node_exporter_web_listen_address: "{{ ansible_wg0.ipv4.address }}:9100"
