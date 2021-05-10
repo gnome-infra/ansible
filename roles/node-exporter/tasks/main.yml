@@ -18,6 +18,9 @@
     path: /root/.ansible/tmp/node-exporter
     state: directory
 
+- set_fact:
+    node_exporter_checksum: "{{ lookup('vars', 'node_exporter_checksum_' + node_exporter_arch) }}"
+
 - name: download {{ node_exporter_version }} for {{ ansible_architecture }}
   get_url:
     url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-{{ node_exporter_arch }}.tar.gz"

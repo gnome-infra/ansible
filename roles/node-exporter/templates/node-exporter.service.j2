@@ -7,7 +7,8 @@ After=network-online.target
 User=node_exporter
 Group=node_exporter
 Restart=on-failure
-ExecStart=/usr/local/bin/node_exporter {{ "\\" if node_exporter_enabled_collectors | length > 0 }}
+ExecStart=/usr/local/bin/node_exporter \
+    --web.listen-address={{ node_exporter_web_listen_address }} {{ "\\" if node_exporter_enabled_collectors | length > 0 }}
 {% for collector in node_exporter_enabled_collectors -%}
 {%   if not collector is mapping %}
     --collector.{{ collector }} \
