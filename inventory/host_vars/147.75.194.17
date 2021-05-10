@@ -20,6 +20,6 @@ gitlab_runner_runners:
       privileged: "true"
       disable_entrypoint_overwrite: "false"
       oom_kill_disable: "false"
-      disable_cache: "false"
+      disable_cache: "true"
       volumes: '["/var/lib/docker/cache:/cache"]'
       shm_size: 0
