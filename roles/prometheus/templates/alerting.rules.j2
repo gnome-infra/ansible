@@ -11,7 +11,7 @@ groups:
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} was rebooted{% endraw %}"
   - alert: High CPU usage
-    expr: '1 - (avg by (instance) (irate(node_cpu_seconds_total{job="node",mode="idle"}[5m]))) > 0.9'
+    expr: '1 - (avg by (instance) (irate(node_cpu_seconds_total{job="node",mode="idle",role!="gitlab-runner"}[5m]))) > 0.9'
     for: 10m
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} is under high CPU usage{% endraw %}"
