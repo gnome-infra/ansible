@@ -1,7 +1,9 @@
 - name: include prometheus role
-  include_role:
+  import_role:
     name: prometheus
     tasks_from: common
+  vars:
+    prometheus_retention_time: "14d"
 
 - name: configure prometheus
   template:
