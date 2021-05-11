@@ -96,3 +96,9 @@ scrape_configs:
     static_configs:
     - targets:
       - fosshost.gnome.org:9091
+
+  - job_name: 'gitlab-ci-exporter'
+    scheme: https
+    static_configs:
+    - targets:
+      - gitlab-ci-exporter.openshift.gnome.org
