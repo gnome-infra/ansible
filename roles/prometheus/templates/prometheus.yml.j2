@@ -85,3 +85,14 @@ scrape_configs:
       regex: {{ hostvars[host].ansible_eth1['ipv4']['address'] }}:9100
       replacement: {{ host }}
 {% endfor %}
+
+  - job_name: 'gitlab-runners'
+    scheme: https
+    honor_labels: true
+    metrics_path: '/federate'
+    params:
+      'match[]':
+      - '{job="node"}'
+    static_configs:
+    - targets:
+      - fosshost.gnome.org:9091
