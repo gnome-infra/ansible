@@ -6,7 +6,7 @@ After=network-online.target
 User=prometheus
 Group=prometheus
 Restart=on-failure
-ExecStart=/usr/local/bin/prometheus --config.file={{ prometheus_config_dir }}/prometheus.yml --storage.tsdb.path={{ prometheus_db_dir }}/data --storage.tsdb.retention.time=90d
+ExecStart=/usr/local/bin/prometheus --config.file={{ prometheus_config_dir }}/prometheus.yml --storage.tsdb.path={{ prometheus_db_dir }}/data --storage.tsdb.retention.time={{ prometheus_retention_time }}
 ExecReload=/bin/kill -HUP $MAINPID
 NoNewPrivileges=true
 ProtectHome=true

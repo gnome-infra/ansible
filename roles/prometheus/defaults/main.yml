@@ -3,6 +3,7 @@ prometheus_version: 2.25.0
 prometheus_checksum: sha256:d163e41c56197425405e836222721ace8def3f120689fe352725fe5e3ba1a69d
 prometheus_db_dir: /var/lib/prometheus
 prometheus_config_dir: /etc/prometheus
+prometheus_retention_time: "90d"
 prometheus_node_hostgroups:
   - ral3
   - osuosl
