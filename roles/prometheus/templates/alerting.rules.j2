@@ -29,7 +29,7 @@ groups:
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} has less than 10% of free space available on {{ $labels.mountpoint }}{% endraw %}"
   - alert: High inodes usage
-    expr: (node_filesystem_files - node_filesystem_files_free) / node_filesystem_files > 0.9
+    expr: '(node_filesystem_files{fstype!="fuse.ceph-fuse"} - node_filesystem_files_free) / node_filesystem_files > 0.9'
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} has less than 10% of free inodes available on {{ $labels.mountpoint }}{% endraw %}"
 - name: bbb
