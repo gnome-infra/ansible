@@ -16,7 +16,7 @@ gitlab_runner_runners:
     executor: "docker"
     docker:
       tls_verify: "false"
-      image: "\"alpine:latest\""
+      image: "\"fedora:latest\""
       privileged: "true"
       disable_cache: "false"
       volumes: '["/mnt/cache:/cache"]'
@@ -29,7 +29,7 @@ gitlab_runner_runners:
     executor: "docker"
     docker:
       tls_verify: "false"
-      image: "\"alpine:latest\""
+      image: "\"fedora:latest\""
       privileged: "false"
       disable_cache: "false"
       volumes: '["/cache"]'

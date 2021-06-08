@@ -18,7 +18,7 @@ gitlab_runner_runners:
     seccomp: "buildah"
     docker:
       tls_verify: "false"
-      image: "\"alpine:latest\""
+      image: "\"fedora:latest\""
       volumes: '["/cache"]'
       disable_cache: "true"
       shm_size: 0
@@ -48,7 +48,7 @@ gitlab_runner_runners:
     seccomp: "flatpak"
     docker:
       tls_verify: "false"
-      image: "\"alpine:latest\""
+      image: "\"fedora:latest\""
       shm_size: 0
       privileged: "false"
       cap_drop: '["all"]'
@@ -68,7 +68,7 @@ gitlab_runner_runners:
     executor: "docker"
     docker:
       tls_verify: "false"
-      image: "\"alpine:latest\""
+      image: "\"fedora:latest\""
       disable_entrypoint_overwrite: "false"
       oom_kill_disable: "false"
       volumes: '["/cache"]'
@@ -101,7 +101,7 @@ gitlab_runner_runners:
     seccomp: "flatpak"
     docker:
       tls_verify: "false"
-      image: "\"alpine:latest\""
+      image: "\"fedora:latest\""
       shm_size: 0
       privileged: "false"
       cap_drop: '["all"]'

@@ -17,7 +17,7 @@ gitlab_runner_runners:
     seccomp: "buildah"
     docker:
       tls_verify: "false"
-      image: "\"alpine:latest\""
+      image: "\"fedora:latest\""
       disable_entrypoint_overwrite: "false"
       oom_kill_disable: "false"
       volumes: '["/cache"]'
