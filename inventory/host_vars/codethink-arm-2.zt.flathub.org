@@ -1,5 +1,5 @@
 ---
-gitlab_runner_concurrent: 2
+gitlab_runner_concurrent: 1
 gitlab_runner_check_interval: 0
 
 gitlab_runner_runners:
@@ -33,28 +33,6 @@ gitlab_runner_runners:
       SecretKey: "{{ gitlab_runner_cache_secret_key }}"
       BucketName: "{{ gitlab_runner_cache_bucket_name }}"
       BucketLocation: "{{ gitlab_runner_cache_bucket_region }}"
-
-  - name: "codethink-arm-2.zt.flathub.org (flatpak)"
-    limit: 1
-    output_limit: 16384
-    url: "https://gitlab.gnome.org/"
-    token: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          63646530346633373937353663303936666639346237376662323939393661396139353031333135
-          6132653665323032616162626465323032643836373361630a326431376636636539653730363266
-          33636561646134356366626639336561316331343630313462323132613034333335336364346639
-          6261396636363062370a363861646165633339313233303537623639356362646132626537323835
-          33373662653934623466306661363632646337323566653833396564663237626333
-    executor: "docker"
-    seccomp: "flatpak"
-    docker:
-      tls_verify: "false"
-      image: "\"fedora:32\""
-      shm_size: 0
-      privileged: "false"
-      cap_drop: '["all"]'
-      volumes: '["/proc:/host/proc"]'
-      disable_cache: "true"
 
   - name: "codethink-arm-2.zt.flathub.org (gnome-build-meta)"
     output_limit: 32768
