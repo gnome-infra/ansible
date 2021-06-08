@@ -18,9 +18,9 @@ gitlab_runner_runners:
       tls_verify: "false"
       image: "\"fedora:latest\""
       privileged: "true"
-      disable_cache: "false"
+      disable_cache: "true"
       volumes: '["/mnt/cache:/cache"]'
-      shm_size: 0
+      shm_size: 256000000
 
   - name: "c2-large-arm"
     output_limit: 16384
@@ -31,6 +31,7 @@ gitlab_runner_runners:
       tls_verify: "false"
       image: "\"fedora:latest\""
       privileged: "false"
-      disable_cache: "false"
+      disable_cache: "true"
       volumes: '["/cache"]'
       shm_size: 0
+      shm_size: 256000000
