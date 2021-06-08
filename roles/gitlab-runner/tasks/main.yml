@@ -52,11 +52,11 @@
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   tags: docuum
-  when: gitlab_runner_enable_docuum
+  when: gitlab_runner_enable_docuum and gitlab_runner_docuum_threshold is defined
 
 - name: start docuum
   docker_container:
     name: docuum
     state: started
   tags: docuum
-  when: gitlab_runner_enable_docuum
+  when: gitlab_runner_enable_docuum and gitlab_runner_docuum_threshold is defined

@@ -1,11 +1,7 @@
 ---
-- name: set selinux to enforcing
-  selinux:
-    policy: targeted
-    state: enforcing
-
 - name: install python2-dnf
   yum: name=python2-dnf state=present
+  when: ansible_distribution_major_version < "8"
 
 - name: remove CentOS docker packages
   yum: name=docker,docker-common state=absent
@@ -21,7 +17,11 @@
     gpgcheck: yes
 
 - name: install docker-ce
-  yum: name=docker-ce,docker-ce-cli,containerd.io,python-docker-py state=present
+  yum: name=docker-ce,docker-ce-cli,containerd.io state=present
+
+- name: install python-docker-py
+  yum: name=python-docker-py state=present
+  when: ansible_distribution_major_version < "8"
 
 - name: add gitlab-runner repository
   yum_repository:
@@ -30,7 +30,6 @@
     file: runner_gitlab-runner
     baseurl: https://packages.gitlab.com/runner/gitlab-runner/el/$releasever/$basearch
     gpgcheck: no
-  when: ansible_distribution == 'CentOS'
 
 - name: install selinux-policy-devel
   yum: name=selinux-policy-devel state=present

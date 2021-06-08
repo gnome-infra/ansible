@@ -3,7 +3,7 @@ gitlab_runner_concurrent: 4
 gitlab_runner_check_interval: 0
 
 gitlab_runner_runners:
-  - name: "packet-1-c1-large-arm"
+  - name: "c2-large-arm"
     output_limit: 16384
     url: "https://gitlab.gnome.org"
     token: !vault |
@@ -16,8 +16,21 @@ gitlab_runner_runners:
     executor: "docker"
     docker:
       tls_verify: "false"
-      image: "\"fedora:31\""
+      image: "\"alpine:latest\""
       privileged: "true"
       disable_cache: "false"
       volumes: '["/mnt/cache:/cache"]'
+      shm_size: 0
+
+  - name: "c2-large-arm"
+    output_limit: 16384
+    url: "https://gitlab.gnome.org"
+    token: "Q1pDPWTPqoyyzAJhRCW2"
+    executor: "docker"
+    docker:
+      tls_verify: "false"
+      image: "\"alpine:latest\""
+      privileged: "false"
+      disable_cache: "false"
+      volumes: '["/cache"]'
       shm_size: 0
