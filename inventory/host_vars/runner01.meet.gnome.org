@@ -19,7 +19,7 @@ gitlab_runner_runners:
     seccomp: "buildah"
     docker:
       tls_verify: "false"
-      image: "\"fedora:32\""
+      image: "\"alpine:latest\""
       volumes: '["/cache"]'
       disable_cache: "true"
       shm_size: 0
