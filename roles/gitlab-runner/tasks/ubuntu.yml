@@ -27,16 +27,3 @@
     update_cache: yes
     cache_valid_time: 3600
   tags: docker
-
-- name: install containerd
-  apt:
-    name: docker.io
-    state: present
-    update_cache: yes
-    cache_valid_time: 3600
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release != 'xenial'
-  tags: docker
-
-- name: start and enable containerd
-  service: name=containerd enabled=yes state=started
-  tags: docker
