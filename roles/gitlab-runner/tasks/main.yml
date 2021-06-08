@@ -25,7 +25,7 @@
   file:
     path: /etc/gitlab-runner
     state: directory
-    mode: '0750'
+    mode: '0700'
 
 - name: configure gitlab-runner
   template:
