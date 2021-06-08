@@ -1,5 +1,5 @@
 ---
-gitlab_runner_docuum_threshold: "90 GB"
+gitlab_runner_docuum_threshold: "80 GB"
 gitlab_runner_concurrent: 4
 gitlab_runner_check_interval: 0
 
