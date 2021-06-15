@@ -1,5 +1,5 @@
 ---
-- include: common.yaml
+- import_tasks: common.yml
 
 - name: configure prometheus
   template:
