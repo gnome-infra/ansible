@@ -56,9 +56,10 @@ scrape_configs:
       - scale.gnome.org:9187
 
   - job_name: 'bbb'
+    scheme: https
     static_configs:
     - targets:
-      - meet.gnome.org:9688
+      - bbb-exporter.openshift.gnome.org
 
   - job_name: 'openshift-node-exporter'
     scheme: https

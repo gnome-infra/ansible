@@ -8,7 +8,7 @@ prometheus_node_hostgroups:
   - ral3
   - osuosl
 prometheus_static_node_targets:
-  - meet.gnome.org:9100
+  - bbb.gnome.org:9100
 prometheus_openshift_token: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           38353063663730386433356530343739643438383266393535316436353936643766313333663537
