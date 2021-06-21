@@ -1,7 +1,6 @@
 [gitlab-runners]
 do-nyc1-gitlab-runner-01
 progress.gnome.org
-runner01.meet.gnome.org
 socket.gnome.org
 
 [gitlab-runners-gbm]
