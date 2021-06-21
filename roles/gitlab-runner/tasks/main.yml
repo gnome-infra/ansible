@@ -60,3 +60,9 @@
     state: started
   tags: docuum
   when: gitlab_runner_enable_docuum and gitlab_runner_docuum_threshold is defined
+
+- name: 'Remove old containers and volumes on schedule'
+  cron:
+    name: "Prune old containers and volumes"
+    special_time: daily
+    job: "docker system prune -af --filter label=com.gitlab.gitlab-runner.managed=true"
