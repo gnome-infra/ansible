@@ -66,3 +66,7 @@
     name: "Prune old containers and volumes"
     special_time: daily
     job: "docker system prune -af --filter label=com.gitlab.gitlab-runner.managed=true"
+
+- name: Make sure /dev/kvm is root:root (0660)
+  copy: src=00-kvm.rules dest=/etc/udev/rules.d/00-kvm.rules mode=0644 owner=root group=root
+  notify: reload udevadm

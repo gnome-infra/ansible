@@ -1,0 +1,1 @@
+KERNEL=="kvm", GROUP="root", MODE="0660"

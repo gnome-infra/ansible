@@ -10,3 +10,6 @@
 
 - name: restart docker
   service: name=docker.service state=restarted
+
+- name: reload udevadm
+  command: udevadm control --reload-rules
