@@ -1,6 +1,4 @@
 [gitlab-runners]
-progress.gnome.org
-socket.gnome.org
 
 [gitlab-runners-gbm]
 147.75.194.17
