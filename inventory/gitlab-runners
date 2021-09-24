@@ -1,4 +1,5 @@
 [gitlab-runners]
+progress.gnome.org
 
 [gitlab-runners-gbm]
 147.75.194.17
