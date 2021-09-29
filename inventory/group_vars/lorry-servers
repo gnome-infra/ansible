@@ -1,0 +1,8 @@
+
+lorry:
+    hostname: lorry.guest.codethink.co.uk
+    config_repo: "https://oauth2:{{ lorry_mirror_config_read_repository_key }}@gitlab.codethink.co.uk/infrastructure/mirroring-config.git"
+    gitlab_access_token: "{{ lorry_automation_user_api_token }}"
+    gitlab_domain: "gitlab.codethink.co.uk"
+    gitlab_repo_visibility: private
+    ssh_key: "{{ lorry_automation_user_ssh_priv_key }}"
