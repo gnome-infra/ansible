@@ -1,0 +1,21 @@
+[config]
+log = stderr
+log-max = 100M
+log-keep = 10
+log-level = debug
+statedb = /data/db/webapp.db
+configuration-directory = /data/confgit
+status-html = /data/html/lc-status.html
+wsgi = no
+debug-port = 12765
+templates = /usr/local/share/lorry-controller/templates
+static-files = /usr/local/share/lorry-controller/static
+confgit-url = {{ lorry.config_repo }}
+publish-failures = yes
+git-server-type = local
+
+downstream-host-type = gitlab
+
+downstream-visibility = {{ lorry.gitlab_repo_visibility }}
+downstream-http-url = https://{{ lorry.gitlab_domain }}
+gitlab-private-token = {{ lorry.gitlab_access_token }}

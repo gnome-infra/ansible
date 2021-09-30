@@ -1,8 +1,8 @@
+lorry_automation_user_api_token: "hLsLCmRQqM6-txkS31rR"
 
 lorry:
-    hostname: lorry.guest.codethink.co.uk
-    config_repo: "https://oauth2:{{ lorry_mirror_config_read_repository_key }}@gitlab.codethink.co.uk/infrastructure/mirroring-config.git"
+    config_repo: "https://oauth2:{{ lorry_automation_user_api_token }}@gitlab.gnome.org/Infrastructure/Mirrors/mirroring-config.git"
     gitlab_access_token: "{{ lorry_automation_user_api_token }}"
-    gitlab_domain: "gitlab.codethink.co.uk"
-    gitlab_repo_visibility: private
-    ssh_key: "{{ lorry_automation_user_ssh_priv_key }}"
+    gitlab_domain: "gitlab.gnome.org"
+    gitlab_repo_visibility: internal
+    mirror_base_url: "https://oauth2:{{ lorry_automation_user_api_token }}@{{ lorry.gitlab_domain }}"

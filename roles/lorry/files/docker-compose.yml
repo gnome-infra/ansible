@@ -1,0 +1,63 @@
+version: '3'
+services:
+  lorry-controller-webapp:
+    image: registry.gitlab.com/codethinklabs/lorry/trovekube/lc-webapp:master
+    command:
+    - lorry-controller-webapp
+    - --config
+    - /config/webapp.conf
+    ports:
+    - 12765:12765 # Should be internal only
+    volumes:
+    - ./config:/config
+    - ./log:/data/log
+    - ./html:/data/html
+    - ./db:/data/db
+    networks:
+    - lorry
+
+  lorry-controller-minion-0:
+    image: registry.gitlab.com/codethinklabs/lorry/trovekube/lc-webapp:master
+    command:
+    - minion-entrypoint
+    - --config
+    - /config/minion.conf
+    volumes:
+    - ./config:/config
+    - ./working-area:/data/working-area
+    restart: on-failure
+    networks:
+    - lorry
+
+  lighttpd:
+    image: sebp/lighttpd
+    volumes:
+    - ./html:/var/www/localhost/htdocs
+    - ./config/lighttpd:/etc/lighttpd
+    ports:
+    - 8000:80
+    networks:
+    - lorry
+
+  lorry-controller-readconf:
+    image: governmentpaas/curl-ssl
+    command:
+    - sh
+    - /cron/readconf.sh
+    volumes:
+    - ./cron:/cron
+    networks:
+    - lorry
+
+  lorry-controller-status:
+    image: governmentpaas/curl-ssl
+    command:
+    - sh
+    - /cron/status.sh
+    volumes:
+    - ./cron:/cron
+    networks:
+    - lorry
+
+networks:
+  lorry:

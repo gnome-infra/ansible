@@ -1,0 +1,76 @@
+- name: Set main data dir variable
+  set_fact:
+    lorry_data_dir: /srv/lorry
+
+- name: Set more configuration variables
+  set_fact:
+    lorry_config_dir: "{{ lorry_data_dir }}/config"
+    lorry_cron_dir: "{{ lorry_data_dir }}/cron"
+    lorry_db_dir: "{{ lorry_data_dir }}/db"
+    lorry_html_dir: "{{ lorry_data_dir }}/html"
+    lorry_working_area_dir: "{{ lorry_data_dir }}/working-area"
+
+
+- name: create data directories
+  file:
+    name: "{{ item }}"
+    state: directory
+  with_items:
+  - "{{ lorry_data_dir }}"
+  - "{{ lorry_config_dir }}"
+  - "{{ lorry_db_dir }}"
+  - "{{ lorry_html_dir }}"
+  - "{{ lorry_working_area_dir }}"
+
+- name: Copy static configuration files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ lorry_config_dir }}"
+    directory_mode: yes
+  with_items:
+  - minion.conf
+  - lighttpd
+  notify:
+    - restart-lorry
+
+- name: Create templated configuration files
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ lorry_config_dir }}/{{ item }}"
+  with_items:
+  - webapp.conf
+  - lorry.conf
+  notify:
+    - restart-lorry
+
+- name: Copy static cron scripts
+  copy:
+    src: "cron/{{ item }}"
+    dest: "{{ lorry_cron_dir }}/"
+  with_items:
+  - readconf.sh
+  - status.sh
+  notify:
+    - restart-lorry
+
+- name: Copy static docker-compose.yml file
+  copy:
+    src: "{{ item }}"
+    dest: "{{ lorry_data_dir }}/{{ item }}"
+  with_items:
+  - docker-compose.yml
+
+- name: Install lorry systemd service
+  template:
+    src: lorry-docker-compose.service.j2
+    dest: /etc/systemd/system/lorry-docker-compose.service
+    mode: preserve
+  notify: reload systemd daemon
+
+- name: enable lorry systemd service
+  systemd:
+    name: lorry-docker-compose.service
+    enabled: "yes"
+    masked: "no"
+    state: "started"
+  ignore_errors: yes
