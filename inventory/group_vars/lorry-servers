@@ -1,8 +1,10 @@
-lorry_automation_user_api_token: "hLsLCmRQqM6-txkS31rR"
+lorry_automation_user_api_token: ""
+
+gnome_gitlab_domain: "gitlab.gnome.org"
 
 lorry:
     config_repo: "https://oauth2:{{ lorry_automation_user_api_token }}@gitlab.gnome.org/Infrastructure/Mirrors/mirroring-config.git"
     gitlab_access_token: "{{ lorry_automation_user_api_token }}"
-    gitlab_domain: "gitlab.gnome.org"
+    gitlab_domain: "{{ gnome_gitlab_domain }}"
     gitlab_repo_visibility: internal
-    mirror_base_url: "https://oauth2:{{ lorry_automation_user_api_token }}@{{ lorry.gitlab_domain }}"
+    mirror_base_url: "https://oauth2:{{ lorry_automation_user_api_token }}@{{ gnome_gitlab_domain }}"
