@@ -1,0 +1,16 @@
+lorry_automation_user_api_token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34373334323035316635633437383535353939633063623461663431643534623664633432643464
+          6439633865653465636532646265386631646435313931330a626337346336353562313739613462
+          37393331383763303039653839313633643762376130323065633232633438363230616238623431
+          3163393466393132660a306437336438613736626164383537623830663263353338333330303934
+          30656431613639643239383031663039636235356661626339663335643533613336
+
+gnome_gitlab_domain: "gitlab.gnome.org"
+
+lorry:
+    config_repo: "https://oauth2:{{ lorry_automation_user_api_token }}@gitlab.gnome.org/Infrastructure/Mirrors/mirroring-config.git"
+    gitlab_access_token: "{{ lorry_automation_user_api_token }}"
+    gitlab_domain: "{{ gnome_gitlab_domain }}"
+    gitlab_repo_visibility: internal
+    mirror_base_url: "https://oauth2:{{ lorry_automation_user_api_token }}@{{ gnome_gitlab_domain }}"
