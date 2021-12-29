@@ -12,5 +12,5 @@ lorry:
     config_repo: "https://oauth2:{{ lorry_automation_user_api_token }}@gitlab.gnome.org/Infrastructure/Mirrors/mirroring-config.git"
     gitlab_access_token: "{{ lorry_automation_user_api_token }}"
     gitlab_domain: "{{ gnome_gitlab_domain }}"
-    gitlab_repo_visibility: internal
+    gitlab_repo_visibility: public
     mirror_base_url: "https://oauth2:{{ lorry_automation_user_api_token }}@{{ gnome_gitlab_domain }}"
