@@ -6,8 +6,8 @@ services:
     - lorry-controller-webapp
     - --config
     - /config/webapp.conf
-    ports:
-    - 12765:12765 # Should be internal only
+    expose:
+    - 12765 # Should be internal only
     volumes:
     - ./config:/config
     - ./log:/data/log
