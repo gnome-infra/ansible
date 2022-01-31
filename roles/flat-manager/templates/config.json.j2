@@ -1,0 +1,34 @@
+{
+    "repos": {
+        "nightly": {
+            "path": "/srv/repo/public_html/repo",
+            "base-url": "https://nightly.gnome.org/repo/",
+            "gpg-key": "6A7C5D4482170E3D",
+            "suggested-repo-name": "gnome-nightly",
+            "runtime-repo-url": "https://nightly.gnome.org/gnome-nightly.flatpakrepo",
+            "collection-id": "org.gnome.Nightly",
+            "subsets": {},
+            "deltas": [
+                { "id": ["*.Platform", "*.Sdk", "*.Platform.Compat.*" ], "depth": 3},
+                { "id": ["*.Sdk.Locale", "*.Platform.Locale"], "depth": 2},
+                { "id": ["*.Locale"], "depth": 0},
+                { "id": ["*.Sdk.Debug", "*.Platform.Compat.Debug"], "depth": 2},
+                { "id": ["*.Debug"], "arch": ["x86_64"], "depth": 2},
+                { "id": ["*.Debug"], "depth": 0},
+                { "id": ["*.Sources"], "depth": 0},
+                { "id": ["*"], "arch": ["x86_64"], "depth": 2},
+                { "id": ["*"], "depth": 1}
+            ],
+            "appstream-delta-depth": 5,
+	    "post-publish-script": "/etc/flat-manager/post-publish.sh"
+        }
+    },
+    "host": "127.0.0.1",
+    "port": 8080,
+    "base-url": "https://nightly.gnome.org",
+    "database-url": "postgres://%2Fvar%2Frun%2Fpostgresql/flat-manager",
+    "build-repo-base": "/srv/repo/public_html/build-repo",
+    "build-gpg-key": "6A7C5D4482170E3D",
+    "gpg-homedir": "/srv/repo/.gnupg",
+    "secret": "{{ flat_manager_secret }}"
+}

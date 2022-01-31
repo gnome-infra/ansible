@@ -1,0 +1,15 @@
+[Unit]
+Description=Flat-manager for GNOME Nightly
+After=postgresql.service
+
+[Service]
+User=flat-manager
+Group=flat-manager
+WorkingDirectory=/srv/repo
+ExecStart=/usr/local/bin/flat-manager
+
+Environment=REPO_CONFIG=/etc/flat-manager/config.json
+Environment=RUST_BACKTRACE=1
+
+[Install]
+WantedBy=multi-user.target

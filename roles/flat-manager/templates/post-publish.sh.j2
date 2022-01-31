@@ -1,0 +1,29 @@
+#!/bin/bash
+
+curl \
+    --request POST https://api.cdn77.com/v3/cdn/{{ flat_manager_cdn77_nightly_id }}/job/purge \
+    --header 'Authorization: Bearer {{ flat_manager_cdn77_token }}' \
+    --data-raw '{
+        "paths": [
+            "/repo/summary",
+            "/repo/summary.sig",
+            "/repo/summary.idx",
+            "/repo/summary.idx.sig",
+            "/gnomeos/repo/summary",
+            "/gnomeos/repo/summary.sig",
+            "/gnomeos/repo/summary.idx",
+            "/gnomeos/repo/summary.idx.sig"
+        ]
+    }'
+
+curl \
+    --request POST https://api.cdn77.com/v3/cdn/{{ flat_manager_cdn77_ostree_id }}/job/purge \
+    --header 'Authorization: Bearer {{ flat_manager_cdn77_token }}' \
+    --data-raw '{
+        "paths": [
+            "/repo/summary",
+            "/repo/summary.sig",
+            "/repo/summary.idx",
+            "/repo/summary.idx.sig"
+        ]
+    }'

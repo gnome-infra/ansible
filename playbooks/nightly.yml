@@ -1,0 +1,5 @@
+- hosts: flat-manager.gnome.org
+  gather_facts: true
+  remote_user: root
+  roles:
+    - flat-manager
