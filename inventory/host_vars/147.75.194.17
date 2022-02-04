@@ -1,5 +1,5 @@
 ---
-gitlab_runner_concurrent: 12
+gitlab_runner_concurrent: 6
 gitlab_runner_check_interval: 0
 
 gitlab_runner_runners:
