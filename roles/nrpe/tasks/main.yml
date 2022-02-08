@@ -26,6 +26,7 @@
     owner: root
     group: root
     mode: 0644
+  notify: Restart NRPE
 
 - name: Land NRPE default plugins
   template:
@@ -35,6 +36,7 @@
     group: root
     mode: 0644
   loop: "{{ nrpe_default_plugins }}"
+  notify: Restart NRPE
 
 - name: Generate Ceph token for checks
   shell: /usr/bin/ceph auth get-or-create client.nagios mon 'allow r' > /etc/ceph/ceph.client.nagios.keyring creates=/etc/ceph/ceph.client.nagios.keyring
