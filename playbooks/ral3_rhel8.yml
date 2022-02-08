@@ -1,5 +1,5 @@
 ---
-- hosts: hypervisors
+- hosts: all
   gather_facts: true
   remote_user: root
   roles:
@@ -9,9 +9,20 @@
    - chrony
    - iptables
    - ipaclient.wrapper
-   - dell
    - bash
    - base_auth
    - nrpe
    - base_network
    - rsyslog
+
+- hosts: hypervisors
+  gather_facts: true
+  remote_user: root
+  roles:
+   - dell
+
+- hosts: bastions
+  gather_facts: true
+  remote_user: root
+  roles:
+   - squid
