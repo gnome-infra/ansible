@@ -26,3 +26,4 @@
   remote_user: root
   roles:
    - squid
+   - node-exporter
