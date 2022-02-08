@@ -1,7 +1,10 @@
 firewall_additional_rules:
   - "iptables -t nat -A POSTROUTING -s 172.31.2.0/24 -o eth0 -j MASQUERADE"
+  - "iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE"
   - "iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT"
   - "iptables -A FORWARD -s 172.31.2.0/24 -i eth1 -o eth0 -m conntrack --ctstate NEW -j ACCEPT"
+  - "iptables -A FORWARD -s 10.8.0.0/24 -i wg0 -o eth0 -m conntrack --ctstate NEW -j ACCEPT"
+  - "iptables -A FORWARD -s 10.8.0.0/24 -d 172.31.2.0/24 -i wg0 -o eth1 -m conntrack --ctstate NEW -j ACCEPT"
 
 firewall_allowed_tcp_ports:
   - 22
