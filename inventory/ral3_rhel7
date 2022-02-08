@@ -1,7 +1,7 @@
 [redhat:children]
-ral3
+ral3_rhel7
 
-[ral3]
+[ral3_rhel7]
 nsd02.gnome.org
 gesture.gnome.org
 view.gnome.org

@@ -5,7 +5,7 @@ prometheus_db_dir: /var/lib/prometheus
 prometheus_config_dir: /etc/prometheus
 prometheus_retention_time: "90d"
 prometheus_node_hostgroups:
-  - ral3
+  - ral3_rhel7
   - osuosl
   - ral3_rhel8
 prometheus_static_node_targets:

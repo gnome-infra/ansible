@@ -1,5 +1,5 @@
 ---
-- hosts: ral3,!gitlab.gnome.org
+- hosts: ral3_rhel7,ral3_rhel8,!gitlab.gnome.org
   gather_facts: true
   remote_user: root
   roles:
