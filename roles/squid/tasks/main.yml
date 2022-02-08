@@ -1,0 +1,19 @@
+---
+- name: Land the squid package
+  yum:
+    name: squid
+    state: present
+
+- name: Define squid.conf
+  template:
+    src: squid.conf.j2
+    dest: /etc/squid/squid.conf
+    owner: root
+    group: squid
+    mode: 0640
+
+- name: Start and enable Squid
+  service:
+    name: squid
+    state: started
+    enabled: true
