@@ -7,7 +7,7 @@
   <name xml:lang="en">ansible</name>
   <description xml:lang="en">Ansible Playbooks, Tasks, Roles in use by the GNOME Infrastructure Team</description>
   <shortdesc xml:lang="en">Ansible Playbooks, Tasks, Roles in use by the GNOME Infrastructure Team</shortdesc>
-  <homepage rdf:resource="https://wiki.gnome.org/Sysadmin" />
+  <homepage rdf:resource="https://wiki.gnome.org/Infrastructure" />
   <mailing-list rdf:resource="https://mail.gnome.org/mailman/listinfo/gnome-infrastructure" />
   <category rdf:resource="http://api.gnome.org/doap-extensions#infrastructure" />
   <bug-database rdf:resource="https://gitlab.gnome.org/Infrastructure/ansible/issues" />
@@ -15,7 +15,7 @@
 
   <maintainer>
     <foaf:Person>
-      <foaf:name>GNOME sysadmin team</foaf:name>
+      <foaf:name>GNOME Infrastructure Team</foaf:name>
       <foaf:mbox rdf:resource="mailto:gnome-sysadmin@gnome.org" />
       <gnome:userid>root</gnome:userid>
     </foaf:Person>
