@@ -1,0 +1,8 @@
+---
+# Execute via:
+# ansible-playbook -i $fqdn, get-facts.yaml
+- hosts: all
+  user: root
+  tasks:
+    - debug: var=vars
+    - debug: var=hostvars[inventory_hostname]
