@@ -1,3 +1,8 @@
+[ral3_rhel8:children]
+virtual-machines
+hypervisors
+bastions
+
 [virtual-machines]
 ceph-metrics.gnome.org
 bastion01.gnome.org

@@ -9,7 +9,6 @@ scale.gnome.org
 flowbox.gnome.org
 master.gnome.org
 account.gnome.org
-bastion.gnome.org
 gitlab.gnome.org
 nsd01.gnome.org
 palette.gnome.org
@@ -20,9 +19,6 @@ puppetmaster02.gnome.org
 [puppetmasters]
 puppetmaster01.gnome.org
 puppetmaster02.gnome.org
-
-[openvpn-server]
-bastion.gnome.org
 
 [osuosl]
 signal.gnome.org
