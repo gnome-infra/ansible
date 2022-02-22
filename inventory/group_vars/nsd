@@ -15,3 +15,6 @@ nsd_tsig_keys:
   - tsig_keyname: 20160920.gnome.org
     tsig_secret: "{{ nsd_tsig_keys_vault.ext_key }}"
     tsig_algorithm: hmac-sha256
+
+nrpe_custom_plugins:
+  - check_nsd
