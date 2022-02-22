@@ -19,3 +19,7 @@ ceph03.gnome.org
 
 [bastions]
 bastion01.gnome.org
+
+[nsd]
+nsd01.gnome.org is_master=true
+nsd02.gnome.org is_slave=true

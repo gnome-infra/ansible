@@ -1,0 +1,18 @@
+---
+nsd_version: 4
+nsd_service_name: "nsd"
+nsd_pkg_name: "nsd"
+nsd_control_program: "/usr/sbin/nsd-control"
+nsd_control_setup_program: "/usr/sbin/nsd-control-setup"
+nsd_config_dir: "/etc/nsd"
+nsd_zones_config_file: "/etc/nsd/zones.conf"
+nsd_master_zones_dir: "/var/lib/nsd/master"
+nsd_slave_zones_dir: "/var/lib/nsd/slave"
+nsd_log_dir: "/var/log/nsd"
+
+nsd_server_config:
+  do-ip4: "yes"
+  do-ip6: "yes"
+  logfile: "{{ nsd_log_dir }}/nsd.log"
+  zonesdir: "{{ nsd_master_zones_dir }}"
+  xfrdir: "{{ nsd_slave_zones_dir }}"

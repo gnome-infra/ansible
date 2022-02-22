@@ -1,0 +1,107 @@
+---
+
+- name: Custom role dependant variables (master)
+  include_vars:
+    file: master.yml
+  when: is_master|default(false)
+
+- name: Custom role dependant variables (slave)
+  include_vars:
+    file: slave.yml
+  when: is_slave|default(false)
+
+- name: Install nsd
+  dnf: pkg={{ nsd_pkg_name }} state=present
+
+- name: Create master zones directory
+  file:
+    path: "{{ nsd_master_zones_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create slave zones directory
+  file:
+    path: "{{ nsd_slave_zones_dir }}"
+    state: directory
+    owner: nsd
+    group: nsd
+    mode: 0755
+
+- name: Create nsd log directory
+  file:
+    path: "{{ nsd_log_dir }}"
+    state: directory
+    owner: nsd
+    group: nsd
+    mode: 0775
+    setype: nsd_log_t
+
+- name: Configure nsd zones
+  template:
+    src: zones_config.j2
+    dest: "{{ nsd_zones_config_file }}"
+    owner: root
+    group: root
+    mode: 0644
+    validate: '/usr/sbin/nsd-checkconf %s'
+  notify:
+    - rebuild nsd database
+    - reload nsd database
+    - restart nsd
+
+- name: Create base nsd configuration file
+  template:
+    src: nsd_config.j2
+    dest: "{{ nsd_config_dir }}/nsd.conf"
+    owner: root
+    group: root
+    mode: 0644
+    validate: '/usr/sbin/nsd-checkconf %s'
+  notify:
+    - restart nsd
+
+- name: Stat against nsd_control.pem
+  stat:
+   path: "{{ nsd_config_dir }}/nsd_control.pem"
+  register: stat_result
+
+- name: Generate nsd control SSL certificates
+  command: "{{ nsd_control_setup_program }}"
+  when: not stat_result.stat.exists
+
+- name: Make sure nsd is running
+  service:
+    name: "{{ nsd_service_name }}"
+    state: started
+    enabled: yes
+
+- name: Copy content of unsigned zones
+  copy:
+    src: "unsigned_zones/{{ item.zone_filename }}"
+    dest: "{{ nsd_master_zones_dir }}/{{ item.zone_filename }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ nsd_unsigned_zones }}"
+  when: is_master|default(false)
+  notify:
+    - rebuild nsd database
+    - reload nsd database
+    - notify slaves
+
+- name: Copy content of signed zones
+  copy:
+    src: "/srv/dns/built/{{ item.zone_filename }}.signed"
+    dest: "{{ nsd_master_zones_dir }}/{{ item.zone_filename }}"
+    owner: root
+    group: root
+    mode: 0644
+    remote_src: yes
+  with_items: "{{ nsd_signed_zones }}"
+  when: is_master|default(false)
+  notify:
+    - rebuild nsd database
+    - reload nsd database
+    - notify slaves

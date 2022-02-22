@@ -1,0 +1,69 @@
+---
+masters: &default
+  masters:
+    - ip: 172.31.2.30
+      tsig_key: sec_key
+
+nsd_unsigned_zones:
+  - zone_name: clutter-project.org
+    zone_filename: clutter-project.org
+    <<: *default
+  - zone_name: gnome3.org
+    zone_filename: gnome3.org
+    <<: *default
+  - zone_name: gnome3.com
+    zone_filename: gnome3.com
+    <<: *default
+  - zone_name: gnome.io
+    zone_filename: gnome.io
+    <<: *default
+  - zone_name: happybirthdaygnome.org
+    zone_filename: happybirthdaygnome.org
+    <<: *default
+  - zone_name: gnome.gr
+    zone_filename: gnome.gr
+    <<: *default
+  - zone_name: pango.org
+    zone_filename: pango.org
+    <<: *default
+  - zone_name: pygtk.org
+    zone_filename: pygtk.org
+    <<: *default
+  - zone_name: gegl.org
+    zone_filename: gegl.org
+    <<: *default
+  - zone_name: flatpak.org
+    zone_filename: flatpak.org
+    <<: *default
+  - zone_name: gnome.asia
+    zone_filename: gnome.asia
+    <<: *default
+  - zone_name: libsoup.org
+    zone_filename: libsoup.org
+    <<: *default
+
+nsd_signed_zones:
+  - zone_name: gimp.org
+    zone_filename: gimp.org
+    <<: *default
+  - zone_name: gnome.org
+    zone_filename: gnome.org
+    <<: *default
+  - zone_name: guadec.org
+    zone_filename: guadec.org
+    <<: *default
+  - zone_name: gnomehispano.org
+    zone_filename: gnomehispano.org
+    <<: *default
+  - zone_name: gnomehispano.es
+    zone_filename: gnomehispano.es
+    <<: *default
+  - zone_name: guadec.es
+    zone_filename: guadec.es
+    <<: *default
+  - zone_name: gimp.net
+    zone_filename: gimp.net
+    <<: *default
+  - zone_name: gtk.org
+    zone_filename: gtk.org
+    <<: *default

@@ -1,0 +1,26 @@
+;
+; BIND data file for gegl.org
+;
+;$TTL		86400
+;$TTL		3600
+$TTL		300
+@		IN	SOA	ns-master.gnome.org. hostmaster.gnome.org. (
+				2010032100	; Serial
+				28800		; Refresh
+				7200		; Retry
+				604800		; Expire
+				;86400		; Default TTL
+				;3600		; Default TTL
+				300		; Default TTL
+				)
+
+		IN	NS	ns-master.gnome.org.
+		IN	NS	ns-slave.gnome.org.
+
+		IN	A	109.74.199.77
+
+		IN	MX	10	smtp.gnome.org.
+
+www		IN	A	109.74.199.77
+
+ftp		IN	CNAME	ftp.gimp.org.

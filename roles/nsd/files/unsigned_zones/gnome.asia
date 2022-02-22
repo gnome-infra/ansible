@@ -1,0 +1,65 @@
+$TTL        300
+@       IN  SOA ns-master.gnome.org. hostmaster.gnome.org. (
+                2021091400  ; Serial
+                28800       ; Refresh
+                7200        ; Retry
+                604800      ; Expire
+                300     ; Default TTL
+            )
+
+            IN  NS  ns-master.gnome.org.
+            IN  NS  ns-slave.gnome.org.
+
+            IN  A  185.199.108.153
+            IN  A  185.199.109.153
+            IN  A  185.199.110.153
+            IN  A  185.199.111.153
+
+            IN  AAAA 2606:50c0:8000::153
+            IN  AAAA 2606:50c0:8001::153
+            IN  AAAA 2606:50c0:8002::153
+            IN  AAAA 2606:50c0:8003::153
+
+            IN  TXT "v=spf1 a mx a:gnome.asia ip4:34.215.195.175 ?all"
+
+            IN  MX  30 ASPMX5.GOOGLEMAIL.COM.
+            IN  MX  30 ASPMX4.GOOGLEMAIL.COM.
+            IN  MX  30 ASPMX3.GOOGLEMAIL.COM.
+            IN  MX  20 ALT2.ASPMX.L.GOOGLE.COM.
+            IN  MX  30 ASPMX2.GOOGLEMAIL.COM.
+            IN  MX  10 ASPMX.L.GOOGLE.COM.
+            IN  MX  20 ALT1.ASPMX.L.GOOGLE.COM.
+
+
+ftp         IN  A   34.215.195.175
+m           IN  A   34.215.195.175
+localhost   IN  A   127.0.0.1
+webmail     IN  A   34.215.195.175
+admin       IN  A   34.215.195.175
+2011tmp     IN  A   67.207.129.73
+china       IN  A   67.207.131.31
+china2      IN  A   67.207.131.31
+mail        IN  A   209.20.68.30
+rock        IN  A   119.59.73.133
+survey      IN  A   34.215.195.175
+2008        IN  CNAME   rock
+2009        IN  CNAME   rock
+2010        IN  CNAME   rock
+2011        IN  CNAME   rock
+survey2     IN  CNAME   dizi.lyrical.net.
+www         IN  CNAME   gnome-asia.github.io.
+test        IN  CNAME   rock
+zozo        IN  CNAME   rock
+2012        IN  CNAME   gnome.asia.
+2013        IN  CNAME   gnome.asia.
+2014        IN  CNAME   gnome.asia.
+2017        IN  A   52.26.95.19
+2016        IN  A   34.215.195.175
+2015        IN  A   34.215.195.175
+2018        IN  CNAME   gnome-asia.github.io.
+2019        IN  CNAME   gnome-asia.github.io.
+2020        IN  CNAME   openshift.gnome.org.
+
+google3ead69f8239dfb8a  IN  CNAME   google.com.
+
+gnome.asia. IN TXT "github-verification=a7zjTstjyQXRYw49sP6CxDCMF4BGKTGqdZWQGIRDER"

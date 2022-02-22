@@ -1,0 +1,30 @@
+$TTL		300
+
+@		IN	SOA	ns-master.gnome.org. hostmaster.gnome.org. (
+				2020041500      ; Serial
+				28800		; Refresh
+				7200		; Retry
+				604800		; Expire
+				;86400		; Default TTL
+				;3600		; Default TTL
+				300		; Default TTL
+				)
+
+		IN	NS	ns-master.gnome.org.
+		IN	NS	ns-slave.gnome.org.
+
+; front-ams.flathub.org
+		IN	A	46.235.231.150
+		IN	AAAA	2a00:1098:88:12::1
+
+; front-hex2.flathub.org
+		IN	A	46.235.230.111
+		IN	AAAA	2a00:1098:82:e:0:0:1:1
+
+		IN	MX	10 smtp.gnome.org.
+
+docs		IN	CNAME	readthedocs.io.
+
+www		IN	CNAME   @
+
+flatpak.org. IN TXT "libera-iE!2PbqoQsUaDXkRDrbAX2_j"

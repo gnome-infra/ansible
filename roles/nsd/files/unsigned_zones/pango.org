@@ -1,0 +1,18 @@
+$TTL 3600
+@	IN	SOA	pango.org. hostmaster.gnome.org.  (
+				2022022100 ; Serial
+				10800      ; Refresh
+				900        ; Retry
+				1000000    ; Expire
+				3600 )     ; Minimum
+	IN	NS	ns-master.gnome.org.
+	IN	NS	ns-slave.gnome.org.
+
+	IN	MX	10	smtp.gnome.org.
+    IN	A   8.43.85.13
+    IN  A   8.43.85.14
+    IN  A   8.43.85.29 
+
+www     IN      CNAME   openshift.gnome.org. 
+wiki    IN      CNAME   openshift.gnome.org.
+old     IN      CNAME   openshift.gnome.org. 

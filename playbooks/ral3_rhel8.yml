@@ -27,3 +27,10 @@
   roles:
    - squid
    - node-exporter
+
+- hosts: nsd
+  gather_facts: true
+  remote_user: root
+  roles:
+   - nsd
+   - node-exporter
