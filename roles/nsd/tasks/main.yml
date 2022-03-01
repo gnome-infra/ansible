@@ -90,6 +90,8 @@
     - rebuild nsd database
     - reload nsd database
     - notify slaves
+  tags:
+    - unsigned_zones
 
 - name: Copy content of signed zones
   copy:
@@ -105,3 +107,5 @@
     - rebuild nsd database
     - reload nsd database
     - notify slaves
+  tags:
+    - signed_zones
