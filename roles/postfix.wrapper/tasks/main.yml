@@ -1,0 +1,13 @@
+---
+- import_role:
+    name: postfix
+  vars:
+    postfix_conf:
+      relayhost: "smtp-int.gnome.org"
+      my_hostname: "{{ ansible_fqdn }}"
+      inet_interfaces: "localhost, vpn.{{ ansible_fqdn }}"
+      mynetworks: "127.0.0.0/8, 8.43.85.24/32, 172.31.2.36/32"
+      smtpd_recipient_restrictions: "permit_mynetworks, reject"
+      smtpd_client_restrictions: "permit_mynetworks, reject"
+      smtp_tls_security_level: "encrypt"
+      smtp_tls_CAfile: "/etc/pki/tls/certs/ca-bundle.crt"

@@ -9,6 +9,7 @@
    - chrony
    - iptables
    - ipaclient.wrapper
+   - postfix.wrapper
    - bash
    - base_auth
    - nrpe

@@ -4,4 +4,5 @@ roles/redhat.subscription
 roles/chrony
 roles/iptables
 roles/geerlingguy.*
+roles/postfix
 vault
