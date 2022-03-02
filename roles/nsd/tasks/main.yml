@@ -4,11 +4,17 @@
   include_vars:
     file: master.yml
   when: is_master|default(false)
+  tags:
+    - unsigned_zones
+    - signed_zones
 
 - name: Custom role dependant variables (slave)
   include_vars:
     file: slave.yml
   when: is_slave|default(false)
+  tags:
+    - unsigned_zones
+    - signed_zones
 
 - name: Install nsd
   dnf: pkg={{ nsd_pkg_name }} state=present
