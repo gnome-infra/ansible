@@ -4,7 +4,7 @@
   vars:
     postfix_conf:
       relayhost: "smtp-int.gnome.org"
-      my_hostname: "{{ ansible_fqdn }}"
+      myhostname: "{{ ansible_fqdn }}"
       inet_interfaces: "localhost, vpn.{{ ansible_fqdn }}"
       mynetworks: "127.0.0.0/8, 8.43.85.24/32, 172.31.2.36/32"
       smtpd_recipient_restrictions: "permit_mynetworks, reject"
