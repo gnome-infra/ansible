@@ -115,3 +115,27 @@
     - notify slaves
   tags:
     - signed_zones
+
+- name: Install certbot
+  dnf: name=certbot state=installed
+  when: is_master|default(false)
+
+- name: Install certbot renew timer for OCP4
+  template:
+    src: openshift-certbot-renew.timer.j2
+    dest: /etc/systemd/system/openshift-certbot-renew.timer
+  when: is_master|default(false)
+
+- name: Install certbot renew service for OCP4
+  template:
+    src: openshift-certbot-renew.service.j2
+    dest: /etc/systemd/system/openshift-certbot-renew.service
+  when: is_master|default(false)
+
+- name: Enable openshift-certbot-renew timer
+  systemd:
+    name: openshift-certbot-renew.timer
+    state: started
+    enabled: yes
+    daemon-reload: yes
+  when: is_master|default(false)

@@ -1,0 +1,10 @@
+[Unit]
+Description=Renew OCP4 wildcard LE certificate monthly
+
+[Timer]
+OnCalendar=monthly
+RandomizedDelaySec=12hours
+Persistent=true
+
+[Install]
+WantedBy=timers.target
