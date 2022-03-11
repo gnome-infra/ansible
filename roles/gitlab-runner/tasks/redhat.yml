@@ -1,35 +1,29 @@
 ---
-- name: install python2-dnf
-  yum: name=python2-dnf state=present
-  when: ansible_distribution_major_version < "8"
-
-- name: remove CentOS docker packages
-  yum: name=docker,docker-common state=absent
-  tags: docker
-
 - name: add docker repository
   yum_repository:
     name: docker-ce
     description: Docker CE
     file: docker-ce
-    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
-    gpgkey: https://download.docker.com/linux/centos/gpg
+    baseurl: https://download.docker.com/linux/fedora/$releasever/$basearch/stable
+    gpgkey: https://download.docker.com/linux/fedora/gpg
     gpgcheck: yes
 
-- name: install docker-ce
-  yum: name=docker-ce,docker-ce-cli,containerd.io state=present
+- name: install docker
+  yum: name=docker-ce,docker-ce-cli,containerd.io,python3-docker,crun state=present
 
-- name: install python-docker-py
-  yum: name=python-docker-py state=present
-  when: ansible_distribution_major_version < "8"
+- name: start and enable docker socket
+  systemd: name=docker.socket state=started enabled=yes
 
 - name: add gitlab-runner repository
   yum_repository:
     name: runner_gitlab-runner
     description: GitLab Runner repository
+    baseurl: https://packages.gitlab.com/runner/gitlab-runner/fedora/33/$basearch
+    gpgkey: |
+      https://packages.gitlab.com/runner/gitlab-runner/gpgkey
+      https://packages.gitlab.com/runner/gitlab-runner/gpgkey/runner-gitlab-runner-4C80FB51394521E9.pub.gpg
     file: runner_gitlab-runner
-    baseurl: https://packages.gitlab.com/runner/gitlab-runner/el/$releasever/$basearch
-    gpgcheck: no
+    gpgcheck: yes
 
 - name: install selinux-policy-devel
   yum: name=selinux-policy-devel state=present
@@ -47,4 +41,4 @@
   tags: selinux
 
 - name: install gitlab-runner
-  yum: name=gitlab-runner state=present
+  yum: name=gitlab-runner,cronie state=present

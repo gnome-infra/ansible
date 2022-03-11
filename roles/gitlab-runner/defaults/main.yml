@@ -9,3 +9,6 @@ gitlab_runner_dockerd_config:
   fixed-cidr-v6: "2001:db8:1::/64"
   registry-mirrors:
     - "https://dptr.openshift.gnome.org"
+  runtimes:
+    crun:
+      path: /usr/bin/crun
