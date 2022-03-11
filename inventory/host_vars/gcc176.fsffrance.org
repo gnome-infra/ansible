@@ -18,6 +18,7 @@ gitlab_runner_runners:
     seccomp: "buildah"
     executor: "docker"
     docker:
+      runtime: "\"crun\""
       tls_verify: "false"
       image: "\"fedora:latest\""
       disable_cache: "true"
