@@ -9,6 +9,7 @@ gitlab_runner_runners:
     output_limit: 32768
     url: "https://gitlab.gnome.org"
     executor: "docker"
+    environment: '["container=docker"]'
     token: !vault |
            $ANSIBLE_VAULT;1.1;AES256
            65363864363861646633393131656435343334363466623065633732616565653536643537316364

@@ -17,6 +17,7 @@ gitlab_runner_runners:
           64396663643962653066316338326631643431636132336131393466316264383235
     seccomp: "buildah"
     executor: "docker"
+    environment: '["container=docker"]'
     docker:
       runtime: "\"crun\""
       tls_verify: "false"

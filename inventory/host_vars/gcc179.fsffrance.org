@@ -17,6 +17,7 @@ gitlab_runner_runners:
           64613361346135323437663463633938303263303535353430643334373565646463
     seccomp: "buildah"
     executor: "docker"
+    environment: '["container=docker"]'
     docker:
       tls_verify: "false"
       image: "\"fedora:latest\""
