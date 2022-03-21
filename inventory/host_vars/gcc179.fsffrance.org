@@ -19,6 +19,7 @@ gitlab_runner_runners:
     executor: "docker"
     environment: '["container=docker"]'
     docker:
+      runtime: "\"crun\""
       tls_verify: "false"
       image: "\"fedora:latest\""
       disable_entrypoint_overwrite: "false"
@@ -51,6 +52,7 @@ gitlab_runner_runners:
     executor: "docker"
     seccomp: "flatpak"
     docker:
+      runtime: "\"crun\""
       tls_verify: "false"
       image: "\"fedora:latest\""
       shm_size: 0
@@ -71,6 +73,7 @@ gitlab_runner_runners:
           35356464653835333335653535623636663763386238613866323166333037333366
     executor: "docker"
     docker:
+      runtime: "\"crun\""
       tls_verify: "false"
       image: "\"fedora:latest\""
       disable_entrypoint_overwrite: "false"
