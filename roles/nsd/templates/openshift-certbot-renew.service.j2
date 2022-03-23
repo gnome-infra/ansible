@@ -5,4 +5,4 @@ Description=Renew OCP4 wildcard LE certificate
 Type=oneshot
 User=letsencrypt
 WorkingDirectory=/srv/letsencrypt
-ExecStart=/usr/bin/certbot -v certonly --noninteractive --no-random-sleep-on-renew --work-dir /srv/letsencrypt/ --config-dir /srv/letsencrypt/config/ --logs-dir /srv/letsencrypt/logs/ --manual --preferred-challenges=dns --manual-auth-hook /home/admin/bin/certbot/auth-hook --manual-cleanup-hook /home/admin/bin/certbot/cleanup-hook -d '*.apps.openshift4.gnome.org'
+ExecStart=/usr/bin/certbot -v certonly --noninteractive --no-random-sleep-on-renew --work-dir /srv/letsencrypt/ --config-dir /srv/letsencrypt/config/ --logs-dir /srv/letsencrypt/logs/ --manual --preferred-challenges=dns --manual-auth-hook /home/admin/bin/certbot/auth-hook --manual-cleanup-hook /home/admin/bin/certbot/cleanup-hook --cert-name gnome.org -d '*.gnome.org,*.apps.openshift4.gnome.org'
