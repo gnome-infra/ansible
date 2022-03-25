@@ -96,3 +96,19 @@ scrape_configs:
     static_configs:
     - targets:
       - fosshost.gnome.org:9090
+
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+        - https://webmail.gnome.org
+        - https://bugzilla.gnome.org
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: fosshost.gnome.org:9116
