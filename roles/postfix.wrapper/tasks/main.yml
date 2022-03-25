@@ -11,3 +11,4 @@
       smtpd_client_restrictions: "permit_mynetworks, reject"
       smtp_tls_security_level: "encrypt"
       smtp_tls_CAfile: "/etc/pki/tls/certs/ca-bundle.crt"
+      smtputf8_enable: "no"
