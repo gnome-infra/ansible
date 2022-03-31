@@ -1,6 +1,6 @@
 $TTL		300
 @		IN	SOA	ns-master.gnome.org. hostmaster.gnome.org. (
-			        2022021100	; Serial
+			        2022033100	; Serial
 				28800		; Refresh
 				7200		; Retry
 				604800		; Expire
@@ -14,7 +14,7 @@ $TTL		300
 
                 IN	A   8.43.85.13
                 IN  A   8.43.85.14
-                IN  A   8.43.85.29 
+                IN  A   8.43.85.29
 
                 IN  MX  10  smtp.gnome.org.
 lists           IN  MX  10  smtp.gnome.org.
@@ -22,8 +22,8 @@ lists           IN  MX  10  smtp.gnome.org.
 wiki        IN  CNAME   openshift.gnome.org.
 www         IN  CNAME   openshift.gnome.org.
 
-planet      IN  CNAME   openshift.gnome.org.
-www.planet  IN  CNAME   openshift.gnome.org.
+planet      IN  CNAME   router-default.apps.openshift4.gnome.org.
+www.planet  IN  CNAME   router-default.apps.openshift4.gnome.org.
 memory      IN  CNAME   pylyglot.info.tm.
 
 lists       IN  A       8.43.85.13
