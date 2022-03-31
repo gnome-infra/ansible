@@ -59,15 +59,6 @@ gitlab_runner_runners:
       cap_drop: '["all"]'
       volumes: '["/proc:/host/proc"]'
       disable_cache: "true"
-    cache:
-      Type: "\"s3\""
-      Shared: "true"
-    cache.s3:
-      ServerAddress: "{{ gitlab_runner_cache_endpoint }}"
-      AccessKey: "{{ gitlab_runner_cache_access_key }}"
-      SecretKey: "{{ gitlab_runner_cache_secret_key }}"
-      BucketName: "{{ gitlab_runner_cache_bucket_name }}"
-      BucketLocation: "{{ gitlab_runner_cache_bucket_region }}"
 
   - name: "progress-asan"
     output_limit: 16384
@@ -123,3 +114,4 @@ gitlab_runner_runners:
       cap_drop: '["all"]'
       volumes: '["/proc:/host/proc"]'
       disable_cache: "true"
+
