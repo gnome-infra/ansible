@@ -89,7 +89,7 @@
     dest: "{{ nsd_master_zones_dir }}/{{ item.zone_filename }}"
     owner: root
     group: root
-    mode: 0644
+    mode: 0664
   with_items: "{{ nsd_unsigned_zones }}"
   when: is_master|default(false)
   notify:
@@ -105,7 +105,7 @@
     dest: "{{ nsd_master_zones_dir }}/{{ item.zone_filename }}"
     owner: root
     group: root
-    mode: 0644
+    mode: 0664
     remote_src: yes
   with_items: "{{ nsd_signed_zones }}"
   when: is_master|default(false)
