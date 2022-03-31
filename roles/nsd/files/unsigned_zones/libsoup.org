@@ -1,6 +1,6 @@
 $TTL 300
 @        IN    SOA    ns-master.gnome.org. hostmaster.gnome.org. (
-                2022020300; Serial
+                2022033100; Serial
                 28800; Refresh
                 7200; Retry
                 604800; Expire
@@ -10,10 +10,10 @@ $TTL 300
                 IN    NS    ns-master.gnome.org.
                 IN    NS    ns-slave.gnome.org.
 
-                IN  A   8.43.85.13
-                IN  A   8.43.85.14
-                IN  A   8.43.85.29
+                IN  A   8.43.85.3
+                IN  A   8.43.85.4
+                IN  A   8.43.85.5
 
                 IN  TXT "google-site-verification=Mgpz9pg08HGTf7Npx1NQ7bZ3IaG1v0ww9QiS_HB6u4o"
 
-www IN  CNAME    openshift.gnome.org.
+www IN  CNAME   router-default.apps.openshift4.gnome.org.
