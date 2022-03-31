@@ -4,6 +4,8 @@ Requires=docker.service
 After=docker.service
 
 [Service]
+Environment="LORRY_SSH_KEY={{ lorry.ssh_key | replace('\n', '\\n')  }}"
+Environment=LORRY_SSH_KNOWN_HOSTS={{ lorry.gitlab_domain }}
 Type=oneshot
 RemainAfterExit=yes
 WorkingDirectory={{ lorry_data_dir }}
