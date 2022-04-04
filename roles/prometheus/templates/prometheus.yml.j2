@@ -165,11 +165,6 @@ scrape_configs:
     static_configs:
       - targets:
         - gitlab.gnome.org
-  - job_name: gitlab_exporter_database
-    metrics_path: "/database"
-    static_configs:
-      - targets:
-        - gitlab.gnome.org:9168
   - job_name: gitlab_exporter_sidekiq
     metrics_path: "/sidekiq"
     static_configs:
