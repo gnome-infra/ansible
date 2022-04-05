@@ -159,12 +159,6 @@ scrape_configs:
     static_configs:
       - targets:
         - gitlab.gnome.org:9229
-  - job_name: gitlab_rails
-    metrics_path: "/-/metrics"
-    scheme: https
-    static_configs:
-      - targets:
-        - gitlab.gnome.org
   - job_name: gitlab_exporter_sidekiq
     metrics_path: "/sidekiq"
     static_configs:
