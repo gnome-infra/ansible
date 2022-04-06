@@ -1,0 +1,7 @@
+[oscp4-all:children]
+oscp-masters
+
+[oscp4-masters]
+master1.openshift4.gnome.org master_node_ip=172.31.2.50
+master2.openshift4.gnome.org master_node_ip=172.31.2.51
+master3.openshift4.gnome.org master_node_ip=172.31.2.52

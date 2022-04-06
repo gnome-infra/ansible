@@ -168,3 +168,34 @@ scrape_configs:
     static_configs:
       - targets:
         - gitlab.gnome.org:9236
+
+  - job_name: 'openshift4'
+    scheme: https
+    honor_labels: true
+    bearer_token: {{ prometheus_openshift4_token }}
+    metrics_path: '/federate'
+    params:
+      'match[]':
+      - '{job="etcd"}'
+      - '{job="node-exporter"}'
+    static_configs:
+    - targets:
+      - prometheus-k8s-openshift-monitoring.apps.openshift4.gnome.org
+    metric_relabel_configs:
+    - source_labels: [ prometheus_replica ]
+      regex: prometheus-k8s-1
+      action: drop
+{% for host in groups['oscp4-all'] %}
+    - source_labels: [ instance ]
+      target_label: instance
+      regex: {{ master_node_ip }}:.*
+      replacement: {{ host }}
+{% endfor %}
+    - source_labels: [ job ]
+      target_label: job
+      regex: etcd
+      replacement: openshift4-etcd
+    - source_labels: [ job ]
+      target_label: job
+      regex: node-exporter
+      replacement: node
