@@ -25,6 +25,18 @@
   tags:
     - prometheus_config
 
+- name: Copy over Openshift Monitoring rule file (expr)
+  copy:
+    src: openshift-monitoring.rules
+    dest: "{{ prometheus_config_dir }}/rules/openshift-monitoring.rules"
+    owner: root
+    group: prometheus
+    mode: '0640'
+    validate: "/usr/local/bin/promtool check rules %s"
+  notify: reload prometheus
+  tags:
+    - prometheus_config
+
 - name: start and enable prometheus
   systemd:
     name: prometheus
