@@ -178,6 +178,8 @@ scrape_configs:
       'match[]':
       - '{job="etcd"}'
       - '{job="node-exporter"}'
+      - '{job="kubelet"}'
+      - '{job="kube-state-metrics"}'
     static_configs:
     - targets:
       - prometheus-k8s-openshift-monitoring.apps.openshift4.gnome.org
@@ -199,3 +201,11 @@ scrape_configs:
       target_label: job
       regex: node-exporter
       replacement: node
+    - source_labels: [ job ]
+      target_label: job
+      regex: kubelet
+      replacement: openshift4-kubelet
+    - source_labels: [ job ]
+      target_label: job
+      regex: kube-state-metrics
+      replacement: openshift4-kube-state-metrics
