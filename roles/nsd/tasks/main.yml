@@ -87,8 +87,8 @@
   copy:
     src: "unsigned_zones/{{ item.zone_filename }}"
     dest: "{{ nsd_master_zones_dir }}/{{ item.zone_filename }}"
-    owner: root
-    group: root
+    owner: nsd
+    group: nsd
     mode: 0664
   with_items: "{{ nsd_unsigned_zones }}"
   when: is_master|default(false)
@@ -103,8 +103,8 @@
   copy:
     src: "/srv/dns/built/{{ item.zone_filename }}.signed"
     dest: "{{ nsd_master_zones_dir }}/{{ item.zone_filename }}"
-    owner: root
-    group: root
+    owner: nsd
+    group: nsd
     mode: 0664
     remote_src: yes
   with_items: "{{ nsd_signed_zones }}"
