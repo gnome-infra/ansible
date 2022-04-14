@@ -32,6 +32,11 @@ groups:
     expr: '(node_filesystem_files{fstype!="fuse.ceph-fuse"} - node_filesystem_files_free) / node_filesystem_files > 0.9'
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} has less than 10% of free inodes available on {{ $labels.mountpoint }}{% endraw %}"
+- name: blackbox
+  rules:
+  - alert: SSLCertExpiration
+    expr: probe_ssl_earliest_cert_expiry{job="blackbox"} - time() < 86400 * 7
+    for: 1m
 - name: bbb
   rules:
   - alert: bbb-exporter is down
