@@ -1,6 +1,6 @@
 $TTL 300
 @        IN    SOA    ns-master.gnome.org. hostmaster.gnome.org. (
-                2021011800; Serial
+                2022041500; Serial
                 28800; Refresh
                 7200; Retry
                 604800; Expire
