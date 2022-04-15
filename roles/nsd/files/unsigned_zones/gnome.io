@@ -12,8 +12,8 @@ $TTL 300
 
                 MX  10  smtp.gnome.org. 
 
-                IN  A   8.43.85.13
-                IN  A   8.43.85.14
-                IN  A   8.43.85.29
+                IN  A   8.43.85.3
+                IN  A   8.43.85.4
+                IN  A   8.43.85.5
 
-www IN  CNAME    openshift.gnome.org.
+www IN  CNAME    router-default.apps.openshift4.gnome.org.

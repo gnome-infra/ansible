@@ -19,13 +19,13 @@ $TTL		300
                 IN  MX  10  smtp.gnome.org.
 lists           IN  MX  10  smtp.gnome.org.
 
-wiki        IN  CNAME   openshift.gnome.org.
+wiki        IN  CNAME   router-default.apps.openshift4.gnome.org.
 www         IN  CNAME   router-default.apps.openshift4.gnome.org. 
 
 planet      IN  CNAME   router-default.apps.openshift4.gnome.org.
 www.planet  IN  CNAME   router-default.apps.openshift4.gnome.org.
 memory      IN  CNAME   pylyglot.info.tm.
 
-lists       IN  A       8.43.85.13
-            IN  A       8.43.85.14
-            IN  A       8.43.85.29
+lists       IN  A       8.43.85.3
+            IN  A       8.43.85.4
+            IN  A       8.43.85.5

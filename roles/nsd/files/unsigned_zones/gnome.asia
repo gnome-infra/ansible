@@ -58,7 +58,7 @@ zozo        IN  CNAME   rock
 2015        IN  A   34.215.195.175
 2018        IN  CNAME   gnome-asia.github.io.
 2019        IN  CNAME   gnome-asia.github.io.
-2020        IN  CNAME   openshift.gnome.org.
+2020        IN  CNAME   router-default.apps.openshift4.gnome.org.
 
 google3ead69f8239dfb8a  IN  CNAME   google.com.
 
