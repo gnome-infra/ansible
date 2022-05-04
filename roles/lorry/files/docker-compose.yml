@@ -25,6 +25,9 @@ services:
     volumes:
     - ./config:/config
     - ./working-area:/data/working-area
+    environment:
+    - LORRY_SSH_KEY=${LORRY_SSH_KEY}
+    - LORRY_SSH_KNOWN_HOSTS=${LORRY_SSH_KNOWN_HOSTS}
     restart: on-failure
     networks:
     - lorry
