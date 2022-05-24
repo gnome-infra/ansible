@@ -37,12 +37,6 @@ scrape_configs:
       target_label: instance
       regex: vpn.(.*)
 
-  - job_name: 'rocketchat'
-    scheme: https
-    static_configs:
-    - targets:
-      - rocketchat-exporter.openshift.gnome.org
-
   - job_name: 'mysqld'
     static_configs:
     - targets:
@@ -60,32 +54,6 @@ scrape_configs:
     static_configs:
     - targets:
       - bbb-exporter.apps.openshift4.gnome.org
-
-  - job_name: 'openshift-node-exporter'
-    scheme: https
-    honor_labels: true
-    bearer_token: {{ prometheus_openshift_token }}
-    metrics_path: '/federate'
-    params:
-      'match[]':
-      - '{job="node-exporter"}'
-    static_configs:
-    - targets:
-      - prometheus-k8s-openshift-monitoring.openshift.gnome.org
-    metric_relabel_configs:
-    - source_labels: [ prometheus_replica ]
-      regex: prometheus-k8s-1
-      action: drop
-    - source_labels: [ job ]
-      target_label: job
-      regex: node-exporter
-      replacement: node
-{% for host in groups['oscp-all'] %}
-    - source_labels: [ instance ]
-      target_label: instance
-      regex: {{ hostvars[host].ansible_eth1['ipv4']['address'] }}:9100
-      replacement: {{ host }}
-{% endfor %}
 
   - job_name: 'gitlab-runners'
     honor_labels: true

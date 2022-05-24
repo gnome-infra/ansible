@@ -1,10 +1,4 @@
 ---
-- name: gather facts from OSCP nodes
-  hosts: oscp-all
-  remote_user: root
-  gather_facts: true
-  tasks: []
-
 - hosts: prometheus-server
   gather_facts: true
   remote_user: root
