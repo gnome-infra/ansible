@@ -12,3 +12,8 @@ gitlab_runner_dockerd_config:
   runtimes:
     crun:
       path: /usr/bin/crun
+  default-ulimits:
+    nofile:
+      Hard: 524288
+      Name: nofile
+      Soft: 524288
