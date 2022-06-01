@@ -1,21 +1,23 @@
 [gitlab-runners]
 progress.gnome.org
+140.211.166.9
+140.211.166.15
 
 [gitlab-runners-gbm]
 147.75.194.17
 147.75.80.214
 
-[gitlab-runners-osuosl]
-
-[gitlab-runners-aarch64]
+[gitlab-runners-codethink]
 codethink-arm-1.zt.flathub.org
 codethink-arm-2.zt.flathub.org
 codethink-arm-3.zt.flathub.org
 codethink-arm-4.zt.flathub.org
+
+[gitlab-runners-fosshost]
 fosshost-arm-1
 fosshost-arm-2
 
 [gitlab-runners:children]
 gitlab-runners-gbm
-gitlab-runners-osuosl
-gitlab-runners-aarch64
+gitlab-runners-codethink
+gitlab-runners-fosshost

@@ -1,0 +1,90 @@
+---
+gitlab_runner_docuum_threshold: "150 GB"
+gitlab_runner_concurrent: 3
+gitlab_runner_check_interval: 0
+
+gitlab_runner_runners:
+  - name: "osuosl-x86-2"
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          66386464356464326132646465643836613565343666636539623539356439616538396434326339
+          3630616432326565333237356632663835653436373638610a383835656265633932323736656432
+          62346539653331303035393262613866616231646232336337366336323461623438376133656331
+          6431386331613730640a616333313263303065336231626132323934633363376638626534316133
+          37323033383261663263363765366233383033333931303466633866633462633230
+    executor: "docker"
+    seccomp: "buildah"
+    docker:
+      runtime: "\"crun\""
+      tls_verify: "false"
+      image: "\"fedora:latest\""
+      volumes: '["/cache"]'
+      disable_cache: "true"
+      shm_size: 0
+      privileged: "false"
+    cache:
+      Type: "\"s3\""
+      Shared: "true"
+    cache.s3:
+      ServerAddress: "{{ gitlab_runner_cache_endpoint }}"
+      AccessKey: "{{ gitlab_runner_cache_access_key }}"
+      SecretKey: "{{ gitlab_runner_cache_secret_key }}"
+      BucketName: "{{ gitlab_runner_cache_bucket_name }}"
+      BucketLocation: "{{ gitlab_runner_cache_bucket_region }}"
+
+  - name: "osuosl-x86-2-flatpak"
+    limit: 1
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          62323035646637326362363734373662316664393131643835396430373166343435613563313563
+          3239393330316165653163326533643764623936323038630a316562323061303161333161653336
+          36373638656631313566363731663531643362316337363562343538383038623236303733303236
+          3231656534366436390a383335656465663361616663346434396334623435376234643039373730
+          35643933663466656635356238643465643430313535353566316136613235386638
+    executor: "docker"
+    seccomp: "flatpak"
+    docker:
+      runtime: "\"crun\""
+      tls_verify: "false"
+      image: "\"fedora:latest\""
+      shm_size: 0
+      privileged: "false"
+      cap_drop: '["all"]'
+      volumes: '["/proc:/host/proc"]'
+      disable_cache: "true"
+
+  - name: "osuosl-x86-2-asan"
+    output_limit: 16384
+    url: "https://gitlab.gnome.org/"
+    token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          38363663373332303262623731663566303062393333363438386330376131333864343436613939
+          3631323263353434663134643431633535666335626334340a643138663562376637356666643935
+          33313036626232383737326631646266616661356434623366386264323537346431376563623066
+          3465666632386365330a373265326435306339663939636162313035626538346638623861633033
+          64366439336536386235646463623866386261386137613133653466393266346537
+    executor: "docker"
+    docker:
+      runtime: "\"crun\""
+      tls_verify: "false"
+      image: "\"fedora:latest\""
+      disable_entrypoint_overwrite: "false"
+      oom_kill_disable: "false"
+      volumes: '["/cache"]'
+      disable_cache: "true"
+      shm_size: 0
+      privileged: "false"
+      cap_add: ["SYS_PTRACE"]
+    cache:
+      Type: "\"s3\""
+      Shared: "true"
+    cache.s3:
+      ServerAddress: "{{ gitlab_runner_cache_endpoint }}"
+      AccessKey: "{{ gitlab_runner_cache_access_key }}"
+      SecretKey: "{{ gitlab_runner_cache_secret_key }}"
+      BucketName: "{{ gitlab_runner_cache_bucket_name }}"
+      BucketLocation: "{{ gitlab_runner_cache_bucket_region }}"

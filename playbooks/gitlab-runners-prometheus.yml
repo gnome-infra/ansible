@@ -1,12 +1,12 @@
 ---
-- hosts: gitlab-runners,fosshost.gnome.org
+- hosts: gitlab-runners,!gitlab-runners-codethink,!147.75.80.214,fosshost.gnome.org
   gather_facts: true
   remote_user: root
   roles:
    - node-exporter
 
 - name: gather facts from GitLab runners
-  hosts: gitlab-runners
+  hosts: gitlab-runners,!gitlab-runners-codethink,!147.75.80.214
   remote_user: root
   gather_facts: true
   tasks: []
