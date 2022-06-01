@@ -1,6 +1,0 @@
----
-- hosts: gcc176.fsffrance.org
-  gather_facts: true
-  remote_user: root
-  roles:
-    - pullthrough-registry

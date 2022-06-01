@@ -6,9 +6,7 @@ progress.gnome.org
 147.75.80.214
 
 [gitlab-runners-osuosl]
-gcc150.fsffrance.org
 gcc175.fsffrance.org
-gcc176.fsffrance.org
 gcc179.fsffrance.org
 
 [gitlab-runners-aarch64]
