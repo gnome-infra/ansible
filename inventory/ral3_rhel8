@@ -2,6 +2,7 @@
 virtual-machines
 hypervisors
 bastions
+nsd
 
 [virtual-machines]
 ceph-metrics.gnome.org
