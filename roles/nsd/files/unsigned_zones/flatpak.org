@@ -1,7 +1,7 @@
 $TTL		300
 
 @		IN	SOA	ns-master.gnome.org. hostmaster.gnome.org. (
-				2022060900      ; Serial
+				2022062200      ; Serial
 				28800		; Refresh
 				7200		; Retry
 				604800		; Expire
@@ -24,3 +24,4 @@ docs		IN	CNAME	readthedocs.io.
 www		IN	CNAME   router-default.apps.openshift4.gnome.org.
 
 flatpak.org. IN TXT "libera-iE!2PbqoQsUaDXkRDrbAX2_j"
+_github-challenge-flatpak-org IN TXT "917f6431b5"
