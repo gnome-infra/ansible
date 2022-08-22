@@ -5,4 +5,3 @@ roles/chrony
 roles/iptables
 roles/geerlingguy.*
 roles/postfix
-vault
