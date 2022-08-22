@@ -3,10 +3,6 @@
   src: https://github.com/openstack/ansible-role-redhat-subscription.git
   scm: git
 
-- name: ipaclient
-  src: https://github.com/freeipa/ansible-freeipa.git
-  scm: git
-
 - name: chrony
   src: https://github.com/openstack/ansible-role-chrony.git
   scm: git
