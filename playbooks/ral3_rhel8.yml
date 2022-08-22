@@ -2,8 +2,9 @@
 - hosts: all
   gather_facts: true
   remote_user: root
-  roles:
+  collections:
    - community.general.redhat_subscription
+  roles:
    - packages
    - motd
    - chrony
