@@ -8,6 +8,7 @@
     - public_keys/averi
     - public_keys/bpiotrowski
     - public_keys/backups
+    - public_keys/awx
 
 - name: Set default root password
   user:
