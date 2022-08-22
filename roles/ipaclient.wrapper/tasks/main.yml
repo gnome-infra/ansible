@@ -13,7 +13,7 @@
     mode: 0644
 
 - import_role:
-    name: ipaclient
+    name: ipaclient/ipaclient
   vars:
     # All IPA variables are defined at https://github.com/freeipa/ansible-freeipa/blob/master/roles/ipaclient/README.md
 
