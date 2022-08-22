@@ -3,7 +3,7 @@
   gather_facts: true
   remote_user: root
   roles:
-   - redhat.subscription
+   - community.general.redhat_subscription
    - packages
    - motd
    - chrony

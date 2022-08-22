@@ -1,8 +1,4 @@
 ---
-- name: redhat.subscription
-  src: https://github.com/openstack/ansible-role-redhat-subscription.git
-  scm: git
-
 - name: chrony
   src: https://github.com/openstack/ansible-role-chrony.git
   scm: git
