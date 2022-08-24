@@ -14,4 +14,4 @@
 
 - name: Configure rsyslog server
   include_tasks: configure_server.yml
-  when: is_rsyslog_server
+  when: is_rsyslog_server is defined
