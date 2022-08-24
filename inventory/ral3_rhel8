@@ -7,6 +7,7 @@ nsd
 [virtual-machines]
 ceph-metrics.gnome.org
 bastion01.gnome.org
+logs.gnome.org is_rsyslog_server=true
 
 [ceph]
 ceph01.gnome.org
