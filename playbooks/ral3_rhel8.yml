@@ -12,7 +12,7 @@
         password: "{{ rhsm_password }}"
         auto_attach: true
 
-- hosts: all
+- hosts: all,!ceph,!ceph-metrics.gnome.org
   gather_facts: true
   remote_user: root
   roles:
@@ -27,6 +27,7 @@
    - nrpe
    - base_network
    - rsyslog
+   - node-exporter
 
 - hosts: hypervisors
   gather_facts: true
@@ -39,11 +40,9 @@
   remote_user: root
   roles:
    - squid
-   - node-exporter
 
 - hosts: nsd
   gather_facts: true
   remote_user: root
   roles:
    - nsd
-   - node-exporter
