@@ -10,7 +10,7 @@
 
 - name: Configure rsyslog client
   include_tasks: configure_client.yml
-  when: is_rsyslog_server is undefined or not is_rsyslog_server
+  when: is_rsyslog_server is undefined
 
 - name: Configure rsyslog server
   include_tasks: configure_server.yml
