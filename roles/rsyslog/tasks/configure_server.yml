@@ -1,0 +1,13 @@
+- name: configure rsyslog server
+  template:
+    src: rsyslog.conf.j2
+    dest: /etc/rsyslog.d/rsyslog.conf
+  notify: restart rsyslog
+
+- name: land logrotate rules for /var/log/hosts
+  copy:
+    src: files/var-log-hosts
+    dest: /etc/logrotate.d/var-log-hosts
+    owner: root
+    group: root
+    mode: '0644'

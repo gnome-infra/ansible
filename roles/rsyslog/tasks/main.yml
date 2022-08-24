@@ -8,8 +8,10 @@
     state: started
     enabled: true
 
-- name: configure remote logging
-  template:
-    src: remotelog.conf.j2
-    dest: /etc/rsyslog.d/remotelog.conf
-  notify: restart rsyslog
+- name: Configure rsyslog client
+  include_tasks: configure_client.yml
+  when: not is_rsyslog_server
+
+- name: Configure rsyslog server
+  include_tasks: configure_server.yml
+  when: is_rsyslog_server

@@ -1,0 +1,5 @@
+- name: configure remote logging
+  template:
+    src: remotelog.conf.j2
+    dest: /etc/rsyslog.d/remotelog.conf
+  notify: restart rsyslog

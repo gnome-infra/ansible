@@ -1,0 +1,15 @@
+/var/log/hosts/*/*/*/*/*.log {
+    daily
+    compress
+    missingok
+    notifempty
+    nocreate
+}
+
+/var/log/hosts/*/*/*/*/http/*.log {
+    daily
+    compress
+    missingok
+    notifempty
+    nocreate
+}
