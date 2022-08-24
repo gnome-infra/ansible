@@ -2,7 +2,6 @@
 ral3_rhel7
 
 [ral3_rhel7]
-nsd02.gnome.org
 gesture.gnome.org
 view.gnome.org
 scale.gnome.org
@@ -10,8 +9,6 @@ flowbox.gnome.org
 master.gnome.org
 account.gnome.org
 gitlab.gnome.org
-nsd01.gnome.org
-palette.gnome.org
 restaurant.gnome.org
 puppetmaster01.gnome.org
 puppetmaster02.gnome.org
