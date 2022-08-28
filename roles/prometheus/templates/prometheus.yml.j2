@@ -181,3 +181,11 @@ scrape_configs:
       - targets:
         - postgresql-exporter-primary.apps.openshift4.gnome.org
         - postgresql-exporter-replica.apps.openshift4.gnome.org
+
+  - job_name: openshift4-mysqld
+    scheme: https
+    static_configs:
+      - targets:
+        - mysqld-exporter-0.apps.openshift4.gnome.org
+        - mysqld-exporter-1.apps.openshift4.gnome.org
+        - mysqld-exporter-2.apps.openshift4.gnome.org
