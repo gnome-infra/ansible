@@ -37,12 +37,6 @@ scrape_configs:
       target_label: instance
       regex: vpn.(.*)
 
-  - job_name: 'mysqld'
-    static_configs:
-    - targets:
-      - gesture.gnome.org:9104
-      - scale.gnome.org:9104
-
   - job_name: 'bbb'
     scheme: https
     static_configs:
