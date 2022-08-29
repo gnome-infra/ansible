@@ -2,10 +2,7 @@
 ral3_rhel7
 
 [ral3_rhel7]
-gesture.gnome.org
 view.gnome.org
-scale.gnome.org
-master.gnome.org
 account.gnome.org
 gitlab.gnome.org
 restaurant.gnome.org
@@ -22,15 +19,3 @@ signal.gnome.org
 
 [alertmanager]
 signal.gnome.org
-
-[haproxy-int]
-gesture.gnome.org
-scale.gnome.org
-
-[mysqld_exporter]
-gesture.gnome.org
-scale.gnome.org
-
-[postgres_exporter]
-gesture.gnome.org
-scale.gnome.org
