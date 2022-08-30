@@ -46,3 +46,9 @@
   remote_user: root
   roles:
    - nsd
+
+- hosts: master.gnome.org
+  gather_facts: false
+  remote_user: root
+  roles:
+    - ftpadmin

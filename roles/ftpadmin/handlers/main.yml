@@ -1,0 +1,3 @@
+---
+- name: Restart Xinetd
+  service: name=xinetd state=restarted

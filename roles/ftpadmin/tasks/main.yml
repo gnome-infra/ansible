@@ -1,0 +1,37 @@
+---
+- name: Land required packages
+  dnf:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - rsync
+    - xinetd
+    - python2
+    - python2-virtualenv
+
+- name: Land /etc/rsyncd.conf
+  copy:
+    src: files/rsyncd.conf
+    dest: /etc/rsyncd.conf
+    owner: root
+    group: root
+
+- name: Land /etc/xinetd.d/rsync
+  copy:
+    src: files/rsync.xinetd
+    dest: /etc/xinetd.d
+    owner: root
+    group: root
+  notify:
+    - 'Restart Xinetd'
+
+- name: Git checkout sysadmin-bin
+  git:
+    repo: 'https://gitlab.gnome.org/Infrastructure/sysadmin-bin.git'
+    dest: /home/admin/bin
+
+- name: Enable xinetd
+  service:
+    name: xinetd
+    state: started
+    enabled: true
