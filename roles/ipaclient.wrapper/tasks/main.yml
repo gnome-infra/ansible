@@ -25,9 +25,6 @@
     ipaadmin_principal: "{{ ipa_host_enrollment_principal }}"
     ipaadmin_password: "{{ ipa_host_enrollment_password }}"
 
-    #defines if a host already exists, it can join again
-    ipaclient_force_join: yes
-
     # keep ipaclient from managing NTP, it does it poorly
     ipaclient_no_ntp: yes
     ipaclient_force_ntpd: yes
