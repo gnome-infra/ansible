@@ -27,3 +27,4 @@
     - policycoreutils-python-utils
     - setools-console
     - tmux
+    - vim
