@@ -3,7 +3,7 @@
 - name: Custom role dependant variables (master)
   include_vars:
     file: master.yml
-  when: is_master|default(false)
+  when: is_nsd_master|default(false)
   tags:
     - unsigned_zones
     - signed_zones
@@ -11,7 +11,7 @@
 - name: Custom role dependant variables (slave)
   include_vars:
     file: slave.yml
-  when: is_slave|default(false)
+  when: is_nsd_slave|default(false)
   tags:
     - unsigned_zones
     - signed_zones
@@ -91,7 +91,7 @@
     group: nsd
     mode: 0664
   with_items: "{{ nsd_unsigned_zones }}"
-  when: is_master|default(false)
+  when: is_nsd_master|default(false)
   notify:
     - rebuild nsd database
     - reload nsd database
@@ -108,7 +108,7 @@
     mode: 0664
     remote_src: yes
   with_items: "{{ nsd_signed_zones }}"
-  when: is_master|default(false)
+  when: is_nsd_master|default(false)
   notify:
     - rebuild nsd database
     - reload nsd database
@@ -118,19 +118,19 @@
 
 - name: Install certbot
   dnf: name=certbot state=installed
-  when: is_master|default(false)
+  when: is_nsd_master|default(false)
 
 - name: Install certbot renew timer for OCP4
   template:
     src: openshift-certbot-renew.timer.j2
     dest: /etc/systemd/system/openshift-certbot-renew.timer
-  when: is_master|default(false)
+  when: is_nsd_master|default(false)
 
 - name: Install certbot renew service for OCP4
   template:
     src: openshift-certbot-renew.service.j2
     dest: /etc/systemd/system/openshift-certbot-renew.service
-  when: is_master|default(false)
+  when: is_nsd_master|default(false)
 
 - name: Enable openshift-certbot-renew timer
   systemd:
@@ -138,4 +138,4 @@
     state: started
     enabled: yes
     daemon-reload: yes
-  when: is_master|default(false)
+  when: is_nsd_master|default(false)

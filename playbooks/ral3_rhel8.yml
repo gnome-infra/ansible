@@ -12,7 +12,7 @@
         password: "{{ rhsm_password }}"
         auto_attach: true
 
-- hosts: all,!ceph,!ceph-metrics.gnome.org
+- hosts: all
   gather_facts: true
   remote_user: root
   roles:
@@ -20,14 +20,24 @@
    - motd
    - chrony
    - iptables
-   - ipaclient.wrapper
    - postfix.wrapper
    - bash
    - base_auth
    - nrpe
    - base_network
    - rsyslog
+
+- hosts: all,!ceph
+  gather_facts: true
+  remote_user: root
+  roles:
    - node-exporter
+
+- hosts: all,!ipaservers
+  gather_facts: true
+  remote_user: root
+  roles:
+   - ipaclient.wrapper
 
 - hosts: hypervisors
   gather_facts: true
@@ -47,7 +57,7 @@
   roles:
    - nsd
 
-- hosts: master.gnome.org
+- hosts: ftpmasters
   gather_facts: false
   remote_user: root
   roles:

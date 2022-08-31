@@ -22,3 +22,5 @@ abisource_zones:
   - zone_name: abiword.org
     zone_filename: abiword.org
     <<: *zone_default
+
+is_nsd_master: true
