@@ -27,7 +27,7 @@
    - base_network
    - rsyslog
 
-- hosts: all,!ceph
+- hosts: all,!ceph,!ceph_metrics
   gather_facts: true
   remote_user: root
   roles:
