@@ -1,13 +1,13 @@
 ---
 - name: Land custom ldifs
   copy:
-    src: files/{{ item }}
+    src: "files/{{ item }}"
     dest: /etc/dirsrv/slapd-GNOME-ORG/schema
     owner: dirsrv
     group: dirsrv
     mode: '0440'
-    with_items:
-      - 96foundation.ldif
+  with_items:
+    - 96foundation.ldif
 
 - name: Create foundation IDM plugin directory
   file:
@@ -29,4 +29,4 @@
   service:
     name: ipa
     enabled: true
-    state: running
+    state: started
