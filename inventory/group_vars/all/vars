@@ -3,8 +3,8 @@ rhsm_autosubscribe: true
 # IDM
 kerberos_realm: "GNOME.ORG"
 ipaclient_servers:
-  - "view.gnome.org"
-  - "account.gnome.org"
+  - "idm01.gnome.org"
+  - "idm02.gnome.org"
 
 # Chrony
 chrony_role_action: "all"
@@ -17,5 +17,5 @@ firewall_allowed_tcp_ports:
   - "22"
 
 internal_dns_resolvers:
-  - 172.31.2.9
-  - 172.31.2.33
+  - 172.31.2.54
+  - 172.31.2.55
