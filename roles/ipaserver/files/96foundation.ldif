@@ -1,0 +1,4 @@
+dn: cn=schema
+attributeTypes: ( 1.3.6.1.4.1.3319.8.2 NAME 'LastRenewedOn' SINGLE-VALUE EQUALITY caseIgnoreMatch SUBSTR caseIgnoreSubstringsMatch DESC 'Last renewed on date' SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+attributeTypes: ( 1.3.6.1.4.1.3319.8.3 NAME 'FirstAdded' SINGLE-VALUE EQUALITY caseIgnoreMatch SUBSTR caseIgnoreSubstringsMatch DESC 'First added date' SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 ) 
+objectClasses: ( 1.3.6.1.4.1.3319.8.1 NAME 'FoundationFields' AUXILIARY MAY ( LastRenewedOn $ FirstAdded ) )
