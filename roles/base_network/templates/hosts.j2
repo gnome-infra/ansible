@@ -2,3 +2,9 @@
 # that require network functionality will fail.
 127.0.0.1		localhost.localdomain localhost
 ::1		        localhost6.localdomain6 localhost6
+
+{% if ansible_fqdn in groups['ipaservers'] %}
+{% for host in groups['ipaservers'] %}
+{{ hostvars[host].ansible_eth1.ipv4.address }} {{ hostvars[host].ansible_fqdn }} {{ hostvars[host].ansible_hostname }}
+{% endfor %}
+{% endif %}
