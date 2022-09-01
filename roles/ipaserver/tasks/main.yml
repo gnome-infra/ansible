@@ -17,7 +17,7 @@
 
 - name: Land custom foundation IDM plugin
   copy:
-    src: files/96foundation.ldif
+    src: files/foundation.js
     dest: /usr/share/ipa/ui/js/plugins/foundation
     owner: root
     group: root
