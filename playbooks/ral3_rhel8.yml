@@ -62,3 +62,9 @@
   remote_user: root
   roles:
     - ftpadmin
+
+- hosts: ipaservers
+  gather_facts: false
+  remote_user: root
+  roles:
+    - ipaserver
