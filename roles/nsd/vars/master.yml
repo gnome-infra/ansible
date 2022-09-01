@@ -10,8 +10,6 @@ ext: &ext
         tsig_key: sec_key
       - ip: 80.83.7.5
         tsig_key: 20160920.gnome.org
-      - ip: 195.140.195.20
-        tsig_key: 20160920.gnome.org
 
 nsd_unsigned_zones:
   - zone_name: clutter-project.org
