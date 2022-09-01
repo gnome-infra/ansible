@@ -1,3 +1,10 @@
+[prometheus]
+bastions
+nsd
+ipaservers
+ftpmasters
+rsyslog_servers
+
 [ceph_osds]
 ceph01.gnome.org
 ceph02.gnome.org
