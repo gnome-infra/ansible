@@ -1,6 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # Copyright 2013, Tomas Edwardsson
 # Copyright 2019, Bartlomiej Piotrowski
+# Copyright 2022, Andrea Veri
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,44 +17,52 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import ldap
-from pynag.Plugins import PluginHelper, critical, warning, ok
+import sys
+from optparse import OptionParser
 
-plugin = PluginHelper()
+usage = "usage: %prog [options]"
+parser = OptionParser(usage)
 
-plugin.parser.add_option('-u', help="ldap uri", dest="uri", default="ldap://localhost:389")
-plugin.parser.add_option('-D', help="bind DN", dest="binddn")
-plugin.parser.add_option('-w', help="bind password", dest="bindpw")
-plugin.parse_arguments()
+parser.add_option("--ldap-uri", "-u",
+                  action="store", type=str, dest="uri",
+                  default="ldaps://localhost:636", help="LDAP URI")
+parser.add_option("--bind-dn", "-D",
+                  action="store", type=str, dest="binddn",
+                  help="Bind DN")
+parser.add_option("--bind-password", "-w",
+                  action="store", type=str, dest="bindpw",
+                  help="Bind Password")
+
+(options, args) = parser.parse_args()
 
 try:
-    l = ldap.initialize(plugin.options.uri)
+    l = ldap.initialize(options.uri)
 
-    if plugin.options.binddn:
-        l.bind_s(plugin.options.binddn, plugin.options.bindpw)
+    if options.binddn:
+        l.bind_s(options.binddn, options.bindpw)
 
     replication = l.search_s('cn=config',
         ldap.SCOPE_SUBTREE,
         '(objectclass=nsds5replicationagreement)',
         ['nsDS5ReplicaHost', 'nsds5replicaLastUpdateStatus'])
-except Exception, e:
-    plugin.status(critical)
-    plugin.add_summary("Unable to initialize ldap connection: %s" % (e))
-    plugin.exit()
-
+except Exception as e:
+    print('CRITICAL: Unable to initialize ldap connection: %s' % (e))
+    sys.exit(2)
 
 # Loop through replication agreements
 for rhost in replication:
-    plugin.add_summary("%s" % (rhost[1]['nsDS5ReplicaHost'][0]))
-    if rhost[1]['nsds5replicaLastUpdateStatus'][0][7:8] == "0":
-        plugin.status(ok)
-    elif rhost[1]['nsds5replicaLastUpdateStatus'][0][7:8] == "1":
+    _rhost = rhost[1]['nsDS5ReplicaHost'][0].decode()
+    if rhost[1]['nsds5replicaLastUpdateStatus'][0][7:8].decode() == "0":
+        print('OK, %s' % _rhost)
+        sys.exit(0)
+    elif rhost[1]['nsds5replicaLastUpdateStatus'][0][7:8].decode() == "1":
         # Busy Replica is not an error, its "unknown" (but its "ok" for now)
-        plugin.status(ok)
+        print('OK, %s' % _rhost)
+        sys.exit(0)
     else:
-        plugin.status(critical)
+        print('CRITICAL, Failure in Replication')
+        sys.exit(2) 
 
 if not len(replication):
-    plugin.add_summary("Warning: No replicas found")
-    plugin.status(warning)
-
-plugin.exit()
+    print('WARNING: No replicas found')
+    sys.exit(1)
