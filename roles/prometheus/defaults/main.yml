@@ -7,7 +7,7 @@ prometheus_retention_time: "90d"
 prometheus_node_hostgroups:
   - ral3_rhel7
   - osuosl
-  - prometheus
+  - ral3_rhel8
 prometheus_static_node_targets:
   - bbb.gnome.org:9100
 prometheus_openshift4_token: !vault |

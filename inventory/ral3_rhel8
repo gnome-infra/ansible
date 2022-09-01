@@ -1,4 +1,4 @@
-[prometheus:children]
+[ral3_rhel8:children]
 bastions
 nsd
 ipaservers
