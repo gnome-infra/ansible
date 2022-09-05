@@ -26,6 +26,7 @@
    - nrpe
    - base_network
    - rsyslog
+   - backup
 
 - hosts: all,!ceph_osds,!ceph_metrics
   gather_facts: true

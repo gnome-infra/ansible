@@ -1,0 +1,22 @@
+---
+- name: Configure a system to be backed up
+  block:
+    - name: Install rdiff-backup
+      dnf:
+        name: rdiff-backup
+        state: present
+
+    - name: Create /etc/rsyncd
+      file:
+        path: /etc/rsyncd
+        state: directory
+        mode: '0755'
+
+    - name: Land backup.exclude
+      template:
+        src: 'backup.exclude.j2'
+        dest: /etc/rsyncd/backup.exclude
+        owner: root
+        group: root
+        mode: '0644'
+  when: enable_system_backup is defined

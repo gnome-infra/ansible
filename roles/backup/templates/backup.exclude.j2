@@ -1,0 +1,19 @@
+/cgroup
+/sys
+/dev/shm
+/dev/pts
+/var/lib/nfs/rpc_pipefs
+/tmp
+/var/tmp
+/var/cache
+/var/lib/mlocate
+/var/log/lastlog
+/var/lib/yum
+/var/lib/php/session
+/home/users
+/home/admin
+/boot
+/bin
+{% for exclude in backup_exclude|default([]) %}
+{{ exclude }}
+{% endfor %}
