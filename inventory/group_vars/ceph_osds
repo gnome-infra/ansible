@@ -1,3 +1,4 @@
+datacenter: 'ral3'
 nrpe_custom_plugins:
   - check_openmanage
   - check_ceph_df
