@@ -146,10 +146,10 @@ scrape_configs:
     - source_labels: [ prometheus_replica ]
       regex: prometheus-k8s-1
       action: drop
-{% for host in groups['oscp4-all'] %}
+{% for host in groups['oscp4'] %}
     - source_labels: [ instance ]
       target_label: instance
-      regex: {{ master_node_ip }}:.*
+      regex: {{ hostvars[host]['master_node_ip'] }}:.*
       replacement: {{ host }}
 {% endfor %}
     - source_labels: [ job ]

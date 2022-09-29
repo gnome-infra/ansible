@@ -1,0 +1,31 @@
+[clients:children]
+oscp4
+ral3_rhel7
+ral3_rhel8
+osuosl
+
+[ral3_rhel7]
+gitlab.gnome.org
+restaurant.gnome.org
+puppetmaster01.gnome.org
+
+[ral3_rhel8]
+bastion01.gnome.org
+nsd01.gnome.org
+nsd02.gnome.org
+idm01.gnome.org
+idm02.gnome.org
+master.gnome.org
+logs.gnome.org
+signal.gnome.org
+
+[osuosl]
+signal.gnome.org
+
+[oscp4]
+master1.openshift4.gnome.org master_node_ip=172.31.2.50
+master2.openshift4.gnome.org master_node_ip=172.31.2.51
+master3.openshift4.gnome.org master_node_ip=172.31.2.52
+
+[prometheus_server]
+signal.gnome.org
