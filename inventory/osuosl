@@ -1,0 +1,5 @@
+[osuosl:children]
+monitoring
+
+[monitoring]
+signal.gnome.org
