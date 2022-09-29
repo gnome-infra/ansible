@@ -27,5 +27,5 @@ master1.openshift4.gnome.org master_node_ip=172.31.2.50
 master2.openshift4.gnome.org master_node_ip=172.31.2.51
 master3.openshift4.gnome.org master_node_ip=172.31.2.52
 
-[prometheus_server]
+[prometheus_servers]
 signal.gnome.org
