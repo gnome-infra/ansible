@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# check_vpn - plugin for nagios to check whether a VPN is down, by verifying
+#             that the private network is down and the public network is up
+# Copyright (C) 2010 Ioannis Aslanidis <deathwing00 at deathwing00 dot org>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# exit status will be:
+# 0 if VPN is UP
+# 1 if there is packet loss > 0% or the public network is down
+#      the purpose of this check is to detect that the VPN is down, not the
+#      public network, to be able to add dependencies accordingly to the VPN
+# 2 if the VPN is down
+# 3 if incorrectly used
+
+declare -f f_ok
+declare -f f_war
+declare -f f_cri
+declare -f f_unk
+declare -f check_params
+declare -i EXP_PARAMS
+readonly EXP_PARAMS="3"
+# Params:
+# 1 - public ip address
+# 2 - private ip address
+# 3 - number of pings
+function f_ok {
+    echo "OK: "${1}
+    exit 0
+}
+function f_war {
+    echo "WARNING: "${1}
+    exit 1
+}
+function f_cri {
+    echo "CRITICAL: "${1}
+    exit 2
+}
+function f_unk {
+    echo "UNKNOWN: "${1}
+    exit 3
+}
+function check_params {
+    if [[ ${#} -ne ${EXP_PARAMS} ]];
+    then
+        f_unk "Expected ${EXP_PARAMS} parameters (pub addr, priv addr, # of pings) but got ${#}"
+    fi
+}
+### MAIN ###
+check_params ${*}
+readonly PUBL_ADDR="${1}"
+readonly PRIV_ADDR="${2}"
+readonly MAX_PINGS="${3}"
+publ_loss=`/bin/ping -c ${MAX_PINGS} -n -q ${PUBL_ADDR} | /bin/grep "% packet loss" | /usr/bin/cut -d ',' -f 3 | /usr/bin/cut -d '%' -f 1 | /usr/bin/xargs`
+if [[ `echo "${publ_loss}" | /bin/grep -q "^[0-9]*$"; echo ${?}` -ne 0 ]];
+then
+    f_unk "The public address could not be pinged."
+fi
+priv_loss=`/bin/ping -c ${MAX_PINGS} -n -q ${PRIV_ADDR} | /bin/grep "% packet loss" | /usr/bin/cut -d ',' -f 3 | /usr/bin/cut -d '%' -f 1 | /usr/bin/xargs`
+if [[ `echo "${priv_loss}" | /bin/grep -q "^[0-9]*$"; echo ${?}` -ne 0 ]];
+then
+    f_unk "The private address could not be pinged."
+fi
+if [[ "${publ_loss}" -lt 0 || "${priv_loss}" -lt 0 ]];
+then
+    f_unk "Negative packet loss detected."
+elif [[ "${publ_loss}" -eq 0 && "${priv_loss}" -eq 0 ]];
+then
+    f_ok "The VPN is working correctly. 0% packet loss."
+elif [[ "${publ_loss}" -eq 0 && "${priv_loss}" -lt 100 ]];
+then
+    f_war "The VPN is suffering ${priv_loss}% packet loss."
+elif [[ "${publ_loss}" -lt 100 ]];
+then
+    f_war "The public network is suffering ${publ_loss}% packet loss. The VPN is suffering ${priv_loss}% packet loss."
+elif [[ "${publ_loss}" -ge 100 ]];
+then
+    f_war "The public network is DOWN."
+else
+    f_cri "The VPN is DOWN."
+fi
+f_unk "Reached unreachable code"
