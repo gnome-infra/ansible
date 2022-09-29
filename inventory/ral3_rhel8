@@ -4,7 +4,6 @@ nsd
 ipaservers
 ftpmasters
 rsyslog_servers
-prometheus_servers
 
 [ceph_osds]
 ceph01.gnome.org
@@ -35,6 +34,3 @@ master.gnome.org
 
 [rsyslog_servers]
 logs.gnome.org
-
-[prometheus_servers]
-signal.gnome.org

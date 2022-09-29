@@ -8,3 +8,6 @@
 {{ hostvars[host].ansible_eth1.ipv4.address }} {{ hostvars[host].ansible_fqdn }} {{ hostvars[host].ansible_hostname }}
 {% endfor %}
 {% endif %}
+{% if datacenter == 'osuosl' %}
+8.43.85.5 vpn.gnome.org
+{% endif %}

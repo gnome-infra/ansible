@@ -3,7 +3,3 @@ search gnome.org
 {% for ip in internal_dns_resolvers %}
 nameserver {{ ip }}
 {% endfor %}
-
-{% if ansible_fqdn in groups['osuosl'] %}
-8.43.85.5 vpn.gnome.org
-{% endif %}
