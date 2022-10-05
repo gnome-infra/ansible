@@ -1,0 +1,2 @@
+firewall_additional_rules:
+  - "iptables -A INPUT -i eth0 -j ACCEPT"
