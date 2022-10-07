@@ -14,4 +14,4 @@
     path: /etc/audit/plugins.d/syslog.conf
     regexp: '^active ='
     line: 'active = yes'
-  notify: restart rsyslog
+  notify: restart auditd

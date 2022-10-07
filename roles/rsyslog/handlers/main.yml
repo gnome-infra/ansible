@@ -3,3 +3,8 @@
   systemd:
     name: rsyslog
     state: restarted
+
+- name: restart auditd
+  service:
+    name: auditd
+    state: restarted
