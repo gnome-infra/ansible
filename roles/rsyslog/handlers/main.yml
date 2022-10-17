@@ -5,6 +5,5 @@
     state: restarted
 
 - name: restart auditd
-  service:
-    name: auditd
-    state: restarted
+  command:
+    cmd: /usr/sbin/service auditd restart
