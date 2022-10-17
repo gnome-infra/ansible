@@ -18,7 +18,7 @@ This system is puppet managed!  Local changes may be overwritten!
 
  Machine name: {{ ansible_nodename }}, OS: {{ ansible_os_family }} {{ ansible_distribution_version }}
 
- Kernel: {{ ansible_kernel }}, Processors: {{ ansible_processor_cores }}, RAM: {{ (ansible_memtotal_mb * 0.001)|int }} GB
+ Kernel: {{ ansible_kernel }}, Processors: {{ ansible_processor_vcpus }}, RAM: {{ (ansible_memtotal_mb * 0.001)|int }} GB
 
  Sponsor: Red Hat
 
