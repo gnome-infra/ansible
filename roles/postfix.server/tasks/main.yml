@@ -17,7 +17,7 @@
     postfix_backup_multiple: false
     postfix_conf:
       virtual_alias_maps: "{{ postfix_virtual_alias_maps | join(',') }}"
-      alias_maps: "{{ postfix_alias_databases | join(',') }}"
+      alias_maps: "{{ postfix_alias_maps | join(',') }}"
       mydestination: "{{ postfix_mydestinations | join(',') }}"
       mynetworks: "{{ postfix_mynetworks | join(',') }}"
       myhostname: "{{ postfix_myhostname }}"
