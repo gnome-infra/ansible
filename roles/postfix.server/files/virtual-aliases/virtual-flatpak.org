@@ -1,0 +1,5 @@
+media@flatpak.org aday@gnome.org, alexander.larsson@gmail.com, flathub-admins@lists.freedesktop.org, mwleeds@protonmail.com
+docs@flatpak.org aday@gnome.org, alexander.larsson@gmail.com, flathub-admins@lists.freedesktop.org
+flathub@flatpak.org alexander.larsson@gmail.com, flathub-admins@lists.freedesktop.org
+admin@flatpak.org robert@mcqueen.me.uk, flathub-admins@lists.freedesktop.org
+press@flatpak.org flathub-admins@lists.freedesktop.org

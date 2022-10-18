@@ -1,0 +1,29 @@
+presidencia@gnomehispano.org skymix.es@gmail.com
+vicepresidencia@gnomehispano.org anarey@gmail.com
+tesoreria@gnomehispano.org jmcasanova@igalia.com
+secretaria@gnomehispano.org roberto.majadas@openshine.com
+
+vocal1@gnomehispano.org rodrigo@gnome-db.org
+vocal2@gnomehispano.org acs@bitergia.com
+vocal3@gnomehispano.org daniel.mustieles@gmail.com
+
+presidente@gnomehispano.org presidencia@gnomehispano.org
+presidenta@gnomehispano.org presidencia@gnomehispano.org
+
+tesorero@gnomehispano.org tesoreria@gnomehispano.org
+tesorera@gnomehispano.org tesoreria@gnomehispano.org
+
+secretario@gnomehispano.org secretaria@gnomehispano.org
+
+vicepresidente@gnomehispano.org vicepresidencia@gnomehispano.org
+vicepresidenta@gnomehispano.org vicepresidencia@gnomehispano.org
+
+altassocios@gnomehispano.org secretaria@gnomehispano.org, tesoreria@gnomehispano.org, presidencia@gnomehispano.org, vicepresidencia@gnomehispano.org
+
+wikiadmin@gnomehispano.org carlosgc@gnome.org, jmcasanova@igalia.com
+
+directiva@gnomehispano.org presidencia@gnomehispano.org, secretaria@gnomehispano.org, tesoreria@gnomehispano.org, vicepresidencia@gnomehispano.org, vocal1@gnomehispano.org, vocal2@gnomehispano.org, vocal3@gnomehispano.org
+
+carlosgc@gnomehispano.org carlosgc@gnome.org
+
+chema@gnomehispano.org jmcasanova@igalia.com

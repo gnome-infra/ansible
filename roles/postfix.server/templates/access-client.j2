@@ -1,0 +1,106 @@
+#######################
+## MANAGED BY PUPPET ##
+#######################
+#
+# Some mail is just plain annoying - this is here to stop it
+
+#######################################
+## -- WARNING WARNING WARNING --     ##
+## Exceptions (OK) MUST be placed in ##
+##  access-rbl-exception-client!!!   ##
+#######################################
+
+# This host sends us a fake bounces every day (orig forged to john@gnome.org)
+196.26.208.190		500 Pls stop sending forged 'gnome.org' backscatter
+
+# this domain was generating thousands of malformed error messages
+# per day starting 12/10/2005. KvF blocked all mail from these folks.
+
+mobigen.com      REJECT Your error messages really suck
+.mobigen.com     REJECT Your error messages really suck
+211.169.248.153  REJECT Your error messages really suck
+# Ross's attempt...
+#ease@mobigen.com	500 Bloody spam backscatter
+
+193.214.130.4			REJECT boring...
+210.225.145.242	REJECT too much spam from your IP address
+
+# 2010-0402: over 2000 rejects by noon. rejecting (cedwards)
+veloxzone.com.br    REJECT Too much spam
+93.115.241.26		REJECT Use confirmed optin you spammer
+
+# 2-2-2011: automotive spam
+veic.com.br REJECT Go play in traffic spammer
+
+# 2-9-2011 more spam
+videotv.be REJECT I do not want green eggs and spam
+
+# ecademy.com.. pretends to be linkedin.com
+83.138.56.142	REJECT Don't pretend your not another spammer
+
+# spam every damn day in the mailman moderation queue (cedwards)
+futureanalyzer.com      REJECT
+.futureanalyzer.com     REJECT
+
+# spam every day
+ihouseuemail.com	REJECT
+.ihouseuemail.com	REJECT
+
+fortetrinity.co.uk	REJECT
+.fortetrinity.co.uk	REJECT
+
+.verticalresponse.com	REJECT
+verticalresponse.com	REJECT
+vresp.com		REJECT
+.vresp.com		REJECT
+
+venamail.com		REJECT
+.venamail.com		REJECT
+87.237.215.187		REJECT
+87.237.215.188		REJECT
+87.237.215.189		REJECT
+87.237.215.190		REJECT
+87.237.215.191		REJECT
+87.237.210.223		REJECT
+87.237.210.224		REJECT
+87.237.210.225		REJECT
+87.237.210.226		REJECT
+87.237.210.227		REJECT
+87.237.210.228		REJECT
+
+btinternet.co		REJECT
+1stservepromotions.com	REJECT
+btconnect.com		REJECT
+mail.krainerhuette.at	REJECT
+
+ctish.cn            REJECT
+.ctish.cn           REJECT
+aoji.cn             REJECT
+.aoji.cn            REJECT
+webwatcher.com      REJECT
+.webwatcher.com     REJECT
+
+202.153.38.122      REJECT
+194.78.192.57       REJECT
+216.24.226          REJECT
+5.135.109.68        REJECT
+
+
+.emarketing-mail.com	REJECT
+emarketing-mail.com	REJECT
+
+# Mass newsletter mailer, but we should not need to get any newsletters,
+# everything from them has been spam and their reporting is awful
+mcsv.net	REJECT
+.mcsv.net	REJECT
+
+10times.com	REJECT
+.10times.com	REJECT
+
+# spammer adverterising its services
+emailblastingonline.com		REJECT
+.emailblastingonline.com	REJECT
+
+61.144.38.74                REJECT
+104.216.106.0/23            REJECT
+74.63.192.0/18              REJECT

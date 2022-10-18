@@ -1,0 +1,279 @@
+hostmaster@gtk.org gnome-sysadmin@gnome.org
+
+amesbury@gtk.org amesbury@indefi.net
+stelter@gtk.org stelter@gui.org
+
+# Shawn T. Amundson
+snorfle@gtk.org amundson@gtk.org
+amundson@gtk.org amundson@gui.org 
+
+# Manish Singh
+manish@gtk.org yosh@yosh.org
+yosh@gtk.org manish@gtk.org
+cricketboy@gtk.org manish@gtk.org
+duck@gtk.org manish@gtk.org
+msingh@gtk.org manish@gtk.org
+crackrock@gtk.org manish@gtk.org
+
+# Adrian Likins
+adrian@gtk.org adrian@likins.com
+aklikins@gtk.org adrian@gtk.org
+
+# Jens T. Lautenbacher
+jens@gtk.org jtl@schlund.de
+jtl@gtk.org jens@gtk.org
+
+# Kelly Martin
+kelly@gtk.org kmartin@pyrzqxgl.org
+tylenol@gtk.org kelly@gtk.org
+Scott.Goehring@gtk.org kelly@gtk.org
+
+# Tim Janik
+timj@gtk.org tim.janik@googlemail.com
+tim@gtk.org timj@gtk.org
+tim.janik@gtk.org timj@gtk.org
+rambokid@gtk.org timj@gtk.org
+timj-lists@gtk.org timj@gtk.org
+beast@gtk.org timj@gtk.org
+rapicorn@gtk.org timj@gtk.org
+
+# Sven Neumann
+neo@gtk.org neo@blinkenlights.de
+sven@gtk.org neo@gtk.org
+
+# Jay Painter
+jpaint@gtk.org jpaint@serv.net
+jay@gtk.org jpaint@gtk.org
+
+# Peter Mattis
+pmattis@gtk.org petm@xcf.berkeley.edu
+petm@gtk.org pmattis@gtk.org
+
+# Miguel de Icaza
+miguel@gtk.org miguel.de.icaza@gmail.com
+
+# Federico Mena
+quartic@gtk.org federico.mena@gmail.com
+federico@gtk.org quartic@gtk.org
+
+# Elliot Lee
+sopwith@gtk.org sopwith@redhat.com
+
+# Tom Bech
+tomb@gtk.org tomb@ii.uib.no
+
+# Josh MacDonald
+jmacd@gtk.org jmacd@cs.berkeley.edu
+
+# Emil Moshkovich
+emilm@gtk.org emilm@physics.berkeley.edu
+
+# Adam Moss
+adam@gtk.org aspirin@ntlworld.com
+adam.moss@gtk.org adam@gtk.org
+aspirin@gtk.org adam@gtk.org
+fox@gtk.org adam@gtk.org
+
+# Misha Dynin
+misha@gtk.org misha@xcf.berkeley.edu
+
+# Yaroslav Faybishenko
+yaroslav@gtk.org yaroslav@xcf.berkeley.edu
+
+# Michael K. Johnson
+mkj@gtk.org johnsonm@redhat.com
+
+# Laramie Leavitt
+leavittl@gtk.org leavittl@cs.byu.edu
+yanele@gtk.org leavittl@gtk.org
+
+# Nathan Froyd
+froyd@gtk.org maestrox@geocities.com
+Nathan.Froyd@gtk.org froyd@gtk.org
+
+# Tony Gale
+trog@gtk.org gale@syntax.dera.gov.uk
+gale@gtk.org trog@gtk.org
+tony.gale@gtk.org trog@gtk.org
+
+# Seth Burgess
+seth@gtk.org sjburges@gtk.org
+sethtillian@gtk.org sjburges@gtk.org
+sethtillion@gtk.org sjburges@gtk.org
+
+# Nathan Carl Summers
+rock@gtk.org rockwalrus@gmail.com
+rockwalrus@gtk.org rock@gtk.org
+rockwlrs@gtk.org rock@gtk.org
+
+# Lars Hamann
+hamann@gtk.org lars@bistromatic.de
+lars@gtk.org hamann@gtk.org
+
+# Stefan Jeske
+stefan@gtk.org 37wh5r@gmail.com 
+
+# Raph Levien
+raph@gtk.org raph@acm.org
+
+# Miles O'Neal
+meo@gtk.org meo@rru.com
+
+# Sven Riedel
+sr@gtk.org sr@nachtfrost.net
+
+# Tor Lillqvist
+tml@gtk.org tml@iki.fi
+
+# Ray Lehtiniemi
+rayl@gtk.org rayl@mail.com
+
+# Cameron Parish
+cameron@gtk.org cameron@sculpin.com
+camypoo@gtk.org cameron
+
+# Caroline Dahllof
+caro@gtk.org caro@rhythm.com
+
+# Tom Rathborne
+tomr@gtk.org tomr@aceldama.com
+tommer@gtk.org tomr@gtk.org
+
+# Damon Chaplin
+damon@gtk.org damon@helixcode.com
+
+# Anders Carlsson
+andersca@gtk.org andersca@gnome.org
+expander-master@gtk.org andersca@gtk.org
+
+# Kristian Rietveld
+kris@gtk.org kfd.rietveld@gmail.com
+33-hacker@gtk.org kris@gtk.org
+33hacker@gtk.org kris@gtk.org
+
+# Jonathan Blanford
+jrb@gtk.org jrb@gnome.org
+
+# Paolo Molaro
+lupus@gtk.org lupus@lettere.unipd.it
+
+# Raja R Harinath
+harinath@gtk.org harinath@cs.umn.edu
+
+# Jerome Bolliet
+bolliet@gtk.org bolliet@in2p3.fr
+
+# Jeff Garzik
+jgarzik@gtk.org jgarzik@pobox.com
+
+# Carsten Haitzler
+raster@gtk.org raster@redhat.com
+
+# Jukka Rajala
+montana@gtk.org jukka.rajala@iki.fi
+jukka@gtk.org montana@gtk.org
+
+# Mark Crichton
+crichton@gtk.org crichton@fishysnax.com
+mmarker@gtk.org crichton@gtk.org
+
+# Michael Natterer
+mitch@gtk.org mitch@eeeeek.org
+ill@gtk.org mitch@gtk.org
+
+# James Henstridge
+james@gtk.org james@daa.com.au
+jamesh@gtk.org james@gtk.org
+
+# Roman Joost
+romanofski@gtk.org romanofski@gmail.com
+
+# GUM
+gum@gtk.org karin@frozenriver.com
+karin@gtk.org karin@frozenriver.com
+olof@gtk.org olof@frozenriver.com
+
+# Debian Guy Ben Gertzfield
+che@gtk.org che@debian.org
+
+# coding people
+austin@gtk.org Austin_Donnelly@yahoo.co.uk
+nether@gtk.org la@iki.fi
+alt@gtk.org alt@picnic.demon.co.uk
+vidar@gtk.org vidarino@gmail.com
+
+# Marc Lehmann
+marc@gtk.org pcg@goof.com
+
+# Simon Budig
+simon@gtk.org simon@budig.de
+
+# Ian McKellar (GimpMill guy)
+yakk@gtk.org yakk@yakk.net
+
+# Eskil Heyn Olsen
+eskil@gtk.org eskil@eskil.org
+
+# Wolfgang Hofer
+hof@gtk.org wolfgang.hofer@lycos.com
+
+# Jeff Trefftzs
+jefft@gtk.org trefftzs@tcsn.net
+
+# Carol Spears
+wilma@gtk.org carol@gtk.org
+
+# David Odin
+dindinx@gtk.org david@dindinx.net
+
+# Doc people
+syngin@gtk.org mel.boyce@gmail.com
+bex@gtk.org bex@gnome.org
+scizzo@gtk.org scizzo@sector7.nu
+drc@gtk.org sanguivor@gmail.com
+helvetix@gtk.org helvetix@oak.mysterious.org
+
+# groupies
+logan@gtk.org logan@versanet.com
+pavlov@gtk.org pavlov@pavlov.net
+pixelfairy@gtk.org pixelfairy@necroerotic.org
+pixel@gtk.org pixelfairy@gtk.org
+x@gtk.org x@linux.com
+garrett@gtk.org garrett@linuxart.com
+prumpf@gtk.org prumpf@ftp.linux.org.uk
+madrid@gtk.org daniele.medri@libero.it
+maru@gtk.org mike@it-loops.com
+
+# contest winners
+mschrag@gtk.org mschrag@nflux.com
+Mike.Schrag@gtk.org mschrag
+guppy@gtk.org guppy@tigerden.com
+viktor@gtk.org d2viktor@dtek.chalmers.se
+sc@gtk.org sc@scharf.net
+
+# Dave Seidel, maintainer of beast web
+feldspar@gtk.org dave@superluminal.com
+
+staiger@gtk.org staiger@cs.umn.edu
+
+# Jakub Steiner
+jimmac@gtk.org jimmac@gmail.com
+
+# S. Mukund
+mukund@gtk.org muks@mukund.org
+
+# Francisco Bustamente
+bit@gtk.org bit@bitbit.org
+
+# Daniel Rogers
+dsrogers@gtk.org daniel@phasevelocity.org
+
+# Ryan Lortie
+desrt@gtk.org desrt@desrt.ca
+
+# Øyvind Kolås
+pippin@gtk.org pippin@hodefoting.com
+
+# Alexia Death
+alexia@gtk.org alexiadeath@gmail.com
+death@gtk.org alexia@gtk.org

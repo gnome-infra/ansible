@@ -1,0 +1,19 @@
+---
+- name: Restart Postfix
+  service: name=postfix state=restarted
+
+- name: Reload Postfix
+  service: name=postfix state=reloaded
+
+- name: Postmap access file
+  command:
+    cmd: "/usr/sbin/postmap {{ item.path }}"
+  with_items: "{{ _postfix_access_files.results | selectattr('changed', 'equalto', true) | list }}"
+
+- name: Postmap virtual aliases file
+  command:
+    cmd: "/usr/sbin/postmap {{ item.path }}"
+  with_items: "{{ _postfix_virtual_aliases.results | selectattr('changed', 'equalto', true) | list }}"
+
+- name: Restart OpenDKIM
+  service: name=opendkim state=restarted

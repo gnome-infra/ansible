@@ -1,0 +1,85 @@
+#######################
+## MANAGED BY PUPPET ##
+#######################
+#
+# Obvious virii
+/^Subject:.*Wicked screensaver.*/	DISCARD
+/^Subject:.*That movie.*/	DISCARD
+
+# Obvious spam
+/^From:.*LES ATELIERS DU TEMPS.*/	DISCARD
+/^Mailer:.*IncrediMail.*/	DISCARD
+/^Mailer:.*Shadow Mail.*/	DISCARD
+/^Mailer:.*DouhouHaishin/	DISCARD
+/^Mailer:.*Easy DM.*/ DISCARD
+/^Subject:.*nk products/	DISCARD
+/^X-Mailer:.*RLSP Mailer/	DISCARD
+/^From:.*delivery@hosyou.*\.mine\.nu/	DISCARD
+/^Subject:.*Magnetic Ink/ DISCARD
+/^From:.*confirm@ebay.com/	DISCARD
+/^From:.*Cathleen Baer/ DISCARD
+/^Subject:.*natural enlargement/ DISCARD
+/^Subject:.*Improve Desire/ DISCARD
+/^From:.*Mexican Arts/ DISCARD
+/^To:.*Mexican Arts/ DISCARD
+/^Subject:.*give your partner more pleasure/ DISCARD
+/^Subject:.*Investor News/ DISCARD
+/^Subject:.*Hot Penny/ DISCARD
+
+# Do we want postcards?
+/^From:.*@postcard.com/ DISCARD
+
+# Nothing but submit@bugs.gnome.org
+/^To: .*[^(submit)]@bugs.gnome.org$/ DISCARD
+
+# Stop nazi spam. Assembled by gpoo, added by menthos.
+/^Subject: 4,8 Mill\. Osteuropaeer durch Fischer-Volmer Erlass/ DISCARD
+/^Subject: Auf Streife durch den Berliner Wedding/ DISCARD
+/^Subject: Auslaender bevorzugt/ DISCARD
+/^Subject: Auslaenderpolitik/ DISCARD
+/^Subject: Blutige Selbstjustiz/ DISCARD
+/^Subject: Deutsche werden kuenftig beim Arzt abgezockt/ DISCARD
+/^Subject: Dresden 1945/ DISCARD
+/^Subject: Du wirst zum Sklaven gemacht\!\!\!/ DISCARD
+/^Subject: Gegen das Vergessen/ DISCARD
+/^Subject: Graeberschaendung auf bundesdeutsche Anordnung/ DISCARD
+/^Subject: Hier sind wir Lehrer die einzigen Auslaender/ DISCARD
+/^Subject: Paranoider Deutschenmoerder kommt in Psychiatrie/ DISCARD
+/^Subject: Tuerkei in die EU/ DISCARD
+/^Subject: Verbrechen der deutschen Frau/ DISCARD
+/^Subject: 60 Jahre Befreiung: Wer feiert mit\?/ DISCARD
+/^Subject: Armenian Genocide Plagues Ankara 90 Years On/ DISCARD
+/^Subject: Augen auf/ DISCARD
+/^Subject: Deutsche Buerger trauen sich nicht \.\.\./ DISCARD
+/^Subject: Dresden Bombing Is To Be Regretted Enormously/ DISCARD
+/^Subject: Du wirst ausspioniert \.\.\.\.\!/ DISCARD
+/^Subject: Massenhafter Steuerbetrug durch auslaendische Arbeitnehmer/ DISCARD
+/^Subject: Multi-Kulturell = Multi-Kriminell/ DISCARD
+/^Subject: S\.O\.S\. Kiez\! Polizei schlaegt Alarm/ DISCARD
+/^Subject: Schily ueber Deutschland/ DISCARD
+/^Subject: The Whore Lived Like a German/ DISCARD
+/^Subject: Transparenz ist das Mindeste/ DISCARD
+/^Subject: Trotz Stellenabbau/ DISCARD
+/^Subject: Turkish Tabloid Enrages Germany with Nazi Comparisons/ DISCARD
+/^Subject: Volk wird nur zum zahlen gebraucht\!/ DISCARD
+/^Subject: Vorbildliche Aktion/ DISCARD
+
+/^Subject: Auto Reply: / REJECT no auto-responses please
+
+# Obviously misconfigured hosts
+/^Received:.*rom.*legion-net.ru/  REJECT We don't want your backscatter
+/^Received:.*rom root by clai.net/  REJECT We don't want your root mail
+/^Received:.*rom .*hittite\.isp\.9tel\.net/  REJECT We don't want your root mail
+#/^Subject:.*filemon/  REJECT We don't want your root mail
+/^Subject:.*bacterio/  REJECT We don't want your root mail
+
+# Header check testing
+/^Subject:.*Header check reject test/ REJECT Header check test
+/^Subject:.*Header check discard test/ DISCARD Header check test
+/^Subject:.*Header check redirect test/ REDIRECT ross@golder.org
+
+# Political spam about Israel
+/^From:.*Lawrence Auster/i	DISCARD Discarded mail from Lawrence Auster
+
+# Crap from GoogleGroups we somehow got subscribed to
+/^From:.*ksspuae@gmail.com/	DISCARD Junk we didn't subcribe to

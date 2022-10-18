@@ -1,0 +1,4 @@
+webmaster@br.gnome.org	lucasr@gnome.org
+organizacao@forum.gnome.org	lucasr@gnome.org
+contato@br.gnome.org	lucasr@gnome.org, jwendell@gnome.org
+

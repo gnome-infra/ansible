@@ -1,0 +1,209 @@
+---
+- name: Generate dh2048.pem
+  command:
+    cmd: /usr/bin/openssl dhparam -out /etc/postfix/dh2048.pem 2048
+    creates: /etc/postfix/dh2048.pem
+  notify: Restart Postfix
+
+- name: Generate dh512.pem
+  command:
+    cmd: /usr/bin/openssl dhparam -out /etc/postfix/dh512.pem 512
+    creates: /etc/postfix/dh512.pem
+  notify: Restart Postfix
+
+- import_role:
+    name: postfix
+  vars:
+    postfix_backup_multiple: false
+    postfix_conf:
+      virtual_alias_maps: "{{ postfix_virtual_alias_maps | join(',') }}"
+      alias_database: "{{ postfix_alias_databases | join(',') }}"
+      mydestination: "{{ postfix_mydestinations | join(',') }}"
+      header_checks: regexp:/etc/postfix/header_checks
+      mime_header_checks: regexp:/etc/postfix/mime_header_checks
+      body_checks: regexp:/etc/postfix/body_checks
+      smtpd_recipient_limit: 4096
+      default_process_limit: 200
+      maximal_backoff_time: 1000s
+      minimal_backoff_time: 300s
+      default_destination_concurrency_limit: 50
+      smtp_destination_concurrency_limit: 10
+      maximal_queue_lifetime: 1d
+      message_size_limit: 25480000
+      qmgr_fudge_factor: 100
+      virtual_transport: "{{ postfix_virtual_transport }}"
+      mailbox_transport: "{{ postfix_virtual_transport }}"
+      transport_maps: hash:/etc/postfix/transport
+      smtpd_milters: "{{ postfix_smtpd_milters | join(',') }}"
+      milter_default_action: accept
+      smtpd_delay_reject: no
+      smtp_tls_security_level: may
+      smtp_tls_CAfile: /etc/pki/tls/certs/ca-bundle.crt
+      smtp_tls_policy_maps: hash:/etc/postfix/tls_policy_per_domain
+      smtpd_restriction_classes: check_recipient_bounce
+      check_recipient_bounce: check_recipient_access hash:/etc/postfix/access-recipient-bounce
+      smtpd_client_restrictions: sleep 1, reject_unauth_pipelining
+      smtpd_helo_restrictions:
+      smtpd_sender_restrictions:
+      non_smtpd_milters: $smtpd_milters
+      smtpd_recipient_restrictions:
+          reject_non_fqdn_sender
+          reject_non_fqdn_recipient
+          reject_unknown_sender_domain
+          reject_unknown_recipient_domain
+          check_client_access hash:/etc/postfix/access-client
+          check_helo_access hash:/etc/postfix/access-helo
+          check_sender_access hash:/etc/postfix/access-sender
+          reject_unlisted_recipient
+          permit_mynetworks
+          check_recipient_access hash:/etc/postfix/access-recipient
+          reject_unauth_destination
+          reject_invalid_hostname
+          reject_non_fqdn_hostname
+          reject_unknown_reverse_client_hostname
+          reject_unauth_pipelining
+          check_client_access hash:/etc/postfix/access-rbl-exception-client
+          permit
+      smtpd_tls_eecdh_grade: strong
+      smtpd_tls_dh1024_param_file: /etc/postfix/dh2048.pem
+      smtpd_tls_dh512_param_file: /etc/postfix/dh512.pem
+      recipient_delimiter: +
+
+- name: Land custom access* Postfix conf files
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/postfix/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: 
+    - access-client
+    - access-helo
+    - access-rbl-exception-client
+    - access-sender
+    - access-recipient
+    - access-recipient-bounce
+    - tls_policy_per_domain
+  register: _postfix_access_files
+  notify: 
+    - Postmap access file
+    - Reload Postfix
+
+- name: Land additional Postfix config files
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/postfix/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: 
+    - header_checks
+    - mime_header_checks
+    - body_checks
+    - transport
+    - master.cf
+  notify: Reload Postfix
+
+- name: Land Postfix virtual aliases
+  copy:
+    src: "virtual-aliases/{{ item.split('/')[-1] }}"
+    dest: "/etc/postfix/virtual-aliases/{{ item.split('/')[-1] }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ postfix_virtual_alias_maps }}"
+  register: _postfix_virtual_aliases
+  notify: 
+    - Postmap virtual aliases file
+    - Reload Postfix
+  when: '"/etc/postfix/virtual-aliases" in item'
+
+- name: Install OpenDKIM
+  dnf:
+    name: "{{ opendkim_packages }}"
+    state: present
+  vars:
+    opendkim_packages:
+      - opendkim
+      - opendkim-tools
+  when: enable_opendkim
+
+- name: Land OpenDKIM configuration
+  template:
+    src: opendkim/opendkim.conf.j2
+    dest: /etc/opendkim.conf
+    owner: opendkim
+    group: opendkim
+    mode: 0644
+  notify: Restart OpenDKIM
+  when: enable_opendkim
+
+- name: Land additional OpenDKIM config files
+  template:
+    src: "opendkim/{{ item }}.j2"
+    dest: "/etc/opendkim/{{ item }}"
+    owner: opendkim
+    group: opendkim
+    mode: 0644
+  with_items: 
+    - KeyTable
+    - SigningTable
+    - TrustedHosts
+  notify: Restart OpenDKIM
+  when: enable_opendkim
+
+- name: Create OpenDKIM keys directory
+  file:
+    path: "/etc/opendkim/keys/{{ item.name }}"
+    state: directory
+    owner: opendkim
+    group: opendkim
+    mode: 0750
+  with_items: "{{ postfix_dkim_domains }}"
+  when: enable_opendkim
+
+- name: Generate OpenDKIM private key
+  command:
+    cmd: "/usr/sbin/opendkim-genkey -d {{ item.name }} -D /etc/opendkim/keys/{{ item.name }} -s {{ item.selector }} -v"
+    creates: "/etc/opendkim/keys/{{ item.name }}/{{ item.selector }}.private"
+  with_items: "{{ postfix_dkim_domains }}"
+  when: enable_opendkim
+
+- name: Make sure OpenDKIM private key is readable by opendkim user
+  file:
+    path: "/etc/opendkim/keys/{{ item.name }}/{{ item.selector }}.private"
+    owner: opendkim
+    group: opendkim
+    mode: 0640
+  with_items: "{{ postfix_dkim_domains }}"
+  when: enable_opendkim
+
+- name: Start and enable OpenDKIM
+  service:
+    name: opendkim
+    state: started
+    enabled: yes
+  when: enable_opendkim
+
+- name: Land the export-mail.py script
+  copy:
+    src: export-mail.py
+    dest: /usr/local/bin/export-mail.py
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Land the export-mail cronjob
+  cron:
+    name: "Rebuilds (gnome.org, src.gnome.org) aliases"
+    job: "/usr/local/bin/export-mail.py"
+    minute: "0"
+    hour: "0"
+    user: root
+    state: present
+
+- import_role:
+    name: clamav
+
+- import_role:
+   name: rspamd

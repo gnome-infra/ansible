@@ -1,0 +1,312 @@
+hostmaster@gimp.org gnome-sysadmin@gnome.org
+admin@gimp.org gnome-sysadmin@gnome.org
+
+amesbury@gimp.org amesbury@indefi.net
+stelter@gimp.org stelter@gui.org
+
+# Shawn T. Amundson
+snorfle@gimp.org amundson@gimp.org
+amundson@gimp.org amundson@mail.gtk.org
+
+# Manish Singh
+manish@gimp.org yosh@yosh.org
+yosh@gimp.org manish@gimp.org
+cricketboy@gimp.org manish@gimp.org
+duck@gimp.org manish@gimp.org
+msingh@gimp.org manish@gimp.org
+crackrock@gimp.org manish@gimp.org
+
+# Adrian Likins
+adrian@gimp.org adrian@likins.com
+aklikins@gimp.org adrian@gimp.org
+
+# Jens T. Lautenbacher
+jens@gimp.org jtl@schlund.de
+jtl@gimp.org jens@gimp.org
+
+# Kelly Martin
+kelly@gimp.org kmartin@pyrzqxgl.org
+tylenol@gimp.org kelly@gimp.org
+Scott.Goehring@gimp.org kelly@gimp.org
+
+# Tim Janik
+timj@gimp.org tim.janik@googlemail.com
+tim@gimp.org timj@gimp.org
+tim.janik@gimp.org timj@gimp.org
+rambokid@gimp.org timj@gimp.org
+timj-lists@gimp.org timj@gimp.org
+beast@gimp.org timj@gimp.org
+rapicorn@gimp.org timj@gimp.org
+
+# Sven Neumann
+neo@gimp.org neo@blinkenlights.de
+sven@gimp.org neo@gimp.org
+
+# Jay Painter
+jpaint@gimp.org jpaint@serv.net
+jay@gimp.org jpaint@gimp.org
+
+# Peter Mattis
+pmattis@gimp.org petm@xcf.berkeley.edu
+petm@gimp.org pmattis@gimp.org
+
+# Miguel de Icaza
+miguel@gimp.org miguel.de.icaza@gmail.com
+
+# Federico Mena
+quartic@gimp.org federico.mena@gmail.com
+federico@gimp.org quartic@gimp.org
+
+# Elliot Lee
+sopwith@gimp.org sopwith@redhat.com
+
+# Tom Bech
+tomb@gimp.org tomb@ii.uib.no
+
+# Josh MacDonald
+jmacd@gimp.org jmacd@cs.berkeley.edu
+
+# Emil Moshkovich
+emilm@gimp.org emilm@physics.berkeley.edu
+
+# Adam Moss
+adam@gimp.org c@yotes.com
+adam.moss@gimp.org adam@gimp.org
+aspirin@gimp.org adam@gimp.org
+fox@gimp.org adam@gimp.org
+
+# Misha Dynin
+misha@gimp.org misha@xcf.berkeley.edu
+
+# Yaroslav Faybishenko
+yaroslav@gimp.org yaroslav@xcf.berkeley.edu
+
+# Michael K. Johnson
+mkj@gimp.org johnsonm@redhat.com
+
+# Laramie Leavitt
+leavittl@gimp.org leavittl@cs.byu.edu
+yanele@gimp.org leavittl@gimp.org
+
+# Nathan Froyd
+froyd@gimp.org maestrox@geocities.com
+Nathan.Froyd@gimp.org froyd@gimp.org
+
+# Tony Gale
+trog@gimp.org gale@syntax.dera.gov.uk
+gale@gimp.org trog@gimp.org
+tony.gale@gimp.org trog@gimp.org
+
+# Seth Burgess
+seth@gimp.org sjburges@gimp.org
+sethtillian@gimp.org sjburges@gimp.org
+sethtillion@gimp.org sjburges@gimp.org
+
+# Nathan Carl Summers
+rock@gimp.org rockwalrus@gmail.com
+rockwalrus@gimp.org rock@gimp.org
+rockwlrs@gimp.org rock@gimp.org
+
+# Lars Hamann
+hamann@gimp.org lars@bistromatic.de
+lars@gimp.org hamann@gimp.org
+
+# Stefan Jeske
+stefan@gimp.org stefan@bistromatic.de
+
+# Raph Levien
+raph@gimp.org raph@acm.org
+
+# Miles O'Neal
+meo@gimp.org meo@rru.com
+
+# Sven Riedel
+sr@gimp.org sr@nachtfrost.net
+
+# Tor Lillqvist
+tml@gimp.org tml@iki.fi
+
+# Ray Lehtiniemi
+rayl@gimp.org rayl@mail.com
+
+# Cameron Parish
+cameron@gimp.org cameron@sculpin.com
+camypoo@gimp.org cameron@gimp.org
+
+# Caroline Dahllof
+caro@gimp.org caro@rhythm.com
+
+# Tom Rathborne
+tomr@gimp.org tomr@aceldama.com
+tommer@gimp.org tomr@gimp.org
+
+# Damon Chaplin
+damon@gimp.org damon@helixcode.com
+
+# Anders Carlsson
+andersca@gimp.org andersca@gnome.org
+expander-master@gimp.org andersca@gimp.org
+
+# Kristian Rietveld
+kris@gimp.org kfd.rietveld@gmail.com
+33-hacker@gimp.org kris@gimp.org
+33hacker@gimp.org kris@gimp.org
+
+# Jonathan Blanford
+jrb@gimp.org jrb@gnome.org
+
+# Paolo Molaro
+lupus@gimp.org lupus@lettere.unipd.it
+
+# Raja R Harinath
+harinath@gimp.org harinath@cs.umn.edu
+
+# Jerome Bolliet
+bolliet@gimp.org bolliet@in2p3.fr
+
+# Jeff Garzik
+jgarzik@gimp.org jgarzik@pobox.com
+
+# Carsten Haitzler
+raster@gimp.org raster@redhat.com
+
+# Jukka Rajala
+montana@gimp.org jukka.rajala@iki.fi
+jukka@gimp.org montana@gimp.org
+
+# Michael Natterer
+mitch@gimp.org mitch@eeeeek.org
+ill@gimp.org mitch@gimp.org
+
+# James Henstridge
+james@gimp.org james@daa.com.au
+jamesh@gimp.org james@gimp.org
+
+# Roman Joost
+romanofski@gimp.org romanofski@gmail.com
+
+# GUM
+gum@gimp.org karin@frozenriver.com
+karin@gimp.org karin@frozenriver.com
+olof@gimp.org olof@frozenriver.com
+
+# Debian Guy Ben Gertzfield
+che@gimp.org che@debian.org
+
+# coding people
+austin@gimp.org Austin_Donnelly@yahoo.co.uk
+nether@gimp.org la@iki.fi
+alt@gimp.org alt@picnic.demon.co.uk
+vidar@gimp.org vidarino@gmail.com
+
+# Marc Lehmann
+marc@gimp.org pcg@goof.com
+
+# Simon Budig
+simon@gimp.org simon@budig.de
+
+# Ian McKellar (GimpMill guy)
+yakk@gimp.org yakk@yakk.net
+
+# Eskil Heyn Olsen
+eskil@gimp.org eskil@eskil.org
+
+# Wolfgang Hofer
+hof@gimp.org wolfgang.hofer@lycos.com
+
+# Jeff Trefftzs
+jefft@gimp.org trefftzs@tcsn.net
+
+# Carol Spears
+wilma@gimp.org carol@gimp.org
+
+# David Odin
+dindinx@gimp.org david@dindinx.net
+
+# Doc people
+syngin@gimp.org mel.boyce@gmail.com
+bex@gimp.org bex@gnome.org
+scizzo@gimp.org scizzo@sector7.nu
+drc@gimp.org sanguivor@gmail.com
+helvetix@gimp.org helvetix@oak.mysterious.org
+
+# groupies
+logan@gimp.org logan@versanet.com
+pavlov@gimp.org pavlov@pavlov.net
+pixelfairy@gimp.org pixelfairy@necroerotic.org
+pixel@gimp.org pixelfairy@gimp.org
+x@gimp.org x@linux.com
+garrett@gimp.org garrett@linuxart.com
+prumpf@gimp.org prumpf@ftp.linux.org.uk
+madrid@gimp.org daniele.medri@libero.it
+maru@gimp.org mike@it-loops.com
+
+# contest winners
+mschrag@gimp.org mschrag@nflux.com
+Mike.Schrag@gimp.org mschrag
+guppy@gimp.org guppy@tigerden.com
+viktor@gimp.org d2viktor@dtek.chalmers.se
+sc@gimp.org sc@scharf.net
+
+# Dave Seidel, maintainer of beast web
+feldspar@gimp.org dave@superluminal.com
+
+staiger@gimp.org staiger@cs.umn.edu
+
+# Jakub Steiner
+jimmac@gimp.org jimmac@gmail.com
+
+# S. Mukund
+mukund@gimp.org muks@mukund.org
+
+# Francisco Bustamente
+bit@gimp.org bit@bitbit.org
+
+# Daniel Rogers
+dsrogers@gimp.org daniel@phasevelocity.org
+
+# Ryan Lortie
+desrt@gimp.org desrt@desrt.ca
+
+# Øyvind Kolås
+pippin@gimp.org pippin@hodefoting.com
+
+# Alexia Death
+alexia@gimp.org alexiadeath@gmail.com
+death@gimp.org alexia@gimp.org
+
+# Hartmut Kuhse
+onkelhatti@gimp.org hk_priv@gmx.de
+
+# Jenkins Build Infrastructure Bugzilla alias
+ci-bugs@gimp.org scl.gplus@gmail.com
+
+# Daniel Sabo
+daniel@gimp.org danielsabo@gmail.com
+
+# Hartmut
+hatti@gimp.org hkuhse@web.de
+
+# Jehan
+jehan@gimp.org jehanp@staff-mail.gnome.org
+
+# Joao
+jsbueno@gimp.org gwidion@gmail.com
+
+# Pat
+patdavid@gimp.org patdavid@gmail.com
+
+# Sven Claussner (RT #15057)
+scl@gimp.org scl.gplus@gmail.com
+
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/619
+aryeom@gimp.org aryeomhan@staff-mail.gnome.org
+
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/633
+social@gimp.org alexandre.prokoudine@gmail.com, liam@fromoldbooks.org, jehan@gimp.org, mitch@gimp.org
+
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/831
+msstore@gimp.org jernej|s-gimp@eternallybored.org, jgboerema@gmail.com, mitch@gimp.org, schumaml@gmx.de, jehan@gimp.org
+
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/844
+security@gimp.org jernej|s-gimp@eternallybored.org, jgboerema@gmail.com, mitch@gimp.org, schumaml@gmx.de, jehan@gimp.org, liam@fromoldbooks.org

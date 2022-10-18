@@ -1,0 +1,6 @@
+social@las.gnome.org    nuritzis@gmail.com,cassandra.s.18@gmail.com,sri@ramkrishna.me,adeliarahim@gmail.com
+papers@las.gnome.org talks@las.gnome.org
+talks@las.gnome.org    robert@mcqueen.me.uk,sri@ramkrishna.me,cosimo.cecchi@gmail.com,megford@gnome.org,philip@tecnocode.co.uk,aleixpol@kde.org
+info@las.gnome.org      sri@ramkrishna.me,adeliarahim@gmail.com,nuritzis@gmail.com
+sponsors@las.gnome.org  zana@gnome.org,sri@ramkrishna.me
+registration@las.gnome.org  zana@gnome.org 

@@ -1,0 +1,7 @@
+#######################
+## MANAGED BY PUPPET ##
+#######################
+
+/filename=\"?(.*)\.(bat|chm|cmd|com|do|exe|hta|jse|rm|scr|pif|vbe|vbs|vxd|xl)\"?$/  REJECT For security reasons we reject attachments of this type
+/^\s*Content-(Disposition|Type).*name\s*=\s*"?(.+\.(lnk|asd|hlp|ocx|reg|bat|c[ho]m|cmd|exe|dll|vxd|pif|scr|hta|jse?|sh[mbs]|vb[esx]|ws[fh]|wmf|xl))"?\s*$/  REJECT Attachment type not allowed. File "$2" has the unacceptable extension "$3"
+

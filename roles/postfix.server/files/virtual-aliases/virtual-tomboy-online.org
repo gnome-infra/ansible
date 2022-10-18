@@ -1,0 +1,11 @@
+#######################
+## MANAGED BY PUPPET ##
+#######################
+
+# Misc special-purpose aliases
+
+root@tomboy-online.org gnome-sysadmin@gnome.org
+abuse@tomboy-online.org gnome-sysadmin@gnome.org
+hostmaster@tomboy-online.org gnome-sysadmin@gnome.org
+postmaster@tomboy-online.org gnome-sysadmin@gnome.org
+webmaster@tomboy-online.org gnome-web-list@gnome.org

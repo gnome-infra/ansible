@@ -1,0 +1,393 @@
+#######################
+## MANAGED BY PUPPET ##
+#######################
+
+# System aliases
+
+root@gnome.org gnome-sysadmin@gnome.org
+abuse@gnome.org gnome-sysadmin@gnome.org
+
+hostmaster@gnome.org gnome-sysadmin@gnome.org
+postmaster@gnome.org listadmin@gnome.org
+
+gnome-web-maint@gnome.org gnome-web-list@gnome.org
+
+ftpmaster@gnome.org gnome-ftp-maint@gnome.org
+
+webmaster@gnome.org gnome-web-list@gnome.org
+listmaster@gnome.org mailman@gnome.org
+sysadmin@gnome.org gnome-sysadmin@gnome.org
+wordpress@gnome.org noreply@gnome.org
+admin@gnome.org gnome-sysadmin@gnome.org
+
+news@gnome.org gnome-web-list@gnome.org
+membership@gnome.org membership-committee@gnome.org
+docs@gnome.org gnome-doc-list@gnome.org
+jobs@gnome.org webmaster@gnome.org
+
+gnome-mirror-admins@gnome.org archive@ftp.sunet.se,help@mirrorservice.org,veillard@redhat.com,webmaster@cse.buffalo.edu,ftp-adm@acc.umu.se,Fabrice.Bellet@creatis.insa-lyon.fr,ftp-admin@is.naist.jp,ftp@df.lth.se,mirror@artfiles.org,ftpadmin@is.co.za,help@mirrorservice.org,mirror@mirror.umd.edu,ftpmirror-beheer@nluug.nl,dakulov@maxcdn.com,support@osuosl.org,stephenpcg@gmail.com,noc@nbtelecom.com.br,adrian.reber@hs-esslingen.de,board@muug.mb.ca,rrze-ftp-admins@fau.de,staff@dotsrc.org,my@yaoge123.com,support@gethosted.online
+
+# GUADEC
+
+guadec-logos@gnome.org guadec-planning@gnome.org
+
+# On request from Ekaterina Gerasimova on 2014-07-17
+# non-GNOME addresses are related to GUADEC 2020 in Mexico
+guadec@gnome.org zana@gnome.org, kprogri@gnome.org, chenriksen@gnome.org, caxcan70@gmail.com, saharariven@gmail.com, kaartz20@gmail.com, edmundormz@gmail.com
+
+# On request from Ekaterina Gerasimova on 2016-02-04
+patreon@gnome.org kat@gnome.org
+
+guadec-feedback@gnome.org guadec-planning@gnome.org
+
+visa-invitations@gnome.org marinaz@redhat.com, twtyau@gmail.com, sragavan@gnome.org, lists@andreasn.se
+
+# Old mailing lists forwards
+
+gnomemeeting-list@gnome.org ekiga-list@gnome.org
+gnomemeeting-devel-list@gnome.org ekiga-devel-list@gnome.org
+
+gnome-love@gnome.org newcomers-list@gnome.org
+
+soc-mentors-list@gnome.org mentors-list@gnome.org
+gcalctool-list@gnome.org gnome-calculator-list@gnome.org
+
+# Licensing, Board of Directors, donations
+board@gnome.org board-list@gnome.org
+
+# Staff and general info
+info@gnome.org staff-list@gnome.org
+pia-affiliate@gnome.org info@gnome.org
+
+# Hiring Committee
+hiring-committee@gnome.org edsearch-list@gnome.org
+
+# Alias for mail about Copyright/Trademark licensing
+licensing@gnome.org info@gnome.org
+
+# Coding Education Challenge
+cechallenge@gnome.org mwu@gnome.org
+
+# University Outreach (https://gitlab.gnome.org/Infrastructure/Infrastructure/issues/254)
+universityoutreach@gnome.org kprogri@gnome.org, nkemregina@gnome.org
+
+## migrated fundraising alias to moderated mailing list per karen request
+#fundraising@gnome.org board-list@gnome.org,zana@gnome.org
+friends@gnome.org zana@gnome.org, tobiasmue@gnome.org 
+friends-eu@gnome.org director@gnome.org,zana@gnome.org
+tshirts@gnome.org drfickle@k-lug.org
+gear@gnome.org drfickle@k-lug.org
+# Groupon fundraising campaign Paypal address
+defendus@gnome.org zana@gnome.org
+
+# Alias used for donations taken on behalf of the GIMP project
+# Rosanna Yuen, Michael Natterer, Michael Schumacher
+gimp@gnome.org mitch@gimp.org, zana@gnome.org, schumaml@gmx.de
+
+# Personal aliases.
+jacob@gnome.org jberkman@gnome.org
+terra@gnome.org mortenw@gnome.org
+ten@gnome.org ten@ximian.com
+egerasimov@gnome.org kat@gnome.org
+seb128@gnome.org sbacher@gnome.org
+bolsh@gnome.org dneary@gnome.org
+patrick@gnome.org puiterwijk@gnome.org
+aday@gnome.org allanday@gnome.org
+misha@gnome.org mishashnurapet@gnome.org
+schuirmann@gnome.org lschuirma@gnome.org
+
+# Marketing aliases
+
+# marketing is now engagement (GUADEC 2013 - averi - https://mail.gnome.org/archives/engagement-list/2013-August/msg00004.html)
+marketing-list@gnome.org engagement-list@gnome.org
+
+# Used for Amazon Affiliates
+amazon@gnome.org zana@gnome.org
+
+# Used for Microblogging
+microblog@gnome.org allanpday@gmail.com, nuritzi@gnome.org, zana@gnome.org
+
+# Used for Twitter (@GNOMELove)
+gnomelove@gnome.org allanpday@gmail.com
+
+# Flattr, requested by Rosanna Yuen
+flattr@gnome.org flattr-list@gnome.org
+
+# GNOME Instagram account
+instagram@gnome.org aday@gnome.org, sri@gnome.org, nuritzi@gnome.org, christopherdavis@gnome.org, sta7chase7@gmail.com, bwyazel@gnome.org
+
+# Twitter (GNOME Photos)
+twitter-photos@gnome.org debarshir@gnome.org, mailumangjain@gmail.com
+
+# GNOME Summit twitter account
+gnomesummit-twitter@gnome.org gnome-sysadmin@gnome.org
+
+# as per Neil's request
+video@gnome.org info@gnome.org
+
+# GNOME Open Events platform
+events@gnome.org kat@gnome.org, tomtryf@gnome.org
+
+# Microsoft licenses
+microsoft@gnome.org av@gnome.org, csoriano@gnome.org
+
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/311
+gsod-team@gnome.org pmkovar@gnome.org, ebassi@gnome.org, alexbalut@gnome.org, kprogri@gnome.org, sri@gnome.org
+
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/577
+foursquare@gnome.org debarshir@gnome.org, mlundblad@gnome.org
+
+# Various aliases
+
+gnome-contribs@gnome.org joakim@helixcode.com, miguel@helixcode.com
+gnome-press-contact@gnome.org engagement-private@gnome.org
+gnome-press-team@gnome.org engagement-private@gnome.org
+
+director@gnome.org zana@gnome.org
+trinityhousing@gnome.org director@gnome.org, snmartin@galilea.cl
+tutorials@gnome.org director@gnome.org
+
+travel-committee@gnome.org travel-committee-private@gnome.org
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=796507
+travel-invitations-committee@gnome.org info@gnome.org
+
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/issues/64
+compensation-committee@gnome.org csoriano@gnome.org, ramcq@gnome.org, nuritzi@gnome.org
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=785626
+photos@gnome.org cassandra@gnome.org, nuritzi@gnome.org, adeliar@gnome.org
+
+# Libre Graphics Meeting donations (Davy Neary) (RT#4535)
+lgm@gnome.org dneary@gnome.org,louis.desjardins@gmail.com,kamila.giedrojc@gmail.com,jon@rejon.org,zana@gnome.org
+
+# On request from Emmanuele Bassi for clutter's project blog on blogs.g.o (averi - 08/10/2012)
+clutter@gnome.org ebassi@gmail.com
+
+# Lucas Rocha <lucasr@gnome.org> - GNOME Asia Summit
+asia-summit@gnome.org gnomecn@gmail.com, x2rich@gmail.com, emily.chen@sun.com, maggie.liu@sun.com, will@lashell.net, Brian.Cameron@Sun.COM, Alfred.Peng@Sun.COM
+
+# PiTivi Fundraising campaign
+pitivi-fundraiser@gnome.org saunierthibault@gmail.com, mduponchelle1@gmail.com
+pitivi@gnome.org zana@gnome.org, saunierthibault@gmail.com, mduponchelle1@gmail.com
+
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/440
+outreach@gnome.org sri@gnome.org
+
+# Sysadmin aliases
+
+## apache@gnome.org being rejected by external spam filters as invalid/non-existand address.
+apache@gnome.org webmaster@gnome.org
+
+# rdiff-backup logs are sent here
+backups@gnome.org av@gnome.org
+
+# updated from board-list to security-list 2010-08-19 cedwards
+security@gnome.org security-list@gnome.org
+
+# RHN account
+rhn@gnome.org av@gnome.org 
+
+# List of volunteers to handle mass mailing list moderation
+moderators@gnome.org moderator@gnome.org
+listadmin@gnome.org root@gnome.org
+
+mailman-owner@gnome.org gnome-sysadmin@gnome.org
+wiki@gnome.org noreply@gnome.org
+
+#Requested by bkor on 2006-04-21 for NewsBruiser stuff
+noreply@gnome.org devnull
+
+# https://gitlab.com/gitlab-org/gitlab-ce/issues/43521
+@users.noreply.gitlab.gnome.org devnull
+
+# Alias for art.gnome.org admin queries
+art-web-admin@gnome.org gnome-sysadmin@gnome.org
+
+# Planet maintainers
+planet-maint@gnome.org fredm@gnome.org, daniel.mustieles@gmail.com
+
+# gitlab-issues to be available for specific external mail server checks to succeed
+# https://gitlab.gnome.org/Infrastructure/GitLab/issues/319
+gitlab-issues@gnome.org devnull
+
+# GitLab reply by e-mail
+@gitlab.gnome.org gitlab-incoming-email@staff-mail.gnome.org 
+
+emergency@gnome.org rt-emergency@gnome-sysadmins.pagerduty.com
+support@gnome.org info@gnome.org
+
+### OWP Aliases && SOC aliases
+gnome-opw-admins@gnome.org marinaz@redhat.com, karen@gnome.org, kittykat3756@gmail.com
+opw-admins@gnome.org marinaz@redhat.com, karen@gnome.org, zana@gnome.org, sarah@thesharps.us
+
+## Bug 634461
+opw-interns-2010@gnome.org tiffany.antopolski@gmail.com, nancibonfim@gmail.com, luciana@fujii.eti.br, genia.likes.science@gmail.com, stringarray@gmail.com, hellyna@hellyna.com, chandniverma2112@gmail.com
+# Bouncing nruz@alumnos.inf.utfsm.cl
+opw-interns-2011@gnome.org alibezz@gmail.com, yrazes@gmail.com, kittykat3756@googlemail.com, ksinnott5ht@gmail.com, meg387@gmail.com, nitalynx@gmail.com, humusha@gmail.com, yuliansu@gmail.com
+
+## Bug 674751
+opw-interns-2012@gnome.org mmcasetti@gmail.com, monicakochofar@gmail.com, radina.matic@gmail.com, barbara.muraus@gmail.com, elenapetrevska77@gmail.com, a.risteska@gmail.com, azzurroverde@gmail.com, fei@argonemyth.com
+# Bouncing rik0yamada@yahoo.co.jp
+opw-gsoc-interns-2012@gnome.org serah4291@gmail.com, meg387@gmail.com, emilyyrose@gmail.com, jovanka.gulicoska@gmail.com, bhadley@mit.edu, ashwini.oruganti@gmail.com
+# Bouncing jewelfox@fursona.net
+
+## Bug 664534
+opw-interns-december-2011@gnome.org majus85@gmail.com, kasia.bondarava@gmail.com, iamchristyeller@gmail.com, emilyyrose@gmail.com, jovanka.gulicoska@gmail.com, ihmis.suski@gmail.com, laulazzati@yahoo.com.ar, m@heymendy.com, andiswamva@gmail.com, antipapantoni@gmail.com, patriciasantanacruz@gmail.com, sophia.receiving@gmail.com
+opw-gsoc-interns-2011@gnome.org madhuvishy@gmail.com, nohemifdz@gmail.com, ralucaelena1985@gmail.com, tamara.atanasoska20@gmail.com, tiffany.antopolski@gmail.com
+# Bouncing ndoijode@gmail.com
+# Removed at request srishakatux@gmail.com
+
+## Bug 690070
+opw-interns-january-2013@gnome.org martha.c.chumo@gmail.com, housewifehacker@gmail.com, stephaniemanuel16@gmail.com, marija.radevskaa@gmail.com, satabdidas@gmail.com, aakanksha.gaur@gmail.com, sindhu.oxf@gmail.com, flavia.weisghizzi@gmail.com, petra.moessner@mavs.uta.edu, liannelee719@hotmail.com, steph.alarcon@gmail.com, exexpat2@gmail.com, jenny@thepyre.org, aleta.dunne@gmail.com, maletsabisam@gmail.com, laura.adq@gmail.com, anteaya@anteaya.info, vickymsee@gmail.com, tcho708@gmail.com, sucheta.ghoshal@gmail.com, valerie.m.juarez@gmail.com, mnm301@nyu.edu, priynag@gmail.com, zhorishna@gmail.com, gabriela.gibson@gmail.com
+## Bug 690227
+gnome-opw-interns-january-2013@gnome.org satabdidas@gmail.com, aakanksha.gaur@gmail.com, sindhu.oxf@gmail.com, flavia.weisghizzi@gmail.com
+
+gnome-opw-interns-june-2013@gnome.org saumya.zero@gmail.com, saumyapathak2011@gmail.com, shivani.poddar92@gmail.com, aruna.evam@gmail.com, anexasajoop@gmail.com, melissa.srw@gmail.com, tiffanyyyau@gmail.com, twtyau@gmail.com
+opw-interns-june-2013@gnome.org yan@mit.edu, saumya.zero@gmail.com, saumyapathak2011@gmail.com, shivani.poddar92@gmail.com, aruna.evam@gmail.com, anexasajoop@gmail.com, melissa.srw@gmail.com, tiffanyyyau@gmail.com, twtyau@gmail.com, tulinizer@gmail.com, Lidza.Louina@gmail.com, lisan02@gmail.com, hemaklnce@gmail.com, burzalodowa@gmail.com, ufimtseva@gmail.com, laura.vasilescu@rosedu.org, mariafar.94@gmail.com, konkiewicz.m@gmail.com, nagpalchinkal77@gmail.com, hvabey@gmail.com, nattilypigeonfowl@gmail.com, emma.c.echo@gmail.com, gabithume@gmail.com, tiziana.sel@gmail.com, cdphelan@umich.edu, mgnrsb@gmail.com, hasna.sabah@gmail.com, shailjathkr@gmail.com, jenn.parise@gmail.com, evoeges@gmail.com, terrimyu@gmail.com, me@upasana.me, staceysern@gmail.com, a_dom@yahoo.com, katieirenec@gmail.com, rachelqa99@gmail.com, siobhanbamber@gmail.com, kat@codebykat.com, mulhern@cs.wisc.edu
+# Bouncing jessica@megworld.co.uk
+gsoc-opw-interns-2013@gnome.org ellydwivedi2093@gmail.com, himeshidslv@gmail.com, liangent@gmail.com, garimaahujaishere@gmail.com, magdalenberns@gmail.com, monica.dragan@cti.pub.ro, heena393@gmail.com
+gnome-opw-gsoc-interns-2013@gnome.org garimaahujaishere@gmail.com, magdalenberns@gmail.com
+
+opw-interns-december-2013@gnome.org judit.gyimesi.x@gmail.com, djafifa@gmail.com, charul.agrl@gmail.com, pallavikumarijha@gmail.com, riecatnor@gmail.com, kpytang@gmail.com, tyagishobha@gmail.com, yishanj13@gmail.com, elianerpereira@gmail.com, teobaluta@gmail.com, rashika.kheria@gmail.com, valentina.manea.m@gmail.com, kelleynnn@gmail.com, thequeerpastry@gmail.com, jennie.halperin@gmail.com, nif.ward@gmail.com, 831sabina.brown@gmail.com, sayali.92720@gmail.com, cindy.pallaresq@gmail.com, miranda.zhang.q@gmail.com, bnnrgrr@gmail.com, khurana.tashwin@gmail.com, ana.pedro@delasalle.ph, lupoubel@hotmail.com, bebirchall@gmail.com, inchikutty13@gmail.com, niharikakohli29@gmail.com, monteirobrena@gmail.com, maria.pacana@gmail.com, diwanshipandey@gmail.com
+# Bouncing a.koppad@gmail.com
+gnome-opw-interns-december-2013@gnome.org tyagishobha@gmail.com, yishanj13@gmail.com, elianerpereira@gmail.com
+
+opw-interns-may-2014@gnome.org 1.alison.king@gmail.com, alexandra.khirnova@gmail.com, alexandrasava18@gmail.com, anarey@gmail.com, anya.elise.marshall@gmail.com, aswanirashi19@gmail.com, atmalagon@gmail.com, avanzini.arianna@gmail.com, bernat.ada@gmail.com, contact@isabeljimenez.com, frances.hocutt@gmail.com, grafinya.uvarova@gmail.com, helenhalbert@gmail.com, herself@thefumon.com, hi@ingridcheung.com, himangi774@gmail.com, jaimelynschatz@gmail.com, joelle.fleurantin@gmail.com, katerinab@gmail.com, kristina.martsenko@gmail.com, lita.cho@gmail.com, lphjescy@gmail.com, lyndseyjanemoulds@gmail.com, lynncyrin@gmail.com, madamezou@zouish.org, maja.frydrychowicz@gmail.com, maria.k@catit.be, maria.nita.dn@gmail.com, marielle.volz@gmail.com, mavridou@gmail.com, me@sheena.in, mindy@somerandomidiot.com, nidhimj22@gmail.com, nuskita97@gmail.com, pattawanna@gmail.com, ruchita@berkeley.edu, s.mansoury@gmail.com, sandarumk@gmail.com, sara.rmgr@gmail.com, sharma.anjali3110@gmail.com
+gnome-opw-interns-may-2014@gnome.org aswanirashi19@gmail.com, sara.rmgr@gmail.com, mavridou@gmail.com
+gsoc-opw-interns-2014@gnome.org kxra@riseup.net, talinashrotriya@gmail.com, giselle.mnr@gmail.com
+gnome-opw-gsoc-interns-2014@gnome.org giselle.mnr@gmail.com
+
+op-interns-december-2014@gnome.org agrawalshaifali09@gmail.com, andpirvulescu@gmail.com, anke.nowottne@gmail.com, ankitashukla707@gmail.com, aokoye@gmail.com, arwaarif1994@gmail.com, asalle.kim@gmail.com, lhewusfresh@gmail.com, culture.dawle@gmail.com, ebru.akagunduz@gmail.com, ecokpo@gmail.com, rah1@uchicago.edu, evelina_dumitrescu@yahoo.com, galgeek@me.com, ginnery@gmail.com, iulia.manda21@gmail.com, j@introo.me, jennykang95@gmail.com, jmarlena.canepa@gmail.com, jobediah.hansen@gmail.com, julia.lima.dg@gmail.com, mahati.chamarthy@gmail.com, maia.mcc@gmail.com, manpreetkaur9411@gmail.com, ms.annaphilips@gmail.com, necula.roxana91@gmail.com, nelly.smitt@gmail.com, neta.livneh@gmail.com, nitikaagarwal18@gmail.com, priyankajayaswaliitkgp@gmail.com, riceah@gmail.com, roberta.dobrescu@gmail.com, rose@happyspork.com, ruchandani.tina@gmail.com, singh.eejya@gmail.com, snigdha.dagar@gmail.com, sphoorti.joglekar@gmail.com, supraja0493@gmail.com, tahmina.csebuet@gmail.com, tapaswenipathak@gmail.com, tessyjoseph1992@gmail.com, u@451f.org, uma.sharma523@gmail.com, vanyajauhal@gmail.com
+gnome-op-interns-december-2014@gnome.org culture.dawle@gmail.com, jobediah.hansen@gmail.com, maia.mcc@gmail.com
+
+outreachy-interns-may-2015@gnome.org jess.m.mack@gmail.com, nishtha3rai@gmail.com, lglinskih@gmail.com, dobrescu.gina.adriana@gmail.com, vchipirras6@gmail.com, helen.fornazier@gmail.com, vatikaharlalka@gmail.com, mahfouz.saif.elyazal@gmail.com, cristina.opriceana@gmail.com, vthakkar1994@gmail.com, kinga.farkas@gmail.com, oana.niculaescu@gmail.com, aditi96dixit@gmail.com, maksudova.raushaniya@gmail.com, thalia.e.chan@gmail.com, alicescarpa@gmail.com, shekinahglory92@gmail.com, ecbarber1@gmail.com, geetika791@gmail.com, doralynavarro@gmail.com, yachtsman.dev@gmail.com, tassia@acaia.ca, rekth@insiberia.net, arushi.8295@gmail.com, bolya2003@bk.ru, sakshee3@gmail.com, sushma.reddy@research.iiit.ac.in, divyalife526@gmail.com, lindaj@jma3.com
+# Bouncing yixin_1992_cia@126.com
+gsoc-outreachy-interns-2015@gnome.org zenith158@gmail.com, missdeeh@mit.edu, tinajohnson.1234@gmail.com, kumariankita002@gmail.com
+gnome-outreachy-interns-may-2015@gnome.org dobrescu.gina.adriana@gmail.com
+
+outreachy-interns-december-2015@gnome.org linzjax@gmail.com, aditi24.bhatnagar@gmail.com, jordana.sluft@gmail.com, hashem@riseup.net, belinhacbr@gmail.com, amishas157@gmail.com, moriah.ellig@gmail.com, shraddha.6596@gmail.com, shivanib134@gmail.com, ciorneiioana@gmail.com, deepa.kernel@gmail.com, cristina.moraru09@gmail.com, ksenija.stanojevic@gmail.com, mobappbiz@gmail.com, olya.fomenko95@gmail.com, nellykiboi@gmail.com, acynthiaanyango@gmail.com, nikkicubed@gmail.com, laucon@optonline.net, roxana.ilie23@gmail.com, my@le-my.com, oakshweta11@gmail.com, richarupela95@gmail.com, jullieutsch@gmail.com, namp1@yandex.ru, jennifer.e.buehler@gmail.com, akanksha.aha@gmail.com, chaudhary.rohini241@gmail.com, ubershy@gmail.com, sonaligoyal654321@gmail.com, catherine@northcott.nz, njirap@gmail.com, petra_sargent@yahoo.com, josephinelim86@gmail.com, sadieperkins@riseup.net, write.harmandeep@gmail.com
+# Bouncing: rita.sinha89@gmail.com
+gnome-outreachy-interns-december-2015@gnome.org jordana.sluft@gmail.com, hashem@riseup.net, belinhacbr@gmail.com, amishas157@gmail.com
+
+outreachy-interns-may-2016@gnome.org scarlett.gately.clark@gmail.com, merlettaia@gmail.com, ceridwenv@gmail.com, spectranaut@riseup.net, floresmigu3l@gmail.com, yolandaa.alvarez.perez@gmail.com, cyb0rg@riseup.net, gegajrenata@gmail.com, kripak.diana@gmail.com, carlaquintanacarrasco@gmail.com, eirinikos@gmail.com, nevola@gmail.com, amitoj1606@gmail.com, janani.rvchndrn@gmail.com, amsfield22@gmail.com, bhaktipriya96@gmail.com, ipsha21@gmail.com, kbroida@gmail.com, coss@cosstropolis.com, ana.ribeiro@ccc.ufcg.edu.br, larissagaulia@gmail.com, delrio.andre@gmail.com, bennyjr169@gmail.com, jen.kagan@nyu.edu, anarutecvm@gmail.com, manelmozz@gmail.com, Rakhish1994@gmail.com, rutuja.r.surve@gmail.com, kristelteng@gmail.com, anjanavakil@gmail.com, deepthivenkitaramanan@gmail.com, jaiswalswati94@gmail.com, ishadewan07@gmail.com, swatidewan9@gmail.com, lsofia.enriquez@gmail.com, sanakhan2011@gmail.com, ynisha11@gmail.com, 109lozanoi@gmail.com, elena.petrashen@gmail.com, vppriya9@gmail.com, drawginadraw@gmail.com
+
+gnome-outreachy-interns-may-2016@gnome.org yolandaa.alvarez.perez@gmail.com, cyb0rg@riseup.net, gegajrenata@gmail.com, kripak.diana@gmail.com, carlaquintanacarrasco@gmail.com
+gsoc-outreachy-interns-2016@gnome.org devikrishnan67@gmail.com, priyanka.mp2808@gmail.com, smritis.31095@gmail.com
+
+outreachy-interns-december-2016@gnome.org manoramahp@gmail.com, prkpbandara@gmail.com, gnudevliz@gmail.com, siamezzze@gmail.com, urvika.gola@gmail.com, wispfox@gmail.com, mailbhaktibhikne@gmail.com, thomastdt@gmail.com, pallavikumari.in@gmail.com, menaka.m@outlook.com, wangmychn@gmail.com, bankarsandhya512@gmail.com, bhumirks@gmail.com, elise.lennion@gmail.com, eraretuya@gmail.com, aquannie@gmail.com, hello@nasmaahmed.ca, divyabiyani26@gmail.com, gabsurita@gmail.com, jshubheksha@gmail.com, mansimarkaur.mks@gmail.com, lockettmesha@gmail.com, sveta.orlik.code@gmail.com, bhagyashree.iitg@gmail.com, kristiprogri94@gmail.com, elenasolomon28@gmail.com, adamanna.ca@gmail.com, elvinavalieva@gmail.com, cwillia5@gmail.com, anna.mag.kedzierska@gmail.com, jessica.quynh.tran@gmail.com, larissayvette55@gmail.com, kongsally94@gmail.com, karishmasharma558@gmail.com, karen@karen-chan.com, annakoppad@gmail.com, mariannelinharesm@gmail.com, sitlani.namrata@yahoo.in, zareenf@gmail.com, aliao22@gmail.com, sejal.khatri5@gmail.com, tur.neslihan@gmail.com, ronladred@gmail.com, saumya.bhatnagar.sb@gmail.com, outreachy@feorlen.org, alicja.raszkowska@gmail.com
+gnome-outreachy-interns-december-2016@gnome.org wangmychn@gmail.com
+
+opw-alums@gnome.org opw-interns-2010@gnome.org, opw-interns-2011@gnome.org, opw-gsoc-interns-2011@gnome.org, opw-interns-december-2011@gnome.org, opw-interns-2012@gnome.org, opw-gsoc-interns-2012@gnome.org, opw-interns-january-2013@gnome.org, opw-interns-june-2013@gnome.org, gsoc-opw-interns-2013@gnome.org, opw-interns-december-2013@gnome.org, opw-interns-may-2014@gnome.org, gsoc-opw-interns-2014@gnome.org, op-interns-december-2014@gnome.org, marinaz@redhat.com
+outreachy-alums@gnome.org opw-alums@gnome.org, outreachy-interns-may-2015@gnome.org, gsoc-outreachy-interns-2015@gnome.org, outreachy-interns-december-2015@gnome.org, outreachy-interns-may-2016@gnome.org, gsoc-outreachy-interns-2016@gnome.org, outreachy-interns-december-2016@gnome.org
+
+
+gnome-opw-alums@gnome.org opw-interns-2010@gnome.org, opw-interns-2011@gnome.org, opw-gsoc-interns-2011@gnome.org, opw-interns-december-2011@gnome.org, opw-interns-2012@gnome.org, opw-gsoc-interns-2012@gnome.org, gnome-opw-interns-january-2013@gnome.org, gnome-opw-interns-june-2013@gnome.org, gnome-opw-gsoc-interns-2013@gnome.org, gnome-opw-interns-december-2013@gnome.org, gnome-opw-interns-may-2014@gnome.org, gnome-opw-gsoc-interns-2014@gnome.org, gnome-op-interns-december-2014@gnome
+gnome-outreachy-alums@gnome.org gnome-opw-alums@gnome.org, gnome-outreachy-interns-may-2015@gnome.org, gnome-outreachy-interns-december-2015@gnome.org, gnome-outreachy-interns-december-2016@gnome.org
+
+op-career-advisors@gnome.org erin.berkery@gmail.com, catamorphism@gmail.com
+
+outreachy-admins@gnome.org karen@sfconservancy.org, sarah@thesharps.us, marinaz@redhat.com, cindy.pallaresq@gmail.com, tony@sfconservancy.org
+gnome-outreachy-admins@gnome.org marinaz@redhat.com, karen@sfconservancy.org, meg387@gmail.com
+
+### SOC
+soc-admins@gnome.org teuf@gnome.org, kittykat3756@gmail.com, csoriano@gnome.org, felipeborges@gnome.org
+
+### Google Play Developer account - BZ #771981
+android@gnome.org ankitstarski@gmail.com, info@gnome.org
+
+### ED aliases
+neil@gnome.org nmcgovern@gnome.org
+neilm@gnome.org nmcgovern@gnome.org
+
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/issues/238
+africa@gnome.org nkemregina@gmail.com
+
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/430
+asia@gnome.org sammyfung@gnome.org, kprogri@gnome.org
+gnomeasia@gnome.org kprogri@gnome.org
+
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/435
+conduct@gnome.org code-of-conduct-committee@gnome.org
+
+# GUADEC shop, requested by Kristi Progri on 2020-05-08
+shop@gnome.org zana@gnome.org, kprogri@gnome.org, chenriksen@gnome.org
+
+# GUADEC headshots
+headshots@gnome.org guadec-headshots-list@gnome.org
+
+# Bot user for managing mirrors with Lorry
+# https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/705
+lorry-controller-gitlab-bot@gnome.org gnome-sysadmin@gnome.org
+
+# Spamtrap
+/^.*@cvs.gnome.org$/ spamtrap@gnome.org
+/^.*@svn.gnome.org$/ spamtrap@gnome.org
+anjuta-list@gnome.org spamtrap@gnome.org
+banshee-list@gnome.org spamtrap@gnome.org
+calendar-list@gnome.org spamtrap@gnome.org
+cvs-commits-list@gnome.org spamtrap@gnome.org
+cvs-po-commits-list@gnome.org spamtrap@gnome.org
+deja-dup-list@gnome.org spamtrap@gnome.org
+deskbar-applet-list@gnome.org spamtrap@gnome.org
+devel-list@gnome.org spamtrap@gnome.org
+doc-list@gnome.org spamtrap@gnome.org
+dogtail-list@gnome.org spamtrap@gnome.org
+drivel-list@gnome.org spamtrap@gnome.org
+ekiga-devel-list@gnome.org spamtrap@gnome.org
+epiphany-list@gnome.org spamtrap@gnome.org
+fplan-list@gnome.org spamtrap@gnome.org
+ftprelease-list@gnome.org spamtrap@gnome.org
+fundraising-list@gnome.org spamtrap@gnome.org
+gamin-list@gnome.org spamtrap@gnome.org
+garnome-list@gnome.org spamtrap@gnome.org
+gconf-list@gnome.org spamtrap@gnome.org
+gdm-list@gnome.org spamtrap@gnome.org
+gedit-list@gnome.org spamtrap@gnome.org
+glademm-list@gnome.org spamtrap@gnome.org
+gnac-list@gnome.org spamtrap@gnome.org
+gnome-1.4-list@gnome.org spamtrap@gnome.org
+gnome-art-list@gnome.org spamtrap@gnome.org
+gnome-au-list@gnome.org spamtrap@gnome.org
+gnome-components-list@gnome.org spamtrap@gnome.org
+gnome-gui-list@gnome.org spamtrap@gnome.org
+gnome-kde-list@gnome.org spamtrap@gnome.org
+gnome-keyring-list@gnome.org spamtrap@gnome.org
+gnome-maps-list@gnome.org spamtrap@gnome.org
+gnome-my-list@gnome.org spamtrap@gnome.org
+gnome-packaging-list@gnome.org spamtrap@gnome.org
+gnome-pilot-list@gnome.org spamtrap@gnome.org
+gnome-print-list@gnome.org spamtrap@gnome.org
+gnome-redhat-list@gnome.org spamtrap@gnome.org
+gnome-shell-list@gnome.org spamtrap@gnome.org
+gnome-vfs-list@gnome.org spamtrap@gnome.org
+gnome-wsop-list@gnome.org spamtrap@gnome.org
+gnomeaccessibility-list@gnome.org spamtrap@gnome.org
+gnomemm-list@gnome.org spamtrap@gnome.org
+gnomepilot-list@gnome.org spamtrap@gnome.org
+gtk-app-devel-list@gnome.org spamtrap@gnome.org
+gtk-devel-list@gnome.org spamtrap@gnome.org
+gtk-i18n-list@gnome.org spamtrap@gnome.org
+gtk-list@gnome.org spamtrap@gnome.org
+gtkglext-list@gnome.org spamtrap@gnome.org
+guadec-list@gnome.org spamtrap@gnome.org
+guppi-list@gnome.org spamtrap@gnome.org
+jokosher-devel-list@gnome.org spamtrap@gnome.org
+meld-list@gnome.org spamtrap@gnome.org
+mlview-list@gnome.org spamtrap@gnome.org
+muine-list@gnome.org spamtrap@gnome.org
+nemiver-list@gnome.org spamtrap@gnome.org
+orbit-list@gnome.org spamtrap@gnome.org
+orbitcpp-list@gnome.org spamtrap@gnome.org
+performance-list@gnome.org spamtrap@gnome.org
+sawfish-list@gnome.org spamtrap@gnome.org
+seahorse-list@gnome.org spamtrap@gnome.org
+snappy-list@gnome.org spamtrap@gnome.org
+snmp@gnome.org spamtrap@gnome.org
+svn-commits-list@gnome.org spamtrap@gnome.org
+system-tools-list@gnome.org spamtrap@gnome.org
+tracker-list@gnome.org spamtrap@gnome.org
+
+#######################
+## MANAGED BY PUPPET ##
+#######################
