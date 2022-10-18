@@ -20,13 +20,18 @@
    - motd
    - chrony
    - iptables
-   - postfix.wrapper
    - bash
    - base_auth
    - nrpe
    - base_network
    - rsyslog
    - backup
+
+- hosts: all,!smtp_servers
+  gather_facts: true
+  remote_user: root
+  roles:
+   - postfix.wrapper
 
 - hosts: all,!ceph_osds,!ceph_metrics
   gather_facts: true
