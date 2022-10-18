@@ -1,0 +1,32 @@
+worker "fuzzy" {
+  bind_socket = "127.0.0.1:11335";
+  allow_update = ["127.0.0.1"];
+  count = 4;
+
+  backend = "redis";
+  expire = 90d;
+  sync = 1min;
+}
+
+settings_redis {
+        handlers = {
+                SPAMTRAP = <<EOD
+return function(task)
+        local rcpt = task:get_recipients('smtp')
+        if not (rcpt and #rcpt == 1) then
+                return
+        end
+        return 'sptr_' .. rcpt[1]['addr']:lower()
+end
+EOD;
+                SPAMTRAP_DOMAIN = <<EOD
+return function(task)
+        local rcpt = task:get_recipients('smtp')
+        if not (rcpt and #rcpt == 1) then
+                return
+        end
+        return 'sptr_' .. '@' .. rcpt[1]['domain']:lower()
+end
+EOD;
+        }
+}

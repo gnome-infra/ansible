@@ -1,0 +1,47 @@
+---
+- name: Land rspamd default Yum repository
+  yum_repository:
+    name: rspamd
+    description: rspamd Yum repository
+    baseurl: https://rspamd.com/rpm-stable/centos-8/x86_64
+    gpgcheck: yes
+    gpgkey: https://rspamd.com/rpm/gpg.key
+
+- name: Install the default set of packages rspamd needs
+  yum:
+    name: "{{ rspamd_packages }}"
+    state: present
+  vars:
+    rspamd_packages:
+      - rspamd
+      - redis
+
+- name: Land rspamd default conf file
+  template:
+    src: rspamd.conf.local.j2
+    dest: /etc/rspamd/rspamd.conf.local
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart rspamd
+
+- name: Land additional rspamd config files
+  copy:
+    src: local.d
+    dest: /etc/rspamd/local.d
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart rspamd
+
+- name: Start and enable rspamd
+  service:
+    name: rspamd
+    state: started
+    enabled: true
+  
+- name: Start and enable redis
+  service:
+    name: redis
+    state: started
+    enabled: true
