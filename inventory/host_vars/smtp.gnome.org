@@ -1,0 +1,77 @@
+firewall_allowed_tcp_ports:
+  - 25
+  - 993
+  - 587
+
+firewall_additional_rules:
+  - "iptables -A INPUT -i eth1 -j ACCEPT"
+
+dovecot_ldap_host: ldaps://idm02.gnome.org
+dovecot_ldap_bind_userdn: uid=%n,cn=users,cn=accounts,dc=gnome,dc=org
+dovecot_ldap_base: cn=users,cn=accounts,dc=gnome,dc=org
+dovecot_ldap_tls_cacert_path: /etc/ipa/ca.crt
+dovecot_ldap_user_attrs: uidNumber=uid,gidNumber=gid
+dovecot_ldap_user_filter: (&(objectclass=person)(uid=%n)(mail=%n@staff-mail.gnome.org))
+dovecot_mail_privileged_group: staffmail
+dovecot_ssl: true
+dovecot_ssl_cert_path: /etc/pki/tls/certs/dovecot.pem
+dovecot_ssl_key_path: /etc/pki/tls/private/dovecot.pem
+dovecot_maildir_user: dovecot
+dovecot_maildir_group: staffmail
+dovecot_homedir: "{{ dovecot_maildir }}/%d/%u"
+dovecot_maildir: /srv/dovecot
+
+postfix_virtual_alias_maps:
+    - hash:/etc/gnome.org/src-mail/virtual
+    - hash:/etc/postfix/virtual-aliases/virtual-gnome.org
+    - hash:/etc/postfix/virtual-aliases/virtual-las.gnome.org
+    - hash:/etc/postfix/virtual-aliases/virtual-gtk.org
+    - hash:/etc/postfix/virtual-aliases/virtual-gimp.org
+    - hash:/etc/postfix/virtual-aliases/virtual-gimp.net
+    - hash:/etc/postfix/virtual-aliases/virtual-gegl.org
+    - hash:/etc/postfix/virtual-aliases/virtual-gnomehispano.org
+    - hash:/etc/postfix/virtual-aliases/virtual-gnomehispano.es
+    - hash:/etc/postfix/virtual-aliases/virtual-guadec.org
+    - hash:/etc/postfix/virtual-aliases/virtual-br.gnome.org
+    - hash:/etc/postfix/virtual-aliases/virtual-tomboy-online.com
+    - hash:/etc/postfix/virtual-aliases/virtual-tomboy-online.org
+    - hash:/etc/postfix/virtual-aliases/virtual-gnome.no
+    - hash:/etc/postfix/virtual-aliases/virtual-pango.org
+    - hash:/etc/postfix/virtual-aliases/virtual-gnome.gr
+    - hash:/etc/postfix/virtual-aliases/virtual-flatpak.org
+
+postfix_alias_databases:
+    - hash:/etc/gnome.org/master-mail/aliases
+    - hash:/etc/aliases
+
+postfix_mydestinations:
+    - gnome.org
+    - mail.gnome.org
+    - las.gnome.org
+    - cvs.gnome.org
+    - svn.gnome.org
+    - src.gnome.org
+    - gnome.de
+    - gnome.no
+    - gnomefoundation.org
+    - guadec.org
+    - tomboy-online.org
+    - tomboy-online.com
+    - gnomehispano.org
+    - gnomehispano.es
+    - gtk.org
+    - gimp.org
+    - gimp.net
+    - gegl.org
+    - pango.org
+    - gnome.gr
+    - flatpak.org
+    - staff-mail.gnome.org
+
+postfix_virtual_transport: 'lmtp:unix:private/dovecot-lmtp'
+postfix_smtpd_milters:
+  - inet:127.0.0.1:11332
+  - inet:127.0.0.1:8891
+postfix_dkim_domains:
+  - { 'name': 'gnome.org', 'selector': 'default' }
+enable_opendkim: true
