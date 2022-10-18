@@ -5,6 +5,8 @@ ipaservers
 ftpmasters
 rsyslog_servers
 splunk_indexers
+smtp_servers
+dovecot_servers
 
 [ceph_osds]
 ceph01.gnome.org
@@ -38,3 +40,9 @@ logs.gnome.org
 
 [splunk_indexers]
 splunk01.gnome.org
+
+[smtp_servers]
+smtp.gnome.org ansible_host=172.31.2.57
+
+[dovecot_servers]
+smtp.gnome.org ansible_host=172.31.2.57

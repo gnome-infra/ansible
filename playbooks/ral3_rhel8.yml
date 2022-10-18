@@ -69,3 +69,15 @@
   remote_user: root
   roles:
     - ipaserver
+
+- hosts: dovecot_servers
+  gather_facts: false
+  remote_user: root
+  roles:
+    - dovecot
+
+- hosts: smtp_servers
+  gather_facts: false
+  remote_user: root
+  roles:
+    - postfix.server
