@@ -19,6 +19,7 @@
       virtual_alias_maps: "{{ postfix_virtual_alias_maps | join(',') }}"
       alias_database: "{{ postfix_alias_databases | join(',') }}"
       mydestination: "{{ postfix_mydestinations | join(',') }}"
+      mynetworks: "{{ postfix_mynetworks | join(',') }}"
       header_checks: regexp:/etc/postfix/header_checks
       mime_header_checks: regexp:/etc/postfix/mime_header_checks
       body_checks: regexp:/etc/postfix/body_checks
