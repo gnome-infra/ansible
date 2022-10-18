@@ -40,11 +40,13 @@ postfix_virtual_alias_maps:
     - hash:/etc/postfix/virtual-aliases/virtual-gnome.gr
     - hash:/etc/postfix/virtual-aliases/virtual-flatpak.org
 
-postfix_alias_databases:
+postfix_alias_maps:
     - hash:/etc/gnome.org/master-mail/aliases
     - hash:/etc/aliases
 
 postfix_mydestinations:
+    - localhost
+    - $myhostname
     - gnome.org
     - mail.gnome.org
     - las.gnome.org
@@ -80,3 +82,4 @@ postfix_mynetworks:
   - 172.31.0.0/16
   - 10.8.0.0/24
   - 8.43.85.20/32
+postfix_myhostname: smtp.gnome.org

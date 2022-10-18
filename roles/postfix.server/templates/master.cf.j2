@@ -92,7 +92,7 @@ submission inet n       -       y      -       -       smtpd
   -o smtpd_relay_restrictions=permit_mynetworks,permit_sasl_authenticated,defer_unauth_destination
   -o smtpd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated,reject_non_fqdn_recipient,reject_unknown_recipient_domain,reject_unlisted_recipient,reject_unauth_destination
   -o smtpd_sender_restrictions=permit_mynetworks,permit_sasl_authenticated,reject_non_fqdn_sender,reject_unknown_sender_domain
-  -o smtpd_sasl_local_domain=staff-mail.gnome.org
+  -o smtpd_sasl_local_domain=$myhostname
   -o milter_macro_daemon_name=ORIGINATING
 #  -o smtpd_tls_wrappermode=yes -o smtpd_sasl_auth_enable=yes
 #submission	inet	n	-	n	-	-	smtpd
