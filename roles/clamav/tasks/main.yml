@@ -1,0 +1,40 @@
+---
+- name: Install the default set of packages Clamav needs
+  yum:
+    name: "{{ clamav_packages }}"
+    state: present
+  vars:
+    clamav_packages:
+      - clamav
+      - clamd
+      - clamav-update
+
+- name: Land Clamav default conf file
+  template:
+    src: scan.conf.j2
+    dest: /etc/clamd.d/scan.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart Clamd
+
+- name: Land Freshclam conf file
+  template:
+    src: freshclam.conf.j2
+    dest: /etc/freshclam.conf
+    owner: root
+    group: root
+    mode: 0644
+    
+- name: Start and enable Clamd
+  service:
+    name: clamd@scan
+    state: started
+    enabled: true
+
+- name: Land Freshclam's cron job
+  cron:
+    name: "Updates ClamAV DB virus definitions"
+    minute: "0"
+    hour: "*"
+    job: "/usr/bin/freshclam --quiet"
