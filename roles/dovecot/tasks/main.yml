@@ -1,0 +1,51 @@
+---
+- name: Install the packages we need
+  yum:
+    name: "{{ dovecot_packages }}"
+    state: present
+  vars:
+    dovecot_packages:
+      - dovecot
+      - dovecot-pigeonhole
+
+- name: Set permissions on the picked Dovecot maildir
+  file:
+    dest: "{{ dovecot_maildir }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ dovecot_maildir_user }}"
+    group: "{{ dovecot_maildir_group }}"
+    setype: mail_home_rw_t
+
+- name: Land Dovecot configuration
+  template:
+    src: dovecot.conf.j2
+    dest: /etc/dovecot/dovecot.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart Dovecot
+
+- name: Land Dovecot additional configuration
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/dovecot/conf.d/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop: 
+    - auth-ldap.conf.ext
+    - dovecot-ldap.conf.ext
+    - 20-lmtp.conf
+    - 20-managesieve.conf
+    - 10-auth.conf
+    - 10-mail.conf
+    - 10-master.conf
+    - 10-ssl.conf
+  notify: Restart Dovecot
+
+- name: Start and enable Dovecot
+  service:
+    name: dovecot
+    state: started
+    enabled: true

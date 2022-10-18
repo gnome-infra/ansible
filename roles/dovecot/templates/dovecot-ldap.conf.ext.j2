@@ -1,0 +1,17 @@
+uris = {{ dovecot_ldap_host }} 
+auth_bind = yes
+auth_bind_userdn = {{ dovecot_ldap_bind_userdn }} 
+ldap_version = 3
+base = {{ dovecot_ldap_base }}
+deref = never
+scope = subtree
+tls_ca_cert_file = {{ dovecot_ldap_tls_cacert_path }}
+
+user_attrs = {{ dovecot_ldap_user_attrs }}
+user_filter = {{ dovecot_ldap_user_filter }}
+
+pass_attrs = {{ dovecot_ldap_password_attrs | default('') }}
+pass_filter = {{ dovecot_ldap_password_filter | default('') }}
+
+iterate_attrs = {{ dovecot_ldap_iterate_attrs | default('') }}
+iterate_filter = {{ dovecot_ldap_iterate_filter | default('') }}
