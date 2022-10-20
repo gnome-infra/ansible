@@ -69,6 +69,7 @@ postfix_mydestinations:
     - gnome.gr
     - flatpak.org
     - staff-mail.gnome.org
+    - discourse.gnome.org
 
 postfix_virtual_transport: 'lmtp:unix:private/dovecot-lmtp'
 postfix_smtpd_milters:

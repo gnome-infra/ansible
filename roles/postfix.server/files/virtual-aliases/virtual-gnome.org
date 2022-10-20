@@ -56,7 +56,7 @@ gcalctool-list@gnome.org gnome-calculator-list@gnome.org
 board@gnome.org board-list@gnome.org
 
 # Staff and general info
-info@gnome.org staff-list@gnome.org
+info@gnome.org zana@gnome.org,kprogri@gnome.org,chenriksen@gnome.org
 pia-affiliate@gnome.org info@gnome.org
 
 # Hiring Committee
@@ -73,7 +73,7 @@ universityoutreach@gnome.org kprogri@gnome.org, nkemregina@gnome.org
 
 ## migrated fundraising alias to moderated mailing list per karen request
 #fundraising@gnome.org board-list@gnome.org,zana@gnome.org
-friends@gnome.org zana@gnome.org, tobiasmue@gnome.org 
+friends@gnome.org zana@gnome.org, tobiasmue@gnome.org
 friends-eu@gnome.org director@gnome.org,zana@gnome.org
 tshirts@gnome.org drfickle@k-lug.org
 gear@gnome.org drfickle@k-lug.org
@@ -186,7 +186,7 @@ backups@gnome.org av@gnome.org
 security@gnome.org security-list@gnome.org
 
 # RHN account
-rhn@gnome.org av@gnome.org 
+rhn@gnome.org av@gnome.org
 
 # List of volunteers to handle mass mailing list moderation
 moderators@gnome.org moderator@gnome.org
@@ -212,7 +212,7 @@ planet-maint@gnome.org fredm@gnome.org, daniel.mustieles@gmail.com
 gitlab-issues@gnome.org devnull
 
 # GitLab reply by e-mail
-@gitlab.gnome.org gitlab-incoming-email@staff-mail.gnome.org 
+@gitlab.gnome.org gitlab-incoming-email@staff-mail.gnome.org
 
 emergency@gnome.org rt-emergency@gnome-sysadmins.pagerduty.com
 support@gnome.org info@gnome.org
@@ -387,6 +387,12 @@ snmp@gnome.org spamtrap@gnome.org
 svn-commits-list@gnome.org spamtrap@gnome.org
 system-tools-list@gnome.org spamtrap@gnome.org
 tracker-list@gnome.org spamtrap@gnome.org
+
+# Discourse / Former Mailman mailing lists which became aliases
+gnome-sysadmin@gnome.org av@gnome.org,bpiotrowski@gnome.org
+code-of-conduct-committee@gnome.org code-of-conduct-committee@discourse.gnome.org
+
+@discourse.gnome.org discourse-incoming-email@staff-mail.gnome.org
 
 #######################
 ## MANAGED BY PUPPET ##
