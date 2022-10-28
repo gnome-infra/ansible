@@ -1,0 +1,50 @@
+- name: create prometheus_blackbox system group
+  group:
+    name: prometheus_blackbox
+    system: true
+    state: present
+
+- name: create prometheus_blackbox system user
+  user:
+    name: prometheus_blackbox
+    system: true
+    shell: "/sbin/nologin"
+    group: prometheus_blackbox
+    createhome: false
+
+- name: create download directory
+  file:
+    path: /root/.ansible/tmp/prometheus_blackbox
+    state: directory
+
+- name: download prometheus_blackbox {{ prometheus_blackbox_version }}
+  get_url:
+    url: "https://github.com/prometheus/blackbox_exporter/releases/download/v{{ prometheus_blackbox_version }}/blackbox_exporter-{{ prometheus_version }}.linux-amd64.tar.gz"
+    dest: "/root/.ansible/tmp/prometheus_blackbox/blackbox_exporter-{{ prometheus_blackbox_version }}.linux-amd64.tar.gz"
+    checksum: "{{ prometheus_blackbox_checksum }}"
+
+- name: unpack prometheus blackbox binaries
+  unarchive:
+    src: "/root/.ansible/tmp/prometheus_blackbox/blackbox_exporter-{{ prometheus_version }}.linux-amd64.tar.gz"
+    dest: /root/.ansible/tmp/prometheus_blacbox/
+    creates: "/root/.ansible/tmp/prometheus_blackbox/blackbox_exporter-{{ prometheus_blackbox_version }}.linux-amd64/prometheus"
+    remote_src: true
+  check_mode: false
+
+- name: land config file
+  template:
+    src: prometheus_blackbox.yml.j2
+    dest: /etc/prometheus_blackbox.yml.j2
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart blackbox_exporter
+
+- name: install systemd unit
+  template:
+    src: blackbox_exporter.service.j2
+    dest: /etc/systemd/system/blackbox_exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart blackbox_exporter

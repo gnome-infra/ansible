@@ -2,7 +2,8 @@ firewall_additional_rules:
   - "iptables -A INPUT -i wg0 -j ACCEPT"
 firewall_allowed_tcp_ports:
   - 22
-  - 80 
+  - 80
   - 443
 nrpe_custom_plugins:
   - check_vpn
+enable_blackbox: true

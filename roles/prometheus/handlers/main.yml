@@ -10,3 +10,9 @@
     name: prometheus
     daemon-reload: yes
     state: reloaded
+
+- name: restart blackbox_exporter
+  systemd:
+    name: blackbox_exporter
+    daemon-reload: yes
+    state: restarted

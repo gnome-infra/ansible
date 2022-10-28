@@ -1,0 +1,13 @@
+[Unit]
+Description=prometheus blackbox_exporter
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=prometheus_blackbox
+Group=prometheus_blackbox
+ExecStart=/usr/local/bin/blackbox_exporter --config.file="/etc/prometheus_blackbox.yml"
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
