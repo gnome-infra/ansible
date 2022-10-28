@@ -107,14 +107,17 @@ scrape_configs:
 
   - job_name: gitlab_database
     metrics_path: "/database"
+    scheme: https
     static_configs:
       - targets:
         - prometheus-exporter-gitlab.apps.openshift4.gnome.org
   - job_name: gitlab_internals
+    scheme: https
     static_configs:
       - targets:
         - gitlab.gnome.org
   - job_name: gitlab_sidekiq
+    scheme: https
     metrics_path: "/sidekiq"
     static_configs:
       - targets:
