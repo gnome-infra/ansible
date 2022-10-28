@@ -103,7 +103,6 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: fosshost.gnome.org:9116
 
   - job_name: gitlab_database
     metrics_path: "/database"
