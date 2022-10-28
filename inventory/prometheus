@@ -5,7 +5,6 @@ ral3_rhel8
 osuosl
 
 [ral3_rhel7]
-gitlab.gnome.org
 restaurant.gnome.org
 puppetmaster01.gnome.org
 
@@ -19,6 +18,7 @@ master.gnome.org
 logs.gnome.org
 signal.gnome.org
 smtp.gnome.org
+gitlab-git-svcs.gnome.org
 
 [osuosl]
 signal.gnome.org
