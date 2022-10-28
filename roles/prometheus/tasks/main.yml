@@ -46,4 +46,4 @@
   tags: prometheus_config
 
 - name: blackbox_exporter setup
-  import_playbook: blackbox.yml
+  include_tasks: blackbox.yml
