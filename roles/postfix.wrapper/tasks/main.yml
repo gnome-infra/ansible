@@ -12,3 +12,11 @@
       smtp_tls_security_level: "encrypt"
       smtp_tls_CAfile: "/etc/pki/tls/certs/ca-bundle.crt"
       smtputf8_enable: "no"
+
+- name: Land an alias for root user
+  lineinfile:
+    dest: /etc/aliases
+    line: 'root: gnome-sysadmin@gnome.org'
+    regexp: '^root:'
+    insertafter: EOF
+  notify: update aliases database
