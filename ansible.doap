@@ -8,7 +8,7 @@
   <description xml:lang="en">Ansible Playbooks, Tasks, Roles in use by the GNOME Infrastructure Team</description>
   <shortdesc xml:lang="en">Ansible Playbooks, Tasks, Roles in use by the GNOME Infrastructure Team</shortdesc>
   <homepage rdf:resource="https://wiki.gnome.org/Infrastructure" />
-  <mailing-list rdf:resource="https://mail.gnome.org/mailman/listinfo/gnome-infrastructure" />
+  <mailing-list rdf:resource="https://discourse.gnome.org/c/infrastructure/337" />
   <category rdf:resource="http://api.gnome.org/doap-extensions#infrastructure" />
   <bug-database rdf:resource="https://gitlab.gnome.org/Infrastructure/ansible/issues" />
   <programming-language>Ansible</programming-language>
