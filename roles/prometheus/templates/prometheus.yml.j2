@@ -113,6 +113,7 @@ scrape_configs:
         - prometheus-exporter-gitlab.apps.openshift4.gnome.org
   - job_name: gitlab_internals
     scheme: https
+    metrics_path: "/-/metrics"
     static_configs:
       - targets:
         - gitlab.gnome.org
