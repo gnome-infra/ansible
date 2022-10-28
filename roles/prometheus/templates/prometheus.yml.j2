@@ -108,24 +108,24 @@ scrape_configs:
   - job_name: gitlab_redis
     static_configs:
       - targets:
-        - gitlab.gnome.org:9121
+        - prometheus-exporter-gitlab.apps.openshift4.gnome.org:9121
   - job_name: gitlab_postgres
     static_configs:
       - targets:
-        - gitlab.gnome.org:9187
+        - prometheus-exporter-gitlab.apps.openshift4.gnome.org:9187
   - job_name: gitlab_workhorse
     static_configs:
       - targets:
-        - gitlab.gnome.org:9229
+        - prometheus-exporter-gitlab.apps.openshift4.gnome.org:9229
   - job_name: gitlab_exporter_sidekiq
     metrics_path: "/sidekiq"
     static_configs:
       - targets:
-        - gitlab.gnome.org:9168
+        - prometheus-exporter-gitlab.apps.openshift4.gnome.org:9168
   - job_name: gitlab_gitaly
     static_configs:
       - targets:
-        - gitlab.gnome.org:9236
+        - gitlab-git-svcs.gnome.org:9236
 
   - job_name: 'openshift4'
     scheme: https
