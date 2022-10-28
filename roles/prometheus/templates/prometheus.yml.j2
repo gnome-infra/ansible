@@ -105,23 +105,20 @@ scrape_configs:
       - target_label: __address__
         replacement: fosshost.gnome.org:9116
 
-  - job_name: gitlab_redis
+  - job_name: gitlab_database
+    metrics_path: "/database"
     static_configs:
       - targets:
-        - prometheus-exporter-gitlab.apps.openshift4.gnome.org:9121
-  - job_name: gitlab_postgres
+        - prometheus-exporter-gitlab.apps.openshift4.gnome.org
+  - job_name: gitlab_internals
     static_configs:
       - targets:
-        - prometheus-exporter-gitlab.apps.openshift4.gnome.org:9187
-  - job_name: gitlab_workhorse
-    static_configs:
-      - targets:
-        - prometheus-exporter-gitlab.apps.openshift4.gnome.org:9229
-  - job_name: gitlab_exporter_sidekiq
+        - gitlab.gnome.org
+  - job_name: gitlab_sidekiq
     metrics_path: "/sidekiq"
     static_configs:
       - targets:
-        - prometheus-exporter-gitlab.apps.openshift4.gnome.org:9168
+        - prometheus-exporter-gitlab.apps.openshift4.gnome.org
   - job_name: gitlab_gitaly
     static_configs:
       - targets:
