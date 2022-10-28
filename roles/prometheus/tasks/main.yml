@@ -47,4 +47,3 @@
 
 - name: blackbox_exporter setup
   include_playbook: blackbox.yml
-  when: enable_blackbox
