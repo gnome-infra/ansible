@@ -56,12 +56,13 @@ scrape_configs:
   - job_name: 'blackbox'
     metrics_path: /probe
     params:
-      module: [http_2xx]
+      module: [https_2xx]
     static_configs:
       - targets:
-        - https://idm01.gnome.org
-        - https://idm02.gnome.org
+        - https://idm01.gnome.org/ipa/ui
+        - https://idm02.gnome.org/ipa/ui
         - https://webmail.gnome.org
+        - https://hedgedoc.gnome.org
         - https://bugzilla.gnome.org
         - https://blogs.gnome.org
         - https://blog.gtk.org
