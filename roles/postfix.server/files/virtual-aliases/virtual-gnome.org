@@ -71,8 +71,6 @@ cechallenge@gnome.org mwu@gnome.org
 # University Outreach (https://gitlab.gnome.org/Infrastructure/Infrastructure/issues/254)
 universityoutreach@gnome.org kprogri@gnome.org, nkemregina@gnome.org
 
-## migrated fundraising alias to moderated mailing list per karen request
-#fundraising@gnome.org board-list@gnome.org,zana@gnome.org
 friends@gnome.org zana@gnome.org, tobiasmue@gnome.org
 friends-eu@gnome.org director@gnome.org,zana@gnome.org
 tshirts@gnome.org drfickle@k-lug.org
@@ -146,8 +144,6 @@ gnome-press-team@gnome.org engagement-private@gnome.org
 director@gnome.org zana@gnome.org
 trinityhousing@gnome.org director@gnome.org, snmartin@galilea.cl
 tutorials@gnome.org director@gnome.org
-
-travel-committee@gnome.org travel-committee-private@gnome.org
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=796507
 travel-invitations-committee@gnome.org info@gnome.org
@@ -391,6 +387,11 @@ tracker-list@gnome.org spamtrap@gnome.org
 # Discourse / Former Mailman mailing lists which became aliases
 gnome-sysadmin@gnome.org av@gnome.org,bpiotrowski@gnome.org
 code-of-conduct-committee@gnome.org code-of-conduct-committee@discourse.gnome.org
+
+board-list@gnome.org board@discourse.gnome.org
+travel-committee@gnome.org travel-committee@discourse.gnome.org
+fundraising@gnome.org board@gnome.org,zana@gnome.org
+gitlab-abuse-reports@gnome.org code-of-conduct-committee@discourse.gnome.org
 
 @discourse.gnome.org discourse-incoming-email@staff-mail.gnome.org
 
