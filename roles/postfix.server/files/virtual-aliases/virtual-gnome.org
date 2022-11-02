@@ -384,6 +384,8 @@ svn-commits-list@gnome.org spamtrap@gnome.org
 system-tools-list@gnome.org spamtrap@gnome.org
 tracker-list@gnome.org spamtrap@gnome.org
 
+spamtrap@gnome.org spamtrap@staff-mail.gnome.org
+
 # Discourse / Former Mailman mailing lists which became aliases
 gnome-sysadmin@gnome.org av@gnome.org,bpiotrowski@gnome.org
 code-of-conduct-committee@gnome.org code-of-conduct-committee@discourse.gnome.org
