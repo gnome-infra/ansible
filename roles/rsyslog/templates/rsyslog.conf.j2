@@ -63,6 +63,10 @@ $template r_http_apps, "/var/log/hosts/%HOSTNAME%.gnome.org/%$YEAR%/%$MONTH%/%$D
 $template r_other_apps, "/var/log/hosts/%HOSTNAME%.gnome.org/%$YEAR%/%$MONTH%/%$DAY%/non-http-apps.log"
 $template r_local1, "/var/log/hosts/%HOSTNAME%/%$YEAR%/%$MONTH%/%$DAY%/local1.log"
 $template r_oscp4_audit, "/var/log/hosts/%HOSTNAME%/%$YEAR%/%$MONTH%/%$DAY%/audit.log"
+$template r_oscp4_gitlab_application, "/var/log/hosts/%HOSTNAME%.gnome.org/%$YEAR%/%$MONTH%/%$DAY%/production_json.log"
+$template r_oscp4_gitlab_exceptions, "/var/log/hosts/%HOSTNAME%.gnome.org/%$YEAR%/%$MONTH%/%$DAY%/exceptions_json.log"
+$template r_oscp4_gitlab_api, "/var/log/hosts/%HOSTNAME%.gnome.org/%$YEAR%/%$MONTH%/%$DAY%/api_json.log"
+$template r_oscp4_gitlab_audit, "/var/log/hosts/%HOSTNAME%.gnome.org/%$YEAR%/%$MONTH%/%$DAY%/audit_json.log"
 
 #------------------------------------------------------------------------------#
 # templates for local logging                                                  #
@@ -81,7 +85,7 @@ $template l_boot, "/var/log/boot.log"
 #------------------------------------------------------------------------------#
 # remote messages log                                                          #
 #------------------------------------------------------------------------------#
-*.info;mail.none;authpriv.none;cron.none;local6.none;local5.none;local4.none;local1.none   ?r_messages;TraditionalFormat
+*.info;mail.none;authpriv.none;cron.none;local6.none;local5.none;local4.none;local3.none;local1.none   ?r_messages;TraditionalFormat
 
 #------------------------------------------------------------------------------#
 # remote auth/secure log                                                       #
@@ -144,6 +148,15 @@ local1.*                                        ?r_local1;TraditionalFormat
 # remote OSCP 4
 #------------------------------------------------------------------------------#
 if $msg contains "oscp4-audit" then ?r_oscp4_audit;TraditionalFormat
+
+:syslogtag, isequal, "oscp4-gitlab-application"
+local3.info ?r_oscp4_gitlab_application;TraditionalFormat
+:syslogtag, isequal, "oscp4-gitlab-audit"
+local3.info ?r_oscp4_gitlab_audit;TraditionalFormat
+:syslogtag, isequal, "oscp4-gitlab-exceptions"
+local3.info ?r_oscp4_gitlab_exceptions;TraditionalFormat
+:syslogtag, isequal, "oscp4-gitlab-api"
+local3.info ?r_oscp4_gitlab_api;TraditionalFormat
 
 #------------------------------------------------------------------------------#
 # remote audit log                                                              #
