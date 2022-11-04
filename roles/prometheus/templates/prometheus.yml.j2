@@ -29,7 +29,7 @@ scrape_configs:
         hostgroup: {{ hostgroup }}
 {% endfor %}
     - targets:
-{% for target in prometheus_static_node_targets %}
+{% for target in prometheus_static_node_targets | default([]) %}
       - {{ target }}
 {% endfor %}
     relabel_configs:
