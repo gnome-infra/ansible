@@ -43,16 +43,6 @@ scrape_configs:
     - targets:
       - bbb-exporter.apps.openshift4.gnome.org
 
-  - job_name: 'gitlab-runners'
-    honor_labels: true
-    metrics_path: '/federate'
-    params:
-      'match[]':
-      - '{job="node"}'
-    static_configs:
-    - targets:
-      - fosshost.gnome.org:9090
-
   - job_name: 'blackbox'
     metrics_path: /probe
     params:
