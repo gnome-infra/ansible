@@ -3,6 +3,7 @@ firewall_additional_rules:
 firewall_allowed_tcp_ports:
   - 8081
   - 443
+  - 80
 nrpe_custom_plugins:
   - check_ipa_replication
   - check_ipa_status
