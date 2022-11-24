@@ -72,8 +72,8 @@
 #               (yes)   (yes)   (yes)   (never) (100)
 # ==========================================================================
 smtp      inet  n       -       n       -       -       smtpd
-  -o smtpd_tls_cert_file=/etc/pki/tls/certs/smtp.gnome.org.crt
-  -o smtpd_tls_key_file=/etc/pki/tls/private/smtp.gnome.org.key
+  -o smtpd_tls_cert_file=/etc/letsencrypt/live/smtp.gnome.org/fullchain.pem
+  -o smtpd_tls_key_file=/etc/letsencrypt/live/smtp.gnome.org/privkey.pem
   -o smtpd_tls_security_level=may
 submission inet n       -       y      -       -       smtpd
   -o syslog_name=postfix/submission
@@ -81,8 +81,8 @@ submission inet n       -       y      -       -       smtpd
   -o smtpd_sasl_type=dovecot
   -o smtpd_sasl_path=private/auth
   -o smtpd_reject_unlisted_recipient=no
-  -o smtpd_tls_cert_file=/etc/pki/tls/certs/smtp.gnome.org.crt
-  -o smtpd_tls_key_file=/etc/pki/tls/private/smtp.gnome.org.key
+  -o smtpd_tls_cert_file=/etc/letsencrypt/live/smtp.gnome.org/fullchain.pem
+  -o smtpd_tls_key_file=/etc/letsencrypt/live/smtp.gnome.org/privkey.pem
   -o smtpd_use_tls=yes
   -o smtpd_tls_auth_only=yes
   -o smtpd_tls_security_level=encrypt
