@@ -118,7 +118,9 @@
   notify:
     - Postmap virtual aliases file
     - Reload Postfix
-  when: '"/etc/postfix/virtual-aliases" in item'
+  when:
+    - '"/etc/postfix/virtual-aliases" in item'
+    - '"/etc/postfix/transport" in item'
 
 - name: Install OpenDKIM
   dnf:

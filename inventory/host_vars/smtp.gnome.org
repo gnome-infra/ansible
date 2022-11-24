@@ -26,6 +26,7 @@ dovecot_maildir: /srv/dovecot
 
 postfix_virtual_alias_maps:
     - hash:/etc/gnome.org/src-mail/virtual
+    - hash:/etc/postfix/transport
     - hash:/etc/postfix/virtual-aliases/virtual-gnome.org
     - hash:/etc/postfix/virtual-aliases/virtual-las.gnome.org
     - hash:/etc/postfix/virtual-aliases/virtual-gtk.org
