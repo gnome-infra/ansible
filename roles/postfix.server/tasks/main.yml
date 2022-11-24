@@ -38,7 +38,7 @@
       transport_maps: hash:/etc/postfix/transport
       smtpd_milters: "{{ postfix_smtpd_milters | join(',') }}"
       milter_default_action: accept
-      smtpd_delay_reject: no
+      smtpd_delay_reject: 'no'
       smtp_tls_security_level: may
       smtp_tls_CAfile: /etc/pki/tls/certs/ca-bundle.crt
       smtp_tls_policy_maps: hash:/etc/postfix/tls_policy_per_domain
@@ -78,7 +78,7 @@
     owner: root
     group: root
     mode: 0644
-  with_items: 
+  with_items:
     - access-client
     - access-helo
     - access-rbl-exception-client
@@ -87,7 +87,7 @@
     - access-recipient-bounce
     - tls_policy_per_domain
   register: _postfix_access_files
-  notify: 
+  notify:
     - Postmap access file
     - Reload Postfix
 
@@ -98,7 +98,7 @@
     owner: root
     group: root
     mode: 0644
-  with_items: 
+  with_items:
     - header_checks
     - mime_header_checks
     - body_checks
@@ -115,7 +115,7 @@
     mode: 0644
   with_items: "{{ postfix_virtual_alias_maps }}"
   register: _postfix_virtual_aliases
-  notify: 
+  notify:
     - Postmap virtual aliases file
     - Reload Postfix
   when: '"/etc/postfix/virtual-aliases" in item'
@@ -147,7 +147,7 @@
     owner: opendkim
     group: opendkim
     mode: 0644
-  with_items: 
+  with_items:
     - KeyTable
     - SigningTable
     - TrustedHosts
