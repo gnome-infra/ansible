@@ -2,6 +2,7 @@ firewall_allowed_tcp_ports:
   - 25
   - 993
   - 587
+  - 80
 
 firewall_additional_rules:
   - "iptables -A INPUT -i eth1 -j ACCEPT"
