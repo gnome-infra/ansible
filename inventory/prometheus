@@ -1,12 +1,7 @@
 [clients:children]
 oscp4
-ral3_rhel7
 ral3_rhel8
 osuosl
-
-[ral3_rhel7]
-restaurant.gnome.org
-puppetmaster01.gnome.org
 
 [ral3_rhel8]
 bastion01.gnome.org
