@@ -8,10 +8,10 @@
       - dovecot
       - dovecot-pigeonhole
 
-- name: Generate dh4096.pem
+- name: Generate dh2048.pem
   command:
-    cmd: /usr/bin/openssl dhparam -out /etc/postfix/dh4096.pem 4096
-    creates: /etc/dovecot/dh4096.pem
+    cmd: /usr/bin/openssl dhparam -out /etc/postfix/dh2048.pem 2048
+    creates: /etc/dovecot/dh2048.pem
   notify: Restart Dovecot
 
 - name: Set permissions on the picked Dovecot maildir
