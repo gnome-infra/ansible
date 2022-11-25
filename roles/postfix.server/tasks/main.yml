@@ -33,9 +33,12 @@
       maximal_queue_lifetime: 1d
       message_size_limit: 25480000
       qmgr_fudge_factor: 100
-      virtual_transport: "{{ postfix_virtual_transport }}"
-      mailbox_transport: "{{ postfix_virtual_transport }}"
       transport_maps: hash:/etc/postfix/transport
+      smtpd_sender_restrictions: reject_sender_login_mismatch
+      smtpd_sasl_type: dovecot
+      smtpd_sasl_path: private/auth
+      smtpd_sasl_auth_enable: yes
+      smtpd_sender_login_maps: "{{ postfix_smtpd_sender_login_maps | join(',') }}"
       smtpd_milters: "{{ postfix_smtpd_milters | join(',') }}"
       milter_default_action: accept
       smtpd_delay_reject: 'no'

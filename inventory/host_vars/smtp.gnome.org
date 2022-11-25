@@ -93,7 +93,6 @@ postfix_mydestinations:
     - staff-mail.gnome.org
     - discourse.gnome.org
 
-postfix_virtual_transport: 'lmtp:unix:private/dovecot-lmtp'
 postfix_smtpd_milters:
   - inet:127.0.0.1:11332
   - inet:127.0.0.1:8891
@@ -107,3 +106,6 @@ postfix_mynetworks:
   - 8.43.85.20/32
   - 140.211.167.18/32
 postfix_myhostname: smtp.gnome.org
+postfix_smtpd_sender_login_maps:
+  - hash:/etc/gnome.org/master-mail/aliases
+  - hash:/etc/postfix/virtual-aliases/virtual-gnome.org
