@@ -34,9 +34,6 @@
       message_size_limit: 25480000
       qmgr_fudge_factor: 100
       transport_maps: hash:/etc/postfix/transport
-      smtpd_sender_restrictions:
-          permit_mynetworks
-          reject_sender_login_mismatch
       smtpd_sasl_type: dovecot
       smtpd_sasl_path: private/auth
       smtpd_sasl_auth_enable: 'yes'
@@ -52,6 +49,8 @@
       smtpd_client_restrictions: sleep 1, reject_unauth_pipelining
       smtpd_helo_restrictions:
       smtpd_sender_restrictions:
+          permit_mynetworks
+          reject_sender_login_mismatch
       non_smtpd_milters: $smtpd_milters
       smtpd_recipient_restrictions:
           reject_non_fqdn_sender
