@@ -10,7 +10,7 @@
 
 - name: Generate dh2048.pem
   command:
-    cmd: /usr/bin/openssl dhparam -out /etc/postfix/dh2048.pem 2048
+    cmd: /usr/bin/openssl dhparam -out /etc/dovecot/dh2048.pem 2048
     creates: /etc/dovecot/dh2048.pem
   notify: Restart Dovecot
 
