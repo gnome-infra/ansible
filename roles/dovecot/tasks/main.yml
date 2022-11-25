@@ -8,6 +8,12 @@
       - dovecot
       - dovecot-pigeonhole
 
+- name: Generate dh4096.pem
+  command:
+    cmd: /usr/bin/openssl dhparam -out /etc/postfix/dh4096.pem 4096
+    creates: /etc/dovecot/dh4096.pem
+  notify: Restart Dovecot
+
 - name: Set permissions on the picked Dovecot maildir
   file:
     dest: "{{ dovecot_maildir }}"
@@ -33,7 +39,7 @@
     owner: root
     group: root
     mode: 0644
-  loop: 
+  loop:
     - auth-ldap.conf.ext
     - dovecot-ldap.conf.ext
     - 20-lmtp.conf
