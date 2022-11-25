@@ -34,10 +34,12 @@
       message_size_limit: 25480000
       qmgr_fudge_factor: 100
       transport_maps: hash:/etc/postfix/transport
-      smtpd_sender_restrictions: permit_mynetworks, reject_sender_login_mismatch
+      smtpd_sender_restrictions:
+          permit_mynetworks
+          reject_sender_login_mismatch
       smtpd_sasl_type: dovecot
       smtpd_sasl_path: private/auth
-      smtpd_sasl_auth_enable: yes
+      smtpd_sasl_auth_enable: 'yes'
       smtpd_sender_login_maps: "{{ postfix_smtpd_sender_login_maps | join(',') }}"
       smtpd_milters: "{{ postfix_smtpd_milters | join(',') }}"
       milter_default_action: accept
