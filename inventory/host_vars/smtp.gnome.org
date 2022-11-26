@@ -92,6 +92,7 @@ postfix_mydestinations:
     - flatpak.org
     - staff-mail.gnome.org
     - discourse.gnome.org
+    - gitlab.gnome.org
 
 postfix_smtpd_milters:
   - inet:127.0.0.1:11332
