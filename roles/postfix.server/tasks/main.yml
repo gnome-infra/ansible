@@ -33,6 +33,8 @@
       maximal_queue_lifetime: 1d
       message_size_limit: 25480000
       qmgr_fudge_factor: 100
+      virtual_transport: "{{ postfix_virtual_transport }}"
+      mailbox_transport: "{{ postfix_virtual_transport }}"
       transport_maps: hash:/etc/postfix/transport
       smtpd_sasl_type: dovecot
       smtpd_sasl_path: private/auth
