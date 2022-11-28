@@ -35,7 +35,7 @@
       qmgr_fudge_factor: 100
       virtual_transport: "{{ postfix_virtual_transport }}"
       mailbox_transport: "{{ postfix_virtual_transport }}"
-      transport_maps: "{{ postfix_transport_maps }}"
+      transport_maps: "{{ postfix_transport_maps | join(',') }}"
       smtpd_sasl_type: dovecot
       smtpd_sasl_path: private/auth
       smtpd_sasl_auth_enable: 'yes'
