@@ -128,8 +128,8 @@
 
 - name: Land Postfix transport maps
   template:
-    src: "{{ item }}.j2"
-    dest: "/etc/postfix/{{ item }}"
+    src: "{{ item.split('/')[-1] }}.j2"
+    dest: "/etc/postfix/{{ item.split('/')[-1] }}"
     owner: root
     group: root
     mode: 0644
