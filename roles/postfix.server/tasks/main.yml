@@ -16,8 +16,8 @@
   vars:
     postfix_backup_multiple: false
     postfix_conf:
-      virtual_alias_maps: "{{ postfix_virtual_alias_maps | join(',') }}"
-      alias_maps: "{{ postfix_alias_maps | join(',') }}"
+      virtual_alias_maps: "{{ postfix_postmap_files | select('search','virtual') | join(',') }}"
+      alias_maps: "{{ postfix_postalias_files | join(',') }}"
       mydestination: "{{ postfix_mydestinations | join(',') }}"
       mynetworks: "{{ postfix_mynetworks | join(',') }}"
       myhostname: "{{ postfix_myhostname }}"
@@ -35,7 +35,7 @@
       qmgr_fudge_factor: 100
       virtual_transport: "{{ postfix_virtual_transport }}"
       mailbox_transport: "{{ postfix_virtual_transport }}"
-      transport_maps: "{{ postfix_transport_maps | join(',') }}"
+      transport_maps: "{{ postfix_postmap_files | select('search','transport') | join(',') }}"
       smtpd_sasl_type: dovecot
       smtpd_sasl_path: private/auth
       smtpd_sasl_auth_enable: 'yes'
