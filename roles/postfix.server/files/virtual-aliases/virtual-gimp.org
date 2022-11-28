@@ -303,7 +303,7 @@ scl@gimp.org scl.gplus@gmail.com
 aryeom@gimp.org aryeomhan@staff-mail.gnome.org
 
 # https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/633
-social@gimp.org alexandre.prokoudine@gmail.com, liam@fromoldbooks.org, jehan@gimp.org, mitch@gimp.org
+social@gimp.org liam@fromoldbooks.org, jehan@gimp.org, mitch@gimp.org, schumaml@gmx.de
 
 # https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/831
 msstore@gimp.org jernej|s-gimp@eternallybored.org, jgboerema@gmail.com, mitch@gimp.org, schumaml@gmx.de, jehan@gimp.org
