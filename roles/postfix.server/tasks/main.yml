@@ -123,6 +123,8 @@
   notify:
     - Postmap virtual aliases file
     - Reload Postfix
+  when:
+    - "'/etc/gnome.org' not in item"
   tags: postmap
 
 - name: Land Postfix aliases
