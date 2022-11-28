@@ -10,6 +10,8 @@ firewall_additional_rules:
   - "iptables -A INPUT -i eth1 -j ACCEPT"
 
 enable_system_backup: true
+backup_exclude:
+  - /var/lib/mailman
 
 dovecot_ldap_host: ldaps://idm02.gnome.org
 dovecot_ldap_bind_userdn: uid=%n,cn=users,cn=accounts,dc=gnome,dc=org
