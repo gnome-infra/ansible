@@ -15,5 +15,10 @@
     cmd: "/usr/sbin/postmap {{ item.dest }}"
   with_items: "{{ _postfix_virtual_aliases.results | selectattr('changed', 'equalto', true) | list }}"
 
+- name: Postmap transport maps
+  command:
+    cmd: "/usr/sbin/postmap {{ item.dest }}"
+  with_items: "{{ _postfix_transport_maps.results | selectattr('changed', 'equalto', true) | list }}"
+
 - name: Restart OpenDKIM
   service: name=opendkim state=restarted

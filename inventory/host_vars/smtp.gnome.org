@@ -44,7 +44,6 @@ dovecot_bind_pass: !vault |
 
 postfix_virtual_alias_maps:
     - hash:/etc/gnome.org/src-mail/virtual
-    - hash:/etc/postfix/transport
     - hash:/etc/postfix/virtual-aliases/virtual-gnome.org
     - hash:/etc/postfix/virtual-aliases/virtual-las.gnome.org
     - hash:/etc/postfix/virtual-aliases/virtual-gtk.org
@@ -65,6 +64,9 @@ postfix_virtual_alias_maps:
 postfix_alias_maps:
     - hash:/etc/gnome.org/master-mail/aliases
     - hash:/etc/aliases
+
+postfix_transport_maps:
+    - hash:/etc/postfix/transport
 
 postfix_mydestinations:
     - localhost

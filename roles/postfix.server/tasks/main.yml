@@ -35,7 +35,7 @@
       qmgr_fudge_factor: 100
       virtual_transport: "{{ postfix_virtual_transport }}"
       mailbox_transport: "{{ postfix_virtual_transport }}"
-      transport_maps: hash:/etc/postfix/transport
+      transport_maps: "{{ postfix_transport_maps }}"
       smtpd_sasl_type: dovecot
       smtpd_sasl_path: private/auth
       smtpd_sasl_auth_enable: 'yes'
@@ -108,7 +108,6 @@
     - header_checks
     - mime_header_checks
     - body_checks
-    - transport
     - master.cf
   notify: Reload Postfix
 
@@ -126,6 +125,20 @@
     - Reload Postfix
   when:
     - '"/etc/postfix/virtual-aliases" in item'
+
+- name: Land Postfix transport maps
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/postfix/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ postfix_transport_maps }}"
+  register: _postfix_transport_maps
+  notify:
+    - Postmap transport maps
+    - Reload Postfix
+  when:
     - '"/etc/postfix/transport" in item'
 
 - name: Install OpenDKIM
