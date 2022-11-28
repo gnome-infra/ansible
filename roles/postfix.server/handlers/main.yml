@@ -5,20 +5,15 @@
 - name: Reload Postfix
   service: name=postfix state=reloaded
 
-- name: Postmap access file
-  command:
-    cmd: "/usr/sbin/postmap {{ item.dest }}"
-  with_items: "{{ _postfix_access_files.results | selectattr('changed', 'equalto', true) | list }}"
-
 - name: Postmap virtual aliases file
   command:
     cmd: "/usr/sbin/postmap {{ item.dest }}"
-  with_items: "{{ _postfix_virtual_aliases.results | selectattr('changed', 'equalto', true) | list }}"
+  with_items: "{{ _postfix_postmap_files.results | selectattr('changed', 'equalto', true) | list }}"
 
-- name: Postmap transport maps
+- name: Postalias aliases files
   command:
-    cmd: "/usr/sbin/postmap {{ item.dest }}"
-  with_items: "{{ _postfix_transport_maps.results | selectattr('changed', 'equalto', true) | list }}"
+    cmd: "/usr/sbin/postalias {{ item.dest }}"
+  with_items: "{{ _postfix_postalias_files.results | selectattr('changed', 'equalto', true) | list }}"
 
 - name: Restart OpenDKIM
   service: name=opendkim state=restarted

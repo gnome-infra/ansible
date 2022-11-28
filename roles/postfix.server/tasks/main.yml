@@ -112,34 +112,34 @@
   notify: Reload Postfix
 
 - name: Land Postfix virtual aliases
-  copy:
-    src: "virtual-aliases/{{ item.split('/')[-1] }}"
-    dest: "/etc/postfix/virtual-aliases/{{ item.split('/')[-1] }}"
+  template:
+    src: "postmap/{{ item.split('/')[-1] }}.j2"
+    dest: "{{ item | regex_replace('^hash:', '') }}"
     owner: root
     group: root
     mode: 0644
-  with_items: "{{ postfix_virtual_alias_maps }}"
-  register: _postfix_virtual_aliases
+  with_items: "{{ postfix_postmap_files }}"
+  register: _postfix_postmap_files
   notify:
     - Postmap virtual aliases file
     - Reload Postfix
-  when:
-    - '"/etc/postfix/virtual-aliases" in item'
+  tags: postmap
 
-- name: Land Postfix transport maps
+- name: Land Postfix aliases
   template:
-    src: "{{ item.split('/')[-1] }}.j2"
-    dest: "/etc/postfix/{{ item.split('/')[-1] }}"
+    src: "postalias/{{ item.split('/')[-1] }}.j2"
+    dest: "{{ item | regex_replace('^hash:', '') }}"
     owner: root
     group: root
     mode: 0644
-  with_items: "{{ postfix_transport_maps }}"
-  register: _postfix_transport_maps
+  with_items: "{{ postfix_postalias_files }}"
+  register: _postfix_postalias_files
   notify:
-    - Postmap transport maps
+    - Postalias aliases files
     - Reload Postfix
   when:
-    - '"/etc/postfix/transport" in item'
+    - "'/etc/gnome.org' not in item"
+  tags: postalias
 
 - name: Install OpenDKIM
   dnf:

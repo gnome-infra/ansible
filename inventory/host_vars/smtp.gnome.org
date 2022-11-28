@@ -44,7 +44,7 @@ dovecot_bind_pass: !vault |
           3965616434306661300a323635303235356130316239396663643231636437613461653563383639
           32343736306536313861303566383833373832323066626264346165663464663966
 
-postfix_virtual_alias_maps:
+postfix_postmap_files:
     - hash:/etc/gnome.org/src-mail/virtual
     - hash:/etc/postfix/virtual-aliases/virtual-gnome.org
     - hash:/etc/postfix/virtual-aliases/virtual-las.gnome.org
@@ -62,13 +62,11 @@ postfix_virtual_alias_maps:
     - hash:/etc/postfix/virtual-aliases/virtual-pango.org
     - hash:/etc/postfix/virtual-aliases/virtual-gnome.gr
     - hash:/etc/postfix/virtual-aliases/virtual-flatpak.org
+    - hash:/etc/postfix/transport
 
-postfix_alias_maps:
+postfix_postalias_files:
     - hash:/etc/gnome.org/master-mail/aliases
     - hash:/etc/aliases
-
-postfix_transport_maps:
-    - hash:/etc/postfix/transport
 
 postfix_mydestinations:
     - localhost

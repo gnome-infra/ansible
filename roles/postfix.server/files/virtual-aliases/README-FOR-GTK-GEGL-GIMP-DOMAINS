@@ -1,1 +1,0 @@
-Given Git doesn't support hardlinks nor symlinks, please make sure to update each relevant alias file when modifying the following domain's aliases files: aliases-gimp-{org,net}, aliases-gegl.org, aliases-gtk.org.
