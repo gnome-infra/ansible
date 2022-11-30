@@ -27,7 +27,7 @@
 
 - name: Land additional rspamd config files
   copy:
-    src: local.d
+    src: local.d/
     dest: /etc/rspamd/local.d
     owner: root
     group: root
@@ -39,7 +39,7 @@
     name: rspamd
     state: started
     enabled: true
-  
+
 - name: Start and enable redis
   service:
     name: redis
