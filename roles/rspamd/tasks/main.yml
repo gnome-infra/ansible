@@ -34,6 +34,15 @@
     mode: 0644
   notify: Restart rspamd
 
+- name: Land custom Lua code
+  template:
+    src: rspamd.local.lua.j2
+    dest: /etc/rspamd/rspamd.local.lua
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart rspamd
+
 - name: Configure RBL
   template:
     src: local.d/{{ item }}.j2

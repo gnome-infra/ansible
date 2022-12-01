@@ -1,0 +1,97 @@
+local rregexp = require "rspamd_regexp"
+local rlogger = require "rspamd_logger"
+local rhash = require "rspamd_cryptobox_hash"
+local rutil = require "lua_util"
+
+local check_shorturls_dns = '.{{ abusix_api_key }}.shorthash.mail.abusix.zone.'
+local check_diskurls_dns = '.{{ abusix_api_key }}.diskhash.mail.abusix.zone.'
+
+local re_short_path = rregexp.create_cached('/^(?!(?:[a-z]+|[A-Z]+|[0-9]+)$)[a-zA-Z0-9]{3,11}$/')
+
+local check_shorturls_cb = function (task)
+    local function find_short_urls (url)
+        local path = url:get_path();
+        if (re_short_path:match(path)) then
+        return true
+        end
+    end
+    local shorturls = rutil.extract_specific_urls({
+        task = task,
+    limit = 5,
+        prefix = 'shorturls',
+    filter = find_short_urls
+    });
+
+    if (not shorturls) then return false end
+
+    local r = task:get_resolver()
+
+    for _, url in pairs(shorturls) do
+        -- Normalize
+        local surl = url:get_host():lower() .. '/' .. url:get_path()
+        local surl_hash = rhash.create_specific('sha1', surl):hex()
+        local lookup = surl_hash .. check_shorturls_dns
+        local function dns_cb(_,_,results,err)
+            if (not results) then return false end
+            if (tostring(results[1]) == '127.0.3.1') then
+                rlogger.errx('found URL %s (%s) in Short URL blacklist', surl, surl_hash)
+                return task:insert_result('RBL_AMI_SHORTURL', 1.0, surl);
+            end
+        end
+        r:resolve_a({ task = task, name = lookup , callback = dns_cb })
+    end
+end
+
+local check_shorturls = rspamd_config:register_symbol({
+    name = "RBL_AMI_SHORTURL",
+    score = 3.0,
+    description = "Short URL found in Abusix Short URL blacklist",
+    group = "abusix",
+    type = "callback",
+    callback = check_shorturls_cb
+});
+
+local re_disk_urls = rregexp.create_cached('/^(?:drive\\.google\\.com$|yadi\\.sk$|disk\\.yandex\\.)/')
+
+local check_diskurls_cb = function (task)
+    local function find_disk_urls (url)
+        local host = url:get_host():lower();
+        if (re_disk_urls:match(host)) then
+        return true
+        end
+    end
+    local diskurls = rutil.extract_specific_urls({
+        task = task,
+    limit = 5,
+        prefix = 'diskurls',
+    filter = find_disk_urls
+    });
+
+    if (not diskurls) then return false end
+
+    local r = task:get_resolver()
+
+    for _, url in pairs(diskurls) do
+        -- Normalize
+        local durl = url:get_host():lower() .. '/' .. url:get_path()
+        local durl_hash = rhash.create_specific('sha1', durl):hex()
+        local lookup = durl_hash .. check_diskurls_dns
+        local function dns_cb(_,_,results,err)
+            if (not results) then return false end
+            if (tostring(results[1]) == '127.0.3.2') then
+                rlogger.errx('found URL %s (%s) in Disk URL blacklist', durl, durl_hash)
+                return task:insert_result('RBL_AMI_DISKURL', 1.0, durl);
+            end
+        end
+        r:resolve_a({ task = task, name = lookup , callback = dns_cb })
+    end
+end
+
+local check_diskurls = rspamd_config:register_symbol({
+    name = "RBL_AMI_DISKURL",
+    score = 3.0,
+    description = "Disk URL found in Abusix Disk URL blacklist",
+    group = "abusix",
+    type = "callback",
+    callback = check_diskurls_cb
+});
