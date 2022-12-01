@@ -34,6 +34,18 @@
     mode: 0644
   notify: Restart rspamd
 
+- name: Configure RBL
+  template:
+    src: local.d/{{ item }}.j2
+    dest: /etc/rspamd/local.d/{{ item }}
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - rbl.conf
+    - surbl.conf
+  notify: Restart rspamd
+
 - name: Start and enable rspamd
   service:
     name: rspamd

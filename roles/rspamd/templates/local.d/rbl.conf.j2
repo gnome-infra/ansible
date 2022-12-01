@@ -1,0 +1,38 @@
+rbls {
+  brbl {
+    symbol = BARRACUDA_RBL;
+    rbl = "b.barracudacentral.org";
+    received = true;
+  }
+  abusix_dnsbls_lasthop {
+    symbol = "RBL_AMI_LASTHOP";
+    rbl = "{{ abusix_api_key }}.combined.mail.abusix.zone";
+    ipv6 = true;
+    from = true;
+    received = false;
+    unknown = false;
+    returncodes {
+      RBL_AMI_POLICY = [ "127.0.0.11", "127.0.0.12" ];
+    }
+  }
+  abusix_dnsbls_anyhop {
+    symbol = "RBL_AMI_RCVD";
+    rbl = "{{ abusix_api_key }}.combined.mail.abusix.zone";
+    ipv6 = true;
+    from = true;
+    received = true;
+    unknown = false;
+    returncodes {
+      RBL_AMI_BLACK_RCVD = [ "127.0.0.2", "127.0.0.3" ];
+      RBL_AMI_EXPLOIT_RCVD = "127.0.0.4";
+    }
+  }
+  abusix_dnswls_lasthop {
+    symbol = "RWL_AMI_LASTHOP";
+    rbl = "{{ abusix_api_key }}.white.mail.abusix.zone";
+    is_whitelist = true;
+    received = false;
+    ipv6 = true;
+    from = true;
+  }
+}
