@@ -1,16 +1,4 @@
-- name: Set main data dir variable
-  set_fact:
-    lorry_data_dir: /srv/lorry
-
-- name: Set more configuration variables
-  set_fact:
-    lorry_config_dir: "{{ lorry_data_dir }}/config"
-    lorry_cron_dir: "{{ lorry_data_dir }}/cron"
-    lorry_db_dir: "{{ lorry_data_dir }}/db"
-    lorry_html_dir: "{{ lorry_data_dir }}/html"
-    lorry_working_area_dir: "{{ lorry_data_dir }}/working-area"
-
-
+---
 - name: create data directories
   file:
     name: "{{ item }}"
