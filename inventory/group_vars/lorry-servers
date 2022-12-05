@@ -183,11 +183,11 @@ lorry_automation_user_ssh_priv_key: !vault |
 gnome_gitlab_domain: "gitlab.gnome.org"
 
 lorry:
-    config_repo: "ssh://git@gitlab.gnome.org/Infrastructure/Mirrors/mirroring-config.git"
+    config_repo: "https://oauth2:{{ lorry_automation_user_api_token }}@{{ gnome_gitlab_domain }}/Infrastructure/Mirrors/mirroring-config.git"
     gitlab_access_token: "{{ lorry_automation_user_api_token }}"
     gitlab_domain: "{{ gnome_gitlab_domain }}"
     gitlab_repo_visibility: public
-    mirror_base_url: "https://oauth2:{{ lorry_automation_user_api_token }}@{{ gnome_gitlab_domain }}"
+    mirror_base_url: "ssh://git@ssh.gitlab.gnome.org"
     ssh_key: "{{ lorry_automation_user_ssh_priv_key }}"
     ssh_pub_key: "{{ lorry_automation_user_ssh_pub_key }}"
     gitlab_token: "{{ lorry_automation_user_api_token }}"
