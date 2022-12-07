@@ -4,29 +4,23 @@ worker "fuzzy" {
   count = 4;
 
   backend = "redis";
-  expire = 90d;
+  expire = 180d;
   sync = 1min;
 }
 
-settings_redis {
-        handlers = {
-                SPAMTRAP = <<EOD
-return function(task)
-        local rcpt = task:get_recipients('smtp')
-        if not (rcpt and #rcpt == 1) then
-                return
-        end
-        return 'sptr_' .. rcpt[1]['addr']:lower()
-end
-EOD;
-                SPAMTRAP_DOMAIN = <<EOD
-return function(task)
-        local rcpt = task:get_recipients('smtp')
-        if not (rcpt and #rcpt == 1) then
-                return
-        end
-        return 'sptr_' .. '@' .. rcpt[1]['domain']:lower()
-end
-EOD;
-        }
+metric {
+  name = "default";
+  group {
+    name = "bayes";
+    symbol {
+      weight = 2.0;
+      description = "Message probably spam, probability: ";
+      name = "BAYES_SPAM";
+    }   
+    symbol {
+      weight = -5.0;
+      description = "Message probably ham, probability: ";
+      name = "BAYES_HAM";
+    }   
+  } 
 }
