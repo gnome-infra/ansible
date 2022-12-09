@@ -1,0 +1,7 @@
+---
+lorry_data_dir: /srv/lorry
+lorry_config_dir: "{{ lorry_data_dir }}/config"
+lorry_cron_dir: "{{ lorry_data_dir }}/cron"
+lorry_db_dir: "{{ lorry_data_dir }}/db"
+lorry_html_dir: "{{ lorry_data_dir }}/html"
+lorry_working_area_dir: "{{ lorry_data_dir }}/working-area"
