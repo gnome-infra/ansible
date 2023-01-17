@@ -95,7 +95,7 @@ if __name__ == '__main__':
         p = subprocess.Popen(['/usr/bin/diff', '-U0', '--', aliasfile, newaliasfile], stdout=subprocess.PIPE)
         (stdout, stderr) = p.communicate()
         if p.returncode != 0:
-            print(stdout)
+            print(stdout.decode())
             print()
             print()
             subprocess.call(['/bin/mv', '-f', '--', newaliasfile, aliasfile])
