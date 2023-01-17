@@ -223,7 +223,7 @@
     name: "Rebuilds (gnome.org, src.gnome.org) aliases"
     job: "/usr/local/bin/export-mail.py"
     minute: "0"
-    hour: "0"
+    hour: "*"
     user: root
     state: present
 
