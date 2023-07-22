@@ -1,6 +1,0 @@
----
-- hosts: gitlab.gnome.org
-  gather_facts: true
-  remote_user: root
-  roles:
-    - gitlab

@@ -1,6 +1,0 @@
-[Unit]
-Description=Delete unreachable layers from OCI registry
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/gitlab-ctl registry-garbage-collect -m
