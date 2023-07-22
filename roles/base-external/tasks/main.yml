@@ -21,7 +21,7 @@
 - include_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"
 
- include_tasks: fedora.yml
+- include_tasks: fedora.yml
   when: ansible_distribution == "Fedora"
 
 - name: install tailscale
