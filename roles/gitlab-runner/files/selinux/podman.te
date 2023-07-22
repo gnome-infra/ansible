@@ -1,0 +1,12 @@
+module podman 1.0;
+
+require {
+	type container_t;
+	type null_device_t;
+	class chr_file map;
+	class user_namespace create;
+}
+
+#============= container_t ==============
+allow container_t self:user_namespace create;
+allow container_t null_device_t:chr_file map;

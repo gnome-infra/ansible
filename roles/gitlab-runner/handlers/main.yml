@@ -1,15 +1,19 @@
 ---
 - name: restart gitlab-runner
-  service: name=gitlab-runner state=restarted
+  ansible.builtin.systemd:
+    name: gitlab-runner.service
+    state: restarted
+    daemon_reload: true
+    scope: user
+  become_user: podman
 
-- name: daemon reload
-  systemd: daemon_reload=yes
-
-- name: reload sysctl
-  command: sysctl --system --load
-
-- name: restart docker
-  service: name=docker.service state=restarted
+- name: restart pydocuum
+  ansible.builtin.systemd:
+    name: pydocuum.service
+    state: restarted
+    daemon_reload: true
+    scope: user
+  become_user: podman
 
 - name: reload udevadm
-  command: udevadm control --reload-rules
+  ansible.builtin.command: udevadm control --reload-rules

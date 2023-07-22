@@ -1,4 +1,4 @@
-module flatpak_builder 1.0;
+module flatpak 1.0;
 
 require {
 	type autofs_t;

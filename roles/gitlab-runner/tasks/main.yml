@@ -1,72 +1,131 @@
 ---
-- name: add authorized keys for root
-  copy: src=authorized_keys dest=/root/.ssh/authorized_keys mode=0600 owner=root group=root
+- name: put selinux in permissive mode
+  ansible.posix.selinux:
+    policy: targeted
+    state: permissive
+  when: ansible_distribution == "Fedora"
 
-- include_tasks: ubuntu.yml
-  when: ansible_distribution == "Ubuntu"
+- name: install podman
+  ansible.builtin.package:
+    name:
+      - podman
+      - podman-docker
+      - fuse-overlayfs
+      - slirp4netns
+      - systemd-container
+    state: present
+    update_cache: true
 
-- include_tasks: debian.yml
-  when: ansible_distribution == "Debian"
+- name: create podman user
+  ansible.builtin.user:
+    name: podman
+    shell: /bin/bash
+    system: true
+  register: podman_user
 
-- include_tasks: redhat.yml
-  when: ansible_os_family == "RedHat"
-  tags: selinux
+- name: configure subuids and subguids for podman user
+  ansible.builtin.lineinfile:
+    path: "{{ item }}"
+    regexp: '^podman'
+    line: podman:524288:65536
+  with_items:
+    - /etc/subgid
+    - /etc/subuid
 
-- name: configure docker
-  template: src=dockerd.json.j2 dest=/etc/docker/daemon.json
-  notify: restart docker
-  tags: docker
+- name: enable linger for podman
+  ansible.builtin.command: loginctl enable-linger podman
+  args:
+    creates: /var/lib/systemd/linger/podman
 
-- name: start and enable docker
-  service: name=docker state=started enabled=true
-  tags: docker
+- name: start podman socket and auto-update timer
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+    scope: user
+  become_user: podman
+  with_items:
+    - podman.socket
+    - podman-auto-update.timer
 
-- name: create gitlab-runner config directory
-  file:
-    path: /etc/gitlab-runner
+- name: configure selinux modules
+  include_tasks: selinux.yml
+  loop:
+    - pydocuum
+    - flatpak
+    - podman
+  when: ansible_distribution == "Fedora"
+
+- name: create podman config directory
+  ansible.builtin.file:
+    path: "{{ podman_user.home }}/.config/containers"
     state: directory
     mode: '0700'
+  become_user: podman
+
+- name: configure podman
+  ansible.builtin.copy:
+    src: containers.conf
+    dest: "{{ podman_user.home }}/.config/containers/containers.conf"
+  become_user: podman
+
+- name: create gitlab-runner config directory
+  ansible.builtin.file:
+    path: "{{ podman_user.home }}/gitlab-runner"
+    state: directory
+    mode: '0700'
+  become_user: podman
 
 - name: configure gitlab-runner
-  template:
-    src: config.toml.j2
-    dest: /etc/gitlab-runner/config.toml
-  tags: gitlab-runner
+  ansible.builtin.template:
+    src: gitlab-runner-config.toml.j2
+    dest: "{{ podman_user.home }}/gitlab-runner/config.toml"
+    mode: '0600'
+  become_user: podman
 
-- name: increase arp table size
-  copy: src=increase-arp-table-size.conf dest=/etc/sysctl.d/increase-arp-table-size.conf mode=0644 owner=root group=root
-  notify: reload sysctl
+- name: copy seccomp profile for building flatpaks
+  ansible.builtin.copy:
+    src: flatpak.seccomp.json
+    dest: "{{ podman_user.home }}/gitlab-runner/flatpak.seccomp.json"
+  become_user: podman
 
-- name: increase number of file descriptors
-  copy: src=increase-file-max.conf dest=/etc/sysctl.d/increase-file-max.conf mode=0644 owner=root group=root
-  notify: reload sysctl
-  tags: sysctl
+- name: add unit for gitlab-runner service
+  ansible.builtin.template:
+    src: gitlab-runner.service.j2
+    dest: /{{ podman_user.home }}/.config/systemd/user/gitlab-runner.service
+  become_user: podman
+  notify: restart gitlab-runner
 
-- name: create docuum container
-  docker_container:
-    name: docuum
-    image: stephanmisc/docuum:latest
-    state: present
-    restart_policy: on-failure
-    command: "--threshold '{{ gitlab_runner_docuum_threshold }}'"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-  tags: docuum
-  when: gitlab_runner_enable_docuum and gitlab_runner_docuum_threshold is defined
-
-- name: start docuum
-  docker_container:
-    name: docuum
+- name: start gitlab-runner
+  ansible.builtin.systemd:
+    name: gitlab-runner.service
     state: started
-  tags: docuum
-  when: gitlab_runner_enable_docuum and gitlab_runner_docuum_threshold is defined
+    enabled: true
+    daemon_reload: true
+    scope: user
+  become_user: podman
 
-- name: 'Remove old containers and volumes on schedule'
-  cron:
-    name: "Prune old containers and volumes"
-    special_time: daily
-    job: "docker system prune -af --filter label=com.gitlab.gitlab-runner.managed=true"
+- name: add unit for pydocuum service
+  ansible.builtin.template:
+    src: pydocuum.service.j2
+    dest: /{{ podman_user.home }}/.config/systemd/user/pydocuum.service
+  become_user: podman
 
-- name: Make sure /dev/kvm is root:root (0660)
-  copy: src=00-kvm.rules dest=/etc/udev/rules.d/00-kvm.rules mode=0644 owner=root group=root
+- name: start pydocuum
+  ansible.builtin.systemd:
+    name: pydocuum.service
+    state: started
+    enabled: true
+    daemon_reload: true
+    scope: user
+  become_user: podman
+  notify: restart pydocuum
+
+- name: relax /dev/kvm permissions
+  ansible.builtin.copy:
+    src: 00-kvm.rules
+    dest: /etc/udev/rules.d/00-kvm.rules
+    mode: 0644
+    owner: root
+    group: root
   notify: reload udevadm
