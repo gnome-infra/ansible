@@ -1,0 +1,70 @@
+---
+- name: set root ssh keys
+  ansible.builtin.copy:
+    src: root_authorized_keys
+    dest: /root/.ssh/authorized_keys
+    owner: root
+    group: root
+    mode: 0600
+
+- name: install base packages
+  ansible.builtin.package:
+    name:
+      - firewalld
+      - htop
+      - ncdu
+      - sudo
+      - vnstat
+    state: present
+    update_cache: true
+
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+ include_tasks: fedora.yml
+  when: ansible_distribution == "Fedora"
+
+- name: install tailscale
+  ansible.builtin.package:
+    name:
+      - tailscale
+    state: present
+    update_cache: true
+  register: tailscale_pkg
+
+- name: set default firewalld zone to public
+  ansible.builtin.command: firewall-cmd --set-default-zone=public
+  register: default_zone_set
+  changed_when:
+    - '"ZONE_ALREADY_SET" not in default_zone_set.stderr'
+
+- name: start and enable services
+  ansible.builtin.systemd:
+    state: started
+    name: "{{ item }}"
+    enabled: true
+  with_items:
+    - firewalld
+    - tailscaled
+    - vnstat
+
+- name: remind to configure tailscale
+  ansible.builtin.pause:
+    prompt: "ssh to the server and configure tailscale"
+  when: tailscale_pkg.changed
+
+- name: add tailscale0 to internal zone
+  ansible.posix.firewalld:
+    zone: internal
+    interface: tailscale0
+    permanent: true
+    immediate: true
+    state: enabled
+
+- name: allow node-exporter access over tailscale
+  ansible.posix.firewalld:
+    zone: internal
+    port: 9100/tcp
+    permanent: true
+    immediate: true
+    state: enabled

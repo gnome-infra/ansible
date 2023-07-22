@@ -1,0 +1,30 @@
+---
+- name: install ubuntu packages
+  ansible.builtin.package:
+    name:
+      - unattended-upgrades
+      - prometheus-node-exporter
+      - vim-tiny
+    state: present
+    update_cache: true
+
+- block:
+    - name: fetch tailscale repo keyring
+      ansible.builtin.get_url:
+        url: "https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.noarmor.gpg"
+        dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+
+    - name: add tailscale repo
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/ubuntu {{ ansible_distribution_release }} main"
+        state: present
+
+- name: start and enable services
+  ansible.builtin.systemd:
+    state: started
+    name: "{{ item }}"
+    enabled: true
+  with_items:
+    - apt-daily-upgrade.timer
+    - prometheus-node-exporter
+    - unattended-upgrades

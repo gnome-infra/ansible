@@ -1,0 +1,23 @@
+---
+- name: install fedora packages
+  ansible.builtin.package:
+    name:
+      - dnf-automatic
+      - golang-github-prometheus-node-exporter
+      - vim-minimal
+    state: present
+    update_cache: true
+
+- name: add tailscale repo
+  ansible.builtin.command: dnf config-manager --add-repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+  args:
+    creates: /etc/yum.repos.d/tailscale.repo
+
+- name: start and enable services
+  ansible.builtin.systemd:
+    state: started
+    name: "{{ item }}"
+    enabled: true
+  with_items:
+    - dnf-automatic-install.timer
+    - node_exporter
