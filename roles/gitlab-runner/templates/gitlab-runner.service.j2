@@ -23,7 +23,7 @@ ExecStart=/usr/bin/podman \
 	--volume /run/user/{{ podman_user.uid }}/podman/podman.sock:/var/run/docker.sock:z \
 	--volume /home/podman/gitlab-runner:/etc/gitlab-runner:Z \
 	--label io.containers.autoupdate=image \
-	--label org.gnome.pydocuum.skip=True docker.io/gitlab/gitlab-runner:latest
+	--label org.gnome.pydocuum.skip=True registry.gitlab.com/gitlab-org/gitlab-runner:latest
 ExecStop=/usr/bin/podman stop \
 	--ignore -t 10 \
 	--cidfile=%t/%n.ctr-id

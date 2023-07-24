@@ -6,3 +6,4 @@ roles/iptables
 roles/geerlingguy.*
 roles/postfix
 collections/ansible_collections
+*.pyc
