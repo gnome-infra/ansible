@@ -110,6 +110,7 @@
     src: pydocuum.service.j2
     dest: /{{ podman_user.home }}/.config/systemd/user/pydocuum.service
   become_user: podman
+  notify: restart pydocuum
 
 - name: start pydocuum
   ansible.builtin.systemd:
@@ -119,7 +120,6 @@
     daemon_reload: true
     scope: user
   become_user: podman
-  notify: restart pydocuum
 
 - name: relax /dev/kvm permissions
   ansible.builtin.copy:
