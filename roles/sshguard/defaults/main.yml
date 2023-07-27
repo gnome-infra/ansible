@@ -1,0 +1,13 @@
+---
+sshguard_block_time: 120
+sshguard_detection_time: 1800
+sshguard_threshold: 30
+
+sshguard_whitelist:
+  - comment: IPv4 localhost
+    address: 127.0.0.0/8
+  - comment: IPv6 localhost
+    address: ::1
+
+sshguard_backend: /usr/libexec/sshguard/sshg-fw-iptables
+sshguard_logreader: LANG=C /usr/bin/journalctl -afb -p info -n1 -t sshd -o cat

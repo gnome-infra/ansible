@@ -1,0 +1,8 @@
+# {{ ansible_managed }} sshguard whitelist
+
+{% for entry in sshguard_whitelist %}
+{% if entry.comment is defined %}
+#   {{ entry.comment }}
+{% endif %}
+{{ entry.address }}
+{% endfor %}

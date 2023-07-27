@@ -8,3 +8,4 @@ nrpe_custom_plugins:
   - check_ipa_replication
   - check_ipa_status
 enable_system_backup: true
+sshguard_enabled: true

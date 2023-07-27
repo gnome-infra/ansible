@@ -7,3 +7,4 @@ firewall_allowed_tcp_ports:
 nrpe_custom_plugins:
   - check_vpn
 enable_blackbox: true
+sshguard_enabled: true

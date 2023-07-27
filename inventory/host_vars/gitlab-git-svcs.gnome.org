@@ -3,3 +3,4 @@ firewall_additional_rules:
 firewall_allowed_tcp_ports:
   - 22
 enable_system_backup: true
+sshguard_enabled: true

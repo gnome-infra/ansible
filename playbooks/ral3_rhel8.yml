@@ -27,6 +27,12 @@
    - rsyslog
    - backup
 
+- hosts: all
+  gather_facts: false
+  remote_user: root
+  roles:
+    - sshguard
+
 - hosts: all,!smtp_servers
   gather_facts: true
   remote_user: root

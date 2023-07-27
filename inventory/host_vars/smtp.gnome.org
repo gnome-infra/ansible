@@ -9,6 +9,8 @@ firewall_allowed_tcp_ports:
 firewall_additional_rules:
   - "iptables -A INPUT -i eth1 -j ACCEPT"
 
+sshguard_enabled: true
+
 enable_system_backup: true
 backup_exclude:
   - /var/lib/mailman

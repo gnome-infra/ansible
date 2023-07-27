@@ -19,3 +19,13 @@ firewall_allowed_tcp_ports:
 internal_dns_resolvers:
   - 172.31.2.54
   - 172.31.2.55
+
+sshguard_whitelist:
+  - comment: IPv4 localhost
+    address: 127.0.0.0/8
+  - comment: IPv6 localhost
+    address: ::1
+  - comment: Internal
+    address: 172.31.2.0/24
+  - comment: VPN
+    address: 10.8.0.0/24
