@@ -37,7 +37,7 @@ iptables -F
 iptables -X
 {% endif %}
 
-{% if sshguard_enabled %}
+{% if sshguard_enabled | default(false) %}
 # SSH Guard
 iptables -N sshguard
 iptables -A INPUT -j sshguard
@@ -102,7 +102,7 @@ if [ -x "$(which ip6tables 2>/dev/null)" ]; then
   ip6tables -X
 {% endif %}
 
-{% if sshguard_enabled %}
+{% if sshguard_enabled | default(false) %}
   # SSH Guard
   ip6tables -N sshguard
   ip6tables -A INPUT -j sshguard
