@@ -27,7 +27,7 @@
         enabled: true
 
     - name: Make sure the iptables service is masked
-      ansible.builtin.systemd_service:
+      ansible.builtin.systemd:
         name: iptables
         masked: true
   when: sshguard_enabled | default(false)
