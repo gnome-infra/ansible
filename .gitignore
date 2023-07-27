@@ -2,7 +2,6 @@
 roles/ipaclient
 roles/redhat.subscription
 roles/chrony
-roles/iptables
 roles/geerlingguy.*
 roles/postfix
 collections/ansible_collections

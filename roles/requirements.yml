@@ -3,10 +3,6 @@
   src: https://github.com/openstack/ansible-role-chrony.git
   scm: git
 
-- name: iptables
-  src: https://github.com/geerlingguy/ansible-role-firewall.git
-  scm: git
-
 - name: postfix
   src: https://github.com/linux-system-roles/postfix
   scm: git
