@@ -44,6 +44,7 @@ gitlab_runner_config:
         shm_size: 0
         cap_add:
           - SYS_PTRACE
+          - SYS_CHROOT
     - name: a15948139c78-flatpak
       url: https://gitlab.gnome.org
       id: 460
