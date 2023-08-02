@@ -174,3 +174,13 @@ scrape_configs:
         - mysqld-exporter-0.apps.openshift4.gnome.org
         - mysqld-exporter-1.apps.openshift4.gnome.org
         - mysqld-exporter-2.apps.openshift4.gnome.org
+
+  - job_name: 'external'
+    honor_labels: true
+    metrics_path: '/federate'
+    params:
+      'match[]':
+      - '{job="node"}'
+    static_configs:
+    - targets:
+      - bbb2.gnome.org:9090
