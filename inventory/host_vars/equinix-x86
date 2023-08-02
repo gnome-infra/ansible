@@ -1,2 +1,35 @@
 ---
 skip_firewalld: true
+
+gitlab_runner_token_gbm: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          37616337336363353534643662356338326462306336306139393636616239343564383365613835
+          3135306435343463623239343739373831613330373063370a646636653839633233383631656535
+          63353634666431343165663365633434333831626433343931663462663462343733373562386334
+          6233326565313831300a336266643165656131613361666232373936353965346563336430363266
+          62393735383432336437393530353038373831356334646663353536333737613030
+
+gitlab_runner_config:
+  concurrent: 4
+  check_interval: 0
+  session_server:
+    session_timeout: 1800
+  runners:
+    - name: m3-large-x86.gnome.org
+      output_limit: 32768
+      url: https://gitlab.gnome.org
+      token: "{{ gitlab_runner_token_gbm }}"
+      executor: docker
+      docker:
+        host: unix:///run/podman/podman.sock
+        tls_verify: false
+        image: fedora:latest
+        privileged: true
+        disable_entrypoint_overwrite: false
+        oom_kill_disable: false
+        disable_cache: true
+        volumes:
+          - /mnt/data/cache:/cache
+        shm_size: 0
+        cpuset_cpus: 0-57
+        cpus: "58"
