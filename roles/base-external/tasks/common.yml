@@ -1,0 +1,32 @@
+---
+- name: install base packages
+  ansible.builtin.package:
+    name:
+      - htop
+      - ncdu
+      - sudo
+      - vnstat
+    state: present
+    update_cache: true
+
+- name: install tailscale
+  ansible.builtin.package:
+    name:
+      - tailscale
+    state: present
+    update_cache: true
+  register: tailscale_pkg
+
+- name: remind to configure tailscale
+  ansible.builtin.pause:
+    prompt: "ssh to the server and configure tailscale"
+  when: tailscale_pkg.changed
+
+- name: start and enable services
+  ansible.builtin.systemd:
+    state: started
+    name: "{{ item }}"
+    enabled: true
+  with_items:
+    - tailscaled
+    - vnstat
