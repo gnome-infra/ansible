@@ -21,20 +21,20 @@
       - gir1.2-ostree-1.0
 
 - name: add postgres user
-  community.general.postgresql_user:
+  community.postgresql.postgresql_user:
     name: flat-manager
   become: true
   become_user: postgres
 
 - name: create flat-manager database
-  community.general.postgresql_db:
+  community.postgresql.postgresql_db:
     name: flat-manager
     owner: flat-manager
   become: true
   become_user: postgres
 
 - name: create flat-manager-ostree database
-  community.general.postgresql_db:
+  community.postgresql.postgresql_db:
     name: flat-manager-ostree
     owner: flat-manager
   become: true

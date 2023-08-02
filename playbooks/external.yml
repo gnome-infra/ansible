@@ -9,8 +9,6 @@
 - hosts: flat-manager.gnome.org
   gather_facts: true
   remote_user: root
-  collections:
-   - community.general
   roles:
    - external_base
    - flat-manager
