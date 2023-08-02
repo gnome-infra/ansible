@@ -1,4 +1,0 @@
----
-keepalived_int: br2
-keepalived_virtual_ipaddresses:
-  - "172.31.2.250/24 brd 172.31.2.255 dev br2 label br2:0"

@@ -1,8 +1,0 @@
-[Unit]
-Description=Expose OpenVPN cert validity metric
-
-[Timer]
-OnCalendar=hourly
-
-[Install]
-WantedBy=timers.target

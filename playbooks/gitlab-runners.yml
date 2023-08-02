@@ -1,7 +1,0 @@
----
-- hosts: gitlab-runners
-  gather_facts: true 
-  remote_user: root
-  roles:
-   - base-external
-   - gitlab-runner

@@ -1,5 +1,0 @@
----
-- hosts: haproxy-int
-  remote_user: root
-  roles:
-   - haproxy-int

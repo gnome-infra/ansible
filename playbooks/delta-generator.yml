@@ -1,6 +1,0 @@
----
-- hosts: delta-generators
-  gather_facts: true 
-  remote_user: root
-  roles:
-    - { role: delta-generator, when: (ansible_architecture == "x86_64") }

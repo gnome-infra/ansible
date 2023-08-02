@@ -1,0 +1,27 @@
+---
+- hosts: gitlab-runners
+  gather_facts: true 
+  remote_user: root
+  roles:
+   - external_base
+   - gitlab-runner
+
+- hosts: flat-manager.gnome.org
+  gather_facts: true
+  remote_user: root
+  roles:
+   - external_base
+   - flat-manager
+
+- name: gather facts
+  hosts: gitlab-runners,external
+  remote_user: root
+  gather_facts: true
+  tasks: []
+
+- hosts: bbb2.gnome.org
+  gather_facts: true
+  remote_user: root
+  roles:
+   - external_base
+   - external_prometheus

@@ -24,10 +24,21 @@ scrape_configs:
 {% endfor %}
       labels:
         role: gitlab-runner
+    - targets:
+{% for host in groups['external'] %}
+{% if hostvars[host].ansible_tailscale0 is defined %}
+      - {{ hostvars[host].ansible_tailscale0.ipv4.address }}:9100
+{% endif %}
+{% endfor %}
+
 
     relabel_configs:
-{% for host in groups['gitlab-runners'] + groups['base-external'] %}
-{% if hostvars[host].ansible_wg0 is defined %}
+      - source_labels: [ __address__ ]
+        target_label: instance
+        regex: 127.0.0.1:9100
+        replacement: bbb2.gnome.org
+{% for host in groups['gitlab-runners'] + groups['external'] %}
+{% if hostvars[host].ansible_tailscale0 is defined %}
       - source_labels: [ __address__ ]
         target_label: instance
         regex: {{ hostvars[host].ansible_tailscale0.ipv4.address }}:9100
