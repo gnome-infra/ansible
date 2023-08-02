@@ -1,6 +1,6 @@
 ---
 - hosts: gitlab-runners
-  gather_facts: true 
+  gather_facts: true
   remote_user: root
   roles:
    - external_base
@@ -9,6 +9,8 @@
 - hosts: flat-manager.gnome.org
   gather_facts: true
   remote_user: root
+  collections:
+   - community.general
   roles:
    - external_base
    - flat-manager
