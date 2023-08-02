@@ -18,23 +18,19 @@ scrape_configs:
       - 127.0.0.1:9100
     - targets:
 {% for host in groups['gitlab-runners'] %}
-{% if hostvars[host].ansible_wg0 is defined %}
-      - {{ hostvars[host].ansible_wg0.ipv4.address }}:9100
+{% if hostvars[host].ansible_tailscale0 is defined %}
+      - {{ hostvars[host].ansible_tailscale0.ipv4.address }}:9100
 {% endif %}
 {% endfor %}
       labels:
         role: gitlab-runner
 
     relabel_configs:
-      - source_labels: [ __address__ ]
-        target_label: instance
-        regex: 127.0.0.1:9100
-        replacement: fosshost.gnome.org
-{% for host in groups['gitlab-runners'] %}
+{% for host in groups['gitlab-runners'] + groups['base-external'] %}
 {% if hostvars[host].ansible_wg0 is defined %}
       - source_labels: [ __address__ ]
         target_label: instance
-        regex: {{ hostvars[host].ansible_wg0.ipv4.address }}:9100
+        regex: {{ hostvars[host].ansible_tailscale0.ipv4.address }}:9100
         replacement: {{ host }}
 {% endif %}
 {% endfor %}
