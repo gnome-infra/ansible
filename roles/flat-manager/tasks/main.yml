@@ -69,7 +69,7 @@
     dest: /etc/flat-manager/post-publish.sh
     owner: flat-manager
     group: flat-manager
-    mode: 0600
+    mode: 0700
 
 - name: install flat-manager systemd unit
   copy:
