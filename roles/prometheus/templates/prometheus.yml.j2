@@ -184,3 +184,9 @@ scrape_configs:
     static_configs:
     - targets:
       - bbb2.gnome.org:9090
+
+  - job_name: gitlab-cicd
+    scheme: https
+    static_configs:
+      - targets:
+        - gitlab-ci-pipelines-exporter-gitlab.apps.openshift4.gnome.org
