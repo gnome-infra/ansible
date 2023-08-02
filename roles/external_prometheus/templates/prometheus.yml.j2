@@ -15,8 +15,6 @@ scrape_configs:
   - job_name: 'node'
     static_configs:
     - targets:
-      - 127.0.0.1:9100
-    - targets:
 {% for host in groups['gitlab-runners'] %}
 {% if hostvars[host].ansible_tailscale0 is defined %}
       - {{ hostvars[host].ansible_tailscale0.ipv4.address }}:9100
@@ -33,10 +31,6 @@ scrape_configs:
 
 
     relabel_configs:
-      - source_labels: [ __address__ ]
-        target_label: instance
-        regex: 127.0.0.1:9100
-        replacement: bbb2.gnome.org
 {% for host in groups['gitlab-runners'] + groups['external'] %}
 {% if hostvars[host].ansible_tailscale0 is defined %}
       - source_labels: [ __address__ ]
