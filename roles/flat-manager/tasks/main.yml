@@ -1,7 +1,7 @@
 ---
 - name: install required packages
   package:
-    name: 
+    name:
       - nginx
       - gnupg2
       - python3-certbot
@@ -16,25 +16,25 @@
 
 - name: install flatpak
   package:
-    name: 
+    name:
       - flatpak
       - gir1.2-ostree-1.0
 
 - name: add postgres user
-  postgresql_user:
+  community.general.postgresql_user:
     name: flat-manager
   become: true
   become_user: postgres
 
 - name: create flat-manager database
-  postgresql_db:
+  community.general.postgresql_db:
     name: flat-manager
     owner: flat-manager
   become: true
   become_user: postgres
 
 - name: create flat-manager-ostree database
-  postgresql_db:
+  community.general.postgresql_db:
     name: flat-manager-ostree
     owner: flat-manager
   become: true
@@ -90,7 +90,7 @@
   notify: restart flat-manager-ostree
 
 - name: enable and start flat-manager-ostree
-  systemd:
+  ansible.builtin.systemd:
     name: flat-manager-ostree
     daemon_reload: yes
     enabled: yes
