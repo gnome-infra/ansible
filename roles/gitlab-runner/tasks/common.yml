@@ -27,10 +27,11 @@
   ansible.builtin.lineinfile:
     path: "{{ item }}"
     regexp: '^podman'
-    line: podman:524288:65536
+    line: podman:524288:1100000000
   with_items:
     - /etc/subgid
     - /etc/subuid
+  notify: podman system migrate
 
 - name: enable linger for podman
   ansible.builtin.command: loginctl enable-linger podman

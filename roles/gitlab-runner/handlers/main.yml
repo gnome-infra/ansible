@@ -17,3 +17,7 @@
 
 - name: reload udevadm
   ansible.builtin.command: udevadm control --reload-rules
+
+- name: podman system migrate
+  ansible.builtin.command: podman system migrate
+  become_user: podman
