@@ -132,7 +132,7 @@ scrape_configs:
       - '{job="kube-state-metrics"}'
     static_configs:
     - targets:
-      - prometheus-k8s-openshift-monitoring.apps.openshift4.gnome.org
+      - prometheus-k8s-federate-openshift-monitoring.apps.openshift4.gnome.org
     metric_relabel_configs:
     - source_labels: [ prometheus_replica ]
       regex: prometheus-k8s-1
