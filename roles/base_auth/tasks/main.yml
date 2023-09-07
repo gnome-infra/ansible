@@ -10,6 +10,13 @@
     - public_keys/backups
     - public_keys/awx
 
+- name: Land cephadm SSH keys on Ceph nodes
+  authorized_key:
+    user: root
+    state: present
+    key: public_keys/cephadm
+  when: ('ceph_osds' in group_names) or ('ceph_metrics' in group_names)
+
 - name: Set default root password
   user:
     name: root
