@@ -14,7 +14,7 @@
   authorized_key:
     user: root
     state: present
-    key: "{{ lookup('ansible.builtin.file', 'public_keys/cephadm'') }}"
+    key: "{{ lookup('ansible.builtin.file', 'public_keys/cephadm') }}"
   when: ('ceph_osds' in group_names) or ('ceph_metrics' in group_names)
 
 - name: Set default root password
