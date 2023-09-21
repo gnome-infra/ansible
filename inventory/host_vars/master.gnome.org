@@ -4,3 +4,8 @@ firewall_additional_rules:
 firewall_allowed_tcp_ports:
   - 22
   - 873
+enable_system_backup: true
+backup_exclude:
+  - /ftp
+  - /qemu_ftp
+  - /gimp_ftp
