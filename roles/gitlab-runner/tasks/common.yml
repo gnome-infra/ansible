@@ -59,13 +59,13 @@
 
 - name: ensure podman user service override directory exists
   file:
-    path: /etc/systemd/user/podman.service/
+    path: /etc/systemd/user/podman.service.d/
     state: directory
 
 - name: configure podman user service to run through catatonit
   ansible.builtin.copy:
     src: podman.service.override.conf
-    dest: /etc/systemd/user/podman.service/catatonit.conf
+    dest: /etc/systemd/user/podman.service.d/catatonit.conf
 
 - name: create podman config directory
   ansible.builtin.file:
