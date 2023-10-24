@@ -48,7 +48,7 @@ gitlab_runner_config:
     - name: a15948139c78-flatpak
       url: https://gitlab.gnome.org
       id: 460
-      token: "{{ gitlab_runner_token_untagged }}"
+      token: "{{ gitlab_runner_token_flatpak }}"
       executor: docker
       cache:
         MaxUploadedArchiveSize: 0
