@@ -33,7 +33,7 @@
     - /etc/subuid
   notify: podman system migrate
 
-- name: enable linger for podman
+- name: enable linger for podman user
   ansible.builtin.command: loginctl enable-linger podman
   args:
     creates: /var/lib/systemd/linger/podman
@@ -56,6 +56,16 @@
     - flatpak
     - podman
   when: ansible_distribution == "Fedora"
+
+- name: ensure podman user service override directory exists
+  file:
+    path: /etc/systemd/user/podman.service/
+    state: directory
+
+- name: configure podman user service to run through catatonit
+  ansible.builtin.copy:
+    src: podman.service.override.conf
+    dest: /etc/systemd/user/podman.service/catatonit.conf
 
 - name: create podman config directory
   ansible.builtin.file:
