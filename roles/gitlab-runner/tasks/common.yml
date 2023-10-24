@@ -93,8 +93,7 @@
 - name: add unit for gitlab-runner service
   ansible.builtin.template:
     src: gitlab-runner.service.j2
-    dest: /{{ podman_user.home }}/.config/systemd/user/gitlab-runner.service
-  become_user: podman
+    dest: /etc/systemd/user/gitlab-runner.service
   notify: restart gitlab-runner
 
 - name: start gitlab-runner
@@ -109,8 +108,7 @@
 - name: add unit for pydocuum service
   ansible.builtin.template:
     src: pydocuum.service.j2
-    dest: /{{ podman_user.home }}/.config/systemd/user/pydocuum.service
-  become_user: podman
+    dest: /etc/systemd/user/pydocuum.service
   notify: restart pydocuum
 
 - name: start pydocuum
@@ -122,6 +120,14 @@
     scope: user
   become_user: podman
 
+- name: clean up old user systemd services
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "/{{ podman_user.home }}/.config/systemd/user/pydocuum.service"
+    - "/{{ podman_user.home }}/.config/systemd/user/gitlab-runner.service"
+
 - name: relax /dev/kvm permissions
   ansible.builtin.copy:
     src: 00-kvm.rules
@@ -130,3 +136,4 @@
     owner: root
     group: root
   notify: reload udevadm
+
