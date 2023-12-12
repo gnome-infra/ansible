@@ -68,7 +68,6 @@ $template r_oscp4_gitlab_exceptions, "/var/log/hosts/%HOSTNAME%.gnome.org/%$YEAR
 $template r_oscp4_gitlab_api, "/var/log/hosts/%HOSTNAME%.gnome.org/%$YEAR%/%$MONTH%/%$DAY%/api_json.log"
 $template r_oscp4_gitlab_audit, "/var/log/hosts/%HOSTNAME%.gnome.org/%$YEAR%/%$MONTH%/%$DAY%/audit_json.log"
 $template r_oscp4_app_damned_lies, "/var/log/hosts/oscp4-apps.gnome.org/%$YEAR%/%$MONTH%/%$DAY%/damned-lies.log"
-$template r_oscp4_app_gimp, "/var/log/hosts/oscp4-apps.gnome.org/%$YEAR%/%$MONTH%/%$DAY%/gimp.log"
 
 #------------------------------------------------------------------------------#
 # templates for local logging                                                  #
@@ -151,7 +150,6 @@ local1.*                                        ?r_local1;TraditionalFormat
 #------------------------------------------------------------------------------#
 if $msg contains "oscp4-audit" then ?r_oscp4_audit;TraditionalFormat
 if $msg contains "oscp4-app-damned-lies" then ?r_oscp4_app_damned_lies;TraditionalFormat
-if $msg contains "oscp4-app-gimp" then ?r_oscp4_app_gimp;TraditionalFormat
 
 :syslogtag, isequal, "oscp4-gitlab-application"
 local3.info ?r_oscp4_gitlab_application;TraditionalFormat
