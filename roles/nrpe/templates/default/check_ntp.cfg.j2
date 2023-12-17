@@ -2,5 +2,5 @@
 {% if datacenter == 'osuosl' %}
 command[check_ntp_time]=/usr/lib64/nagios/plugins/check_ntp_time -H pool.ntp.org -w 0.1 -c 1
 {% else %}
-command[check_ntp_time]=/usr/lib64/nagios/plugins/check_ntp_time -H guido.osci.io -w 0.1 -c 1
+command[check_ntp_time]=/usr/lib64/nagios/plugins/check_ntp_time -H ntp1.osci.io -w 0.1 -c 1
 {% endif %}
