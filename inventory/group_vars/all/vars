@@ -20,6 +20,7 @@ internal_dns_resolvers:
   - 172.31.2.54
   - 172.31.2.55
 
+sshguard_threshold: 10
 sshguard_whitelist:
   - comment: IPv4 localhost
     address: 127.0.0.0/8
