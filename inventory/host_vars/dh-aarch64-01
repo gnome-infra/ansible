@@ -52,6 +52,8 @@ gitlab_runner_config:
       executor: docker
       cache:
         MaxUploadedArchiveSize: 0
+      environment:
+        - "CI_FB_ARGS=--jobs=1"
       docker:
         tls_verify: false
         image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master
