@@ -1,6 +1,7 @@
 ---
 - name: chrony
   src: https://github.com/openstack/ansible-role-chrony.git
+  version: 0111661102ebb211ce8e1a08df57fb51cb4671fb
   scm: git
 
 - name: postfix
