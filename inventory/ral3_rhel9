@@ -1,0 +1,5 @@
+[ral3_rhel9:children]
+misc
+
+[misc]
+notirc.gnome.org
