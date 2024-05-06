@@ -1,12 +1,12 @@
 ---
-- name: Land EPEL 8 GPG Key
+- name: Land EPEL {{ ansible_distribution_major_version }} GPG Key
   rpm_key:
     state: present
-    key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
+    key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
 
-- name: Enable EPEL 8
+- name: Enable EPEL {{ ansible_distribution_major_version }}
   yum:
-    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
     state: present
 
 - name: Drop repos we don't want on our systems
