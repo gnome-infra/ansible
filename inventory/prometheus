@@ -15,6 +15,9 @@ signal.gnome.org
 smtp.gnome.org
 gitlab-git-svcs.gnome.org
 
+[ral3_rhel9]
+notirc.gnome.org
+
 [osuosl]
 signal.gnome.org
 
