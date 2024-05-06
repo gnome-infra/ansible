@@ -1,0 +1,94 @@
+---
+- hosts: all
+  gather_facts: false
+  remote_user: root
+  collections:
+   - community.general
+  tasks:
+    - name: Register system to RHSM
+      community.general.redhat_subscription:
+        state: present
+        username: "{{ rhsm_username }}"
+        password: "{{ rhsm_password }}"
+        auto_attach: true
+
+- hosts: all
+  gather_facts: true
+  remote_user: root
+  roles:
+   - packages
+   - motd
+   - chrony
+   - iptables
+   - bash
+   - base_auth
+   - nrpe
+   - base_network
+   - rsyslog
+   - backup
+
+- hosts: all
+  gather_facts: false
+  remote_user: root
+  roles:
+    - sshguard
+
+- hosts: all,!smtp_servers
+  gather_facts: true
+  remote_user: root
+  roles:
+   - postfix.wrapper
+
+- hosts: all,!ceph_osds,!ceph_metrics
+  gather_facts: true
+  remote_user: root
+  roles:
+   - node-exporter
+
+- hosts: all,!ipaservers
+  gather_facts: true
+  remote_user: root
+  roles:
+   - ipaclient.wrapper
+
+- hosts: hypervisors
+  gather_facts: true
+  remote_user: root
+  roles:
+   - dell
+
+- hosts: bastions
+  gather_facts: true
+  remote_user: root
+  roles:
+   - squid
+
+- hosts: nsd
+  gather_facts: true
+  remote_user: root
+  roles:
+   - nsd
+
+- hosts: ftpmasters
+  gather_facts: false
+  remote_user: root
+  roles:
+    - ftpadmin
+
+- hosts: ipaservers
+  gather_facts: false
+  remote_user: root
+  roles:
+    - ipaserver
+
+- hosts: dovecot_servers
+  gather_facts: false
+  remote_user: root
+  roles:
+    - dovecot
+
+- hosts: smtp_servers
+  gather_facts: false
+  remote_user: root
+  roles:
+    - postfix.server
