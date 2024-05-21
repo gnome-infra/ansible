@@ -15,7 +15,7 @@ gitlab_runner_token_flatpak: !vault |
     63656631383136366162656530363439356437616537646637376366346135333062
 
 gitlab_runner_config:
-  concurrent: 4
+  concurrent: 3
   check_interval: 0
   shutdown_timeout: 0
   session_server:
