@@ -7,3 +7,4 @@ osuosl-1 ansible_host=140.211.166.9
 osuosl-2 ansible_host=140.211.166.15
 equinix-x86 ansible_host=147.28.151.79
 equinix-arm64 ansible_host=147.28.151.230
+bbb2-runner ansible_host=bbb2.gnome.org ansible_port=2222
