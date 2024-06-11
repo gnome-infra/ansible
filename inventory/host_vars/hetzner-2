@@ -36,6 +36,8 @@ gitlab_runner_config:
           BucketName: "{{ gitlab_runner_cache_bucket_name }}"
           BucketLocation: us-east-1
       docker:
+        dns:
+          - "169.254.0.1"
         tls_verify: false
         image: quay.io/fedora/fedora:latest
         privileged: false
@@ -57,6 +59,8 @@ gitlab_runner_config:
       cache:
         MaxUploadedArchiveSize: 0
       docker:
+        dns:
+          - "169.254.0.1"
         tls_verify: false
         image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master
         privileged: false

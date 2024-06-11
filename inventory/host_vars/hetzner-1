@@ -37,8 +37,7 @@ gitlab_runner_config:
           BucketLocation: us-east-1
       docker:
         dns:
-          - "1.1.1.1"
-          - "8.8.8.8"
+          - "169.254.0.1"
         dns_search: [""]
         helper_image_flavor: "ubuntu"
         tls_verify: false
@@ -63,8 +62,7 @@ gitlab_runner_config:
         MaxUploadedArchiveSize: 0
       docker:
         dns:
-          - "1.1.1.1"
-          - "8.8.8.8"
+          - "169.254.0.1"
         dns_search: [""]
         helper_image_flavor: "ubuntu"
         tls_verify: false
