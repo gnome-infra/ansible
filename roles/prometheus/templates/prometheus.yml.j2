@@ -190,3 +190,9 @@ scrape_configs:
     static_configs:
       - targets:
         - gitlab-ci-pipelines-exporter-gitlab.apps.openshift4.gnome.org
+
+  - job_name: flathub-dramatiq
+    scheme: https
+    static_configs:
+      - targets:
+        - dramatiq-worker-metrics-flathub.apps.openshift4.gnome.org
