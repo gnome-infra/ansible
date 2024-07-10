@@ -1,0 +1,8 @@
+[Unit]
+Description=Automatic DNSSEC signzone
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/tmp
+ExecStart=/usr/local/bin/automatic-dnssec-signzone

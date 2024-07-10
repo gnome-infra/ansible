@@ -139,3 +139,53 @@
     enabled: yes
     daemon-reload: yes
   when: is_nsd_master|default(false)
+
+- name: Configure Git user name for automatic-dnssec-signzone
+  git_config:
+    name: user.name
+    scope: global
+    value: "Local Root user"
+  when: is_nsd_master|default(false)
+
+- name: Configure Git user email for automatic-dnssec-signzone
+  git_config:
+    name: user.email
+    scope: global
+    value: gnome-sysadmin@gnome.org
+  when: is_nsd_master|default(false)
+
+- name: Copy automatic-dnssec-signzone script
+  copy:
+    src: automatic-dnssec-signzone
+    dest: /usr/local/bin/automatic-dnssec-signzone
+    owner: root
+    group: root
+    mode: 0755
+  when: is_nsd_master|default(false)
+
+- name: Install DNSSEC automatic signzone service
+  template:
+    src: automatic-dnssec-signzone.service.j2
+    dest: /etc/systemd/system/automatic-dnssec-signzone.service
+  when: is_nsd_master|default(false)
+
+- name: Install DNSSEC automatic signzone timer
+  template:
+    src: automatic-dnssec-signzone.timer.j2
+    dest: /etc/systemd/system/automatic-dnssec-signzone.timer
+  when: is_nsd_master|default(false)
+
+- name: Enable DNSSEC automatic signzone timer
+  systemd:
+    name: automatic-dnssec-signzone.timer
+    state: started
+    enabled: yes
+    daemon-reload: yes
+  when: is_nsd_master|default(false)
+
+- name: Add safe.directory for /git/dns.git
+  git_config:
+    name: safe.directory
+    scope: global
+    value: /git/dns.git
+  when: is_nsd_master|default(false)

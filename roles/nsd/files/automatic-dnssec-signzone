@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cd /tmp
+git clone /git/dns.git
+
+if [ -d /tmp/dns ]; then
+    cd /tmp/dns
+    ./do-domains
+    git add .
+    git commit -a -m 'Automatic weekly signing run'
+    git push ; cd /tmp ; rm -rf dns
+else
+    echo "Unable to access the directory. Exiting."
+    exit 1
+fi
