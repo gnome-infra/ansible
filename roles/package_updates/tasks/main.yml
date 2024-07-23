@@ -3,18 +3,12 @@
   ansible.builtin.yum:
     name: '*'
     state: latest
-  register: update_result
 
-- name: Reboot the system if needed
-  ansible.builtin.reboot:
-    reboot_timeout: 3600
-  when:
-    - update_result.changed
-    - ansible_product_name != 'KVM'
-
-- name: Wait for the system to come back online
-  ansible.builtin.wait_for_connection:
-    timeout: 300
-  when:
-    - update_result.changed
-    - ansible_product_name != 'KVM'
+- name: Check if a reboot is required
+  ansible.builtin.command:
+    cmd: needs-restarting -r
+  register: reboot_check
+  changed_when: false
+  failed_when:
+    - reboot_check.rc != 0
+    - reboot_check.rc != 1

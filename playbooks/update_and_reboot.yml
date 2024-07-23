@@ -1,27 +1,79 @@
 ---
-- name: Update packages and reboot systems
-  hosts: all,!ceph_osds,!hypervisors,!ipaservers
+- name: Update packages and reboot systems (OCP Virt only)
+  hosts: all
   remote_user: root
-  gather_facts: false
-  roles:
-    - package_updates
-
-- name: Package updates on Ceph nodes
-  hosts: ceph_osds
-  remote_user: root
-  gather_facts: false
-  serial: 1
   roles:
     - package_updates
   tasks:
-    - name: Select a node for Ceph health check
-      ansible.builtin.set_fact:
-        delegate_node: "{{ item }}"
-      with_items: "{{ groups['ceph_osds'] }}"
-      run_once: true
+    - name: Reboot the system if needed
+      ansible.builtin.reboot:
+        reboot_timeout: 1200
       when:
-        - item != inventory_hostname
-        - update_result.changed
+        - reboot_check.rc == 1
+        - ansible_product_name == 'OpenShift Virtualization'
+
+    - name: Wait for the system to come back online
+      ansible.builtin.wait_for_connection:
+        timeout: 300
+      when:
+        - reboot_check.rc == 1
+        - ansible_product_name == 'OpenShift Virtualization'
+
+- name: Update packages and reboot systems (IDM only)
+  hosts: ipaservers
+  remote_user: root
+  gather_facts: false
+  roles:
+    - package_updates
+  tasks:
+    - name: Reboot the system if needed
+      ansible.builtin.reboot:
+        reboot_timeout: 1200
+      when:
+        - reboot_check.rc == 1
+
+    - name: Wait for the system to come back online
+      ansible.builtin.wait_for_connection:
+        timeout: 300
+      when:
+        - reboot_check.rc == 1
+
+    - name: Check IDM services status
+      ansible.builtin.command:
+        cmd: /usr/lib64/nagios/plugins/custom/check_ipa_status
+      register: check_ipa_status
+      until: check_ipa_status.stdout.find("IPA OK") != -1
+      retries: 20
+      delay: 60
+      changed_when: false
+
+    - name: Check IDM replication status
+      ansible.builtin.command:
+        cmd: /usr/lib64/nagios/plugins/custom/check_ipa_replication
+      register: check_ipa_replication
+      until: check_ipa_replication.stdout.find("OK") != -1
+      retries: 20
+      delay: 60
+      changed_when: false
+
+- name: Package updates and reboots on Ceph nodes
+  hosts: ceph_osds
+  remote_user: root
+  gather_facts: false
+  roles:
+    - package_updates
+  tasks:
+    - name: Reboot the system if needed
+      ansible.builtin.reboot:
+        reboot_timeout: 1200
+      when:
+        - reboot_check.rc == 1
+
+    - name: Wait for the system to come back online
+      ansible.builtin.wait_for_connection:
+        timeout: 600
+      when:
+        - reboot_check.rc == 1
 
     - name: Check Ceph health
       ansible.builtin.command:
@@ -30,19 +82,6 @@
       until: ceph_status.stdout | from_json | json_query('health.status') == "HEALTH_OK"
       retries: 20
       delay: 60
-      delegate_to: "{{ delegate_node }}"
-      run_once: true
-      when: update_result.changed
-
-- name: Package updates on IPA nodes
-  hosts: ipaservers
-  remote_user: root
-  gather_facts: false
-  serial: 1
-  roles:
-    - package_updates
-  tasks:
-    - name: Let IDM services stabilize
-      ansible.builtin.pause:
-        minutes: 5
-      when: update_result.changed
+      changed_when: false
+      when:
+        - reboot_check.rc == 1
