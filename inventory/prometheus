@@ -5,8 +5,6 @@ osuosl
 
 [ral3_rhel8]
 bastion01.gnome.org
-nsd01.gnome.org
-nsd02.gnome.org
 idm01.gnome.org
 idm02.gnome.org
 master.gnome.org

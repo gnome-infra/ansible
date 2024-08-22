@@ -1,6 +1,5 @@
 [ral3_rhel8:children]
 bastions
-nsd
 ipaservers
 ftpmasters
 rsyslog_servers
@@ -19,10 +18,6 @@ ceph-metrics.gnome.org
 
 [bastions]
 bastion01.gnome.org
-
-[nsd]
-nsd01.gnome.org
-nsd02.gnome.org
 
 [ipaservers]
 idm01.gnome.org
