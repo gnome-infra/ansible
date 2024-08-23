@@ -1,1 +1,2 @@
 KERNEL=="kvm", GROUP="kvm", MODE="0666"
+KERNEL=="udmabuf", GROUP="kvm", MODE="0666"
