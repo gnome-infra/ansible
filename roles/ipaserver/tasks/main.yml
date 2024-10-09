@@ -25,6 +25,23 @@
   notify:
     - 'Restart httpd'
 
+- name: Land AWS ELB httpd conf
+  template:
+    src: templates/aws-elb.conf.j2
+    dest: /etc/httpd/conf.d/aws-elb.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - 'Restart httpd'
+
+- name: Include /etc/httpd/conf.d/aws-elb.conf
+  lineinfile:
+    path: /etc/httpd/conf.d/ssl.conf
+    insertafter: '^Include /etc/httpd/conf.d/ipa-rewrite.conf'
+    line: 'Include /etc/httpd/conf.d/aws-elb.conf'
+    state: present
+
 - name: Ensure ipa is running
   service:
     name: ipa

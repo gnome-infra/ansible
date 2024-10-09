@@ -3,15 +3,13 @@
 127.0.0.1		localhost.localdomain localhost
 ::1		        localhost6.localdomain6 localhost6
 
-
-{% if datacenter == 'ral3' %}
-{% if 'ipaservers' in groups %}
-{% if ansible_fqdn in groups['ipaservers'] %}
-{% for host in groups['ipaservers'] %}
-{{ hostvars[host].ansible_eth1.ipv4.address }} {{ hostvars[host].ansible_fqdn }} {{ hostvars[host].ansible_hostname }}
-{% endfor %}
-{% endif %}
-{% endif %}
+{% if datacenter in ['ral3', 'aws'] %}
+  {% set group = 'ipaservers' if datacenter == 'ral3' else 'idm' %}
+  {% if group in groups and ansible_fqdn in groups[group] %}
+    {% for host in groups[group] %}
+      {{ hostvars[host].ansible_eth1.ipv4.address if datacenter == 'ral3' else hostvars[host].ansible_eth0.ipv4.address }} {{ hostvars[host].ansible_fqdn }} {{ hostvars[host].ansible_hostname }}
+    {% endfor %}
+  {% endif %}
 {% elif datacenter == 'osuosl' %}
-8.43.85.20 vpn.gnome.org
+  8.43.85.20 vpn.gnome.org
 {% endif %}

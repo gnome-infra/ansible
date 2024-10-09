@@ -1,0 +1,13 @@
+[aws:children]
+us-east-1
+
+[us-east-1:children]
+bastions
+idm
+
+[bastions]
+bastion02.gnome.org
+
+[idm]
+idm03.gnome.org
+idm04.gnome.org

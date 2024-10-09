@@ -1,0 +1,49 @@
+---
+- hosts: all
+  gather_facts: false
+  remote_user: root
+  collections:
+   - community.general
+  tasks:
+    - name: Register system to RHSM
+      community.general.redhat_subscription:
+        state: present
+        username: "{{ rhsm_username }}"
+        password: "{{ rhsm_password }}"
+        auto_attach: true
+
+- hosts: all
+  gather_facts: true
+  remote_user: root
+  roles:
+   - packages
+   - motd
+   - chrony
+   - iptables
+   - bash
+   - base_auth
+   - rsyslog
+
+- hosts: idm
+  gather_facts: false
+  remote_user: root
+  roles:
+    - ipaserver
+
+- hosts: bastions
+  gather_facts: true
+  remote_user: root
+  roles:
+   - sshguard
+
+- hosts: all,!idm
+  gather_facts: true
+  remote_user: root
+  roles:
+   - ipaclient.wrapper
+
+- hosts: all,!smtp_servers
+  gather_facts: true
+  remote_user: root
+  roles:
+   - postfix.wrapper

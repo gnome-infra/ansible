@@ -1,0 +1,4 @@
+sshguard_enabled: true
+
+firewall_allowed_tcp_ports:
+  - 22
