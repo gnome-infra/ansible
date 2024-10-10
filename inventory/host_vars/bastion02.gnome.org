@@ -2,6 +2,3 @@ sshguard_enabled: true
 
 firewall_allowed_tcp_ports:
   - 22
-
-ansible_connection: ssh
-ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
