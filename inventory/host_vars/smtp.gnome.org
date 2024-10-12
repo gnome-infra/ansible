@@ -3,8 +3,6 @@ firewall_allowed_tcp_ports:
   - 993
   - 995
   - 587
-  - 80
-  - 443
 
 firewall_additional_rules:
   - "iptables -A INPUT -i eth1 -j ACCEPT"
@@ -107,9 +105,14 @@ enable_opendkim: true
 postfix_mynetworks:
   - 127.0.0.0/8
   - 172.31.0.0/16
+  - 172.31.16.0/20
   - 10.8.0.0/24
   - 8.43.85.20/32
   - 140.211.167.18/32
+  - 34.234.151.67
+  - 54.165.53.199
+  - 35.153.15.118
+  - 98.83.131.224
 postfix_myhostname: smtp.gnome.org
 postfix_smtpd_sender_login_maps:
   - hash:/etc/gnome.org/master-mail/aliases
