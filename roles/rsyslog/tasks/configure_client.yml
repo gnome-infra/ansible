@@ -12,8 +12,9 @@
 - name: Set nis_enabled to on
   ansible.posix.seboolean:
     name: nis_enabled
-    state: present
+    state: true
     persistent: true
+  when: datacenter == 'aws'
 
 - name: Make sure auditd logs are forwarded
   lineinfile:
