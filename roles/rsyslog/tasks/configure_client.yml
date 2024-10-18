@@ -9,6 +9,12 @@
     name: audispd-plugins
     state: present
 
+- name: Set nis_enabled to on
+  ansible.posix.seboolean:
+    name: nis_enabled
+    state: present
+    persistent: true
+
 - name: Make sure auditd logs are forwarded
   lineinfile:
     path: /etc/audit/plugins.d/syslog.conf
