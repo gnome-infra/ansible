@@ -10,6 +10,7 @@
 - name: Copy Promtail configuration file
   ansible.builtin.template:
     src: promtail-config.yaml.j2
+    setype: container_file_t
     dest: "{{ promtail_base_dir }}/config/promtail-config.yaml"
     mode: '0644'
 
