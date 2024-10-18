@@ -1,0 +1,32 @@
+---
+- name: Create Loki directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    setype: container_file_t
+    owner: 10001
+    group: 10001
+  loop: "{{ loki_storage_dirs }}"
+
+- name: Copy Loki config file
+  ansible.builtin.template:
+    src: loki-config.yaml.j2
+    dest: "{{ loki_base_dir }}/config/loki-config.yaml"
+    mode: '0644'
+
+- name: Copy systemd service file for Loki
+  ansible.builtin.template:
+    src: loki.service.j2
+    dest: /etc/systemd/system/{{ loki_service_name }}.service
+    mode: '0644'
+
+- name: Reload systemd to apply new service
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable and start Loki service
+  ansible.builtin.systemd:
+    name: "{{ loki_service_name }}"
+    enabled: true
+    state: started

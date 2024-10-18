@@ -1,0 +1,34 @@
+[Unit]
+Description=Podman container-promtail.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=%t/containers
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStart=/usr/bin/podman run \
+	--cgroups=no-conmon \
+        --cidfile=%t/%n.ctr-id \
+	--rm \
+	--sdnotify=conmon \
+	--replace \
+	-d \
+	-p 1514:1514 \
+	--name promtail \
+	-v /mnt/promtail:/mnt/promtail docker.io/grafana/promtail:{{ promtail_version }} \
+	--config.file=/mnt/promtail/config/promtail-config.yaml
+ExecStop=/usr/bin/podman stop \
+	--ignore -t 10 \
+        --cidfile=%t/%n.ctr-id
+ExecStopPost=/usr/bin/podman rm \
+	-f \
+	--ignore -t 10 \
+        --cidfile=%t/%n.ctr-id
+Type=notify
+NotifyAccess=all
+
+[Install]
+WantedBy=default.target

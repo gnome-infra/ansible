@@ -3,5 +3,10 @@
       queue.filename="omfwd"
       action.resumeRetryCount="-1"
       queue.saveOnShutdown="on"
+{% if datacenter == 'ral3' %}
       target="vpn.log01.gnome.org" port="514" protocol="udp"
-     )
+{% elif datacenter == "aws" %}
+      target="vpn.bastion02.gnome.org" port="1514" protocol="tcp"
+      Template="RSYSLOG_SyslogProtocol23Format"
+{% endif %}
+)

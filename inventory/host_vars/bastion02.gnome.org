@@ -2,3 +2,6 @@ sshguard_enabled: true
 
 firewall_allowed_tcp_ports:
   - 22
+
+firewall_additional_rules:
+  - "iptables -A INPUT -s 172.31.16.0/20 -p tcp --dport 3100 -j ACCEPT"

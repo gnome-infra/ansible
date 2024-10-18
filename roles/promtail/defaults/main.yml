@@ -1,0 +1,6 @@
+---
+promtail_base_dir: /mnt/promtail
+promtail_storage_dirs:
+  - "{{ promtail_base_dir }}/config"
+promtail_service_name: promtail
+promtail_version: 3.2.1

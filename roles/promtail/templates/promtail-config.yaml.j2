@@ -1,0 +1,36 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://{{ promtail_gateway_endpoint }}:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: rsyslog
+    syslog:
+      listen_address: 0.0.0.0:1514
+      labels:
+        job: "rsyslog"
+    relabel_configs:
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'host'
+
+      - source_labels: ['__syslog_message_severity']
+        target_label: 'severity'
+      - source_labels: ['__syslog_message_facility']
+        target_label: 'facility'
+
+      - source_labels: ['__syslog_message_time']
+        target_label: 'timestamp'
+        action: replace
+        regex: '(.+)'
+        replacement: '${1}'
+
+      - source_labels: ['__syslog_message_app_name']
+        target_label: 'application'
+
+      - source_labels: ['__syslog_message_proc_id']
+        target_label: 'pid'

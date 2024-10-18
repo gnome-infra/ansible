@@ -36,6 +36,18 @@
   roles:
    - sshguard
 
+- hosts: loki
+  gather_facts: false
+  remote_user: root
+  roles:
+   - loki
+
+- hosts: promtail
+  gather_facts: false
+  remote_user: root
+  roles:
+   - promtail
+
 - hosts: all,!idm
   gather_facts: true
   remote_user: root
