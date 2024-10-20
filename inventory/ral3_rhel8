@@ -13,9 +13,6 @@ ceph01.gnome.org
 ceph02.gnome.org
 ceph03.gnome.org
 
-[ceph_metrics]
-ceph-metrics.gnome.org
-
 [bastions]
 bastion01.gnome.org
 
