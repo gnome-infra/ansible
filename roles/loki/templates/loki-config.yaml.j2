@@ -38,8 +38,8 @@ schema_config:
 
 storage_config:
   boltdb_shipper:
-    active_index_directory: {{ loki_base_dir }}//storage/boltdb-shipper-active
-    cache_location: {{ loki_base_dir }}//storage/boltdb-shipper-cache
+    active_index_directory: {{ loki_base_dir }}/storage/boltdb-shipper-active
+    cache_location: {{ loki_base_dir }}/storage/boltdb-shipper-cache
     cache_ttl: 24h
 
 limits_config:
