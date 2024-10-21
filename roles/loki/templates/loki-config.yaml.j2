@@ -8,9 +8,12 @@ common:
   instance_addr: 127.0.0.1
   path_prefix: /tmp/loki
   storage:
-    filesystem:
-      chunks_directory: {{ loki_base_dir }}/storage/chunks
-      rules_directory: {{ loki_base_dir }}/storage/rules
+    s3:
+      endpoint: {{ loki_s3_endpoint }}
+      bucketnames: {{ loki_s3_bucket_name }}
+      region: us-east-1
+      access_key_id: {{ loki_s3_access_key_id }}
+      secret_access_key: {{ loki_s3_secret_access_key }}
   replication_factor: 1
   ring:
     kvstore:
@@ -35,12 +38,9 @@ schema_config:
 
 storage_config:
   boltdb_shipper:
-    active_index_directory: {{ loki_base_dir }}/storage/boltdb-shipper-active
-    cache_location: {{ loki_base_dir }}/storage/boltdb-shipper-cache
+    active_index_directory: {{ loki_base_dir }}//storage/boltdb-shipper-active
+    cache_location: {{ loki_base_dir }}//storage/boltdb-shipper-cache
     cache_ttl: 24h
-  aws:
-    s3: s3://{{ loki_bucket_config }}
-    s3forcepathstyle: true
 
 limits_config:
   retention_period: 90d
