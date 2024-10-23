@@ -3,7 +3,6 @@ bastions
 ipaservers
 ftpmasters
 rsyslog_servers
-splunk_indexers
 smtp_servers
 dovecot_servers
 gitlab
@@ -25,9 +24,6 @@ master.gnome.org
 
 [rsyslog_servers]
 logs.gnome.org
-
-[splunk_indexers]
-splunk01.gnome.org
 
 [smtp_servers]
 smtp.gnome.org
