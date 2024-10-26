@@ -1,0 +1,12 @@
+[Unit]
+Description=Cachet container
+Wants=network-online.target mysql.service
+After=network-online.target mysql.service
+
+[Container]
+Image=quay.io/gnome_infrastructure/cachet:latest
+EnvironmentFile=/etc/cachet/cachet.conf
+PodmanArgs=--rm --net host --pull always
+
+[Service]
+Restart=on-failure

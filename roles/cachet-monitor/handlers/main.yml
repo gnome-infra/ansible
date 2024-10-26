@@ -1,0 +1,5 @@
+---
+- name: Restart Cachet Monitor
+  ansible.builtin.systemd:
+    name: "{{ cachet_monitor_service_name }}"
+    state: restarted

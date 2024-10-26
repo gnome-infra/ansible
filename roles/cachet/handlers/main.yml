@@ -1,0 +1,5 @@
+---
+- name: Restart Cachet
+  ansible.builtin.systemd:
+    name: "{{ cachet_service_name }}"
+    state: restarted

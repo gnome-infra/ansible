@@ -1,0 +1,211 @@
+{
+  "api": {
+    "url": "{{ cachet_url }}/api",
+    "token": "{{ cachet_token }}",
+    "insecure": false
+  },
+  "additional_config": {
+    "incident_creation": false
+  },
+  "date_format": "Monday, 02-Jan-06 15:04:05 MST",
+  "monitors": [
+    {
+      "name": "extensions.gnome.org: HTTP response",
+      "type": "https",
+      "target": "extensions.gnome.org",
+      "strict": "true",
+      "component_id": 1,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*GNOME Shell Extensions.*"
+    },
+    {
+      "name": "gnome.org: HTTP response",
+      "type": "https",
+      "target": "gnome.org",
+      "strict": "true",
+      "component_id": 3,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*GNOME.*"
+    },
+    {
+      "name": "l10n.gnome.org: HTTP response",
+      "type": "https",
+      "target": "l10n.gnome.org",
+      "strict": "true",
+      "component_id": 9,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*Damned Lies.*"
+    },
+    {
+      "name": "blogs.gnome.org: HTTP response",
+      "type": "https",
+      "target": "blogs.gnome.org",
+      "strict": "true",
+      "component_id": 6,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*GNOME.*"
+    },
+    {
+      "name": "cloud.gnome.org: HTTP response",
+      "type": "https",
+      "target": "cloud.gnome.org",
+      "strict": "true",
+      "component_id": 4,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*a safe home for all your data.*"
+    },
+    {
+      "name": "pad.gnome.org: HTTP response",
+      "type": "https",
+      "target": "pad.gnome.org",
+      "strict": "true",
+      "component_id": 11,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*HedgeDoc.*"
+    },
+    {
+      "name": "surveys.gnome.org: HTTP response",
+      "type": "https",
+      "target": "surveys.gnome.org",
+      "strict": "true",
+      "component_id": 16,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*GNOME Surveys.*"
+    },
+    {
+      "name": "gitlab.gnome.org: HTTP response",
+      "type": "https",
+      "target": "gitlab.gnome.org",
+      "strict": "true",
+      "component_id": 2,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*Explore groups.*"
+    },
+    {
+      "name": "download.gnome.org: HTTP response",
+      "type": "https",
+      "target": "download.gnome.org",
+      "strict": "true",
+      "component_id": 7,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*Index of.*"
+    },
+    {
+      "name": "events.gnome.org: HTTP response",
+      "type": "https",
+      "target": "events.gnome.org",
+      "strict": "true",
+      "component_id": 5,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*GNOME.*"
+    },
+    {
+      "name": "developer.gnome.org: HTTP response",
+      "type": "https",
+      "target": "developer.gnome.org",
+      "strict": "true",
+      "component_id": 10,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*GNOME.*"
+    },
+    {
+      "name": "discourse.gnome.org: HTTP response",
+      "type": "https",
+      "target": "discourse.gnome.org",
+      "strict": "true",
+      "component_id": 8,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*GNOME Discourse.*"
+    },
+    {
+      "name": "idm.gnome.org: HTTP response",
+      "type": "https",
+      "target": "idm.gnome.org",
+      "strict": "true",
+      "component_id": 12,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*Identity.*"
+    },
+    {
+      "name": "meet.gnome.org: HTTP response",
+      "type": "https",
+      "target": "meet.gnome.org",
+      "strict": "true",
+      "component_id": 13,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*BigBlueButton.*"
+    },
+    {
+      "name": "nightly.gnome.org flat-manager: HTTP response",
+      "type": "https",
+      "target": "nightly.gnome.org/status",
+      "strict": "true",
+      "component_id": 14,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*flat-manager version.*"
+    },
+    {
+      "name": "nightly.gnome.org: HTTP response",
+      "type": "https",
+      "target": "nightly.gnome.org/gnome-nightly.flatpakrepo",
+      "strict": "true",
+      "component_id": 14,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*Flatpak Repo.*"
+    },
+    {
+      "name": "shop.gnome.org: HTTP response",
+      "type": "https",
+      "target": "shop.gnome.org",
+      "strict": "true",
+      "component_id": 15,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*Items.*"
+    },
+    {
+      "name": "odrs.gnome.org: HTTP response",
+      "type": "https",
+      "target": "odrs.gnome.org",
+      "strict": "true",
+      "component_id": 17,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200,
+      "expected_body": ".*ODRS.*"
+    }
+  ]
+}

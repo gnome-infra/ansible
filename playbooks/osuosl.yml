@@ -29,3 +29,15 @@
    - backup
    - node-exporter
    - ipaclient.wrapper
+
+- hosts: cachet
+  gather_facts: false
+  remote_user: root
+  roles:
+    - cachet
+
+- hosts: cachet-monitor
+  gather_facts: false
+  remote_user: root
+  roles:
+    - cachet-monitor

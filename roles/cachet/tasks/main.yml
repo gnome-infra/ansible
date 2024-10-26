@@ -1,0 +1,31 @@
+---
+- name: Create Cachet directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    setype: container_file_t
+  loop:
+    - "{{ cachet_base_dir }}"
+
+- name: Copy Cachet config file
+  ansible.builtin.template:
+    src: cachet.conf.j2
+    dest: "{{ cachet_base_dir }}/cachet.conf"
+    mode: '0644'
+
+- name: Copy systemd service file for Cachet
+  ansible.builtin.template:
+    src: cachet.container.j2
+    dest: /etc/containers/systemd/{{ cachet_service_name }}.container
+    mode: '0644'
+
+- name: Reload systemd to apply new service
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable and start Cachet service
+  ansible.builtin.systemd:
+    name: "{{ cachet_service_name }}"
+    enabled: true
+    state: started

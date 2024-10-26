@@ -1,0 +1,3 @@
+---
+cachet_monitor_base_dir: /etc/cachet-monitor
+cachet_monitor_service_name: cachet-monitor

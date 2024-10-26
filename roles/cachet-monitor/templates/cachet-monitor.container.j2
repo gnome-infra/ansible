@@ -1,0 +1,12 @@
+[Unit]
+Description=Cachet Monitor container
+Wants=network-online.target cachet.service
+After=network-online.target cachet.service
+
+[Container]
+Image=quay.io/gnome_infrastructure/cachet-monitor:latest
+PodmanArgs=--rm --dns 8.8.8.8 --pull always
+Volume=/etc/cachet-monitor/cachet-monitor.conf:/etc/config.json
+
+[Service]
+Restart=on-failure
