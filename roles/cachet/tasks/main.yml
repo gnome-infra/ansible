@@ -13,6 +13,7 @@
     src: cachet.conf.j2
     dest: "{{ cachet_base_dir }}/cachet.conf"
     mode: '0644'
+  notify: Restart Cachet
 
 - name: Copy systemd service file for Cachet
   ansible.builtin.template:
