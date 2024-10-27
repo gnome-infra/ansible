@@ -206,6 +206,16 @@
       "timeout": 30,
       "expected_status_code": 200,
       "expected_body": ".*ODRS.*"
+    },
+    {
+      "name": "odrs.gnome.org: HTTP response",
+      "type": "https",
+      "target": "odrs.gnome.org/1.0/reviews/api/fetch",
+      "strict": "true",
+      "component_id": 17,
+      "interval": 60,
+      "timeout": 30,
+      "expected_status_code": 200
     }
   ]
 }
