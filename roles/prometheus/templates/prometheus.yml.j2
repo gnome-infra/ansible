@@ -33,9 +33,10 @@ scrape_configs:
       - {{ target }}
 {% endfor %}
     relabel_configs:
-    - source_labels: [ __address__ ]
+    - source_labels: [__address__]
       target_label: instance
-      regex: vpn.(.*)
+      regex: vpn\.(.+):9100
+      replacement: $1
 
   - job_name: gitlab_database
     metrics_path: "/database"
