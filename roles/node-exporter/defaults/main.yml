@@ -1,7 +1,7 @@
 ---
-node_exporter_version: 1.0.1
-node_exporter_checksum_amd64: sha256:3369b76cd2b0ba678b6d618deab320e565c3d93ccb5c2a0d5db51a53857768ae
-node_exporter_checksum_arm64: sha256:017514906922fcc4b7d727655690787faed0562bc7a17aa9f72b0651cb1b47fb
+node_exporter_version: 1.8.2
+node_exporter_checksum_amd64: sha256:6809dd0b3ec45fd6e992c19071d6b5253aed3ead7bf0686885a51d85c6643c66
+node_exporter_checksum_arm64: sha256:627382b9723c642411c33f48861134ebe893e70a63bcc8b3fc0619cd0bfac4be
 node_exporter_textfile_dir: /var/lib/node_exporter
 node_exporter_enabled_collectors:
   - textfile:
