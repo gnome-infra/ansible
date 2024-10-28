@@ -6,7 +6,8 @@ firewall_allowed_tcp_ports:
 
 textfile_collector_scripts:
   - ipa_status.py:
-      command: "/usr/local/bin/ipa_status.py > {{ node_exporter_textfile_dir }}/ipa_status.prom"
+      command: "/usr/local/bin/ipa_status.py
       sudoers:
+        enabled: true
       cron:
         schedule: "*/5 * * * *"

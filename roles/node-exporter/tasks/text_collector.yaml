@@ -36,6 +36,7 @@
     day: "{{ item.value.cron.schedule.split()[2] }}"
     month: "{{ item.value.cron.schedule.split()[3] }}"
     weekday: "{{ item.value.cron.schedule.split()[4] }}"
-    job: "{{ 'sudo ' if item.value.sudoers else '' }}{{ item.value.command }}"
+    job: "{{ 'sudo ' if item.value.sudoers.enabled else '' }}{{ item.value.command }}"
+    env: "HOME=/var/lib/node_exporter"
   loop: "{{ textfile_collector_scripts | default([]) | map('dict2items') | flatten(1) }}"
   when: item.value.cron is defined
