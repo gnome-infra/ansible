@@ -1,0 +1,41 @@
+---
+- name: Create textfile_collector directory
+  file:
+    path: /var/lib/node-exporter/textfile_collector
+    state: directory
+    owner: node_exporter
+    group: node_exporter
+    mode: '0755'
+  when: textfile_collector_scripts is defined
+
+- name: Deploy textfile_collector scripts
+  copy:
+    src: "textfile_collector/{{ item.key }}"
+    dest: /usr/local/bin/{{ item.key }}
+    owner: node_exporter
+    group: node_exporter
+    mode: '0755'
+  loop: "{{ textfile_collector_scripts | default([]) | map('dict2items') | flatten(1) }}"
+  when: textfile_collector_scripts is defined
+
+- name: Configure sudoers for textfile_collector scripts
+  lineinfile:
+    dest: "/etc/sudoers.d/{{ item.key }}"
+    line: "{{ item.value.sudoers.user | default('node_exporter') }} ALL=(root) NOPASSWD: {{ item.value.command }}"
+    create: yes
+    mode: '0440'
+  loop: "{{ textfile_collector_scripts | default([]) | map('dict2items') | flatten(1) }}"
+  when: item.value.sudoers is defined
+
+- name: Setup cron job for textfile_collector scripts
+  cron:
+    name: "Run {{ item.key }} for Node Exporter"
+    user: "node_exporter"
+    minute: "{{ item.value.cron.schedule.split()[0] }}"
+    hour: "{{ item.value.cron.schedule.split()[1] }}"
+    day: "{{ item.value.cron.schedule.split()[2] }}"
+    month: "{{ item.value.cron.schedule.split()[3] }}"
+    weekday: "{{ item.value.cron.schedule.split()[4] }}"
+    job: "{{ 'sudo ' if item.value.sudoers else '' }}{{ item.value.command }}"
+  loop: "{{ textfile_collector_scripts | default([]) | map('dict2items') | flatten(1) }}"
+  when: item.value.cron is defined

@@ -69,3 +69,10 @@
     daemon-reload: yes
     state: started
     enabled: yes
+
+- name: include textfile collector scripts
+  include_tasks: text_collector.yaml
+  loop: "{{ textfile_collector_scripts }}"
+  loop_control:
+    loop_var: item
+  tags: textfile_collector

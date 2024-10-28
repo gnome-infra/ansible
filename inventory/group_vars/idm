@@ -1,5 +1,12 @@
 firewall_allowed_tcp_ports:
-  - 22 
+  - 22
   - 389
   - 636
   - 443
+
+textfile_collector_scripts:
+  - ipa_status.py:
+      command: "ipa_status.py > {{ node_exporter_textfile_dir }}/ipa_status.prom"
+      sudoers:
+      cron:
+        schedule: "*/5 * * * *"
