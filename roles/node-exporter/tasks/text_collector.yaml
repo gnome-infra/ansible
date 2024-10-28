@@ -20,7 +20,7 @@
 
 - name: Configure sudoers for textfile_collector scripts
   lineinfile:
-    dest: "/etc/sudoers.d/{{ item.key }}"
+    dest: "/etc/sudoers.d/{{ item.key | regex_replace('\\.(sh|py)$', '') | replace('_', '-') }}"
     line: "{{ item.value.sudoers.user | default('node_exporter') }} ALL=(root) NOPASSWD: {{ item.value.command }}"
     create: yes
     mode: '0440'
