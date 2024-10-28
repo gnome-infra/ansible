@@ -1,7 +1,7 @@
 [clients:children]
-oscp4
 ral3_rhel8
 osuosl
+aws
 
 [ral3_rhel8]
 bastion01.gnome.org
@@ -13,16 +13,13 @@ signal.gnome.org
 smtp.gnome.org
 gitlab-git-svcs.gnome.org
 
-[ral3_rhel9]
-notirc.gnome.org
+[aws]
+bastion02.gnome.org
+idm03.gnome.org
+idm04.gnome.org
 
 [osuosl]
 signal.gnome.org
-
-[oscp4]
-master1.openshift4.gnome.org master_node_ip=172.31.2.50
-master2.openshift4.gnome.org master_node_ip=172.31.2.51
-master3.openshift4.gnome.org master_node_ip=172.31.2.52
 
 [prometheus_servers]
 signal.gnome.org
