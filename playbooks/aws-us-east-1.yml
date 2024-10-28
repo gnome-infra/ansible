@@ -23,6 +23,7 @@
    - bash
    - base_auth
    - rsyslog
+   - node-exporter
 
 - hosts: idm
   gather_facts: false
