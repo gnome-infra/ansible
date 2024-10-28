@@ -76,3 +76,4 @@
   loop_control:
     loop_var: item
   tags: textfile_collector
+  when: textfile_collector_scripts is defined
