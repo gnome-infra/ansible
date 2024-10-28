@@ -27,6 +27,12 @@
   loop: "{{ textfile_collector_scripts | default([]) | map('dict2items') | flatten(1) }}"
   when: item.value.sudoers is defined
 
+- name: Define HOME=/var/lib/node_exporter
+  ansible.builtin.cron:
+    name: HOME
+    env: yes
+    job: /var/lib/node_exporter
+
 - name: Setup cron job for textfile_collector scripts
   cron:
     name: "Run {{ item.key }} for Node Exporter"
@@ -37,6 +43,5 @@
     month: "{{ item.value.cron.schedule.split()[3] }}"
     weekday: "{{ item.value.cron.schedule.split()[4] }}"
     job: "{{ 'sudo ' if item.value.sudoers.enabled else '' }}{{ item.value.command }}"
-    env: "HOME=/var/lib/node_exporter"
   loop: "{{ textfile_collector_scripts | default([]) | map('dict2items') | flatten(1) }}"
   when: item.value.cron is defined
