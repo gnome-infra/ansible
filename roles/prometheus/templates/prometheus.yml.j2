@@ -37,12 +37,6 @@ scrape_configs:
       target_label: instance
       regex: vpn.(.*)
 
-  - job_name: 'bbb'
-    scheme: https
-    static_configs:
-    - targets:
-      - bbb-exporter.apps.openshift4.gnome.org
-
   - job_name: gitlab_database
     metrics_path: "/database"
     scheme: https
@@ -96,9 +90,3 @@ scrape_configs:
     static_configs:
       - targets:
         - gitlab-ci-pipelines-exporter-gitlab.apps.openshift4.gnome.org
-
-  - job_name: flathub-dramatiq
-    scheme: https
-    static_configs:
-      - targets:
-        - dramatiq-worker-metrics-flathub.apps.openshift4.gnome.org
