@@ -1,0 +1,62 @@
+groups:
+  - name: ipa_alerts
+    rules:
+      # Alert if any IPA service is not running
+      - alert: IPAServiceNotRunning
+        expr: ipa_service_status == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "IPA Service Down"
+          description: "The service {{ $labels.service }} is not running."
+
+      # Alert if any LDAP replication is in error state
+      - alert: LDAPReplicationError
+        expr: ldap_replica_status == 2
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "LDAP Replication Error"
+          description: "The LDAP replication for host {{ $labels.host }} is in error state."
+
+      # Alert if any LDAP replica is busy for an extended period
+      - alert: LDAPReplicaBusy
+        expr: ldap_replica_status == 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "LDAP Replica Busy"
+          description: "The LDAP replica for host {{ $labels.host }} is busy."
+
+      # Alert if not all IPA services are running
+      - alert: IPAStatusNotOK
+        expr: ipa_status_ok == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Not All IPA Services Running"
+          description: "Some IPA services are not running."
+
+      # Alert if there was an error checking IPA status
+      - alert: IPAStatusCheckError
+        expr: ipa_check_error == 1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Error Checking IPA Status"
+          description: "An error occurred while checking the IPA status."
+
+      # Alert if there was an error checking LDAP replication
+      - alert: LDAPReplicationCheckError
+        expr: ldap_check_error == 1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Error Checking LDAP Replication"
+          description: "An error occurred while checking the LDAP replication status."

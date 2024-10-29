@@ -25,6 +25,18 @@
   tags:
     - prometheus_config
 
+- name: Copy over IPA Monitoring rules
+  copy:
+    src: ipa_alerting.rules
+    dest: "{{ prometheus_config_dir }}/rules/ipa_alerting.rules"
+    owner: root
+    group: prometheus
+    mode: '0640'
+    validate: "/usr/local/bin/promtool check rules %s"
+  notify: reload prometheus
+  tags:
+    - prometheus_config
+
 - name: start and enable prometheus
   systemd:
     name: prometheus
