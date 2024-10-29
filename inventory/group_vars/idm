@@ -4,6 +4,9 @@ firewall_allowed_tcp_ports:
   - 636
   - 443
 
+firewall_additional_rules:
+  - "iptables -A INPUT -p tcp -m tcp -s 10.8.0.2/32 --dport 9100 -j ACCEPT"
+
 textfile_collector_scripts:
   - ipa_status.py:
       command: "/usr/local/bin/ipa_status.py"
