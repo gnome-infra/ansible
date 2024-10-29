@@ -3,6 +3,11 @@ firewall_allowed_tcp_ports:
   - 389
   - 636
   - 443
+  - 88
+  - 464
+firewall_allowed_udp_ports:
+  - 88
+  - 464
 
 firewall_additional_rules:
   - "iptables -A INPUT -p tcp -m tcp -s 10.8.0.2/32 --dport 9100 -j ACCEPT"
