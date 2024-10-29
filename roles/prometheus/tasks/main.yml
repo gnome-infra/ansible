@@ -44,6 +44,3 @@
     state: started
     enabled: yes
   tags: prometheus_config
-
-- name: blackbox_exporter setup
-  include_tasks: blackbox.yml
