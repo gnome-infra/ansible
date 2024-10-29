@@ -10,38 +10,45 @@
 
 - name: Deploy textfile_collector scripts
   copy:
-    src: "textfile_collector/{{ item.key }}"
-    dest: /usr/local/bin/{{ item.key }}
+    src: "textfile_collector/{{ script.key }}"
+    dest: /usr/local/bin/{{ script.key }}
     owner: node_exporter
     group: node_exporter
     mode: '0755'
   loop: "{{ textfile_collector_scripts | default([]) | map('dict2items') | flatten(1) }}"
   when: textfile_collector_scripts is defined
+  loop_control:
+    loop_var: script
 
 - name: Configure sudoers for textfile_collector scripts
   lineinfile:
-    dest: "/etc/sudoers.d/{{ item.key | regex_replace('\\.(sh|py)$', '') | replace('_', '-') }}"
-    line: "{{ item.value.sudoers.user | default('node_exporter') }} ALL=(root) NOPASSWD: {{ item.value.command }}"
+    dest: "/etc/sudoers.d/{{ sudoers.key | regex_replace('\\.(sh|py)$', '') | replace('_', '-') }}"
+    line: "{{ sudoers.value.sudoers.user | default('node_exporter') }} ALL=(root) NOPASSWD: {{ sudoers.value.command }}"
     create: yes
     mode: '0440'
   loop: "{{ textfile_collector_scripts | default([]) | map('dict2items') | flatten(1) }}"
-  when: item.value.sudoers is defined
+  when: sudoers.value.sudoers is defined
+  loop_control:
+    loop_var: sudoers
 
 - name: Define HOME=/var/lib/node_exporter
   ansible.builtin.cron:
     name: HOME
     env: yes
     job: /var/lib/node_exporter
+    user: node_exporter
 
 - name: Setup cron job for textfile_collector scripts
   cron:
-    name: "Run {{ item.key }} for Node Exporter"
+    name: "Run {{ cronjob.key }} for Node Exporter"
     user: "node_exporter"
-    minute: "{{ item.value.cron.schedule.split()[0] }}"
-    hour: "{{ item.value.cron.schedule.split()[1] }}"
-    day: "{{ item.value.cron.schedule.split()[2] }}"
-    month: "{{ item.value.cron.schedule.split()[3] }}"
-    weekday: "{{ item.value.cron.schedule.split()[4] }}"
-    job: "{{ 'sudo ' if item.value.sudoers.enabled else '' }}{{ item.value.command }}"
+    minute: "{{ cronjob.value.cron.schedule.split()[0] }}"
+    hour: "{{ cronjob.value.cron.schedule.split()[1] }}"
+    day: "{{ cronjob.value.cron.schedule.split()[2] }}"
+    month: "{{ cronjob.value.cron.schedule.split()[3] }}"
+    weekday: "{{ cronjob.value.cron.schedule.split()[4] }}"
+    job: "{{ 'sudo ' if cronjob.value.sudoers.enabled else '' }}{{ cronjob.value.command }}"
   loop: "{{ textfile_collector_scripts | default([]) | map('dict2items') | flatten(1) }}"
-  when: item.value.cron is defined
+  when: cronjob.value.cron is defined
+  loop_control:
+    loop_var: cronjob
