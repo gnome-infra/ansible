@@ -62,9 +62,9 @@ class IPALDAPMonitor:
             for rhost in replication:
                 host = rhost[1]['nsDS5ReplicaHost'][0].decode()
                 status_code = rhost[1]['nsds5replicaLastUpdateStatus'][0].decode()
-                if "Success" in status_code:
+                if "Replica acquired successfully" in status_code:
                     status_code = '0'
-                elif "Error" in status_code:
+                elif "Problem connecting to replica" in status_code:
                     status_code = '2'
                 else:
                     status_code = '1'
