@@ -5,3 +5,6 @@ chrony_ntp_servers:
   - "2.rhel.pool.ntp.org"
   - "3.rhel.pool.ntp.org"
 promtail_gateway_endpoint: 'vpn.bastion02.gnome.org'
+ipaclient_servers:
+  - "idm03.gnome.org"
+  - "idm04.gnome.org"
