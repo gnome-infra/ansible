@@ -143,6 +143,8 @@ local2.*                                        ?r_other_apps;TraditionalFormat
 #------------------------------------------------------------------------------#
 # remote local1                                                                #
 #------------------------------------------------------------------------------#
+if $programname == 'haproxy' and $msg contains '/check_network_status.txt' then ~
+
 local1.*                                        ?r_local1;TraditionalFormat
 
 #------------------------------------------------------------------------------#
