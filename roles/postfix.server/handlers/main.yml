@@ -10,6 +10,11 @@
     cmd: "/usr/sbin/postmap {{ item.dest }}"
   with_items: "{{ _postfix_postmap_files.results | selectattr('changed', 'equalto', true) | list }}"
 
+- name: Postmap access file
+  command:
+    cmd: "/usr/sbin/postmap {{ item.dest }}"
+  with_items: "{{ _postfix_access_files.results | selectattr('changed', 'equalto', true) | list }}"
+
 - name: Postalias aliases files
   command:
     cmd: "/usr/sbin/postalias {{ item.dest }}"

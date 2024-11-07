@@ -3,8 +3,6 @@ bastions
 ipaservers
 ftpmasters
 rsyslog_servers
-smtp_servers
-dovecot_servers
 gitlab
 
 [ceph_osds]
@@ -24,12 +22,6 @@ master.gnome.org
 
 [rsyslog_servers]
 logs.gnome.org
-
-[smtp_servers]
-smtp.gnome.org
-
-[dovecot_servers]
-smtp.gnome.org
 
 [gitlab]
 gitlab-git-svcs.gnome.org

@@ -6,7 +6,7 @@
       relayhost: "smtp-int.gnome.org"
       myhostname: "{{ ansible_hostname }}.gnome.org"
       inet_interfaces: "localhost, vpn.{{ ansible_hostname }}.gnome.org"
-      mynetworks: "127.0.0.0/8, 8.43.85.24/32, 172.31.2.36/32"
+      mynetworks: "127.0.0.0/8, 8.43.85.24/32, 10.8.0.4/32"
       smtpd_recipient_restrictions: "permit_mynetworks, reject"
       smtpd_client_restrictions: "permit_mynetworks, reject"
       smtp_tls_security_level: "encrypt"

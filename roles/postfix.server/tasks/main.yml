@@ -16,6 +16,7 @@
   vars:
     postfix_backup_multiple: false
     postfix_conf:
+      inet_interfaces: all
       virtual_alias_maps: "{{ postfix_postmap_files | select('search','virtual') | join(',') }}"
       alias_maps: "{{ postfix_postalias_files | join(',') }}"
       mydestination: "{{ postfix_mydestinations | join(',') }}"
@@ -112,6 +113,11 @@
     - body_checks
     - master.cf
   notify: Reload Postfix
+
+- name: Create /etc/postfix/virtual-aliases
+  file:
+    path: /etc/postfix/virtual-aliases
+    state: directory
 
 - name: Land Postfix virtual aliases
   template:

@@ -8,5 +8,8 @@
 {% elif datacenter == "aws" %}
       target="vpn.bastion02.gnome.org" port="1514" protocol="tcp"
       Template="RSYSLOG_SyslogProtocol23Format"
+{% elif datacenter == "osci" %}
+      target="vpn.bastion02.gnome.org" port="1514" protocol="tcp"
+      Template="RSYSLOG_SyslogProtocol23Format"
 {% endif %}
 )

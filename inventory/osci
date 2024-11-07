@@ -1,0 +1,9 @@
+[osci:children]
+smtp_servers
+dovecot_servers
+
+[smtp_servers]
+smtp.gnome.org ansible_ssh_host=8.43.85.231
+
+[dovecot_servers]
+smtp.gnome.org ansible_ssh_host=8.43.85.231

@@ -1,0 +1,10 @@
+---
+- name: Install insights-client
+  dnf:
+    name: insights-client
+    state: present
+
+- name: Register client to Red Hat Insights
+  command: insights-client --register
+  args:
+    creates: /etc/insights-client/.registered

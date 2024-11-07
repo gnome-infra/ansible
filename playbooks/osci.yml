@@ -22,33 +22,10 @@
    - iptables
    - bash
    - base_auth
+   - base_network
    - rsyslog
    - node-exporter
    - rh_insights
-
-- hosts: idm
-  gather_facts: false
-  remote_user: root
-  roles:
-    - ipaserver
-
-- hosts: bastions
-  gather_facts: true
-  remote_user: root
-  roles:
-   - sshguard
-
-- hosts: loki
-  gather_facts: false
-  remote_user: root
-  roles:
-   - loki
-
-- hosts: promtail
-  gather_facts: false
-  remote_user: root
-  roles:
-   - promtail
 
 - hosts: all,!idm
   gather_facts: true
@@ -56,8 +33,14 @@
   roles:
    - ipaclient.wrapper
 
-- hosts: all,!smtp_servers
-  gather_facts: true
+- hosts: smtp_servers
+  gather_facts: false
   remote_user: root
   roles:
-   - postfix.wrapper
+   - postfix.server
+
+- hosts: dovecot_servers
+  gather_facts: false
+  remote_user: root
+  roles:
+    - dovecot
