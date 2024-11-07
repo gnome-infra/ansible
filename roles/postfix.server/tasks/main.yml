@@ -55,6 +55,8 @@
           reject_sender_login_mismatch
       non_smtpd_milters: $smtpd_milters
       smtpd_recipient_restrictions:
+          reject_unknown_client_hostname
+          reject_invalid_helo_hostname
           reject_non_fqdn_sender
           reject_non_fqdn_recipient
           reject_unknown_sender_domain
