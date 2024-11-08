@@ -51,6 +51,10 @@
       check_recipient_bounce: check_recipient_access hash:/etc/postfix/access-recipient-bounce
       smtpd_client_restrictions: sleep 1, reject_unauth_pipelining
       smtpd_helo_restrictions:
+          permit_mynetworks
+          reject_non_fqdn_helo_hostname
+          reject_invalid_helo_hostname
+          reject_unknown_helo_hostname
       smtpd_sender_restrictions:
           permit_mynetworks
           reject_sender_login_mismatch
@@ -58,7 +62,6 @@
       smtpd_recipient_restrictions:
           permit_mynetworks
           reject_unknown_client_hostname
-          reject_invalid_helo_hostname
           reject_non_fqdn_sender
           reject_non_fqdn_recipient
           reject_unknown_sender_domain
