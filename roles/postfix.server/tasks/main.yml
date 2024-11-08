@@ -52,6 +52,7 @@
       smtpd_client_restrictions: sleep 1, reject_unauth_pipelining
       smtpd_helo_restrictions:
           permit_mynetworks
+          check_helo_access hash:/etc/postfix/access-helo
           reject_non_fqdn_helo_hostname
           reject_invalid_helo_hostname
           reject_unknown_helo_hostname
@@ -67,7 +68,6 @@
           reject_unknown_sender_domain
           reject_unknown_recipient_domain
           check_client_access hash:/etc/postfix/access-client
-          check_helo_access hash:/etc/postfix/access-helo
           check_sender_access hash:/etc/postfix/access-sender
           reject_unlisted_recipient
           check_recipient_access hash:/etc/postfix/access-recipient
