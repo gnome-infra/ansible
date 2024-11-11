@@ -5,6 +5,13 @@ gitlab_runner_token_infrastructure: !vault |
           33626666363938366235376138613663653361653535616339636530626464376261626637366162
           3762663833393333650a396434346233353937366130623638313834373966623162343830306261
           34323539363639343933663536303664386366393236613162333239363937333138
+gitlab_runner_token_gnome: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          38653836623131396433646139366531363735636265363130326336653931363763643764333435
+          6533363562636336316538316231373839343737303034360a386339653363666261636430363339
+          61343864343833613639363135343464636438613762663435616532383964303263613533376161
+          6135313536633136380a663932333462613239366565343030353935383862333436653537393233
+          65613035326638613032316430313936633764656136393264323162663562333534
 
 gitlab_runner_config:
   concurrent: 4
@@ -18,6 +25,28 @@ gitlab_runner_config:
       id: 724
       token: "{{ gitlab_runner_token_infrastructure }}"
       executor: docker
+      docker:
+        tls_verify: false
+        image: quay.io/fedora/fedora:latest
+        privileged: false
+        disable_entrypoint_overwrite: false
+        oom_kill_disable: false
+        disable_cache: true
+        shm_size: 0
+    - name: YxdEp3-Hx
+      url: https://gitlab.gnome.org
+      id: 726
+      token: "{{ gitlab_runner_token_gnome }}"
+      executor: docker
+      pre_get_sources_script: "sleep $(shuf -i 5-30 -n 1)"
+      cache:
+        MaxUploadedArchiveSize: 0
+        s3:
+          ServerAddress: "{{ gitlab_runner_cache_server_address }}"
+          AccessKey: "{{ gitlab_runner_cache_access_key }}"
+          SecretKey: "{{ gitlab_runner_cache_secret_key }}"
+          BucketName: "{{ gitlab_runner_cache_bucket_name }}"
+          BucketLocation: us-east-1
       docker:
         tls_verify: false
         image: quay.io/fedora/fedora:latest
