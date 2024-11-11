@@ -6,17 +6,17 @@
     state: present
     update_cache: true
 
-- name: set default firewalld zone to public
-  ansible.builtin.command: firewall-cmd --set-default-zone=public
-  register: default_zone_set
-  changed_when:
-    - '"ZONE_ALREADY_SET" not in default_zone_set.stderr'
-
 - name: start and enable firewalld
   ansible.builtin.systemd:
     state: started
     name: firewalld
     enabled: true
+
+- name: set default firewalld zone to public
+  ansible.builtin.command: firewall-cmd --set-default-zone=public
+  register: default_zone_set
+  changed_when:
+    - '"ZONE_ALREADY_SET" not in default_zone_set.stderr'
 
 - name: add tailscale0 to internal zone
   ansible.posix.firewalld:

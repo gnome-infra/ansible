@@ -1,0 +1,28 @@
+gitlab_runner_token_infrastructure: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          38666661613836363135653065363066386663383633646131633536316334633132366338313233
+          6439623238386665613538633965653931643636623439620a323136343863376466646632626565
+          33626666363938366235376138613663653361653535616339636530626464376261626637366162
+          3762663833393333650a396434346233353937366130623638313834373966623162343830306261
+          34323539363639343933663536303664386366393236613162333239363937333138
+
+gitlab_runner_config:
+  concurrent: 4
+  check_interval: 0
+  shutdown_timeout: 0
+  session_server:
+    session_timeout: 1800
+  runners:
+    - name: b9sHCQ1iz
+      url: https://gitlab.gnome.org
+      id: 724
+      token: "{{ gitlab_runner_token_infrastructure }}"
+      executor: docker
+      docker:
+        tls_verify: false
+        image: quay.io/fedora/fedora:latest
+        privileged: false
+        disable_entrypoint_overwrite: false
+        oom_kill_disable: false
+        disable_cache: true
+        shm_size: 0
