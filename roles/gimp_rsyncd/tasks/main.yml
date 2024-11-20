@@ -45,6 +45,12 @@
     group: root
     mode: '0644'
 
+- name: Set rsync_export_all_ro SELinux boolean
+  ansible.posix.seboolean:
+    name: rsync_export_all_ro
+    state: true
+    persistent: true
+
 - name: Start the Rsyncd service
   ansible.builtin.systemd:
     name: rsyncd.socket
