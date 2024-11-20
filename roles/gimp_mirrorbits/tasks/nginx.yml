@@ -1,0 +1,24 @@
+---
+- name: Install and configure Certbot
+  ansible.builtin.include_tasks: certbot.yml
+
+- name: Install Nginx
+  ansible.builtin.package:
+    name:
+      - nginx
+      - nginx-mod-fancyindex
+    state: present
+    update_cache: true
+
+- name: Create Nginx configuration file
+  ansible.builtin.template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: Restart Nginx
+
+- name: Start the Nginx service
+  ansible.builtin.systemd:
+    name: nginx
+    state: started
+    enabled: true
+    daemon_reload: true

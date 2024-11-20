@@ -1,0 +1,53 @@
+---
+- name: Land required packages
+  ansible.builtin.dnf:
+    name: rsync
+    state: present
+
+- name: Create rsync logging directory
+  ansible.builtin.file:
+    path: /var/log/rsyncd
+    state: directory
+    owner: root
+    group: root
+    mode: '0775'
+    setype: rsync_log_t
+
+- name: Create /etc/rsyncd directory
+  ansible.builtin.file:
+    path: /etc/rsyncd
+    state: directory
+    owner: root
+    group: gimpftpadmin
+    mode: '0775'
+
+- name: Land /etc/rsyncd.conf
+  ansible.builtin.copy:
+    src: files/rsyncd.conf
+    dest: /etc/rsyncd.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Land rsyncd systemd service file
+  ansible.builtin.copy:
+    src: files/rsyncd@.service
+    dest: /etc/systemd/system/rsyncd@.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Land rsyncd systemd socket file
+  ansible.builtin.copy:
+    src: files/rsyncd.socket
+    dest: /etc/systemd/system/rsyncd.socket
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Start the Rsyncd service
+  ansible.builtin.systemd:
+    name: rsyncd.socket
+    state: started
+    enabled: true
+    daemon_reload: true

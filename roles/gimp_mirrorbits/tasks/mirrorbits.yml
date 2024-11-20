@@ -1,0 +1,47 @@
+- name: Create /home/podman/mirrorbits directory
+  ansible.builtin.file:
+    path: /home/podman/mirrorbits
+    state: directory
+    owner: podman
+    group: podman
+    mode: '0755'
+    setype: container_file_t
+
+- name: Create Mirrorbits configuration file
+  ansible.builtin.template:
+    src: templates/mirrorbits.conf.j2
+    dest: /home/podman/mirrorbits/mirrorbits.conf
+    owner: podman
+    group: podman
+    mode: '0644'
+
+- name: Create Mirrorbits GeoIP configuration file
+  ansible.builtin.template:
+    src: templates/GeoIP.conf.j2
+    dest: /home/podman/mirrorbits/GeoIP.conf
+    owner: podman
+    group: podman
+    mode: '0644'
+  notify: Restart mirrorbits
+
+- name: Install the systemd service file for Mirrorbits
+  ansible.builtin.template:
+    src: templates/mirrorbits.service.j2
+    dest: /etc/systemd/user/mirrorbits.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart mirrorbits
+
+- name: Start the Mirrorbits service
+  ansible.builtin.systemd:
+    name: mirrorbits.service
+    state: started
+    enabled: true
+    daemon_reload: true
+    scope: user
+  become_user: podman
+  become: true
+
+- name: Install and configure Nginx
+  ansible.builtin.include_tasks: nginx.yml

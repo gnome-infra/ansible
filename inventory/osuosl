@@ -9,3 +9,6 @@ signal.gnome.org
 
 [cachet-monitor]
 signal.gnome.org
+
+[gimp]
+#master.gimp.org

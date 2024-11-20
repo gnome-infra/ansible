@@ -1,0 +1,9 @@
+[Unit]
+Description=rsyncd Service Sockets
+
+[Socket]
+ListenStream=873
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

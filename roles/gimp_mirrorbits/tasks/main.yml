@@ -1,0 +1,9 @@
+---
+- name: Include podman related tasks
+  ansible.builtin.include_tasks: podman.yml
+
+- name: Include Redis related tasks
+  ansible.builtin.include_tasks: redis.yml
+
+- name: Include Mirrorbits related tasks
+  ansible.builtin.include_tasks: mirrorbits.yml

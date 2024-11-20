@@ -1,0 +1,25 @@
+---
+- name: Podman system migrate
+  ansible.builtin.command: podman system migrate
+  become_user: podman
+
+- name: Restart redis
+  ansible.builtin.systemd:
+    name: redis.service
+    state: restarted
+    scope: user
+  become_user: podman
+  become: true
+
+- name: Restart mirrorbits
+  ansible.builtin.systemd:
+    name: mirrorbits.service
+    state: restarted
+    scope: user
+  become_user: podman
+  become: true
+
+- name: Restart Nginx
+  ansible.builtin.systemd:
+    name: nginx.service
+    state: restarted

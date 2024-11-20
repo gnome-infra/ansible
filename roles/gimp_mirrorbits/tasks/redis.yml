@@ -1,0 +1,25 @@
+- name: Create /home/podman/redis directory
+  ansible.builtin.file:
+    path: /home/podman/redis
+    state: directory
+    group: podman
+    mode: '0755'
+
+- name: Install the systemd service file for Redis
+  ansible.builtin.template:
+    src: templates/redis.service.j2
+    dest: /etc/systemd/user/redis.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart redis
+
+- name: Start the Redis service
+  ansible.builtin.systemd:
+    name: redis.service
+    state: started
+    enabled: true
+    daemon_reload: true
+    scope: user
+  become: true
+  become_user: podman

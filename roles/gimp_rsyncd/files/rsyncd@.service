@@ -1,0 +1,7 @@
+[Unit]
+Description=Rsync daemon
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/rsync --daemon --config=/etc/rsyncd.conf
+StandardInput=socket

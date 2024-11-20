@@ -12,7 +12,7 @@
         password: "{{ rhsm_password }}"
         auto_attach: true
 
-- hosts: all
+- hosts: all !gimp
   gather_facts: true
   remote_user: root
   roles:
@@ -29,6 +29,21 @@
    - backup
    - node-exporter
    - ipaclient.wrapper
+
+- hosts: gimp
+  gather_facts: true
+  remote_user: root
+  roles:
+   - packages
+   - motd
+   - chrony
+   - sshguard
+   - iptables
+   - bash
+   - base_auth
+   - gimp_auth
+   - gimp_rsyncd
+   - gimp_mirrorbits
 
 - hosts: cachet
   gather_facts: false

@@ -1,0 +1,39 @@
+---
+- name: Ensure group {{ gimp_auth_group_name }}
+  ansible.builtin.group:
+    name: "{{ gimp_auth_group_name }}"
+    gid: "{{ gimp_auth_group_gid }}"
+    state: present
+
+- name: Ensure users are created and configured
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    group: "{{ gimp_auth_group_name }}"
+    create_home: true
+    state: present
+  loop: "{{ gimp_auth_users }}"
+
+- name: Add SSH key for each user
+  ansible.posix.authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ lookup('file', item.name + '.pub') }}"
+    path: "/home/{{ item.name }}/.ssh/authorized_keys"
+  loop: "{{ gimp_auth_users }}"
+
+- name: Ensure each user is added to {{ gimp_auth_group_name }}
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    groups: "{{ gimp_auth_group_name }}"
+    append: true
+  loop: "{{ gimp_auth_users }}"
+
+- name: Ensure users can sudo to podman user
+  ansible.builtin.lineinfile:
+    path: "{{ gimp_auth_sudoers_file }}"
+    line: "{{ gimp_auth_group_name }} ALL=(podman) NOPASSWD: ALL"
+    create: true
+    owner: root
+    group: root
+    mode: '0440'
+    validate: 'visudo -cf %s'

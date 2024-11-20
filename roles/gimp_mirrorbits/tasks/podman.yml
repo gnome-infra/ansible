@@ -1,0 +1,44 @@
+---
+- name: Install podman
+  ansible.builtin.package:
+    name:
+      - podman
+      - fuse-overlayfs
+      - slirp4netns
+      - systemd-container
+    state: present
+    update_cache: true
+
+- name: Create podman user
+  ansible.builtin.user:
+    name: podman
+    shell: /bin/bash
+    system: true
+  register: podman_user
+
+- name: Configure subuids and subguids for podman user
+  ansible.builtin.lineinfile:
+    path: "{{ item }}"
+    regexp: '^podman'
+    line: podman:524288:1100000000
+  with_items:
+    - /etc/subgid
+    - /etc/subuid
+  notify: podman system migrate
+
+- name: Enable linger for podman user
+  ansible.builtin.command: loginctl enable-linger podman
+  args:
+    creates: /var/lib/systemd/linger/podman
+
+- name: Start podman socket and auto-update timer
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+    scope: user
+  become: true
+  become_user: podman
+  with_items:
+    - podman.socket
+    - podman-auto-update.timer

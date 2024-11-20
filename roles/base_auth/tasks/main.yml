@@ -21,6 +21,7 @@
   user:
     name: root
     password: "{{ root_password }}"
+  when: ('gimp' not in group_names)
 
 - name: PermitRootLogin with without-password
   lineinfile:

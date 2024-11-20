@@ -1,0 +1,39 @@
+[Unit]
+Description=Mirrorbits
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target redis.service
+RequiresMountsFor=%t/containers
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=always
+TimeoutStopSec=70
+ExecStartPre=-rm -f %t/%n.ctr-id
+ExecStart=/usr/bin/podman \
+	--url unix:/run/user/{{ podman_user.uid }}/podman/podman.sock container run \
+	--cidfile=%t/%n.ctr-id \
+	--cgroups=no-conmon \
+	--rm \
+	--attach STDOUT \
+	--attach STDERR \
+	--sdnotify=conmon \
+	--replace \
+	--name mirrorbits \
+	-p 8080:8080 \
+	--volume /home/podman/mirrorbits/mirrorbits.conf:/etc/mirrorbits.conf:Z \
+	--volume /home/podman/mirrorbits/GeoIP.conf:/etc/GeoIP.conf:Z \
+	--mount type=bind,source=/mnt/ftp,target=/srv/ftp \
+	--label io.containers.autoupdate=image \
+	quay.io/gnome_infrastructure/mirrorbits_gimp:latest
+ExecStop=/usr/bin/podman stop \
+	--ignore -t 10 \
+	--cidfile=%t/%n.ctr-id
+ExecStopPost=/usr/bin/podman rm \
+	-f \
+	--ignore -t 10 \
+	--cidfile=%t/%n.ctr-id
+NotifyAccess=all
+
+[Install]
+WantedBy=default.target
