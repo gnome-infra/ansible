@@ -31,7 +31,7 @@
 - name: Ensure users can sudo to podman user
   ansible.builtin.lineinfile:
     path: "{{ gimp_auth_sudoers_file }}"
-    line: "{{ gimp_auth_group_name }} ALL=(podman) NOPASSWD: ALL"
+    line: "%{{ gimp_auth_group_name }} ALL=(podman) NOPASSWD: ALL"
     create: true
     owner: root
     group: root
