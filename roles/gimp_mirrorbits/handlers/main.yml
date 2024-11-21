@@ -28,3 +28,6 @@
   ansible.builtin.systemd:
     name: mirrorbits-pod.service
     state: restarted
+    scope: user
+  become_user: podman
+  become: true
