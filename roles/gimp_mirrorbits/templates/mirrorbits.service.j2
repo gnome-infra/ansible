@@ -23,7 +23,7 @@ ExecStart=/usr/bin/podman \
 	--pod mirrorbits \
 	--volume /home/podman/mirrorbits/mirrorbits.conf:/etc/mirrorbits.conf:Z \
 	--volume /home/podman/mirrorbits/GeoIP.conf:/etc/GeoIP.conf:Z \
-	--mount type=bind,source=/mnt/ftp,target=/srv/ftp \
+	--mount type=bind,source=/mnt/ftp/pub,target=/srv/ftp \
 	--label io.containers.autoupdate=image \
 	quay.io/gnome_infrastructure/mirrorbits_gimp:latest
 ExecStop=/usr/bin/podman stop \

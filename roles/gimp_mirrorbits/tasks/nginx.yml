@@ -22,3 +22,15 @@
     state: started
     enabled: true
     daemon_reload: true
+
+- name: Set httpd_read_user_content SELinux boolean
+  ansible.posix.seboolean:
+    name: httpd_read_user_content
+    state: true
+    persistent: true
+
+- name: Set httpd_can_network_connect SELinux boolean
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: true
+    persistent: true
