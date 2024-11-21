@@ -23,3 +23,8 @@
   ansible.builtin.systemd:
     name: nginx.service
     state: restarted
+
+- name: Restart Mirrorbits pod
+  ansible.builtin.systemd:
+    name: mirrorbits-pod.service
+    state: restarted

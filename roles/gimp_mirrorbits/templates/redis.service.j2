@@ -4,6 +4,8 @@ Documentation=man:podman-generate-systemd(1)
 Wants=network-online.target
 After=network-online.target
 RequiresMountsFor=/run/user/{{ podman_user.uid }}/containers
+BindsTo=mirrorbits-pod.service
+After=mirrorbits-pod.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n

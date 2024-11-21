@@ -43,11 +43,21 @@
     - podman.socket
     - podman-auto-update.timer
 
-- name: Create a mirrorbits podman pod
-  containers.podman.podman_pod:
-    name: mirrorbits
+- name: Install the systemd service file for Mirrorbits podman pod
+  ansible.builtin.template:
+    src: templates/mirrorbits-pod.service.j2
+    dest: /etc/systemd/user/mirrorbits-pod.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Mirrorbits pod
+
+- name: Start the Mirrorbits pod service
+  ansible.builtin.systemd:
+    name: mirrorbits-pod.service
     state: started
-    ports:
-      - "8080"
-  become: true
+    enabled: true
+    daemon_reload: true
+    scope: user
   become_user: podman
+  become: true
