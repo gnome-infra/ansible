@@ -15,8 +15,8 @@
 
 - name: Obtain SSL certificate for {{ domain_name }}
   ansible.builtin.command: >
-    certbot --nginx -n --agree-tos --email {{ gimp_mirrorbits_certbot_email }}
-    -d {{ gimp_mirrorbits_certbot_domain_name }}
+    certbot certonly --standalone -n --agree-tos --email {{ certbot_email }}
+    -d {{ certbot_domain_name }}
   args:
     creates: /etc/letsencrypt/live/{{ gimp_mirrorbits_certbot_domain_name }}/fullchain.pem
   notify: Restart Nginx
