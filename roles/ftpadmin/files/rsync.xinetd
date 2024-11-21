@@ -1,11 +1,13 @@
 service rsync
 {
-	disable	= no
-	flags		= IPv6
-	socket_type     = stream
-	wait            = no
-	user            = root
-	server          = /usr/bin/rsync
-	server_args     = --daemon
-	log_on_failure  += USERID
+    disable = no
+    socket_type = stream
+    wait = no
+    user = root
+    server = /bin/nc
+    server_args = master.gimp.org 873
+    bind = 8.43.85.16
+    port = 873
+    log_on_success = HOST
+    log_on_failure = HOST
 }
