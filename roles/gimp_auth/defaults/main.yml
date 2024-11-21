@@ -1,6 +1,9 @@
 ---
 gimp_auth_users:
   - name: "jehanp"
+  - name: "mitch"
+  - name: "schumaml"
+  - name: "ok"
 gimp_auth_group_name: "gimpftpadmin"
 gimp_auth_group_gid: 1886200301
 gimp_auth_sudoers_file: "/etc/sudoers.d/podman"
