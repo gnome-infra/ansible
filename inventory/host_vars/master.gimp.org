@@ -1,3 +1,6 @@
+datacenter: 'osuosl'
+chrony_ntp_servers:
+  - pool.ntp.org
 sshguard_enabled: true
 firewall_allowed_tcp_ports:
   - 22
