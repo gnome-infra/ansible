@@ -13,7 +13,7 @@
     enabled: yes
     state: started
 
-- name: Obtain SSL certificate for {{ domain_name }}
+- name: Obtain SSL certificate for {{ gimp_mirrorbits_certbot_domain_name }}
   ansible.builtin.command: >
     certbot certonly --standalone -n --agree-tos --email {{ gimp_mirrorbits_certbot_email }}
     -d {{ gimp_mirrorbits_certbot_domain_name }}
