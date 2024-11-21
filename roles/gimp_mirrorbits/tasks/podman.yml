@@ -42,3 +42,12 @@
   with_items:
     - podman.socket
     - podman-auto-update.timer
+
+- name: Create a mirrorbits podman pod
+  containers.podman.podman_pod:
+    name: mirrorbits
+    state: started
+    ports:
+      - "8080"
+  become: true
+  become_user: podman

@@ -20,7 +20,7 @@ ExecStart=/usr/bin/podman \
 	--sdnotify=conmon \
 	--replace \
 	--name redis \
-	-p 6379:6379 \
+        --pod mirrorbits \
 	--volume /home/podman/redis:/data:Z \
 	--label io.containers.autoupdate=image \
 	docker.io/redis:6.2
