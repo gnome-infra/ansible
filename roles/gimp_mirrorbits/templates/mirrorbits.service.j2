@@ -23,6 +23,7 @@ ExecStart=/usr/bin/podman \
 	--replace \
 	--name mirrorbits \
 	--pod mirrorbits \
+	--security-opt label=level:s0:c428,c683	\
 	--volume /home/podman/mirrorbits/mirrorbits.conf:/etc/mirrorbits.conf:Z \
 	--volume /home/podman/mirrorbits/GeoIP.conf:/etc/GeoIP.conf:Z \
 	--mount type=bind,source=/mnt/ftp/pub,target=/srv/ftp \
