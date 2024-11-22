@@ -34,3 +34,9 @@
     name: httpd_can_network_connect
     state: true
     persistent: true
+
+- name: Set httpd_enable_homedirs SELinux boolean
+  ansible.posix.seboolean:
+    name: httpd_enable_homedirs
+    state: true
+    persistent: true
