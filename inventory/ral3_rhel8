@@ -22,6 +22,3 @@ master.gnome.org
 
 [rsyslog_servers]
 logs.gnome.org
-
-[gitlab]
-gitlab-git-svcs.gnome.org

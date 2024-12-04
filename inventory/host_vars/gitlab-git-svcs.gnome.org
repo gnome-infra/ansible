@@ -1,7 +1,0 @@
-firewall_additional_rules:
-  - "iptables -A INPUT -i eth1 -j ACCEPT"
-firewall_allowed_tcp_ports:
-  - 22
-enable_system_backup: true
-sshguard_enabled: true
-sshguard_threshold: 45

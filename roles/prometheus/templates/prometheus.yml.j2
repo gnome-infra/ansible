@@ -43,7 +43,7 @@ scrape_configs:
     scheme: https
     static_configs:
       - targets:
-        - prometheus-exporter-gitlab.apps.openshift4.gnome.org
+        - prometheus-exporter-gitlab.apps.openshift.gnome.org
   - job_name: gitlab_internals
     scheme: https
     metrics_path: "/-/metrics"
@@ -55,26 +55,13 @@ scrape_configs:
     metrics_path: "/sidekiq"
     static_configs:
       - targets:
-        - prometheus-exporter-gitlab.apps.openshift4.gnome.org
+        - prometheus-exporter-gitlab.apps.openshift.gnome.org
   - job_name: gitlab_gitaly
-    static_configs:
-      - targets:
-        - gitlab-git-svcs.gnome.org:9236
-
-  - job_name: openshift4-postgresql
     scheme: https
+    metrics_path: "/gitaly"
     static_configs:
       - targets:
-        - postgresql-exporter-primary.apps.openshift4.gnome.org
-        - postgresql-exporter-replica.apps.openshift4.gnome.org
-
-  - job_name: openshift4-mysqld
-    scheme: https
-    static_configs:
-      - targets:
-        - mysqld-exporter-0.apps.openshift4.gnome.org
-        - mysqld-exporter-1.apps.openshift4.gnome.org
-        - mysqld-exporter-2.apps.openshift4.gnome.org
+        - prometheus-exporter-gitlab.apps.openshift.gnome.org
 
   - job_name: 'external'
     honor_labels: true
@@ -85,9 +72,3 @@ scrape_configs:
     static_configs:
     - targets:
       - bbb2.gnome.org:9090
-
-  - job_name: gitlab-cicd
-    scheme: https
-    static_configs:
-      - targets:
-        - gitlab-ci-pipelines-exporter-gitlab.apps.openshift4.gnome.org
