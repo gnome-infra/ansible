@@ -3,7 +3,6 @@ bastions
 ipaservers
 ftpmasters
 rsyslog_servers
-gitlab
 
 [ceph_osds]
 ceph01.gnome.org
