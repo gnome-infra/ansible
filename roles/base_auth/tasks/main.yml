@@ -7,7 +7,6 @@
   with_file:
     - public_keys/averi
     - public_keys/bpiotrowski
-    - public_keys/backups
     - public_keys/awx
 
 - name: Land cephadm SSH keys on Ceph nodes
