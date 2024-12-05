@@ -56,12 +56,6 @@ scrape_configs:
     static_configs:
       - targets:
         - prometheus-exporter-gitlab.apps.openshift.gnome.org
-  - job_name: gitlab_gitaly
-    scheme: https
-    metrics_path: "/gitaly"
-    static_configs:
-      - targets:
-        - prometheus-exporter-gitlab.apps.openshift.gnome.org
 
   - job_name: 'external'
     honor_labels: true
