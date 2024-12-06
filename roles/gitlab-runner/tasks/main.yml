@@ -1,8 +1,8 @@
 ---
 - name: include common tasks
-  ansible.builtin.include: common.yml
+  ansible.builtin.include_tasks: common.yml
   when: ansible_distribution != "NixOS"
 
 - name: include nixos tasks
-  ansible.builtin.include: nixos.yml
+  ansible.builtin.include_tasks: nixos.yml
   when: ansible_distribution == "NixOS"
