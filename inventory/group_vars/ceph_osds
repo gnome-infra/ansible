@@ -8,3 +8,5 @@ nrpe_custom_plugins:
   - check_ceph_osd
 firewall_additional_rules:
   - "iptables -A INPUT -i br0 -j ACCEPT"
+ansible_connection: ssh
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@bastion01.gnome.org -o StrictHostKeyChecking=no"'
