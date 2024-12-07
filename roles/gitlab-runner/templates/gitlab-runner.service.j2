@@ -7,8 +7,10 @@ RequiresMountsFor=/run/user/{{ podman_user.uid }}/containers
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
-Restart=always
-TimeoutStopSec=70
+Restart=on-failure
+RestartSec=10s
+TimeoutStartSec=30s
+TimeoutStopSec=180s
 ExecStartPre=-rm -f /run/user/{{ podman_user.uid }}/%n.ctr-id
 ExecStart=/usr/bin/podman \
 	--url unix:/run/user/{{ podman_user.uid }}/podman/podman.sock container run \
