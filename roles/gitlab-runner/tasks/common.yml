@@ -72,12 +72,14 @@
     path: "{{ podman_user.home }}/.config/containers"
     state: directory
     mode: '0700'
+  become: true
   become_user: podman
 
 - name: configure podman
   ansible.builtin.copy:
     src: containers.conf
     dest: "{{ podman_user.home }}/.config/containers/containers.conf"
+  become: true
   become_user: podman
 
 - name: create gitlab-runner config directory
@@ -85,6 +87,7 @@
     path: "{{ podman_user.home }}/gitlab-runner"
     state: directory
     mode: '0700'
+  become: true
   become_user: podman
 
 - name: configure gitlab-runner
@@ -92,12 +95,14 @@
     src: gitlab-runner-config.toml.j2
     dest: "{{ podman_user.home }}/gitlab-runner/config.toml"
     mode: '0600'
+  become: true
   become_user: podman
 
 - name: copy seccomp profile for building flatpaks
   ansible.builtin.copy:
     src: flatpak.seccomp.json
     dest: "{{ podman_user.home }}/gitlab-runner/flatpak.seccomp.json"
+  become: true
   become_user: podman
 
 - name: add unit for gitlab-runner service
@@ -105,6 +110,18 @@
     src: gitlab-runner.service.j2
     dest: /etc/systemd/user/gitlab-runner.service
   notify: restart gitlab-runner
+
+- name: make sure pydocuum, gitlab-runner, podman were not started as root
+  ansible.builtin.systemd:
+    name: "{{ item }}.service"
+    state: stopped
+    enabled: false
+    daemon_reload: true
+    scope: user
+  loop:
+    - podman
+    - gitlab-runner
+    - pydocuum
 
 - name: start gitlab-runner
   ansible.builtin.systemd:
@@ -114,6 +131,7 @@
     daemon_reload: true
     scope: user
   become_user: podman
+  become: true
 
 - name: add unit for pydocuum service
   ansible.builtin.template:
@@ -129,6 +147,7 @@
     daemon_reload: true
     scope: user
   become_user: podman
+  become: true
 
 - name: clean up old user systemd services
   ansible.builtin.file:
@@ -147,3 +166,12 @@
     group: root
   notify: reload udevadm
 
+- name: Enable systemctl --user as podman
+  lineinfile:
+    path: "~/.bashrc"
+    line: "{{ item }}"
+  loop:
+    - 'export XDG_RUNTIME_DIR=/run/user/$(id -u)'
+    - 'export DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus'
+  become_user: podman
+  become: true
