@@ -6,7 +6,6 @@ aws
 [ral3_rhel8]
 bastion01.gnome.org
 idm01.gnome.org
-idm02.gnome.org
 master.gnome.org
 logs.gnome.org
 signal.gnome.org

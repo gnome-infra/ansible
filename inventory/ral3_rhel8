@@ -14,7 +14,6 @@ bastion01.gnome.org
 
 [ipaservers]
 idm01.gnome.org
-idm02.gnome.org
 
 [ftpmasters]
 master.gnome.org
