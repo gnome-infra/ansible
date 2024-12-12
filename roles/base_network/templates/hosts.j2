@@ -3,11 +3,11 @@
 127.0.0.1		localhost.localdomain localhost
 ::1		        localhost6.localdomain6 localhost6
 
-{% if datacenter in ['ral3', 'aws'] %}
-  {% set group = 'ipaservers' if datacenter == 'ral3' else 'idm' %}
+{% if datacenter in == 'aws' %}
+  {% set group = 'idm' %}
   {% if group in groups and ansible_fqdn in groups[group] %}
     {% for host in groups[group] %}
-      {{ hostvars[host].ansible_eth1.ipv4.address if datacenter == 'ral3' else hostvars[host].ansible_eth0.ipv4.address }} {{ hostvars[host].ansible_fqdn }} {{ hostvars[host].ansible_hostname }}
+      {{ hostvars[host].ansible_eth0.ipv4.address }} {{ hostvars[host].ansible_fqdn }} {{ hostvars[host].ansible_hostname }}
     {% endfor %}
   {% endif %}
 {% elif datacenter in ['osuosl', 'osci'] %}

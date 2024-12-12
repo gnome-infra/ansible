@@ -17,8 +17,7 @@ firewall_allowed_tcp_ports:
   - "22"
 
 internal_dns_resolvers:
-  - 172.31.2.54
-  - 172.31.2.55
+  - 172.31.16.2
 
 sshguard_threshold: 10
 sshguard_whitelist:
