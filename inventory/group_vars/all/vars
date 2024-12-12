@@ -9,8 +9,10 @@ ipaclient_servers:
 # Chrony
 chrony_role_action: "all"
 chrony_ntp_servers:
-  - "ntp1.osci.io"
-  - "ntp2.osci.io"
+  - "0.rhel.pool.ntp.org"
+  - "1.rhel.pool.ntp.org"
+  - "2.rhel.pool.ntp.org"
+  - "3.rhel.pool.ntp.org"
 
 # IPtables
 firewall_allowed_tcp_ports:
@@ -26,7 +28,7 @@ sshguard_whitelist:
   - comment: IPv6 localhost
     address: ::1
   - comment: Internal
-    address: 172.31.2.0/24
+    address: 172.31.16.0/20
   - comment: VPN
     address: 10.8.0.0/24
   - comment: RAL3
