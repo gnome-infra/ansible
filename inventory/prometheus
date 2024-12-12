@@ -1,14 +1,9 @@
 [clients:children]
-ral3_rhel8
+osci
 osuosl
 aws
 
-[ral3_rhel8]
-bastion01.gnome.org
-idm01.gnome.org
-master.gnome.org
-logs.gnome.org
-signal.gnome.org
+[osci]
 smtp.gnome.org
 
 [aws]

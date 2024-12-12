@@ -1,5 +1,0 @@
-is_rsyslog_server: true
-firewall_additional_rules:
-  - "iptables -A INPUT -i eth0 -j ACCEPT"
-ansible_connection: ssh
-ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@bastion01.gnome.org -o StrictHostKeyChecking=no"'

@@ -5,7 +5,7 @@ prometheus_db_dir: /var/lib/prometheus
 prometheus_config_dir: /etc/prometheus
 prometheus_retention_time: "90d"
 prometheus_node_hostgroups:
-  - ral3_rhel8
+  - osci
   - osuosl
   - aws
 prometheus_blackbox_version: 0.22.0
