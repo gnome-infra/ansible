@@ -3,7 +3,7 @@
 127.0.0.1		localhost.localdomain localhost
 ::1		        localhost6.localdomain6 localhost6
 
-{% if datacenter in == 'aws' %}
+{% if datacenter == 'aws' %}
   {% set group = 'idm' %}
   {% if group in groups and ansible_fqdn in groups[group] %}
     {% for host in groups[group] %}
