@@ -31,5 +31,3 @@ sshguard_whitelist:
     address: 172.31.16.0/20
   - comment: VPN
     address: 10.8.0.0/24
-  - comment: RAL3
-    address: 8.43.85.0/24
