@@ -14,7 +14,6 @@
     name: nis_enabled
     state: true
     persistent: true
-  when: datacenter == 'aws'
 
 - name: Make sure auditd logs are forwarded
   lineinfile:
