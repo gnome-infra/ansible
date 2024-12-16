@@ -4,6 +4,7 @@ firewall_allowed_tcp_ports:
   - 993
   - 995
   - 587
+  - 80
 
 firewall_additional_rules:
   - "iptables -A INPUT -i wg0 -j ACCEPT"
