@@ -97,6 +97,7 @@
     mode: '0600'
   become: true
   become_user: podman
+  notify: restart gitlab-runner
 
 - name: copy seccomp profile for building flatpaks
   ansible.builtin.copy:
