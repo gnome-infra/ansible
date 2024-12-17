@@ -55,3 +55,6 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         shm_size: 0
+        cap_add:
+          - SYS_PTRACE
+          - SYS_CHROOT
