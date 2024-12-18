@@ -39,7 +39,7 @@
 
     - name: Check IDM services status
       ansible.builtin.command:
-        cmd: /usr/local/bin/ipa_status.py
+        cmd: /usr/local/bin/ipa_status.py -v
       register: check_ipa_status
       until: check_ipa_status.stdout.find("OK:") != -1
       retries: 20
