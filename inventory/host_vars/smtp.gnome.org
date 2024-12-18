@@ -63,8 +63,6 @@ postfix_mydestinations:
     - $myhostname
     - gnome.org
     - las.gnome.org
-    - cvs.gnome.org
-    - svn.gnome.org
     - src.gnome.org
     - guadec.org
     - gnomehispano.org
