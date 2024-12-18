@@ -3,7 +3,6 @@
 # option in /etc/opendkim.conf then restart OpenDKIM. Additional hosts
 # may be added on separate lines (IP addresses, hostnames, or CIDR ranges).
 # The localhost IP (127.0.0.1) should always be the first entry in this file.
-127.0.0.1
-::1
-10.8.0.0/24
-172.31.16.0/20
+{% for item in postfix_mynetworks %}
+- {{ item }}
+{% endfor %}
