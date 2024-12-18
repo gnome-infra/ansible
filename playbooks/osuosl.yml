@@ -29,6 +29,7 @@
    - backup
    - node-exporter
    - ipaclient.wrapper
+   - rh_insights
 
 - hosts: gimp
   gather_facts: true
@@ -44,6 +45,7 @@
    - gimp_auth
    - gimp_rsyncd
    - gimp_mirrorbits
+   - rh_insights
 
 - hosts: cachet
   gather_facts: false
