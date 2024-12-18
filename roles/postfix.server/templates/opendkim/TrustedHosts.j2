@@ -4,5 +4,5 @@
 # may be added on separate lines (IP addresses, hostnames, or CIDR ranges).
 # The localhost IP (127.0.0.1) should always be the first entry in this file.
 {% for item in postfix_mynetworks %}
-- {{ item }}
+{{ item }}
 {% endfor %}
