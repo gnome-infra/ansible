@@ -19,6 +19,7 @@
 
 - name: Update packages and reboot systems (IDM only)
   hosts: idm
+  serial: 1
   remote_user: root
   gather_facts: false
   roles:
