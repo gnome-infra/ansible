@@ -176,7 +176,10 @@ def generate_sender_login_maps(groups):
     emails = fetch_email_addresses(members)
 
     custom_map = [('av@gnome.org', 'averi'), \
-                 ('bart@gnome.org', 'bpiotrowski'),
+                 ('bart@gnome.org', 'bpiotrowski'), \
+                 ('kristi@gnome.org', 'kprogri'), \
+                 ('anisa@gnome.org', 'akuci'), \
+                 ('richard@gnome.org', 'rlittauer')
                  ]
 
     sender_login_maps_content = ""
