@@ -82,7 +82,7 @@ postfix_dkim_domains:
 enable_opendkim: true
 postfix_mynetworks:
   - 127.0.0.0/8
-  - "[::1]/128" 
+  - "[::1]/128"
   - 172.31.16.0/20
   - 10.8.0.0/24
   - 140.211.167.18/32
@@ -92,6 +92,5 @@ postfix_mynetworks:
   - 98.83.131.224
 postfix_myhostname: smtp.gnome.org
 postfix_smtpd_sender_login_maps:
-  - hash:/etc/gnome.org/master-mail/aliases
-  - hash:/etc/postfix/virtual-aliases/virtual-gnome.org
+  - hash:/etc/gnome.org/login-maps/sender_login_maps
 postfix_virtual_transport: 'lmtp:unix:private/dovecot-lmtp'
