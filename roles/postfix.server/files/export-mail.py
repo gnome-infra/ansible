@@ -175,12 +175,29 @@ def generate_sender_login_maps(groups):
 
     emails = fetch_email_addresses(members)
 
+    custom_map = [('av@gnome.org', 'averi'), \
+                 ('bart@gnome.org', 'bpiotrowski'),
+                 ]
+
     sender_login_maps_content = ""
     for uid, _ in emails:
-        sender_login_maps_content += f'{uid}@gnome.org\t\t{uid}\n'
+        uids = []
+        for c_mail, c_uid in custom_map:
+            if c_mail.split('@')[0] == uid:
+                uids.append(uid)
+                uids.append(c_uid)
+
+            if c_uid == uid:
+                sender_login_maps_content += f'{c_mail}\t\t{c_uid}\n'
+
+        if len(uids) > 0:
+            sender_login_maps_content += f'{uid}@gnome.org\t\t{" ".join(uids)}\n'
+        else:
+            sender_login_maps_content += f'{uid}@gnome.org\t\t{uid}\n'
 
         if uid in gimp_ldapmain:
             sender_login_maps_content += f'{uid}@gimp.org\t\t{uid}\n'
+
     return sender_login_maps_content
 
 def fetch_gitlab_group_members(group_id):
