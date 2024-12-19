@@ -1,107 +1,239 @@
 #!/usr/bin/python3
 
+"""
+This script generates and updates email alias files and sender login maps
+by querying an LDAP server (FreeIPA) for group memberships and email addresses.
+
+It uses the `ALIASES` list to define the alias files and their corresponding
+domains and groups. It also generates a `sender_login_maps` file for
+Postfix based on specified LDAP groups. For @gimp.org we handle it by querying
+GitLab for the Teams/Core/GIMP group and checking whose members are also part of
+the staffmail LDAP group.
+
+The script utilizes caching to improve performance by storing fetched
+email addresses and group members.
+"""
+
 import ldap
-import ldap.modlist
-import ldap.filter
+import gitlab
 import subprocess
 import sys
 
-exec(open("/home/admin/secret/freeipa_ro").read())
+from ldap.filter import filter_format
+
+exec(open('/home/admin/secret/freeipa_ro').read())
+exec(open('/home/admin/secret/gitlab_ro').read())
+
+gl = gitlab.Gitlab('https://gitlab.gnome.org', private_token=GITLAB_TOKEN)
+
+GL_GROUP_ID = '178936'
 
 ALIASES = [
-    ('/etc/gnome.org/src-mail/virtual',    'src.gnome.org', 'gnomecvs'),
+    ('/etc/gnome.org/src-mail/virtual', 'src.gnome.org', 'gnomecvs'),
     ('/etc/gnome.org/master-mail/aliases', '', ('foundation', 'emeritus', 'staffmail', 'mailgrace')),
 ]
 
-_cache_email = {}
+email_cache = {}
 def fetch_email_addresses(members):
-    unknown_emails = members.difference(_cache_email.keys())
+    """
+    Fetches email addresses for a set of members from LDAP, utilizing a cache
+    to avoid redundant queries.
 
-    if len(unknown_emails):
-        format = '(uid=%s)' * len(unknown_emails)
-        filter = '(|%s)' % ldap.filter.filter_format(format, list(unknown_emails))
-        results = l.search_s(LDAP_USER_BASE, ldap.SCOPE_SUBTREE, filter, ('uid', 'mail'))
-        for entry in results:
-            id = entry[0]
-            attr = entry[1]
-            if 'mail' not in attr:
-                continue
+    Args:
+        members (set): A set of member UIDs.
 
-            _cache_email[attr['uid'][0].decode()] = attr['mail'][0].decode()
+    Returns:
+        list: A list of tuples (uid, email) for the given members.
+    """
+    unknown_emails = members.difference(email_cache.keys())
 
-    return [(uid, _cache_email[uid]) for uid in sorted(members) if uid in _cache_email]
+    if unknown_emails:
+        for member in members:
+            filter = ldap.filter.filter_format(
+                '(&(objectClass=person)(%s=%s))', ('uid', member))
+            results = l.search_s(
+                LDAP_USER_BASE, ldap.SCOPE_SUBTREE, filter, ('uid', 'mail'))
 
-_cache_group = {}
+            if len(results) > 0:
+                email_cache[results[0][1]['uid'][0]] = results[0][1]['mail'][0]
+            else:
+                return None
+
+    return ([(uid, email_cache[uid.encode()]) for uid in sorted(members) if uid.encode() in email_cache])
+
+group_cache = {}
 def fetch_group_members(group):
-    if group in _cache_group:
-        return _cache_group[group]
+    """
+    Fetches the members of a given group from LDAP, utilizing a cache
+    to avoid redundant queries.
 
-    filter = ldap.filter.filter_format('(&(objectClass=posixGroup)(cn=%s))', (group, ))
-    results = l.search_s(LDAP_GROUP_BASE, ldap.SCOPE_SUBTREE, filter, ('member', ))
+    Args:
+        group (str): The name of the group.
+
+    Returns:
+        set: A set of member UIDs for the given group.
+    """
+    if group in group_cache:
+        return group_cache[group]
+
+    filter_str = filter_format('(&(objectClass=posixGroup)(cn=%s))', (group,))
+    results = l.search_s(LDAP_GROUP_BASE, ldap.SCOPE_SUBTREE, filter_str, ('member',))
 
     members = set()
-
     for _, attr in results:
-        if 'member' not in attr:
-            continue
+        if 'member' in attr:
+            for member in attr['member']:
+                member = member.decode()
+                uid = member.split(',')[0].split('=')[1]
+                members.add(uid)
 
-        for userid in attr['member']:
-            splitentry = userid.decode().split(',')
-            singleentry = splitentry[0]
-            splitteduid = singleentry.split('=')
-            uid = splitteduid[1]
-
-            members.add(uid)
-
-    _cache_group[group] = members
-
+    group_cache[group] = members
     return members
 
+def generate_alias_file(aliasfile, domain, groups):
+    """
+    Generates an alias file with email addresses for the specified groups.
+
+    Args:
+        aliasfile (str): Path to the alias file.
+        domain (str): The domain to append to the aliases.
+        groups (str or tuple): The group(s) to include in the alias file.
+
+    Returns:
+        tuple: A tuple containing the original alias file path and the new alias file path.
+    """
+    if isinstance(groups, tuple):
+        members = set()
+        for group in groups:
+            members.update(fetch_group_members(group))
+    else:
+        members = fetch_group_members(groups)
+        groups = (groups,)
+
+    emails = fetch_email_addresses(members)
+    newaliasfile = ""
+
+    if domain == "":
+        file_format = "%s%s:\t\t%s\n"
+    else:
+        file_format = "%s%s %s\n"
+        if not domain.startswith("@"):
+            domain = "@" + domain
+
+    newaliasfile += ("# WARNING: Do not edit this file directly. Logic around \n"
+                     "# aliases generation is managed via the export-mail.py script\n\n")
+
+    for uid, mail in emails:
+        newaliasfile += file_format % (uid, domain, mail.decode())
+
+    return aliasfile, newaliasfile
+
+def update_file(original_file, new_file_content):
+    """
+    Updates a file with new content if there are differences.
+
+    Args:
+        original_file (str): Path to the original file.
+        new_file_content (str): The new content for the file.
+    """
+    new_file = f'{original_file}.new'
+    with open(new_file, 'w') as f:
+        f.write(new_file_content)
+
+    try:
+        subprocess.run(['diff', '-U0', '--', original_file, new_file], check=True, capture_output=True, text=True)
+    except subprocess.CalledProcessError as e:
+        print(e.stdout)
+        subprocess.run(['mv', '-f', '--', new_file, original_file], check=True)
+        # Apply postfix-specific commands based on the file type
+        if 'sender_login_maps' in original_file:
+            subprocess.run(['postmap', f'{original_file}'], check=True)
+        else:  # Assuming it's an alias file
+            if domain == '':
+                subprocess.run(['postalias', '-w', original_file], check=True)
+            else:
+                subprocess.run(['postmap', f'{original_file}'], check=True)
+        subprocess.run(['postfix', 'reload'], check=True)
+
+def generate_sender_login_maps(groups):
+    """
+    Generates the content for sender_login_maps, mapping email addresses
+    to corresponding UIDs for the specified LDAP groups and Teams/GIMP/CoreTeam
+    GitLab group members with 'ldapmain' identity when they are also part of
+    staffmail.
+    """
+    members = set()
+    for group in groups:
+        members.update(fetch_group_members(group))
+
+    gimp_gitlab_group = fetch_gitlab_group_members(GL_GROUP_ID)
+    gimp_ldapmain = [
+      fetch_ldapmain_identity(member.id)
+      for member in gimp_gitlab_group
+      if fetch_ldapmain_identity(member.id) in fetch_group_members('staffmail')
+    ]
+
+    emails = fetch_email_addresses(members)
+
+    sender_login_maps_content = ""
+    for uid, _ in emails:
+        sender_login_maps_content += f'{uid}@gnome.org\t\t{uid}\n'
+
+        if uid in gimp_ldapmain:
+            sender_login_maps_content += f'{uid}@gimp.org\t\t{uid}\n'
+    return sender_login_maps_content
+
+def fetch_gitlab_group_members(group_id):
+  """
+  Fetches the members of a given GitLab group.
+
+  Args:
+    group_id (int): The ID of the GitLab group.
+
+  Returns:
+    list: A list of GitLab user objects representing the group members.
+  """
+  try:
+    group = gl.groups.get(group_id)
+    return group.members.list(all=True)
+  except gitlab.exceptions.GitlabGetError as e:
+    print(f"Error fetching GitLab group members: {e}")
+    return []
+
+def fetch_ldapmain_identity(user):
+  """
+  Fetches the 'ldapmain' identity for a given GitLab user.
+
+  Args:
+    user (gitlab.v4.objects.User): The GitLab user object.
+
+  Returns:
+    str or None: The 'ldapmain' identity value or None if not found.
+  """
+  user = gl.users.get(user)
+  identities = user.identities
+  if len(identities) > 0:
+    for identity in identities:
+      if identity['provider'] == 'ldapmain':
+        return identity['extern_uid'].split(',')[0].split('=')[1]
+
+  return None
+
+
 if __name__ == '__main__':
-    global l
     try:
         ldap.set_option(ldap.OPT_X_TLS_CACERTFILE, LDAP_CA_PATH)
-
-        l = ldap.initialize('ldaps://%s:636' % LDAP_HOST)
+        l = ldap.initialize(f'ldaps://{LDAP_HOST}:636')
         l.simple_bind_s(LDAP_USER, LDAP_PASSWORD)
     except ldap.LDAPError as e:
-        print >>sys.stderr, e
+        print(e, file=sys.stderr)
         sys.exit(1)
 
     for aliasfile, domain, groups in ALIASES:
-        if type(groups) == tuple:
-            members = set()
-            for group in groups:
-                members.update(fetch_group_members(group))
-        else:
-            members = fetch_group_members(groups)
-            groups = (groups, )
+        aliasfile, newaliasfile = generate_alias_file(aliasfile, domain, groups)
+        update_file(aliasfile, newaliasfile)
 
-        emails = fetch_email_addresses(members)
-        newaliasfile = '%s.new2' % aliasfile
+    sender_login_maps_content = generate_sender_login_maps(['emeritus', 'mailgrace', 'foundation', 'staffmail'])
+    update_file('/etc/gnome.org/login-maps/sender_login_maps', sender_login_maps_content)
 
-        if domain == "":
-            file_format = "%s%s:\t\t%s\n"
-        else:
-            file_format = "%s%s %s\n"
-            if not domain.startswith("@"):
-                domain = "@" + domain
-
-        with open(newaliasfile, 'w') as f:
-            f.write("# WARNING: Do not edit this file directly. Users who should have\n")
-            f.write("#          aliases should be added to the %s group\n\n" % ",".join(groups))
-            f.writelines((file_format % (uid, domain, mail) for uid, mail in emails))
-
-        p = subprocess.Popen(['/usr/bin/diff', '-U0', '--', aliasfile, newaliasfile], stdout=subprocess.PIPE)
-        (stdout, stderr) = p.communicate()
-        if p.returncode != 0:
-            print(stdout.decode())
-            print()
-            print()
-            subprocess.call(['/bin/mv', '-f', '--', newaliasfile, aliasfile])
-            if domain == '':
-                subprocess.call(['/usr/sbin/postalias', '-w', aliasfile])
-            else:
-                subprocess.call(['/usr/sbin/postmap', 'hash:%s' % aliasfile])
-            subprocess.call(['/usr/sbin/postfix', 'reload']);
     l.unbind_s()
