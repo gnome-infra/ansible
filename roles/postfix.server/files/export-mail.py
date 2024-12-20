@@ -182,7 +182,8 @@ def generate_sender_login_maps(groups):
             'bart': 'bpiotrowski',
             'kristi': 'kprogri',
             'anisa': 'akuci',
-            'richard': 'rlittauer'
+            'richard': 'rlittauer',
+            'aday': 'allanday'
         },
         'gimp.org': {
             'jehan': 'jehanp',
