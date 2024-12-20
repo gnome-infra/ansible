@@ -175,31 +175,38 @@ def generate_sender_login_maps(groups):
 
     emails = fetch_email_addresses(members)
 
-    custom_map = [('av@gnome.org', 'averi'), \
-                 ('bart@gnome.org', 'bpiotrowski'), \
-                 ('kristi@gnome.org', 'kprogri'), \
-                 ('anisa@gnome.org', 'akuci'), \
-                 ('richard@gnome.org', 'rlittauer')
-                 ]
-
     sender_login_maps_content = ""
+    custom_map = {
+        'gnome.org': {
+            'av': 'averi',
+            'bart': 'bpiotrowski',
+            'kristi': 'kprogri',
+            'anisa': 'akuci',
+            'richard': 'rlittauer'
+        },
+        'gimp.org': {
+            'jehan': 'jehanp',
+            'aryeom': 'aryeomhan'
+        }
+    }
+
     for uid, _ in emails:
-        uids = []
-        for c_mail, c_uid in custom_map:
-            if c_mail.split('@')[0] == uid:
-                uids.append(uid)
-                uids.append(c_uid)
+        aliases = [uid]
+        if uid in custom_map['gnome.org'].keys():
+            aliases.append(custom_map['gnome.org'][uid])
 
-            if c_uid == uid:
-                sender_login_maps_content += f'{c_mail}\t\t{c_uid}\n'
+        sender_login_maps_content += f'{uid}@gnome.org\t\t{" ".join(aliases)}\n'
 
-        if len(uids) > 0:
-            sender_login_maps_content += f'{uid}@gnome.org\t\t{" ".join(uids)}\n'
-        else:
-            sender_login_maps_content += f'{uid}@gnome.org\t\t{uid}\n'
+        for key, value in custom_map['gnome.org'].items():
+            if uid == value:
+                sender_login_maps_content += f'{key}@gnome.org\t\t{value}\n'
 
         if uid in gimp_ldapmain:
             sender_login_maps_content += f'{uid}@gimp.org\t\t{uid}\n'
+
+            for key, value in custom_map['gimp.org'].items():
+                if uid == value:
+                  sender_login_maps_content += f'{key}@gimp.org\t\t{value}\n'
 
     return sender_login_maps_content
 
