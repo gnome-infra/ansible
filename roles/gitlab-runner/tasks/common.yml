@@ -165,7 +165,9 @@
     mode: 0644
     owner: root
     group: root
-  notify: reload udevadm
+  notify:
+    - reload udevadm
+    - trigger udevadm
 
 - name: Enable systemctl --user as podman
   lineinfile:

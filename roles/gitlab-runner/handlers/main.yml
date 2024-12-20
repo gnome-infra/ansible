@@ -18,6 +18,9 @@
 - name: reload udevadm
   ansible.builtin.command: udevadm control --reload-rules
 
+- name: trigger udevadm
+  ansible.builtin.command: udevadm trigger
+
 - name: podman system migrate
   ansible.builtin.command: podman system migrate
   become_user: podman
