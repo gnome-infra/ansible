@@ -112,18 +112,6 @@
     dest: /etc/systemd/user/gitlab-runner.service
   notify: restart gitlab-runner
 
-- name: make sure pydocuum, gitlab-runner, podman were not started as root
-  ansible.builtin.systemd:
-    name: "{{ item }}.service"
-    state: stopped
-    enabled: false
-    daemon_reload: true
-    scope: user
-  loop:
-    - podman
-    - gitlab-runner
-    - pydocuum
-
 - name: start gitlab-runner
   ansible.builtin.systemd:
     name: gitlab-runner.service
@@ -157,6 +145,18 @@
   with_items:
     - "/{{ podman_user.home }}/.config/systemd/user/pydocuum.service"
     - "/{{ podman_user.home }}/.config/systemd/user/gitlab-runner.service"
+
+- name: make sure pydocuum, gitlab-runner, podman were not started as root
+  ansible.builtin.systemd:
+    name: "{{ item }}.service"
+    state: stopped
+    enabled: false
+    daemon_reload: true
+    scope: user
+  loop:
+    - podman
+    - gitlab-runner
+    - pydocuum
 
 - name: relax /dev/kvm permissions
   ansible.builtin.copy:
