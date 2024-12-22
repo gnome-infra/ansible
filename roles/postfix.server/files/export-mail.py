@@ -147,13 +147,13 @@ def update_file(original_file, new_file_content):
         subprocess.run(['mv', '-f', '--', new_file, original_file], check=True)
         # Apply postfix-specific commands based on the file type
         if 'sender_login_maps' in original_file:
-            subprocess.run(['postmap', f'{original_file}'], check=True)
+            subprocess.run(['/usr/sbin/postmap', f'{original_file}'], check=True)
         else:  # Assuming it's an alias file
             if domain == '':
-                subprocess.run(['postalias', '-w', original_file], check=True)
+                subprocess.run(['/usr/sbin/postalias', '-w', original_file], check=True)
             else:
-                subprocess.run(['postmap', f'{original_file}'], check=True)
-        subprocess.run(['postfix', 'reload'], check=True)
+                subprocess.run(['/usr/sbin/postmap', f'{original_file}'], check=True)
+        subprocess.run(['/usr/sbin/postfix', 'reload'], check=True)
 
 def generate_sender_login_maps(groups):
     """
