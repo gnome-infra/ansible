@@ -38,7 +38,6 @@ gitlab_runner_config:
       id: 726
       token: "{{ gitlab_runner_token_gnome }}"
       executor: docker
-      pre_get_sources_script: "sleep $(shuf -i 5-30 -n 1)"
       cache:
         MaxUploadedArchiveSize: 0
         s3:

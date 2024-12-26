@@ -20,7 +20,6 @@ gitlab_runner_config:
       url: https://gitlab.gnome.org
       token: "{{ gitlab_runner_token_gbm }}"
       executor: docker
-      pre_get_sources_script: "sleep $(shuf -i 5-30 -n 1)"
       docker:
         host: unix:///run/podman/podman.sock
         tls_verify: false

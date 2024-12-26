@@ -26,7 +26,6 @@ gitlab_runner_config:
       id: 460
       token: "{{ gitlab_runner_token_untagged }}"
       executor: docker
-      pre_get_sources_script: "sleep $(shuf -i 3-15 -n 1)"
       cache:
         MaxUploadedArchiveSize: 0
         s3:
@@ -58,7 +57,6 @@ gitlab_runner_config:
       id: 460
       token: "{{ gitlab_runner_token_flatpak }}"
       executor: docker
-      pre_get_sources_script: "sleep $(shuf -i 3-15 -n 1)"
       cache:
         MaxUploadedArchiveSize: 0
       docker:

@@ -32,7 +32,6 @@ gitlab_runner_config:
       token_obtained_at: 0001-01-01T00:00:00.000Z
       token_expires_at: 0001-01-01T00:00:00.000Z
       executor: docker
-      pre_get_sources_script: "sleep $(shuf -i 5-30 -n 1)"
       docker:
         host: unix:///run/podman/podman.sock
         tls_verify: false
@@ -51,7 +50,6 @@ gitlab_runner_config:
       token_obtained_at: 0001-01-01T00:00:00.000Z
       token_expires_at: 0001-01-01T00:00:00.000Z
       executor: docker
-      pre_get_sources_script: "sleep $(shuf -i 5-30 -n 1)"
       docker:
         host: unix:///run/podman/podman.sock
         tls_verify: false
