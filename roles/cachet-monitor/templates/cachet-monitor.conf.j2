@@ -195,6 +195,27 @@
       "timeout": 30,
       "expected_status_code": 200,
       "expected_body": ".*ODRS.*"
+    },
+    {
+      "name": "smtp.gnome.org - SMTP",
+      "target": "smtp.gnome.org",
+      "type": "tcp",
+      "port": "25",
+      "component_id": 18
+    },
+    {
+      "name": "smtp.gnome.org - Submission",
+      "target": "smtp.gnome.org",
+      "type": "tcp",
+      "port": "587",
+      "component_id": 18
+    },
+    {
+      "name": "smtp.gnome.org - IMAPS",
+      "target": "smtp.gnome.org",
+      "type": "tcp",
+      "port": "995",
+      "component_id": 18
     }
   ]
 }
