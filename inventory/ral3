@@ -1,0 +1,4 @@
+[ral3]
+redhat-01 ansible_host=8.43.85.3
+redhat-02 ansible_host=8.43.85.4
+redhat-03 ansible_host=8.43.85.5
