@@ -53,6 +53,7 @@ gitlab_runner_config:
       id: 460
       token: "{{ gitlab_runner_token_flatpak }}"
       executor: docker
+      output_limit: 100000
       cache:
         MaxUploadedArchiveSize: 0
       docker:
