@@ -43,7 +43,7 @@
     mode: 0644
   notify: Restart rspamd
 
-- name: Configure RBL
+- name: Land additional rspamd templated config files
   template:
     src: local.d/{{ item }}.j2
     dest: /etc/rspamd/local.d/{{ item }}
@@ -53,6 +53,7 @@
   loop:
     - rbl.conf
     - surbl.conf
+    - options.inc
   notify: Restart rspamd
 
 - name: Start and enable rspamd
