@@ -1,3 +1,5 @@
 datacenter: 'ral3'
 firewall_allowed_tcp_ports:
   - 22
+firewall_additional_rules:
+  - "iptables -t nat -A POSTROUTING -s 172.31.2.0/24 -o br0-external -j MASQUERADE"

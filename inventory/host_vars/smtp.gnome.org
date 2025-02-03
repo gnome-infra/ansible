@@ -90,6 +90,9 @@ postfix_mynetworks:
   - 54.165.53.199
   - 35.153.15.118
   - 98.83.131.224
+  - 8.43.85.3
+  - 8.43.85.4
+  - 8.43.85.5
 postfix_myhostname: smtp.gnome.org
 postfix_smtpd_sender_login_maps:
   - hash:/etc/gnome.org/login-maps/sender_login_maps
