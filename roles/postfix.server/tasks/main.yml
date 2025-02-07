@@ -17,9 +17,9 @@
     postfix_backup_multiple: false
     postfix_conf:
       inet_interfaces: all
-      virtual_alias_maps: "{{ (postfix_postmap_files | select('search', 'virtual') | list)
-                              + (postfix_regexp_files | select('search', 'virtual') | list)
-                              | join(', ') }}"
+      virtual_alias_maps: "{% set files = (postfix_postmap_files | select('search', 'virtual') | list) +
+                                          (postfix_regexp_files | select('search', 'virtual') | list) %}
+                                          {{ files | join(', ') }}"
       alias_maps: "{{ postfix_postalias_files | join(',') }}"
       mydestination: "{{ postfix_mydestinations | join(',') }}"
       mynetworks: "{{ postfix_mynetworks | join(',') }}"
