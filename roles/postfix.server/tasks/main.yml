@@ -154,6 +154,18 @@
     - "'/etc/gnome.org' not in item"
   tags: postalias
 
+- name: Land Postfix virtual aliases regexes
+  template:
+    src: "regexp/{{ item.split('/')[-1] }}.j2"
+    dest: "{{ item | regex_replace('^regexp:', '') }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ postfix_regexp_files }}"
+  notify:
+    - Reload Postfix
+  tags: regexp
+
 - name: Install OpenDKIM
   dnf:
     name: "{{ opendkim_packages }}"

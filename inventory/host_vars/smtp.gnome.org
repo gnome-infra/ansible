@@ -54,6 +54,9 @@ postfix_postmap_files:
     - hash:/etc/postfix/virtual-aliases/virtual-flatpak.org
     - hash:/etc/postfix/transport
 
+postfix_regexp_files:
+    - regexp:/etc/postfix/virtual-aliases/virtual-gitlab.gnome.org
+
 postfix_postalias_files:
     - hash:/etc/gnome.org/master-mail/aliases
     - hash:/etc/aliases
