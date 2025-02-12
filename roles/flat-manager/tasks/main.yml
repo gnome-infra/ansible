@@ -33,13 +33,6 @@
   become: true
   become_user: postgres
 
-- name: create flat-manager-ostree database
-  community.postgresql.postgresql_db:
-    name: flat-manager-ostree
-    owner: flat-manager
-  become: true
-  become_user: postgres
-
 - name: create flat-manager configuration directory
   file:
     path: /etc/flat-manager
@@ -53,15 +46,6 @@
     group: flat-manager
     mode: 0600
   notify: restart flat-manager
-
-- name: configure flat-manager-ostree
-  template:
-    src: ostree.json.j2
-    dest: /etc/flat-manager/ostree.json
-    owner: flat-manager
-    group: flat-manager
-    mode: 0600
-  notify: restart flat-manager-ostree
 
 - name: install post-publish script
   template:
@@ -83,31 +67,10 @@
     daemon_reload: yes
     enabled: yes
 
-- name: install flat-manager-ostree systemd unit
-  copy:
-    src: flat-manager-ostree.service
-    dest: /etc/systemd/system/flat-manager-ostree.service
-  notify: restart flat-manager-ostree
-
-- name: enable and start flat-manager-ostree
-  ansible.builtin.systemd:
-    name: flat-manager-ostree
-    daemon_reload: yes
-    enabled: yes
-
 - name: configure nginx for flat-manager
   copy:
     src: flat-manager.gnome.org.conf
     dest: /etc/nginx/sites-enabled/flat-manager.gnome.org.conf
-    mode: 0600
-    owner: root
-    group: root
-  notify: reload nginx
-
-- name: configure nginx for flat-manager-ostree
-  copy:
-    src: flat-manager-ostree.gnome.org.conf
-    dest: /etc/nginx/sites-enabled/flat-manager-ostree.gnome.org.conf
     mode: 0600
     owner: root
     group: root
