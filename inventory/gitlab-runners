@@ -9,3 +9,5 @@ equinix-arm64 ansible_host=147.28.151.230
 azure-aarch64-01 ansible_host=20.115.56.224
 osuosl-1 ansible_host=140.211.167.235
 osuosl-2 ansible_host=140.211.167.242
+redhat-runner-01 ansible_host=172.31.2.100
+redhat-runner-02 ansible_host=172.31.2.101

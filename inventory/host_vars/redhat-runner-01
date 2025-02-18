@@ -1,0 +1,35 @@
+ansible_connection: ssh
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@8.43.85.5 -o StrictHostKeyChecking=no"'
+
+gitlab_runner_instance_wide_token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34323938373466636365663336663461316632613461653231376262383338323836626535306163
+          3664646564373865666433383363326631346530636134620a396262613664643963316430623037
+          34633235653361653464323030373263643464336465353430356261353934363037346432333531
+          3936616233626565330a613437653665623264386636303262313065353834333563316265343531
+          39353032366631643162383362383966333137656134373438316133666433346633
+
+gitlab_runner_config:
+  concurrent: 10
+  check_interval: 0
+  shutdown_timeout: 0
+  session_server:
+    session_timeout: 1800
+  runners:
+    - name: redhat-runner-01
+      url: https://gitlab.gnome.org
+      id: 859
+      token: "{{ gitlab_runner_instance_wide_token }}"
+      executor: docker
+      docker:
+        dns:
+          - "169.254.1.1"
+        dns_search: [""]
+        helper_image_flavor: "ubuntu"
+        tls_verify: false
+        image: quay.io/fedora/fedora:latest
+        privileged: false
+        disable_entrypoint_overwrite: false
+        oom_kill_disable: false
+        disable_cache: true
+        shm_size: 0
