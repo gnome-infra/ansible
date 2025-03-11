@@ -10,7 +10,7 @@ gitlab_runner_instance_wide_token: !vault |
           39353032366631643162383362383966333137656134373438316133666433346633
 
 gitlab_runner_config:
-  concurrent: 10
+  concurrent: 4
   check_interval: 0
   shutdown_timeout: 0
   session_server:
