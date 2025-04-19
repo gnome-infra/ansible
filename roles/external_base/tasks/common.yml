@@ -30,7 +30,3 @@
   with_items:
     - tailscaled
     - vnstat
-
-- name: Configure chronyd
-  ansible.builtin.include_role:
-    name: chrony

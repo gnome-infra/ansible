@@ -21,3 +21,7 @@
   with_items:
     - dnf-automatic-install.timer
     - node_exporter
+
+- name: Configure chronyd
+  ansible.builtin.include_role:
+    name: chrony
