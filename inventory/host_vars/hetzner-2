@@ -1,3 +1,8 @@
+chrony_ntp_servers:
+  - "ntp1.hetzner.de"
+  - "ntp2.hetzner.com"
+  - "ntp3.hetzner.net"
+
 gitlab_runner_token_untagged: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           33663865373363653737396235383963353164303039373336383463616434383735326130656163
