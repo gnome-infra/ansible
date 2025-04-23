@@ -203,12 +203,13 @@ def generate_sender_login_maps(groups):
     sender_login_maps_content = ""
     custom_map = {
         "gnome.org": {
+            "aday": "allanday",
+            "anisa": "akuci",
             "av": "averi",
             "bart": "bpiotrowski",
             "kristi": "kprogri",
-            "anisa": "akuci",
             "richard": "rlittauer",
-            "aday": "allanday",
+            "steven": "sdeobald",
         },
         "gimp.org": {"jehan": "jehanp", "aryeom": "aryeomhan"},
     }
