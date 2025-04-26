@@ -18,10 +18,3 @@
   remote_user: root
   gather_facts: true
   tasks: []
-
-- hosts: bbb2.gnome.org
-  gather_facts: true
-  remote_user: root
-  roles:
-   - external_base
-   - external_prometheus
