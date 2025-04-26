@@ -10,12 +10,12 @@ gitlab_runner_token_gbm: !vault |
           62393735383432336437393530353038373831356334646663353536333737613030
 
 gitlab_runner_config:
-  concurrent: 5
+  concurrent: 4
   check_interval: 0
   session_server:
     session_timeout: 1800
   runners:
-    - name: m3-large-x86.gnome.org
+    - name: redhat-runner-03
       output_limit: 32768
       url: https://gitlab.gnome.org
       token: "{{ gitlab_runner_token_gbm }}"
@@ -29,7 +29,5 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         volumes:
-          - /mnt/data/cache:/cache
+          - /var/cache/gnome-build-meta:/cache
         shm_size: 0
-        cpuset_cpus: 0-57
-        cpus: "58"
