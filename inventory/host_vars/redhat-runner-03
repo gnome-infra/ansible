@@ -1,4 +1,7 @@
 ---
+ansible_connection: ssh
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@8.43.85.5 -o StrictHostKeyChecking=no"'
+
 skip_firewalld: true
 
 gitlab_runner_token_gbm: !vault |
