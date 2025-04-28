@@ -14,7 +14,7 @@
     {% if ansible_distribution_major_version == '40' %}
     --add-repo
     {% else %}
-    addrepo
+    addrepo --from-repofile
     {% endif %}
     https://pkgs.tailscale.com/stable/fedora/tailscale.repo
   args:
