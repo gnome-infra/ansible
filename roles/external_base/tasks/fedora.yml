@@ -3,7 +3,7 @@
   ansible.builtin.package:
     name:
       - dnf-automatic
-      - golang-github-prometheus-node-exporter
+      - "{{ ansible_distribution_major_version == '40' ? 'golang-github-prometheus-node-exporter' : 'node-exporter' }}"
       - vim-minimal
     state: present
     update_cache: true
