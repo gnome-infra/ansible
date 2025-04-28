@@ -10,7 +10,13 @@
 
 - name: add tailscale repo
   ansible.builtin.command: >
-    dnf config-manager {{ ansible_distribution_major_version == '40' ? '--add-repo' : 'addrepo' }} https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+    dnf config-manager
+    {% if ansible_distribution_major_version == '40' %}
+    --add-repo
+    {% else %}
+    addrepo
+    {% endif %}
+    https://pkgs.tailscale.com/stable/fedora/tailscale.repo
   args:
     creates: /etc/yum.repos.d/tailscale.repo
 
