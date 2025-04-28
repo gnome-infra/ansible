@@ -20,7 +20,7 @@
     name: "{{ item }}"
     enabled: true
   with_items:
-    - dnf-automatic-install.timer
+    - dnf-automatic.timer
     - node_exporter
 
 - name: Configure chronyd
