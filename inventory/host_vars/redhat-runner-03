@@ -24,7 +24,6 @@ gitlab_runner_config:
       token: "{{ gitlab_runner_token_gbm }}"
       executor: docker
       docker:
-        host: unix:///run/podman/podman.sock
         tls_verify: false
         image: fedora:latest
         privileged: true
