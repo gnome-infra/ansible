@@ -56,7 +56,7 @@ gitlab_runner_config:
           - all
         oom_kill_disable: false
         security_opt:
-          - seccomp:/etc/gitlab-runner/flatpak.seccomp.json
+          - seccomp:/home/podman/gitlab-runner/flatpak.seccomp.json
         disable_cache: true
         volumes:
           - /proc:/host/proc
