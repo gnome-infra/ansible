@@ -2,8 +2,6 @@
 ansible_connection: ssh
 ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@8.43.85.5 -o StrictHostKeyChecking=no"'
 
-skip_firewalld: true
-
 gitlab_runner_token_gbm: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           37616337336363353534643662356338326462306336306139393636616239343564383365613835
