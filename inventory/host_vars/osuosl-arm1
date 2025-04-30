@@ -31,7 +31,6 @@ gitlab_runner_config:
       token_expires_at: 0001-01-01T00:00:00.000Z
       executor: docker
       docker:
-        host: unix:///run/podman/podman.sock
         tls_verify: false
         image: fedora:latest
         privileged: true
@@ -49,7 +48,6 @@ gitlab_runner_config:
       token_expires_at: 0001-01-01T00:00:00.000Z
       executor: docker
       docker:
-        host: unix:///run/podman/podman.sock
         tls_verify: false
         image: fedora:latest
         privileged: false
