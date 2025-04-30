@@ -38,7 +38,7 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         volumes:
-          - /var/lib/containers/runners-cache:/cache
+          - /var/cache/gnome-build-meta:/cache
         shm_size: 256000000
     - name: osuosl-arm1-flatpak
       output_limit: 16384
