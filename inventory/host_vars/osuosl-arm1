@@ -1,6 +1,4 @@
 ---
-skip_firewalld: true
-
 gitlab_runner_token_gbm: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           64643634623165353138653866666431373735373364353933336463643964333565626664373233
@@ -24,7 +22,7 @@ gitlab_runner_config:
   session_server:
     session_timeout: 1800
   runners:
-    - name: c3-large-arm
+    - name: osuosl-arm1
       output_limit: 16384
       url: https://gitlab.gnome.org
       id: 0
@@ -43,7 +41,7 @@ gitlab_runner_config:
         volumes:
           - /var/lib/containers/runners-cache:/cache
         shm_size: 256000000
-    - name: c3-large-arm-flatpak
+    - name: osuosl-arm1-flatpak
       output_limit: 16384
       url: https://gitlab.gnome.org/
       token: "{{ gitlab_runner_token_flatpak }}"
