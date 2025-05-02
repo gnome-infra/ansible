@@ -29,5 +29,5 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         volumes:
-          - /var/cache/gnome-build-meta:/cache
+          - /home/podman/cache:/cache
         shm_size: 0
