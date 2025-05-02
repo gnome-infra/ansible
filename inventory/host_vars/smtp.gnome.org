@@ -6,6 +6,9 @@ firewall_allowed_tcp_ports:
   - 587
   - 80
 
+firewall_additional_rules:
+  - "iptables -A INPUT -p tcp -m tcp --dport 9100 -s 10.8.0.2/32 -j ACCEPT"
+
 sshguard_enabled: true
 
 dovecot_ldap_host: ldaps://idm03.gnome.org
