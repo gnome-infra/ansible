@@ -3,7 +3,7 @@
   yum_repository:
     name: rspamd
     description: rspamd Yum repository
-    baseurl: https://rspamd.com/rpm-stable/centos-8/x86_64
+    baseurl: https://rspamd.com/rpm-stable/centos-9/x86_64
     gpgcheck: yes
     gpgkey: https://rspamd.com/rpm/gpg.key
 
@@ -54,6 +54,7 @@
     - rbl.conf
     - surbl.conf
     - options.inc
+    - gpt.conf
   notify: Restart rspamd
 
 - name: Start and enable rspamd

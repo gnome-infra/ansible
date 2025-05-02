@@ -4,6 +4,8 @@ us-east-1
 [us-east-1:children]
 bastions
 idm
+smtp_servers
+dovecot_servers
 
 [bastions]
 bastion02.gnome.org
@@ -17,3 +19,9 @@ bastion02.gnome.org
 
 [promtail]
 bastion02.gnome.org
+
+[smtp_servers]
+smtp.gnome.org
+
+[dovecot_servers]
+smtp.gnome.org

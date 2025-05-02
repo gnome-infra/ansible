@@ -10,7 +10,6 @@
       {{ hostvars[host].ansible_eth0.ipv4.address }} {{ hostvars[host].ansible_fqdn }} {{ hostvars[host].ansible_hostname }}
     {% endfor %}
   {% endif %}
-{% elif datacenter in ['osuosl', 'osci'] %}
-8.43.85.20 vpn.gnome.org
+{% elif datacenter in ['osuosl'] %}
 98.83.131.224 bastion02.gnome.org
 {% endif %}

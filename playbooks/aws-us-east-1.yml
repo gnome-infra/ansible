@@ -61,3 +61,15 @@
   remote_user: root
   roles:
    - postfix.wrapper
+
+- hosts: smtp_servers
+  gather_facts: false
+  remote_user: root
+  roles:
+   - postfix.server
+
+- hosts: dovecot_servers
+  gather_facts: false
+  remote_user: root
+  roles:
+    - dovecot

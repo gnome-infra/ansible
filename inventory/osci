@@ -1,9 +1,0 @@
-[osci:children]
-smtp_servers
-dovecot_servers
-
-[smtp_servers]
-smtp.gnome.org
-
-[dovecot_servers]
-smtp.gnome.org
