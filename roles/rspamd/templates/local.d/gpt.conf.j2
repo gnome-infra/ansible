@@ -1,0 +1,12 @@
+enabled = true;
+api_key = "{{ rspamd_gpt_api_key }}";
+autolearn = true;
+
+symbols_to_except = [
+  'BAYES_SPAM',
+  'WHITELIST_SPF',
+  'WHITELIST_DKIM',
+  'WHITELIST_DMARC',
+  'FUZZY_DENIED',
+  'LOCAL_FUZZY_DENIED',
+];
