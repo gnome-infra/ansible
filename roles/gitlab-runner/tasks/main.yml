@@ -181,7 +181,7 @@
 
 - name: shim resolved setup for podman
   ansible.builtin.file:
-    path: "/run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd/"
+    path: "/run/user/{{ podman_user.uid }}/containers/networks/rootless-netns"
     state: directory
     recurse: yes
     owner: podman
@@ -190,6 +190,6 @@
 
 - name: symlink resolved config files
   ansible.builtin.file:
-    src: /run/systemd/resolve
-    dest: "/run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd/resolve"
+    src: /etc/resolv.conf
+    dest: "/run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/resolv.conf"
     state: link
