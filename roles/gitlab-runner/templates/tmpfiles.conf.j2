@@ -1,0 +1,8 @@
+d /run/user/{{ podman_user.uid }} 0700 podman podman -
+d /run/user/{{ podman_user.uid }}/containers 0700 podman podman -
+d /run/user/{{ podman_user.uid }}/containers/networks 0700 podman podman -
+d /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns 0700 podman podman -
+d /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run 0700 podman podman -
+d /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd 0700 podman podman -
+d /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd/resolve 0700 podman podman -
+L! /run/systemd/resolve - - - - /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd/resolve/
