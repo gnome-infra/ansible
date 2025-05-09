@@ -5,4 +5,5 @@ d /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns 0700 podman
 d /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run 0700 podman podman -
 d /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd 0700 podman podman -
 d /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd/resolve 0700 podman podman -
-L! /run/systemd/resolve - - - - /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd/resolve/
+L! /run/systemd/resolve/resolv.conf - - - - /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd/resolve/resolv.conf
+L! /run/systemd/resolve/stub-resolv.conf - - - - /run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd/resolve/stub-resolv.conf
