@@ -178,18 +178,3 @@
     - 'export DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus'
   become_user: podman
   become: true
-
-- name: shim resolved setup for podman
-  ansible.builtin.file:
-    path: "/run/user/{{ podman_user.uid }}/containers/networks/rootless-netns"
-    state: directory
-    recurse: yes
-    owner: podman
-    group: podman
-    mode: '0700'
-
-- name: symlink resolved config files
-  ansible.builtin.file:
-    src: /etc/resolv.conf
-    dest: "/run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/resolv.conf"
-    state: link
