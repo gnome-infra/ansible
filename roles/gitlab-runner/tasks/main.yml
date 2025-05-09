@@ -179,15 +179,17 @@
   become_user: podman
   become: true
 
-- name: symlink /run/systemd/resolve to where podman wants it
-  ansible.builtin.template:
-    src: templates/tmpfiles.conf.j2
-    dest: /etc/tmpfiles.d/podman-resolve-symlink.conf
-    owner: root
-    group: root
-    mode: '0644'
-  register: tmpfiles_conf
+- name: shim resolved setup for podman
+  ansible.builtin.file:
+    path: "/run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd/"
+    state: directory
+    recurse: yes
+    owner: podman
+    group: podman
+    mode: '0700'
 
-- name: apply tmpfiles configuration
-  ansible.builtin.command: systemd-tmpfiles --create /etc/tmpfiles.d/podman-resolve-symlink.conf
-  when: tmpfiles_conf.changed
+- name: symlink resolved config files
+  ansible.builtin.file:
+    src: /run/systemd/resolve
+    dest: "/run/user/{{ podman_user.uid }}/containers/networks/rootless-netns/run/systemd/resolve"
+    state: link
