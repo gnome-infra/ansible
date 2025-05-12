@@ -24,3 +24,7 @@
 - name: podman system migrate
   ansible.builtin.command: podman system migrate
   become_user: podman
+
+- name: reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true

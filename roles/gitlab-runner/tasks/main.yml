@@ -178,3 +178,27 @@
     - 'export DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus'
   become_user: podman
   become: true
+
+- name: Ensure podman-cleanup service file is copied
+  ansible.builtin.copy:
+    src: podman-cleanup.service
+    dest: /etc/systemd/system/podman-cleanup.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: reload systemd daemon
+
+- name: Ensure podman-cleanup timer file is copied
+  ansible.builtin.copy:
+    src: podman-cleanup.timer
+    dest: /etc/systemd/system/podman-cleanup.timer
+    owner: root
+    group: root
+    mode: '0644'
+  notify: reload systemd daemon
+
+- name: Ensure podman-cleanup timer is enabled and started
+  ansible.builtin.systemd:
+    name: podman-cleanup.timer
+    enabled: true
+    state: started

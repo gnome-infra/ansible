@@ -1,0 +1,11 @@
+[Unit]
+Description=Clean up Podman containers and volumes
+After=podman.service
+
+[Service]
+User=podman
+Type=oneshot
+ExecStart=/usr/bin/podman container prune -f
+ExecStart=/usr/bin/podman volume prune -f
+
+[Install]
