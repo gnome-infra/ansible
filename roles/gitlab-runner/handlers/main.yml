@@ -6,6 +6,7 @@
     daemon_reload: true
     scope: user
   become_user: podman
+  become: true
 
 - name: restart pydocuum
   ansible.builtin.systemd:
@@ -14,6 +15,7 @@
     daemon_reload: true
     scope: user
   become_user: podman
+  become: true
 
 - name: reload udevadm
   ansible.builtin.command: udevadm control --reload-rules
@@ -24,6 +26,7 @@
 - name: podman system migrate
   ansible.builtin.command: podman system migrate
   become_user: podman
+  become: true
 
 - name: reload systemd daemon
   ansible.builtin.systemd:
