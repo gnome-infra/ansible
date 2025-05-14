@@ -39,6 +39,7 @@ gitlab_runner_config:
         disable_cache: true
         volumes:
           - /var/cache/gnome-build-meta:/cache
+          - casd_socket:/run/casd
         shm_size: 256000000
     - name: osuosl-arm1-flatpak
       output_limit: 16384
@@ -61,3 +62,6 @@ gitlab_runner_config:
         volumes:
           - /proc:/host/proc
         shm_size: 0
+
+buildbox_casd: true
+buildbox_casd_jobs: 4
