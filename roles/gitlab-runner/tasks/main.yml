@@ -148,7 +148,7 @@
     - "--buildbox-run"
     - "buildbox-run-bubblewrap"
     - "--jobs"
-    - "{{ buildbox_casd_jobs }}"
+    - "{{ gitlab_runner_buildbox_casd_jobs }}"
     - "--bind unix:/run/casd/casd.sock"
     - "/srv/cas"
     quadlet_filename: buildbox-casd
@@ -167,7 +167,7 @@
         WantedBy=default.target
   become_user: podman
   become: true
-  when: "{{ buildbox_casd | default(false) }}"
+  when: "{{ gitlab_runner_buildbox_casd | default(false) }}"
   notify: restart buildbox-casd
 
 - name: clean up old user systemd services

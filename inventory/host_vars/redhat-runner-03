@@ -33,5 +33,5 @@ gitlab_runner_config:
           - casd_socket:/run/casd
         shm_size: 0
 
-buildbox_casd: true
-buildbox_casd_jobs: 10
+gitlab_runner_buildbox_casd: true
+gitlab_runner_buildbox_casd_jobs: 10
