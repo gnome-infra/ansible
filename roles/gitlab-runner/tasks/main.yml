@@ -45,6 +45,7 @@
     enabled: true
     scope: user
   become_user: podman
+  become: true
   with_items:
     - podman.socket
     - podman-auto-update.timer
