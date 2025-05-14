@@ -17,6 +17,15 @@
   become_user: podman
   become: true
 
+- name: restart buildbox-casd
+  ansible.builtin.systemd:
+    name: buildbox-casd.service
+    state: restarted
+    daemon_reload: true
+    scope: user
+  become_user: podman
+  become: true
+
 - name: reload udevadm
   ansible.builtin.command: udevadm control --reload-rules
 

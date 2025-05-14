@@ -30,4 +30,8 @@ gitlab_runner_config:
         disable_cache: true
         volumes:
           - /home/podman/cache:/cache
+          - casd_socket:/run/casd
         shm_size: 0
+
+buildbox_casd: true
+buildbox_casd_jobs: 10

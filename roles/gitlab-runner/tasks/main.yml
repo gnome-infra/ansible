@@ -139,6 +139,37 @@
   become_user: podman
   become: true
 
+- name: create quadlet for buildbox-casd
+  containers.podman.podman_container:
+    name: buildbox-casd
+    image: registry.gitlab.com/freedesktop-sdk/infrastructure/freedesktop-sdk-docker-images/buildbox-casd:latest
+    state: quadlet
+    command:
+    - "--buildbox-run"
+    - "buildbox-run-bubblewrap"
+    - "--jobs"
+    - "{{ buildbox_casd_jobs }}"
+    - "--bind unix:/run/casd/casd.sock"
+    - "/srv/cas"
+    quadlet_filename: buildbox-casd
+    privileged: true
+    volumes:
+      - casd_socket:/run/casd
+      - casd_storage:/srv/cas
+    quadlet_options:
+      - "AutoUpdate=registry"
+      - "Pull=newer"
+      - |
+        [Service]
+        Restart=always
+      - |
+        [Install]
+        WantedBy=default.target
+  become_user: podman
+  become: true
+  when: "{{ buildbox_casd | default(false) }}"
+  notify: restart buildbox-casd
+
 - name: clean up old user systemd services
   ansible.builtin.file:
     path: "{{ item }}"
