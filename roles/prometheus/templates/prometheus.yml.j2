@@ -38,6 +38,16 @@ scrape_configs:
       regex: vpn\.(.+):9100
       replacement: $1
 
+  - job_name: 'external'
+    honor_labels: true
+    metrics_path: '/federate'
+    params:
+      'match[]':
+      - '{job="node"}'
+    static_configs:
+    - targets:
+      - 37.27.142.13:9090
+
   - job_name: gitlab_database
     metrics_path: "/database"
     scheme: https

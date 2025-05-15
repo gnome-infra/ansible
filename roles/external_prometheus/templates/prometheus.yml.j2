@@ -9,33 +9,54 @@ rule_files:
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
-    - targets:
-      - 127.0.0.1:9090
+      - targets:
+          - 127.0.0.1:9090
 
   - job_name: 'node'
     static_configs:
-    - targets:
+{% set gitlab_runner_targets = [] %}
 {% for host in groups['gitlab-runners'] %}
-{% if hostvars[host].ansible_tailscale0 is defined %}
-      - {{ hostvars[host].ansible_tailscale0.ipv4.address }}:9100
-{% endif %}
+{%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
+{%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
+{%   set ts_ip = ts_ipv4.get('address') %}
+{%   if ts_ip %}
+{%     set _ = gitlab_runner_targets.append(ts_ip ~ ':9100') %}
+{%   endif %}
 {% endfor %}
-      labels:
-        role: gitlab-runner
-    - targets:
-{% for host in groups['external'] %}
-{% if hostvars[host].ansible_tailscale0 is defined %}
-      - {{ hostvars[host].ansible_tailscale0.ipv4.address }}:9100
-{% endif %}
+{% if gitlab_runner_targets %}
+      - targets:
+{% for target in gitlab_runner_targets %}
+          - "{{ target }}"
 {% endfor %}
+        labels:
+          role: gitlab-runner
+{% endif %}
 
+{% set external_targets = [] %}
+{% for host in groups['external'] %}
+{%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
+{%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
+{%   set ts_ip = ts_ipv4.get('address') %}
+{%   if ts_ip %}
+{%     set _ = external_targets.append(ts_ip ~ ':9100') %}
+{%   endif %}
+{% endfor %}
+{% if external_targets %}
+      - targets:
+{% for target in external_targets %}
+          - "{{ target }}"
+{% endfor %}
+{% endif %}
 
     relabel_configs:
 {% for host in groups['gitlab-runners'] + groups['external'] %}
-{% if hostvars[host].ansible_tailscale0 is defined %}
+{%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
+{%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
+{%   set ts_ip = ts_ipv4.get('address') %}
+{%   if ts_ip %}
       - source_labels: [ __address__ ]
         target_label: instance
-        regex: {{ hostvars[host].ansible_tailscale0.ipv4.address }}:9100
-        replacement: {{ host }}
-{% endif %}
+        regex: "{{ ts_ip }}:9100"
+        replacement: "{{ host }}"
+{%   endif %}
 {% endfor %}

@@ -18,3 +18,9 @@
   remote_user: root
   gather_facts: true
   tasks: []
+
+- hosts: hetzner-3
+  gather_facts: true
+  remote_user: root
+  roles:
+   - external_prometheus
