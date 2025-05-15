@@ -16,3 +16,10 @@
     validate: "/usr/local/bin/promtool check config %s"
   notify: reload prometheus
   tags: prometheus_config
+
+- name: Add port 9090/tcp permanently to firewalld
+  ansible.posix.firewalld:
+    port: 9090/tcp
+    permanent: true
+    state: enabled
+    immediate: true
