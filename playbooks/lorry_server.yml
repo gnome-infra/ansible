@@ -1,5 +1,0 @@
----
-- hosts: lorry-servers
-  remote_user: root
-  roles:
-   - lorry
