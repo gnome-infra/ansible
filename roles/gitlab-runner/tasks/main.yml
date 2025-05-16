@@ -156,6 +156,8 @@
     volumes:
       - casd_socket:/run/casd
       - casd_storage:/srv/cas
+    label:
+      org.gnome.pydocuum.skip: "True"
     quadlet_options:
       - "AutoUpdate=registry"
       - "Pull=newer"
