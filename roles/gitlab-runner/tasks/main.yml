@@ -128,6 +128,7 @@
     src: pydocuum.service.j2
     dest: /etc/systemd/user/pydocuum.service
   notify: restart pydocuum
+  when: gitlab_runner_enable_pydocuum | default(true)
 
 - name: start pydocuum
   ansible.builtin.systemd:
@@ -138,6 +139,7 @@
     scope: user
   become_user: podman
   become: true
+  when: gitlab_runner_enable_pydocuum | default(true)
 
 - name: create quadlet for buildbox-casd
   containers.podman.podman_container:
