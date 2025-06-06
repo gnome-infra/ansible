@@ -249,8 +249,8 @@ def fetch_gitlab_group_members(group_id):
         group = gl.groups.get(group_id)
         return group.members.list(all=True)
     except gitlab.exceptions.GitlabGetError as e:
-        print(f"Error fetching GitLab group members: {e}")
-        return []
+        print(f"Error fetching GitLab group members: {e}. Exiting.")
+        sys.exit(1)
 
 
 def fetch_ldapmain_identity(user):
