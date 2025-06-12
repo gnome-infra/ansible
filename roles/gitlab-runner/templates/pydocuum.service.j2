@@ -22,7 +22,7 @@ ExecStart=/usr/bin/podman \
 	--replace \
 	--name pydocuum \
 	--volume /run/user/{{ podman_user.uid }}/podman/podman.sock:/run/podman.sock:z \
-	--volume /var/lib/containers:/var/lib/containers:ro \
+	--volume {{ gitlab_runner_pydocuum_containers_storage | default('/home/podman/.local/share/containers') }}:/var/lib/containers:ro \
 	--label io.containers.autoupdate=image \
 	--label org.gnome.pydocuum.skip=True quay.io/gnome_infrastructure/pydocuum:latest
 ExecStop=/usr/bin/podman stop \
