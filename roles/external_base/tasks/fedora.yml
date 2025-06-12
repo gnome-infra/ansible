@@ -54,6 +54,11 @@
   ansible.builtin.copy:
     content: |
       [Timer]
+      # Clear the default schedule
+      OnCalendar=
+      RandomizedDelaySec=
+
+      [Timer]
       OnCalendar=Sat 22:00
       RandomizedDelaySec=180m
       Persistent=true
