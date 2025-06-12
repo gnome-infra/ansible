@@ -54,7 +54,7 @@
     state: present
     backrefs: true
 
-- name: Add cron job for unattended-upgrades on Sunday 10 PM EST
+- name: Add cron job for unattended-upgrades on Sunday 10 PM
   ansible.builtin.cron:
     name: "Run unattended-upgrades on Sunday 10 PM"
     minute: "0"

@@ -50,7 +50,7 @@
     state: directory
     mode: '0755'
 
-- name: Configure dnf-automatic timer to run on Saturday at 10 PM EST
+- name: Configure dnf-automatic timer to run on Saturday at 10 PM
   ansible.builtin.copy:
     content: |
       [Timer]
