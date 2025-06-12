@@ -59,6 +59,6 @@
     name: "Run unattended-upgrades on Sunday 10 PM"
     minute: "0"
     hour: "22"
-    day_of_week: "0"
+    weekday: "0"
     job: "/usr/bin/unattended-upgrade"
     user: root

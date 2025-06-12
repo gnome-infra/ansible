@@ -50,11 +50,12 @@
     state: directory
     mode: '0755'
 
-- name: Configure dnf-automatic timer to run on Sunday 10 PM EST
+- name: Configure dnf-automatic timer to run on Saturday at 10 PM EST
   ansible.builtin.copy:
     content: |
       [Timer]
-      OnCalendar=Sun *-*-* 22:00
+      OnCalendar=Sat *-*-* 22:00
+      RandomizedDelaySec=180m
       Persistent=true
     dest: /etc/systemd/system/dnf-automatic.timer.d/override.conf
     mode: '0644'
