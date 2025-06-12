@@ -54,7 +54,7 @@
   ansible.builtin.copy:
     content: |
       [Timer]
-      OnCalendar=Sat *-*-* 22:00
+      OnCalendar=Sat 22:00
       RandomizedDelaySec=180m
       Persistent=true
     dest: /etc/systemd/system/dnf-automatic.timer.d/override.conf
