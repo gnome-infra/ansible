@@ -32,3 +32,32 @@
 - name: Configure chronyd
   ansible.builtin.include_role:
     name: chrony
+
+- name: Configure dnf-automatic.conf for automatic updates and reboot
+  ansible.builtin.lineinfile:
+    path: /etc/dnf/automatic.conf
+    regexp: "^{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    create: false
+  loop:
+    - { regexp: 'apply_updates =', line: 'apply_updates = yes' }
+    - { regexp: 'reboot =', line: 'reboot = when_needed' }
+
+- name: Create systemd drop-in directory for dnf-automatic.timer
+  ansible.builtin.file:
+    path: /etc/systemd/system/dnf-automatic.timer.d
+    state: directory
+    mode: '0755'
+
+- name: Configure dnf-automatic timer to run on Sunday 10 PM EST
+  ansible.builtin.copy:
+    content: |
+      [Timer]
+      OnCalendar=Sun *-*-* 22:00
+      Persistent=true
+    dest: /etc/systemd/system/dnf-automatic.timer.d/override.conf
+    mode: '0644'
+  notify:
+    - Reload systemd daemon
+    - Restart dnf-automatic timer

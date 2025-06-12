@@ -5,6 +5,7 @@
       - unattended-upgrades
       - prometheus-node-exporter
       - vim-tiny
+      - apt-transport-https
     state: present
     update_cache: true
 
@@ -28,3 +29,36 @@
     - apt-daily-upgrade.timer
     - prometheus-node-exporter
     - unattended-upgrades
+
+- name: Disable daily unattended-upgrades via apt-periodic and enable lists update
+  ansible.builtin.copy:
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "0";
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    mode: '0644'
+
+- name: Configure 50unattended-upgrades for automatic reboot
+  ansible.builtin.lineinfile:
+    path: /etc/apt/apt.conf.d/50unattended-upgrades
+    regexp: '^(// )?Unattended-Upgrade::Automatic-Reboot ".*";'
+    line: 'Unattended-Upgrade::Automatic-Reboot "true";'
+    state: present
+    backrefs: true
+
+- name: Set automatic reboot time in 50unattended-upgrades (for when a reboot is triggered)
+  ansible.builtin.lineinfile:
+    path: "/etc/apt/apt.conf.d/50unattended-upgrades"
+    regexp: '^(// )?Unattended-Upgrade::Automatic-Reboot-Time ".*";'
+    line: 'Unattended-Upgrade::Automatic-Reboot-Time "01:00";'
+    state: present
+    backrefs: true
+
+- name: Add cron job for unattended-upgrades on Sunday 10 PM EST
+  ansible.builtin.cron:
+    name: "Run unattended-upgrades on Sunday 10 PM"
+    minute: "0"
+    hour: "22"
+    day_of_week: "0"
+    job: "/usr/bin/unattended-upgrade"
+    user: root
