@@ -42,7 +42,7 @@
     create: false
   loop:
     - { regexp: 'apply_updates =', line: 'apply_updates = yes' }
-    - { regexp: 'reboot =', line: 'reboot = when_needed' }
+    - { regexp: 'reboot =', line: 'reboot = when-needed' }
 
 - name: Create systemd drop-in directory for dnf-automatic.timer
   ansible.builtin.file:
