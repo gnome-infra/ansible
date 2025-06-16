@@ -56,7 +56,7 @@
       [Timer]
       # Clear the default schedule
       OnCalendar=
-      RandomizedDelaySec=
+      RandomizedDelaySec=0
 
       [Timer]
       OnCalendar=Sat 22:00
