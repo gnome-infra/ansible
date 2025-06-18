@@ -16,7 +16,7 @@ gitlab_runner_token_flatpak: !vault |
           65356266623662636337303035626463613735376661626236303137353062383061
 
 gitlab_runner_config:
-  concurrent: 2
+  concurrent: 6
   check_interval: 0
   shutdown_timeout: 0
   session_server:
@@ -24,6 +24,7 @@ gitlab_runner_config:
   runners:
     - name: osuosl-arm1
       output_limit: 16384
+      concurrent: 2
       url: https://gitlab.gnome.org
       id: 0
       token: "{{ gitlab_runner_token_gbm }}"
@@ -44,6 +45,7 @@ gitlab_runner_config:
     - name: osuosl-arm1-flatpak
       output_limit: 16384
       url: https://gitlab.gnome.org/
+      concurrent: 4
       token: "{{ gitlab_runner_token_flatpak }}"
       token_obtained_at: 0001-01-01T00:00:00.000Z
       token_expires_at: 0001-01-01T00:00:00.000Z
