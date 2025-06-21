@@ -45,6 +45,8 @@ gitlab_runner_config:
         cap_add:
           - SYS_PTRACE
           - SYS_CHROOT
+        tmpfs:
+          "/tmp": "rw,nosuid,nodev,exec,mode=1777"
     - name: a15948139c78-flatpak
       url: https://gitlab.gnome.org
       id: 460
@@ -68,3 +70,5 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         shm_size: 0
+        tmpfs:
+          "/tmp": "rw,nosuid,nodev,exec,mode=1777"
