@@ -33,6 +33,8 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         shm_size: 0
+        tmpfs:
+          "/tmp": "rw,nosuid,nodev,exec,mode=1777"
     - name: YxdEp3-Hx
       url: https://gitlab.gnome.org
       id: 726
@@ -57,3 +59,5 @@ gitlab_runner_config:
         cap_add:
           - SYS_PTRACE
           - SYS_CHROOT
+        tmpfs:
+          "/tmp": "rw,nosuid,nodev,exec,mode=1777"

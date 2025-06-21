@@ -42,6 +42,8 @@ gitlab_runner_config:
           - /var/cache/gnome-build-meta:/cache
           - casd_socket:/run/casd
         shm_size: 256000000
+        tmpfs:
+          "/tmp": "rw,nosuid,nodev,exec,mode=1777"
     - name: osuosl-arm1-flatpak
       output_limit: 16384
       url: https://gitlab.gnome.org/
@@ -64,6 +66,8 @@ gitlab_runner_config:
         volumes:
           - /proc:/host/proc
         shm_size: 0
+        tmpfs:
+          "/tmp": "rw,nosuid,nodev,exec,mode=1777"
 
 gitlab_runner_buildbox_casd: true
 gitlab_runner_buildbox_casd_jobs: 4
