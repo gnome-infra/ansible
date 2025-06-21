@@ -39,3 +39,5 @@ gitlab_runner_config:
         cap_add:
           - SYS_PTRACE
           - SYS_CHROOT
+        tmpfs:
+          "/tmp": "rw,nosuid,nodev,exec,mode=1777"
