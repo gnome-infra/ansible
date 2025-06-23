@@ -153,9 +153,7 @@
     - "{{ gitlab_runner_buildbox_casd_jobs }}"
     - "--bind unix:/run/casd/casd.sock"
     - "--quota-high"
-    - "88%"
-    - "--reserved"
-    - "20G"
+    - "50%"
     - "/srv/cas"
     quadlet_filename: buildbox-casd
     privileged: true
