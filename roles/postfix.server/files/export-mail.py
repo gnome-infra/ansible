@@ -210,6 +210,8 @@ def generate_sender_login_maps(groups):
             "kristi": "kprogri",
             "richard": "rlittauer",
             "steven": "sdeobald",
+            "ss": "ssyal",
+            "deepa": "dvenkatraman",
         },
         "gimp.org": {"jehan": "jehanp", "aryeom": "aryeomhan"},
     }
