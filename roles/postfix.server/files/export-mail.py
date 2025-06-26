@@ -212,14 +212,24 @@ def generate_sender_login_maps(groups):
             "steven": "sdeobald",
             "ss": "ssyal",
             "deepa": "dvenkatraman",
+            "treasurer": ["ssyal", "dvenkatraman"]
         },
         "gimp.org": {"jehan": "jehanp", "aryeom": "aryeomhan"},
     }
 
+    for domain, mappings in custom_map.items():
+        for alias, allowed_users in mappings.items():
+            if isinstance(allowed_users, (list, tuple)):
+                sender_login_maps_content += (
+                    f"{alias}@{domain}\t\t{' '.join(allowed_users)}\n"
+                )
+
     for uid, _ in emails:
         aliases = [uid]
-        if uid in custom_map["gnome.org"].keys():
-            aliases.append(custom_map["gnome.org"][uid])
+        if uid in custom_map["gnome.org"]:
+            value = custom_map["gnome.org"][uid]
+            if isinstance(value, str):
+                aliases.append(value)
 
         sender_login_maps_content += f"{uid}@gnome.org\t\t{' '.join(aliases)}\n"
 
