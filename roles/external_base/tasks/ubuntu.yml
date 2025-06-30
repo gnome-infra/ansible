@@ -44,7 +44,6 @@
     regexp: '^(// )?Unattended-Upgrade::Automatic-Reboot ".*";'
     line: 'Unattended-Upgrade::Automatic-Reboot "true";'
     state: present
-    backrefs: true
 
 - name: Set automatic reboot time in 50unattended-upgrades (for when a reboot is triggered)
   ansible.builtin.lineinfile:
@@ -52,7 +51,6 @@
     regexp: '^(// )?Unattended-Upgrade::Automatic-Reboot-Time ".*";'
     line: 'Unattended-Upgrade::Automatic-Reboot-Time "01:00";'
     state: present
-    backrefs: true
 
 - name: Add cron job for unattended-upgrades on Sunday 10 PM
   ansible.builtin.cron:
