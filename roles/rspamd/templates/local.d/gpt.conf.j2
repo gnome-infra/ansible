@@ -1,12 +1,17 @@
 enabled = true;
+url = "https://openrouter.ai/api/v1/chat/completions";
 api_key = "{{ rspamd_gpt_api_key }}";
+models = ["google/gemini-2.5-flash-lite", "gpt-5-nano"];
 autolearn = true;
 
-symbols_to_except = [
-  'BAYES_SPAM',
-  'WHITELIST_SPF',
-  'WHITELIST_DKIM',
-  'WHITELIST_DMARC',
-  'FUZZY_DENIED',
-  'LOCAL_FUZZY_DENIED',
-];
+symbols_to_except = {
+  BAYES_SPAM = 0.9,
+  WHITELIST_SPF = -1,
+  WHITELIST_DKIM = -1,
+  WHITELIST_DMARC = -1,
+  FUZZY_DENIED = -1,
+  REPLY = -1,
+  BOUNCE = -1,
+  LOCAL_FUZZY_DENIED = -1,
+  MAILCOW_FUZZY_DENIED = -1,
+};
