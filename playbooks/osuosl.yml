@@ -23,7 +23,6 @@
    - postfix.wrapper
    - bash
    - base_auth
-   - nrpe
    - base_network
    - rsyslog
    - backup
