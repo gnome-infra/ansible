@@ -204,6 +204,7 @@ def generate_sender_login_maps(groups):
     custom_map = {
         "gnome.org": {
             "aday": "allanday",
+            "allan": "allanday",
             "anisa": "akuci",
             "av": "averi",
             "bart": "bpiotrowski",
@@ -212,7 +213,7 @@ def generate_sender_login_maps(groups):
             "steven": "sdeobald",
             "ss": "ssyal",
             "deepa": "dvenkatraman",
-            "treasurer": ["ssyal", "dvenkatraman"]
+            "treasurer": ["ssyal", "dvenkatraman"],
         },
         "gimp.org": {"jehan": "jehanp", "aryeom": "aryeomhan"},
     }
