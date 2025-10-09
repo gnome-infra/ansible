@@ -39,7 +39,6 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         volumes:
-          - /var/cache/gnome-build-meta:/cache
           - casd_socket:/run/casd
         shm_size: 256000000
         tmpfs:
