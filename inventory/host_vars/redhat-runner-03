@@ -29,7 +29,6 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         volumes:
-          - /home/podman/cache:/cache
           - casd_socket:/run/casd
         shm_size: 0
         tmpfs:
