@@ -157,6 +157,8 @@
     - "/srv/cas"
     quadlet_filename: buildbox-casd
     privileged: true
+    env:
+      BUILDBOX_STAGER: copy-or-link
     volumes:
       - casd_socket:/run/casd
       - casd_storage:/srv/cas
