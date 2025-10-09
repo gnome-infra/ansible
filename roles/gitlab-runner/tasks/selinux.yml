@@ -1,6 +1,10 @@
 ---
-- name: install selinux-policy-devel
-  ansible.builtin.package: name=selinux-policy-devel state=present
+- name: install SELinux related packages
+  ansible.builtin.package:
+    name:
+      - selinux-policy-devel
+      - python3-libselinux
+    state: present
 
 - name: copy te file for {{ item }}
   ansible.builtin.copy:
