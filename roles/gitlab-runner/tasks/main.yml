@@ -144,21 +144,21 @@
 - name: create quadlet for buildbox-casd
   containers.podman.podman_container:
     name: buildbox-casd
-    image: registry.gitlab.com/freedesktop-sdk/infrastructure/freedesktop-sdk-docker-images/buildbox-casd:0e8c7caecfc58793e561406f9a58e9c64ae0074b
+    image: registry.gitlab.com/freedesktop-sdk/infrastructure/freedesktop-sdk-docker-images/buildbox-casd:b66e19fb81b048724a7c973bb3ba7260874d70f1
     state: quadlet
     command:
     - "--buildbox-run"
     - "buildbox-run-bubblewrap"
     - "--jobs"
     - "{{ gitlab_runner_buildbox_casd_jobs }}"
+    - "--cache-failures"
+    - "false"
     - "--bind unix:/run/casd/casd.sock"
     - "--quota-high"
     - "200G"
     - "/srv/cas"
     quadlet_filename: buildbox-casd
     privileged: true
-    env:
-      BUILDBOX_STAGER: copy-or-link
     volumes:
       - casd_socket:/run/casd
       - casd_storage:/srv/cas
