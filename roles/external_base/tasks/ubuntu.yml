@@ -1,24 +1,35 @@
 ---
-- name: install ubuntu packages
+- name: Fetch tailscale repo keyring
+  ansible.builtin.get_url:
+    url: "https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.noarmor.gpg"
+    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+
+- name: Add tailscale repo
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/ubuntu {{ ansible_distribution_release }} main"
+    state: present
+
+- name: Install required packages
   ansible.builtin.package:
     name:
+      - htop
+      - ncdu
+      - sudo
+      - vnstat
       - unattended-upgrades
       - prometheus-node-exporter
       - vim-tiny
       - apt-transport-https
+      - tailscale
     state: present
     update_cache: true
+    lock_timeout: 120
+  register: consolidated_pkg_result
 
-- block:
-    - name: fetch tailscale repo keyring
-      ansible.builtin.get_url:
-        url: "https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.noarmor.gpg"
-        dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
-
-    - name: add tailscale repo
-      ansible.builtin.apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/ubuntu {{ ansible_distribution_release }} main"
-        state: present
+- name: remind to configure tailscale
+  ansible.builtin.pause:
+    prompt: "ssh to the server and configure tailscale"
+  when: consolidated_pkg_result.changed
 
 - name: start and enable services
   ansible.builtin.systemd:
@@ -26,6 +37,8 @@
     name: "{{ item }}"
     enabled: true
   with_items:
+    - tailscaled
+    - vnstat
     - apt-daily-upgrade.timer
     - prometheus-node-exporter
     - unattended-upgrades

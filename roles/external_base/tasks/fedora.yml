@@ -1,14 +1,5 @@
 ---
-- name: install fedora packages
-  ansible.builtin.package:
-    name:
-      - dnf-automatic
-      - "{{ 'golang-github-prometheus-node-exporter' if ansible_distribution_major_version == '40' else 'node-exporter' }}"
-      - vim-minimal
-    state: present
-    update_cache: true
-
-- name: add tailscale repo
+- name: Add tailscale repo
   ansible.builtin.command: >
     dnf config-manager
     {% if ansible_distribution_major_version == '40' %}
@@ -20,12 +11,33 @@
   args:
     creates: /etc/yum.repos.d/tailscale.repo
 
+- name: Install base packages
+  ansible.builtin.package:
+    name:
+      - htop
+      - ncdu
+      - sudo
+      - vnstat
+      - dnf-automatic
+      - "{{ 'golang-github-prometheus-node-exporter' if ansible_distribution_major_version == '40' else 'node-exporter' }}"
+      - vim-minimal
+      - tailscale
+    state: present
+    update_cache: true
+
+- name: remind to configure tailscale
+  ansible.builtin.pause:
+    prompt: "ssh to the server and configure tailscale"
+  when: tailscale_pkg_result.changed
+
 - name: start and enable services
   ansible.builtin.systemd:
     state: started
     name: "{{ item }}"
     enabled: true
   with_items:
+    - tailscaled
+    - vnstat
     - dnf-automatic.timer
     - node_exporter
 

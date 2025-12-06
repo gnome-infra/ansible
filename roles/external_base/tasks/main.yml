@@ -7,8 +7,16 @@
     group: root
     mode: 0600
 
-- include_tasks: common.yml
-  when: ansible_distribution != "NixOS"
+- name: Clear any existing APT lock and repair dpkg
+  when: ansible_distribution == "Ubuntu"
+  block:
+    - name: Identify and terminate the process holding the lock
+      ansible.builtin.shell: |
+        LOCK_PID=$(fuser -k -9 /var/lib/apt/lists/lock 2>&1 | awk '/killed/ {print $NF}')
+        echo "Killed PID: ${LOCK_PID}"
+      register: fix_kill_result
+      ignore_errors: true
+      changed_when: fix_kill_result.rc != 0
 
 - include_tasks: firewalld.yml
   when: skip_firewalld is undefined
