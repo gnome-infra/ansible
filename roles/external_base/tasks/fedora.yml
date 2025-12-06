@@ -30,7 +30,7 @@
       - tailscale
     state: present
     update_cache: true
-  register: tailscale_pkg
+  register: tailscale_pkg_result
 
 - name: remind to configure tailscale
   ansible.builtin.pause:

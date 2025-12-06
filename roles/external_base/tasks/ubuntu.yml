@@ -20,16 +20,23 @@
       - prometheus-node-exporter
       - vim-tiny
       - apt-transport-https
-      - tailscale
     state: present
     update_cache: true
     lock_timeout: 120
   register: consolidated_pkg_result
 
+- name: Install tailscale
+  ansible.builtin.package:
+    name:
+      - tailscale
+    state: present
+    update_cache: true
+  register: tailscale_pkg_result
+
 - name: remind to configure tailscale
   ansible.builtin.pause:
     prompt: "ssh to the server and configure tailscale"
-  when: consolidated_pkg_result.changed
+  when: tailscale_pkg_result.changed
 
 - name: start and enable services
   ansible.builtin.systemd:
