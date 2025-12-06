@@ -21,9 +21,16 @@
       - dnf-automatic
       - "{{ 'golang-github-prometheus-node-exporter' if ansible_distribution_major_version == '40' else 'node-exporter' }}"
       - vim-minimal
+    state: present
+    update_cache: true
+
+- name: Install tailscale
+  ansible.builtin.package:
+    name:
       - tailscale
     state: present
     update_cache: true
+  register: tailscale_pkg
 
 - name: remind to configure tailscale
   ansible.builtin.pause:
