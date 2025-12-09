@@ -1,0 +1,2 @@
+ansible_connection: ssh
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@8.145.34.63 -o StrictHostKeyChecking=no"'
