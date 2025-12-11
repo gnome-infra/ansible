@@ -2,12 +2,17 @@
 - name: Add tailscale repo
   ansible.builtin.command: >
     dnf config-manager
+    {% if ansible_distribution == 'Fedora' %}
     {% if ansible_distribution_major_version == '40' %}
     --add-repo
     {% else %}
     addrepo --from-repofile
     {% endif %}
     https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+    {% elif ansible_distribution == 'RedHat' %}
+    addrepo --from-repofile
+    https://pkgs.tailscale.com/stable/rhel/{{ ansible_distribution_major_version }}/tailscale.repo
+    {% endif %}
   args:
     creates: /etc/yum.repos.d/tailscale.repo
 
@@ -32,12 +37,12 @@
     update_cache: true
   register: tailscale_pkg_result
 
-- name: remind to configure tailscale
+- name: Remind to configure tailscale
   ansible.builtin.pause:
     prompt: "ssh to the server and configure tailscale"
   when: tailscale_pkg_result.changed
 
-- name: start and enable services
+- name: Start and enable services
   ansible.builtin.systemd:
     state: started
     name: "{{ item }}"

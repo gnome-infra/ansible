@@ -1,28 +1,28 @@
 ---
-- name: install SELinux related packages
+- name: Install SELinux related packages
   ansible.builtin.package:
     name:
       - selinux-policy-devel
       - python3-libselinux
     state: present
 
-- name: copy te file for {{ item }}
+- name: Copy te file for {{ item }}
   ansible.builtin.copy:
     src: "selinux/{{ item }}.te"
     dest: "/etc/selinux/targeted/{{ item }}.te"
-    mode: 0644
+    mode: '0644'
   register: te
 
-- name: check pp file for {{ item }}
+- name: Check pp file for {{ item }}
   ansible.builtin.stat:
     path: "/etc/selinux/targeted/{{ item }}.pp"
   register: pp_check
 
-- name: compile {{ item }} selinux module
+- name: Compile {{ item }} selinux module
   ansible.builtin.command: make -f /usr/share/selinux/devel/Makefile -C /etc/selinux/targeted/ {{ item }}.pp
   register: pp
   when: (te is changed) or (not pp_check.stat.exists)
 
-- name: install {{ item }} selinux module
+- name: Install {{ item }} selinux module
   ansible.builtin.command: semodule -i /etc/selinux/targeted/{{ item }}.pp
   when: pp is changed

@@ -1,11 +1,11 @@
 ---
-- name: put selinux in permissive mode
+- name: Put selinux in permissive mode
   ansible.posix.selinux:
     policy: targeted
     state: permissive
-  when: ansible_distribution == "Fedora"
+  when: ansible_distribution in ["Fedora", "RedHat"]
 
-- name: install podman
+- name: Install podman
   ansible.builtin.package:
     name:
       - podman
@@ -16,14 +16,14 @@
     state: present
     update_cache: true
 
-- name: create podman user
+- name: Create podman user
   ansible.builtin.user:
     name: podman
     shell: /bin/bash
     system: true
   register: podman_user
 
-- name: configure subuids and subguids for podman user
+- name: Configure subuids and subguids for podman user
   ansible.builtin.lineinfile:
     path: "{{ item }}"
     regexp: '^podman'
@@ -33,12 +33,12 @@
     - /etc/subuid
   notify: podman system migrate
 
-- name: enable linger for podman user
+- name: Enable linger for podman user
   ansible.builtin.command: loginctl enable-linger podman
   args:
     creates: /var/lib/systemd/linger/podman
 
-- name: start podman socket and auto-update timer
+- name: Start podman socket and auto-update timer
   ansible.builtin.systemd:
     name: "{{ item }}"
     state: started
@@ -50,25 +50,27 @@
     - podman.socket
     - podman-auto-update.timer
 
-- name: configure selinux modules
-  include_tasks: selinux.yml
+- name: Configure selinux modules
+  ansible.builtin.include_tasks: selinux.yml
   loop:
     - pydocuum
     - flatpak
     - podman
-  when: ansible_distribution == "Fedora"
+  when: ansible_distribution in ["Fedora", "RedHat"]
 
-- name: ensure podman user service override directory exists
-  file:
+- name: Ensure podman user service override directory exists
+  ansible.builtin.file:
     path: /etc/systemd/user/podman.service.d/
     state: directory
+    mode: '0755'
 
-- name: configure podman user service to run through catatonit
+- name: Configure podman user service to run through catatonit
   ansible.builtin.copy:
     src: podman.service.override.conf
     dest: /etc/systemd/user/podman.service.d/catatonit.conf
+    mode: '0644'
 
-- name: create podman config directory
+- name: Create podman config directory
   ansible.builtin.file:
     path: "{{ podman_user.home }}/.config/containers"
     state: directory
@@ -76,14 +78,15 @@
   become: true
   become_user: podman
 
-- name: configure podman
+- name: Configure podman
   ansible.builtin.copy:
     src: containers.conf
     dest: "{{ podman_user.home }}/.config/containers/containers.conf"
+    mode: '0644'
   become: true
   become_user: podman
 
-- name: create gitlab-runner config directory
+- name: Create gitlab-runner config directory
   ansible.builtin.file:
     path: "{{ podman_user.home }}/gitlab-runner"
     state: directory
@@ -91,7 +94,7 @@
   become: true
   become_user: podman
 
-- name: configure gitlab-runner
+- name: Configure gitlab-runner
   ansible.builtin.template:
     src: gitlab-runner-config.toml.j2
     dest: "{{ podman_user.home }}/gitlab-runner/config.toml"
@@ -100,20 +103,22 @@
   become_user: podman
   notify: restart gitlab-runner
 
-- name: copy seccomp profile for building flatpaks
+- name: Copy seccomp profile for building flatpaks
   ansible.builtin.copy:
     src: flatpak.seccomp.json
     dest: "{{ podman_user.home }}/gitlab-runner/flatpak.seccomp.json"
+    mode: '0644'
   become: true
   become_user: podman
 
-- name: add unit for gitlab-runner service
+- name: Add unit for gitlab-runner service
   ansible.builtin.template:
     src: gitlab-runner.service.j2
     dest: /etc/systemd/user/gitlab-runner.service
+    mode: '0644'
   notify: restart gitlab-runner
 
-- name: start gitlab-runner
+- name: Start gitlab-runner
   ansible.builtin.systemd:
     name: gitlab-runner.service
     state: started
@@ -123,14 +128,15 @@
   become_user: podman
   become: true
 
-- name: add unit for pydocuum service
+- name: Add unit for pydocuum service
   ansible.builtin.template:
     src: pydocuum.service.j2
     dest: /etc/systemd/user/pydocuum.service
+    mode: '0644'
   notify: restart pydocuum
   when: gitlab_runner_enable_pydocuum | default(true)
 
-- name: start pydocuum
+- name: Start pydocuum
   ansible.builtin.systemd:
     name: pydocuum.service
     state: started
@@ -141,22 +147,22 @@
   become: true
   when: gitlab_runner_enable_pydocuum | default(true)
 
-- name: create quadlet for buildbox-casd
+- name: Create quadlet for buildbox-casd
   containers.podman.podman_container:
     name: buildbox-casd
     image: registry.gitlab.com/freedesktop-sdk/infrastructure/freedesktop-sdk-docker-images/buildbox-casd:b22cda9dfa2c8792f434428b9f2ca5ce0ad66a2d
     state: quadlet
     command:
-    - "--buildbox-run"
-    - "buildbox-run-bubblewrap"
-    - "--jobs"
-    - "{{ gitlab_runner_buildbox_casd_jobs }}"
-    - "--cache-failures"
-    - "false"
-    - "--bind unix:/run/casd/casd.sock"
-    - "--quota-high"
-    - "200G"
-    - "/srv/cas"
+      - "--buildbox-run"
+      - "buildbox-run-bubblewrap"
+      - "--jobs"
+      - "{{ gitlab_runner_buildbox_casd_jobs }}"
+      - "--cache-failures"
+      - "false"
+      - "--bind unix:/run/casd/casd.sock"
+      - "--quota-high"
+      - "200G"
+      - "/srv/cas"
     quadlet_filename: buildbox-casd
     privileged: true
     volumes:
@@ -175,10 +181,10 @@
         WantedBy=default.target
   become_user: podman
   become: true
-  when: "{{ gitlab_runner_buildbox_casd | default(false) }}"
+  when: gitlab_runner_buildbox_casd | default(false)
   notify: restart buildbox-casd
 
-- name: clean up old user systemd services
+- name: Clean up old user systemd services
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
@@ -186,7 +192,7 @@
     - "/{{ podman_user.home }}/.config/systemd/user/pydocuum.service"
     - "/{{ podman_user.home }}/.config/systemd/user/gitlab-runner.service"
 
-- name: make sure pydocuum, gitlab-runner, podman were not started as root
+- name: Make sure pydocuum, gitlab-runner, podman were not started as root
   ansible.builtin.systemd:
     name: "{{ item }}.service"
     state: stopped
@@ -200,19 +206,19 @@
        if not gitlab_runner_enable_pydocuum | default(true) | bool
        else ['podman', 'gitlab-runner', 'pydocuum'] }}
 
-- name: relax /dev/kvm permissions
+- name: Relax /dev/kvm permissions
   ansible.builtin.copy:
     src: 00-kvm.rules
     dest: /etc/udev/rules.d/00-kvm.rules
-    mode: 0644
+    mode: '0644'
     owner: root
     group: root
   notify:
     - reload udevadm
     - trigger udevadm
 
-- name: enable systemctl --user as podman
-  lineinfile:
+- name: Enable systemctl --user as podman
+  ansible.builtin.lineinfile:
     path: "~/.bashrc"
     line: "{{ item }}"
   loop:
