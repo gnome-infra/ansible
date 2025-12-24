@@ -69,6 +69,6 @@ gitlab_runner_config:
           "/tmp": "rw,nosuid,nodev,exec,mode=1777"
 
 gitlab_runner_buildbox_casd: true
-gitlab_runner_buildbox_casd_jobs: 4
+gitlab_runner_buildbox_casd_jobs: 3
 
 gitlab_runner_enable_pydocuum: false
