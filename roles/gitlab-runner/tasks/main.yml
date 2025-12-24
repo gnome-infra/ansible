@@ -217,19 +217,6 @@
     - reload udevadm
     - trigger udevadm
 
-- name: configure vkms module to load at boot
-  ansible.builtin.copy:
-    src: 60-vkms.conf
-    dest: /etc/modules-load.d/60-vkms.conf
-    mode: 0644
-    owner: root
-    group: root
-
-- name: load vkms module immediately
-  community.general.modprobe:
-    name: vkms
-    state: present
-
 - name: Enable systemctl --user as podman
   ansible.builtin.lineinfile:
     path: "~/.bashrc"
