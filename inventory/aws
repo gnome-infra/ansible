@@ -25,6 +25,3 @@ smtp.gnome.org
 
 [dovecot_servers]
 smtp.gnome.org
-
-[irc]
-irc.gnome.org
