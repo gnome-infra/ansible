@@ -5,12 +5,19 @@
   collections:
    - community.general
   tasks:
+    - name: Check if system is registered to RHSM
+      ansible.builtin.command: subscription-manager identity
+      register: rhsm_status
+      failed_when: false
+      changed_when: false
+
     - name: Register system to RHSM
       community.general.redhat_subscription:
         state: present
         username: "{{ rhsm_username }}"
         password: "{{ rhsm_password }}"
         auto_attach: true
+      when: rhsm_status.rc != 0
 
 - hosts: all !gimp
   gather_facts: true
