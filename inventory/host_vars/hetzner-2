@@ -31,6 +31,8 @@ gitlab_runner_config:
       id: 460
       token: "{{ gitlab_runner_token_untagged }}"
       executor: docker
+      environment:
+        - "FF_USE_GIT_NATIVE_CLONE=true"
       cache:
         MaxUploadedArchiveSize: 0
         s3:
@@ -42,6 +44,7 @@ gitlab_runner_config:
       docker:
         dns:
           - "169.254.1.1"
+        helper_image: "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:alpine-edge-x86_64-v18.8.0"
         tls_verify: false
         image: quay.io/fedora/fedora:latest
         privileged: false
@@ -63,11 +66,14 @@ gitlab_runner_config:
       token: "{{ gitlab_runner_token_flatpak }}"
       executor: docker
       output_limit: 100000
+      environment:
+        - "FF_USE_GIT_NATIVE_CLONE=true"
       cache:
         MaxUploadedArchiveSize: 0
       docker:
         dns:
           - "169.254.1.1"
+        helper_image: "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:alpine-edge-x86_64-v18.8.0"
         tls_verify: false
         image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master
         privileged: false
