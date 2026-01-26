@@ -20,6 +20,8 @@ gitlab_runner_config:
       id: 964
       token: "{{ gitlab_runner_token }}"
       executor: docker
+      environment:
+        - "FF_USE_GIT_NATIVE_CLONE=true"
       cache:
         MaxUploadedArchiveSize: 0
         s3:
@@ -29,6 +31,7 @@ gitlab_runner_config:
           BucketName: "{{ gitlab_runner_cache_bucket_name }}"
           BucketLocation: us-east-1
       docker:
+        helper_image: "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:alpine-edge-arm64-v18.8.0"
         tls_verify: false
         image: quay.io/fedora/fedora:latest
         privileged: false

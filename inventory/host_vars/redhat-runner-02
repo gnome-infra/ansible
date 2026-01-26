@@ -21,11 +21,13 @@ gitlab_runner_config:
       id: 860
       token: "{{ gitlab_runner_instance_wide_token }}"
       executor: docker
+      environment:
+        - "FF_USE_GIT_NATIVE_CLONE=true"
       docker:
         dns:
           - "169.254.1.1"
         dns_search: [""]
-        helper_image_flavor: "ubuntu"
+        helper_image: "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:alpine-edge-x86_64-v18.8.0"
         tls_verify: false
         image: quay.io/fedora/fedora:latest
         privileged: false

@@ -31,7 +31,10 @@ gitlab_runner_config:
       token_obtained_at: 0001-01-01T00:00:00.000Z
       token_expires_at: 0001-01-01T00:00:00.000Z
       executor: docker
+      environment:
+        - "FF_USE_GIT_NATIVE_CLONE=true"
       docker:
+        helper_image: "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:alpine-edge-arm64-v18.8.0"
         tls_verify: false
         image: fedora:latest
         privileged: true
@@ -51,7 +54,10 @@ gitlab_runner_config:
       token_obtained_at: 0001-01-01T00:00:00.000Z
       token_expires_at: 0001-01-01T00:00:00.000Z
       executor: docker
+      environment:
+        - "FF_USE_GIT_NATIVE_CLONE=true"
       docker:
+        helper_image: "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:alpine-edge-arm64-v18.8.0"
         tls_verify: false
         image: fedora:latest
         privileged: false
