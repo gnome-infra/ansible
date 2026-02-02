@@ -1,6 +1,4 @@
 ---
-- import_playbook: osuosl-openstack-oom.yml
-
 - hosts: gitlab-runners
   gather_facts: true
   remote_user: root
