@@ -2,6 +2,7 @@
 - name: Check OSUOSL OpenStack runners and kick if down
   hosts: localhost
   gather_facts: false
+  become: false
   vars:
     osuosl_openstack_runners:
       - osuosl-1
