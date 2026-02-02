@@ -9,13 +9,6 @@
     osuosl_openstack_clouds_path: /tmp/osuosl-openstack-clouds.yaml
   environment: "{{ { 'OS_CLIENT_CONFIG_FILE': osuosl_openstack_clouds_path } if (osuosl_openstack_clouds_yaml is defined) else {} }}"
   tasks:
-    - name: Fail if clouds.yaml path already exists
-      ansible.builtin.stat:
-        path: "{{ osuosl_openstack_clouds_path }}"
-      register: clouds_stat
-      failed_when: clouds_stat.stat.exists
-      when: osuosl_openstack_clouds_yaml is defined
-
     - name: Deploy clouds.yaml from Ansible (vault) for this run
       ansible.builtin.copy:
         content: "{{ osuosl_openstack_clouds_yaml }}"
