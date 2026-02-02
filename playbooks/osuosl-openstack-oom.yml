@@ -1,0 +1,69 @@
+---
+- name: Check OSUOSL OpenStack runners and kick if down
+  hosts: localhost
+  gather_facts: false
+  vars:
+    osuosl_openstack_runners:
+      - osuosl-1
+      - osuosl-2
+    osuosl_openstack_clouds_path: /tmp/osuosl-openstack-clouds.yaml
+  environment: "{{ { 'OS_CLIENT_CONFIG_FILE': osuosl_openstack_clouds_path } if (osuosl_openstack_clouds_yaml is defined) else {} }}"
+  tasks:
+    - name: Fail if clouds.yaml path already exists
+      ansible.builtin.stat:
+        path: "{{ osuosl_openstack_clouds_path }}"
+      register: clouds_stat
+      failed_when: clouds_stat.stat.exists
+      when: osuosl_openstack_clouds_yaml is defined
+
+    - name: Deploy clouds.yaml from Ansible (vault) for this run
+      ansible.builtin.copy:
+        content: "{{ osuosl_openstack_clouds_yaml }}"
+        dest: "{{ osuosl_openstack_clouds_path }}"
+        mode: "0600"
+      when: osuosl_openstack_clouds_yaml is defined
+
+    - name: Check if OSUOSL runners are reachable and eventually stop and start them
+      block:
+        - name: Collect unresponsive runners
+          ansible.builtin.set_fact:
+            osuosl_unresponsive: "{{ osuosl_reachability.results | selectattr('failed') | list }}"
+
+        - name: Stop unresponsive OSUOSL OpenStack runner
+          openstack.cloud.server_action:
+            name: "{{ item.item }}"
+            action: stop
+            cloud: "{{ osuosl_openstack_cloud | default(omit) }}"
+          loop: "{{ osuosl_unresponsive }}"
+          loop_control:
+            label: "{{ item.item }}"
+          delegate_to: localhost
+
+        - name: Wait for server to stop
+          openstack.cloud.server_info:
+            cloud: "{{ osuosl_openstack_cloud | default(omit) }}"
+            name: "{{ item.item }}"
+          register: server_state
+          until: (server_state.servers | default([]) | length > 0) and (server_state.servers[0].status == "SHUTOFF")
+          retries: 10
+          delay: 5
+          loop: "{{ osuosl_unresponsive }}"
+          loop_control:
+            label: "{{ item.item }}"
+          delegate_to: localhost
+
+        - name: Start OSUOSL OpenStack runner
+          openstack.cloud.server_action:
+            name: "{{ item.item }}"
+            action: start
+            cloud: "{{ osuosl_openstack_cloud | default(omit) }}"
+          loop: "{{ osuosl_unresponsive }}"
+          loop_control:
+            label: "{{ item.item }}"
+          delegate_to: localhost
+      always:
+        - name: Remove deployed clouds.yaml
+          ansible.builtin.file:
+            path: "{{ osuosl_openstack_clouds_path }}"
+            state: absent
+          when: osuosl_openstack_clouds_yaml is defined
