@@ -19,6 +19,18 @@
 
     - name: Check if OSUOSL runners are reachable and eventually stop and start them
       block:
+        - name: Check if OSUOSL runners are reachable
+          ansible.builtin.wait_for:
+            host: "{{ hostvars[item].ansible_host | default(item) }}"
+            port: 22
+            timeout: 10
+            state: started
+          register: osuosl_reachability
+          ignore_errors: true
+          loop: "{{ osuosl_openstack_runners }}"
+          loop_control:
+            label: "{{ item }}"
+
         - name: Collect unresponsive runners
           ansible.builtin.set_fact:
             osuosl_unresponsive: "{{ osuosl_reachability.results | selectattr('failed') | list }}"
