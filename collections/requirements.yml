@@ -4,3 +4,4 @@ collections:
   - name: community.postgresql
   - name: containers.podman
   - name: openstack.cloud
+    version: ">=2.2.0"
