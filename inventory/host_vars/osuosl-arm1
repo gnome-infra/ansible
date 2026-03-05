@@ -34,7 +34,6 @@ gitlab_runner_config:
       environment:
         - "FF_USE_GIT_NATIVE_CLONE=true"
       docker:
-        helper_image: "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:alpine-edge-arm64-v18.8.0"
         tls_verify: false
         image: fedora:latest
         privileged: true
@@ -57,7 +56,6 @@ gitlab_runner_config:
       environment:
         - "FF_USE_GIT_NATIVE_CLONE=true"
       docker:
-        helper_image: "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:alpine-edge-arm64-v18.8.0"
         tls_verify: false
         image: fedora:latest
         privileged: false
