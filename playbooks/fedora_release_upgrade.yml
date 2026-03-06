@@ -1,0 +1,88 @@
+---
+- name: Fedora release upgrade
+  hosts: all
+  serial: 1
+  remote_user: root
+  gather_facts: true
+  vars:
+    # Use generic python3 so connection check works after upgrade (interpreter path may change)
+    ansible_python_interpreter: /usr/bin/python3
+  vars_prompt:
+    - name: fedora_release
+      prompt: "Target Fedora release version (e.g. 42)"
+      private: false
+
+  pre_tasks:
+    - name: Validate that fedora_release is provided
+      ansible.builtin.assert:
+        that:
+          - fedora_release is defined
+          - fedora_release | length > 0
+          - fedora_release | int > 0
+        fail_msg: "fedora_release must be a valid Fedora version number"
+
+    - name: Skip non-Fedora systems
+      ansible.builtin.meta: end_host
+      when: ansible_distribution != "Fedora"
+
+  tasks:
+    - name: Check if system is already at the target release
+      when: ansible_distribution_major_version == fedora_release | string
+      block:
+        - name: Report that the system is already at the target release
+          ansible.builtin.debug:
+            msg: "System is already running Fedora {{ ansible_distribution_major_version }}, nothing to do."
+
+        - name: End play for this host
+          ansible.builtin.meta: end_host
+
+    - name: Abort if target release is older than current release
+      ansible.builtin.assert:
+        that:
+          - fedora_release | int > ansible_distribution_major_version | int
+        fail_msg: >-
+          Target release ({{ fedora_release }}) must be newer than the
+          current release ({{ ansible_distribution_major_version }}).
+          Downgrades are not supported.
+
+    - name: Install the dnf system-upgrade plugin
+      ansible.builtin.dnf:
+        name: dnf-plugin-system-upgrade
+        state: present
+
+    - name: Download upgrade packages for Fedora {{ fedora_release }}
+      ansible.builtin.command:
+        cmd: >-
+          dnf system-upgrade download
+          --releasever={{ fedora_release }}
+          --assumeyes
+          --allowerasing
+      register: upgrade_download
+      changed_when: "'Complete!' in upgrade_download.stdout"
+
+    - name: Trigger system-upgrade reboot
+      ansible.builtin.command:
+        cmd: systemd-run --on-active=10 --timer-property=AccuracySec=1 dnf5 offline reboot --assumeyes
+      changed_when: true
+
+    - name: Wait for the host to go down
+      ansible.builtin.pause:
+        seconds: 20
+
+    - name: Wait for the system to come back online after upgrade
+      ansible.builtin.wait_for_connection:
+        connect_timeout: 30
+        sleep: 30
+        delay: 120
+        timeout: 3600
+
+    - name: Re-gather facts after upgrade
+      ansible.builtin.setup:
+
+    - name: Verify the upgrade succeeded
+      ansible.builtin.assert:
+        that:
+          - ansible_distribution_major_version == fedora_release | string
+        fail_msg: >-
+          Upgrade verification failed. Expected Fedora {{ fedora_release }}
+          but found Fedora {{ ansible_distribution_major_version }}.
