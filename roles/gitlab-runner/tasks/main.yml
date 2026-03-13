@@ -152,14 +152,13 @@
     name: buildbox-casd
     image: registry.gitlab.com/freedesktop-sdk/infrastructure/freedesktop-sdk-docker-images/buildbox-casd:b22cda9dfa2c8792f434428b9f2ca5ce0ad66a2d
     state: quadlet
-    entrypoint: ''
+    entrypoint: 'sh'
     command:
-    - sh
-    - -c
-    - >-
-      rm -rf /srv/cas/*/tmp/ /srv/cas/*/staging/;
-      exec buildbox-casd --buildbox-run buildbox-run-bubblewrap --jobs {{ gitlab_runner_buildbox_casd_jobs }}
-      --cache-failures false --bind unix:/run/casd/casd.sock --quota-high 200G /srv/cas
+      - -c
+      - >-
+          rm -rf /srv/cas/cas/tmp/ /srv/cas/cas/staging/;
+          exec buildbox-casd --buildbox-run buildbox-run-bubblewrap --jobs {{ gitlab_runner_buildbox_casd_jobs }}
+          --cache-failures false --bind unix:/run/casd/casd.sock --quota-high 200G /srv/cas
     quadlet_filename: buildbox-casd
     privileged: true
     volumes:
