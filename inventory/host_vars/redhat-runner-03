@@ -2,13 +2,23 @@
 ansible_connection: ssh
 ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@38.145.34.64 -o StrictHostKeyChecking=no"'
 
-gitlab_runner_token_gbm: !vault |
+gitlab_runner_gbm_token: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           37616337336363353534643662356338326462306336306139393636616239343564383365613835
           3135306435343463623239343739373831613330373063370a646636653839633233383631656535
           63353634666431343165663365633434333831626433343931663462663462343733373562386334
           6233326565313831300a336266643165656131613361666232373936353965346563336430363266
           62393735383432336437393530353038373831356334646663353536333737613030
+gitlab_runner_webkitgtk_token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          37313636323433353665623036663633346637393763626331653030336135363263666433326134
+          3637383237393636386632663034343732343934323938660a653565626239373231393236623638
+          37306464386234623461376266353132626430356535343230376135623632663465373734303961
+          3166343137653164320a613636343432343836306235626262336663336265393934393136386566
+          30306465323732643138373734636164316335356137373061326631353063636138623934316337
+          39346362303230653836313664363933306433313661663732383961336262306664343239633364
+          64373030363731356363613435353135636639663534336637303161646561666464653337313239
+          37316439386434343966
 
 gitlab_runner_config:
   concurrent: 2
@@ -19,7 +29,7 @@ gitlab_runner_config:
     - name: redhat-runner-03
       output_limit: 32768
       url: https://gitlab.gnome.org
-      token: "{{ gitlab_runner_token_gbm }}"
+      token: "{{ gitlab_runner_gbm_token }}"
       executor: docker
       environment:
         - "FF_USE_GIT_NATIVE_CLONE=true"
@@ -33,6 +43,29 @@ gitlab_runner_config:
         volumes:
           - /home/podman/cache:/cache
           - casd_socket:/run/casd
+        shm_size: 0
+        tmpfs:
+          "/tmp": "rw,nosuid,nodev,exec,mode=1777"
+    - name: redhat-runner-03-webkitgtk
+      url: https://gitlab.gnome.org
+      id: 1101
+      token: "{{ gitlab_runner_webkitgtk_token }}"
+      executor: docker
+      environment:
+        - "FF_USE_GIT_NATIVE_CLONE=true"
+      cache:
+        MaxUploadedArchiveSize: 0
+      docker:
+        tls_verify: false
+        image: quay.io/fedora/fedora:latest
+        privileged: false
+        cap_drop:
+          - all
+        security_opt:
+          - seccomp:/home/podman/gitlab-runner/flatpak.seccomp.json
+        disable_entrypoint_overwrite: false
+        oom_kill_disable: false
+        disable_cache: true
         shm_size: 0
         tmpfs:
           "/tmp": "rw,nosuid,nodev,exec,mode=1777"
