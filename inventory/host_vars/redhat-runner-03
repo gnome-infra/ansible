@@ -67,6 +67,8 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         shm_size: 0
+        volumes:
+          - /proc:/host/proc
         tmpfs:
           "/tmp": "rw,nosuid,nodev,exec,mode=1777"
 
