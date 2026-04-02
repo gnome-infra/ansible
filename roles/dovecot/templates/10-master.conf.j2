@@ -89,7 +89,8 @@ service auth {
   # something else than 0666 and Dovecot lets the kernel enforce the
   # permissions (e.g. 0777 allows everyone full permissions).
   unix_listener auth-userdb {
-    mode = 0777
+    mode = 0660
+    group = staffmail
   }
 
   # Postfix smtp-auth
