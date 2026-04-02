@@ -62,13 +62,6 @@
     setype: mail_home_rw_t
   loop: "{{ dovecot_shared_mailboxes | default([]) }}"
 
-- name: Subscribe users to shared mailboxes
-  command: >
-    doveadm mailbox subscribe -u {{ item.1 }}
-    shared/{{ item.0.name }}/INBOX
-  loop: "{{ dovecot_shared_mailboxes | default([]) | subelements('acl_users') }}"
-  changed_when: false
-
 - name: Land Dovecot configuration
   template:
     src: dovecot.conf.j2
