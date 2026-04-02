@@ -234,6 +234,8 @@ def generate_sender_login_maps(groups):
                 )
 
     for uid, _ in emails:
+        if uid in SHARED_ACCOUNTS:
+            continue
         aliases = [uid]
         if uid in custom_map["gnome.org"]:
             value = custom_map["gnome.org"][uid]
