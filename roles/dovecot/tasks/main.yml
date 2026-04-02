@@ -29,7 +29,7 @@
     state: directory
     owner: "{{ item.name }}"
     group: "{{ dovecot_mail_privileged_group }}"
-    mode: '0770'
+    mode: '2770'
     setype: mail_home_rw_t
   loop: "{{ dovecot_shared_mailboxes | default([]) }}"
 
@@ -39,7 +39,7 @@
     state: directory
     owner: "{{ item.0.name }}"
     group: "{{ dovecot_mail_privileged_group }}"
-    mode: '0770'
+    mode: '2770'
     setype: mail_home_rw_t
   loop: "{{ (dovecot_shared_mailboxes | default([])) | product(['Maildir', 'Maildir/cur', 'Maildir/new', 'Maildir/tmp']) | list }}"
 
