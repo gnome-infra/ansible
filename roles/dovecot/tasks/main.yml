@@ -43,13 +43,14 @@
     setype: mail_home_rw_t
   loop: "{{ (dovecot_shared_mailboxes | default([])) | product(['Maildir', 'Maildir/cur', 'Maildir/new', 'Maildir/tmp']) | list }}"
 
-- name: Register shared mailboxes in acl_shared_dict
-  command: >
-    doveadm dict set -u {{ item.name }}
-    "file:/srv/dovecot/shared-mailboxes.db"
-    "shared/shared-boxes/user/{{ item.name }}/INBOX" 1
-  loop: "{{ dovecot_shared_mailboxes | default([]) }}"
-  changed_when: false
+- name: Create shared mailbox dict directory
+  file:
+    path: /srv/dovecot/dict
+    state: directory
+    owner: dovecot
+    group: "{{ dovecot_mail_privileged_group }}"
+    mode: '0770'
+    setype: mail_home_rw_t
 
 - name: Land shared mailbox ACL files
   template:
