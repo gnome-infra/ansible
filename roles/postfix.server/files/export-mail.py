@@ -28,6 +28,8 @@ gl = gitlab.Gitlab("https://gitlab.gnome.org", private_token=GITLAB_TOKEN)
 
 GL_GROUP_ID = "178936"
 
+SHARED_ACCOUNTS = {"exec", "accounting", "info"}
+
 ALIASES = [
     ("/etc/gnome.org/src-mail/virtual", "src.gnome.org", "gnomecvs"),
     (
@@ -142,7 +144,10 @@ def generate_alias_file(aliasfile, domain, groups):
     )
 
     for uid, mail in emails:
-        newaliasfile += file_format % (uid, domain, mail.decode())
+        if domain == "" and uid in SHARED_ACCOUNTS:
+            newaliasfile += "%s:\t\t\\%s\n" % (uid, uid)
+        else:
+            newaliasfile += file_format % (uid, domain, mail.decode())
 
     return aliasfile, newaliasfile
 
