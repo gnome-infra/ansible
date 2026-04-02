@@ -23,6 +23,36 @@
     group: "{{ dovecot_maildir_group }}"
     setype: mail_home_rw_t
 
+- name: Create shared mailbox parent directories
+  file:
+    path: "{{ dovecot_maildir }}/{{ item.name }}"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ dovecot_mail_privileged_group }}"
+    mode: '0770'
+    setype: mail_home_rw_t
+  loop: "{{ dovecot_shared_mailboxes | default([]) }}"
+
+- name: Create shared mailbox Maildir directories
+  file:
+    path: "{{ dovecot_maildir }}/{{ item.0.name }}/{{ item.1 }}"
+    state: directory
+    owner: "{{ item.0.name }}"
+    group: "{{ dovecot_mail_privileged_group }}"
+    mode: '0770'
+    setype: mail_home_rw_t
+  loop: "{{ (dovecot_shared_mailboxes | default([])) | product(['Maildir', 'Maildir/cur', 'Maildir/new', 'Maildir/tmp']) | list }}"
+
+- name: Land shared mailbox ACL files
+  template:
+    src: dovecot-acl.j2
+    dest: "{{ dovecot_maildir }}/{{ item.name }}/Maildir/dovecot-acl"
+    owner: "{{ item.name }}"
+    group: "{{ dovecot_mail_privileged_group }}"
+    mode: '0660'
+    setype: mail_home_rw_t
+  loop: "{{ dovecot_shared_mailboxes | default([]) }}"
+
 - name: Land Dovecot configuration
   template:
     src: dovecot.conf.j2

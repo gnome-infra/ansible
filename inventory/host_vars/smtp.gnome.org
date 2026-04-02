@@ -25,6 +25,26 @@ dovecot_maildir_user: dovecot
 dovecot_maildir_group: staffmail
 dovecot_homedir: "{{ dovecot_maildir }}/%d/%u"
 dovecot_maildir: /srv/dovecot
+dovecot_shared_mailboxes:
+  - name: exec
+    acl_users:
+      - allanday
+      - ramcq
+      - arunsr
+  - name: accounting
+    acl_users:
+      - allanday
+      - ramcq
+      - arunsr
+      - akuci
+      - dvenkatraman
+  - name: info
+    acl_users:
+      - allanday
+      - ramcq
+      - arunsr
+      - akuci
+      - bpiotrowski
 dovecot_bind_dn: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           62333535376636336139323339633066333839636536303264323061613137366430623634363439
