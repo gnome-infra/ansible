@@ -43,6 +43,16 @@
     setype: mail_home_rw_t
   loop: "{{ (dovecot_shared_mailboxes | default([])) | product(['Maildir', 'Maildir/cur', 'Maildir/new', 'Maildir/tmp']) | list }}"
 
+- name: Create shared mailbox Sent directories
+  file:
+    path: "{{ dovecot_maildir }}/{{ item.0.name }}/{{ item.1 }}"
+    state: directory
+    owner: "{{ item.0.name }}"
+    group: "{{ dovecot_mail_privileged_group }}"
+    mode: '2770'
+    setype: mail_home_rw_t
+  loop: "{{ (dovecot_shared_mailboxes | default([])) | product(['Maildir/.Sent', 'Maildir/.Sent/cur', 'Maildir/.Sent/new', 'Maildir/.Sent/tmp']) | list }}"
+
 - name: Create shared mailbox dict directory
   file:
     path: /srv/dovecot/dict
@@ -90,11 +100,33 @@
     - dovecot-ldap.conf.ext
     - 20-lmtp.conf
     - 20-managesieve.conf
+    - 90-sieve.conf
     - 10-auth.conf
     - 10-mail.conf
     - 10-master.conf
     - 10-ssl.conf
   notify: Restart Dovecot
+
+- name: Create sieve-before directory
+  file:
+    path: /etc/dovecot/sieve-before
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Land shared-sent sieve script
+  copy:
+    src: shared-sent.sieve
+    dest: /etc/dovecot/sieve-before/shared-sent.sieve
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Dovecot
+
+- name: Compile shared-sent sieve script
+  command: sievec /etc/dovecot/sieve-before/shared-sent.sieve
+  changed_when: false
 
 - name: Start and enable Dovecot
   service:

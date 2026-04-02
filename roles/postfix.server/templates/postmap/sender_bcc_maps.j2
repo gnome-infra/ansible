@@ -1,0 +1,3 @@
+{% for mailbox in dovecot_shared_mailboxes %}
+{{ mailbox.name }}@gnome.org    {{ mailbox.name }}+sent@gnome.org
+{% endfor %}

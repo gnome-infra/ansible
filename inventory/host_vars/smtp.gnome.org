@@ -72,6 +72,7 @@ postfix_postmap_files:
     - hash:/etc/postfix/virtual-aliases/virtual-gnomehispano.org
     - hash:/etc/postfix/virtual-aliases/virtual-guadec.org
     - hash:/etc/postfix/virtual-aliases/virtual-flatpak.org
+    - hash:/etc/postfix/sender_bcc_maps
     - hash:/etc/postfix/transport
 
 postfix_regexp_files:
