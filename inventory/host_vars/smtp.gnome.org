@@ -5,6 +5,7 @@ firewall_allowed_tcp_ports:
   - 995
   - 587
   - 80
+  - 4190
 
 firewall_additional_rules:
   - "iptables -A INPUT -p tcp -m tcp --dport 9100 -s 10.8.0.2/32 -j ACCEPT"
