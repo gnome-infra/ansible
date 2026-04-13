@@ -1,0 +1,9 @@
+[Unit]
+Description=Learn spam from user Junk folders
+After=rspamd.service dovecot.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/rspamd-learn-junk.sh
+Nice=10
+IOSchedulingClass=idle
