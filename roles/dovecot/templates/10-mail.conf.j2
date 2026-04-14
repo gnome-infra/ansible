@@ -84,7 +84,7 @@ namespace shared {
   type = shared
   separator = /
   prefix = shared/%%u/
-  location = maildir:{{ dovecot_maildir }}/%%u/Maildir:INDEX=~/Maildir/shared/%%u
+  location = maildir:{{ dovecot_maildir }}/%%u/Maildir:INDEX=~/Maildir/shared/%%u:INDEXPVT=~/Maildir/shared/%%u
   subscriptions = no
   list = children
 }
