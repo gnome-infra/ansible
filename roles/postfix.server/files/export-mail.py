@@ -211,7 +211,7 @@ def generate_sender_login_maps(groups):
             "aday": "allanday",
             "allan": "allanday",
             "anisa": "akuci",
-            "av": "averi",
+            "av": "avmail",
             "bart": "bpiotrowski",
             "kristi": "kprogri",
             "richard": "rlittauer",
