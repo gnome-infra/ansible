@@ -29,21 +29,21 @@ dovecot_maildir: /srv/dovecot
 dovecot_shared_mailboxes:
   - name: exec
     acl_users:
-      - allanday
-      - ramcq
-      - arunsr
+      - allan
+      - rob
+      - arun
   - name: accounting
     acl_users:
-      - allanday
-      - ramcq
-      - arunsr
+      - allan
+      - rob
+      - arun
       - akuci
       - dvenkatraman
   - name: info
     acl_users:
-      - allanday
-      - ramcq
-      - arunsr
+      - allan
+      - rob
+      - arun
       - akuci
       - bpiotrowski
 dovecot_bind_dn: !vault |
