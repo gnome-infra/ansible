@@ -1,4 +1,4 @@
-require ["fileinto", "address"];
+require ["fileinto"];
 
 if allof(
     address :is "from" "service@paypal.com",
