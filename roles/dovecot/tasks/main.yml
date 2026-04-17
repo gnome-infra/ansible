@@ -53,6 +53,16 @@
     setype: mail_home_rw_t
   loop: "{{ (dovecot_shared_mailboxes | default([])) | product(['Maildir/.Sent', 'Maildir/.Sent/cur', 'Maildir/.Sent/new', 'Maildir/.Sent/tmp']) | list }}"
 
+- name: Create shared mailbox subdirectories
+  file:
+    path: "{{ dovecot_maildir }}/{{ item.0.0.name }}/Maildir/.{{ item.0.1 }}{{ item.1 }}"
+    state: directory
+    owner: "{{ item.0.0.name }}"
+    group: "{{ dovecot_mail_privileged_group }}"
+    mode: '2770'
+    setype: mail_home_rw_t
+  loop: "{{ (dovecot_shared_mailboxes | default([])) | subelements('mailboxes', skip_missing=True) | product(['', '/cur', '/new', '/tmp']) | list }}"
+
 - name: Create shared mailbox dict directory
   file:
     path: /srv/dovecot/dict
@@ -126,6 +136,19 @@
 
 - name: Compile shared-sent sieve script
   command: sievec /etc/dovecot/sieve-before/shared-sent.sieve
+  changed_when: false
+
+- name: Land accounting-paypal sieve script
+  copy:
+    src: accounting-paypal.sieve
+    dest: /etc/dovecot/sieve-before/accounting-paypal.sieve
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Dovecot
+
+- name: Compile accounting-paypal sieve script
+  command: sievec /etc/dovecot/sieve-before/accounting-paypal.sieve
   changed_when: false
 
 - name: Start and enable Dovecot
