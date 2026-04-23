@@ -32,6 +32,7 @@ dovecot_shared_mailboxes:
       - allan
       - rob
       - arun
+      - bpiotrowski
   - name: accounting
     acl_users:
       - allan
@@ -39,6 +40,7 @@ dovecot_shared_mailboxes:
       - arun
       - akuci
       - dvenkatraman
+      - bpiotrowski
   - name: info
     acl_users:
       - allan
