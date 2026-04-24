@@ -41,6 +41,7 @@ dovecot_shared_mailboxes:
       - akuci
       - dvenkatraman
       - bpiotrowski
+      - dmatlak
   - name: info
     acl_users:
       - allan
