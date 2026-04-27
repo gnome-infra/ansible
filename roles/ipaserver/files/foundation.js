@@ -33,6 +33,14 @@ foundation_plugin.add_foundation_fields = function() {
  label: 'Previous account changes'
  });
 
+ section.fields.push({
+ name: 'matrixhandle',
+ label: 'Matrix Handle',
+ tooltip: 'Format: localpart:homeserver (e.g. av:gnome.org)',
+ pattern: '^[a-zA-Z0-9._=\\-\\/]+:[a-zA-Z0-9.\\-]+$',
+ pattern_errmsg: 'Must be in the format localpart:homeserver (e.g. av:gnome.org)'
+ });
+
  return true;
 
 };
