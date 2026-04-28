@@ -32,7 +32,6 @@ dovecot_shared_mailboxes:
       - allan
       - rob
       - arun
-      - bpiotrowski
   - name: accounting
     acl_users:
       - allan
@@ -48,6 +47,7 @@ dovecot_shared_mailboxes:
       - arun
       - akuci
       - dmatlak
+      - bpiotrowski
 dovecot_bind_dn: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           62333535376636336139323339633066333839636536303264323061613137366430623634363439
