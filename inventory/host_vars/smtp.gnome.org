@@ -49,6 +49,7 @@ dovecot_shared_mailboxes:
       - arun
       - akuci
       - bpiotrowski
+      - dmatlak
 dovecot_bind_dn: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           62333535376636336139323339633066333839636536303264323061613137366430623634363439
