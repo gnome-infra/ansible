@@ -1,8 +1,8 @@
 ---
-- name: Put selinux in permissive mode
+- name: Set SELinux to enforcing mode
   ansible.posix.selinux:
     policy: targeted
-    state: permissive
+    state: enforcing
   when: ansible_distribution in ["Fedora", "RedHat"]
 
 - name: Install podman
@@ -15,6 +15,22 @@
       - systemd-container
     state: present
     update_cache: true
+
+- name: Set SELinux context for catatonit
+  community.general.sefcontext:
+    target: /usr/libexec/podman/catatonit
+    setype: container_runtime_exec_t
+    state: present
+  when: ansible_distribution in ["Fedora", "RedHat"]
+  register: catatonit_fcontext
+
+- name: Apply SELinux context for catatonit
+  ansible.builtin.command:
+    cmd: restorecon -v /usr/libexec/podman/catatonit
+  when:
+    - ansible_distribution in ["Fedora", "RedHat"]
+    - catatonit_fcontext is changed
+  notify: restart podman service
 
 - name: Create podman user
   ansible.builtin.user:
@@ -38,7 +54,16 @@
   args:
     creates: /var/lib/systemd/linger/podman
 
-- name: Start podman socket and auto-update timer
+- name: Disable podman socket activation
+  ansible.builtin.systemd:
+    name: podman.socket
+    state: stopped
+    enabled: false
+    scope: user
+  become_user: podman
+  become: true
+
+- name: Start podman service and auto-update timer
   ansible.builtin.systemd:
     name: "{{ item }}"
     state: started
@@ -47,7 +72,7 @@
   become_user: podman
   become: true
   with_items:
-    - podman.socket
+    - podman.service
     - podman-auto-update.timer
 
 - name: Configure selinux modules
@@ -56,6 +81,7 @@
     - pydocuum
     - flatpak
     - podman
+    - gnome_runner
   when: ansible_distribution in ["Fedora", "RedHat"]
 
 - name: Ensure podman user service override directory exists
@@ -69,6 +95,10 @@
     src: podman.service.override.conf
     dest: /etc/systemd/user/podman.service.d/catatonit.conf
     mode: '0644'
+  notify:
+    - restart podman service
+    - restart pydocuum
+    - restart gitlab-runner
 
 - name: Create podman config directory
   ansible.builtin.file:

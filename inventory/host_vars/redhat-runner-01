@@ -40,5 +40,7 @@ gitlab_runner_config:
         cap_add:
           - SYS_PTRACE
           - SYS_CHROOT
+        security_opt:
+          - "label=level:s0:c100,c100"
         tmpfs:
           "/tmp": "rw,nosuid,nodev,exec,mode=1777"

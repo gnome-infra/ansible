@@ -43,6 +43,8 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         shm_size: 0
+        security_opt:
+          - "label=level:s0:c100,c100"
     - name: zvKw-Pk9
       url: https://gitlab.gnome.org
       id: 966
@@ -66,6 +68,8 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         shm_size: 0
+        security_opt:
+          - "label=level:s0:c200,c200"
         cap_add:
           - SYS_PTRACE
           - SYS_CHROOT

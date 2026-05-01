@@ -57,6 +57,8 @@ gitlab_runner_config:
         cap_add:
           - SYS_PTRACE
           - SYS_CHROOT
+        security_opt:
+          - "label=level:s0:c100,c100"
         tmpfs:
           "/tmp": "rw,nosuid,nodev,exec,mode=1777"
     - name: a15948139c78-flatpak
@@ -81,6 +83,7 @@ gitlab_runner_config:
           - /proc:/host/proc
         security_opt:
           - seccomp:/home/podman/gitlab-runner/flatpak.seccomp.json
+          - "label=level:s0:c200,c200"
         disable_entrypoint_overwrite: false
         oom_kill_disable: false
         disable_cache: true

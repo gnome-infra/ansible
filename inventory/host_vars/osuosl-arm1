@@ -44,6 +44,8 @@ gitlab_runner_config:
           - /home/podman/gnome-build-meta:/cache
           - casd_socket:/run/casd
         shm_size: 256000000
+        security_opt:
+          - "label=level:s0:c100,c100"
         tmpfs:
           "/tmp": "rw,nosuid,nodev,exec,mode=1777"
     - name: osuosl-arm1-flatpak
@@ -66,6 +68,7 @@ gitlab_runner_config:
         oom_kill_disable: false
         security_opt:
           - seccomp:/home/podman/gitlab-runner/flatpak.seccomp.json
+          - "label=level:s0:c200,c200"
         disable_cache: true
         volumes:
           - /proc:/host/proc

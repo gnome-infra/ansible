@@ -45,6 +45,8 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         shm_size: 0
+        security_opt:
+          - "label=level:s0:c100,c100"
         devices:
           - /dev/kvm
           - /dev/udmabuf
@@ -72,6 +74,7 @@ gitlab_runner_config:
           - /proc:/host/proc
         security_opt:
           - seccomp:/home/podman/gitlab-runner/flatpak.seccomp.json
+          - "label=level:s0:c200,c200"
         disable_entrypoint_overwrite: false
         oom_kill_disable: false
         disable_cache: true

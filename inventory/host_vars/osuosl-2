@@ -35,6 +35,8 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         shm_size: 0
+        security_opt:
+          - "label=level:s0:c100,c100"
         tmpfs:
           "/tmp": "rw,nosuid,nodev,exec,mode=1777"
     - name: osuosl-2-gnome-release-service-ptyxis
@@ -52,5 +54,7 @@ gitlab_runner_config:
         oom_kill_disable: false
         disable_cache: true
         shm_size: 0
+        security_opt:
+          - "label=level:s0:c200,c200"
         tmpfs:
           "/tmp": "rw,nosuid,nodev,exec,mode=1777"
