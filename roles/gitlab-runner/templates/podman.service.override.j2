@@ -3,6 +3,8 @@ Requires=
 After=
 
 [Service]
+{% if ansible_distribution in ["Fedora", "RedHat"] %}
 SELinuxContext=system_u:system_r:container_runtime_t:s0-s0:c0.c1023
+{% endif %}
 ExecStart=
 ExecStart=/usr/libexec/podman/catatonit -- /usr/bin/podman $LOGGING system service --time=0

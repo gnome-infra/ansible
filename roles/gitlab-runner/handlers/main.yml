@@ -16,6 +16,7 @@
     scope: user
   become_user: podman
   become: true
+  when: gitlab_runner_enable_pydocuum | default(true)
 
 - name: restart buildbox-casd
   ansible.builtin.systemd:
