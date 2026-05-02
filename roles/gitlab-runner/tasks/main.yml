@@ -54,6 +54,16 @@
   args:
     creates: /var/lib/systemd/linger/podman
 
+- name: Check podman socket state
+  ansible.builtin.command:
+    cmd: systemctl --user is-enabled podman.socket
+  become_user: podman
+  become: true
+  register: podman_socket_state
+  changed_when: false
+  failed_when: false
+  tags: podman
+
 - name: Disable podman socket activation
   ansible.builtin.systemd:
     name: podman.socket
@@ -62,6 +72,8 @@
     scope: user
   become_user: podman
   become: true
+  when: podman_socket_state.stdout == "enabled"
+  tags: podman
 
 - name: Start podman service and auto-update timer
   ansible.builtin.systemd:
@@ -74,6 +86,7 @@
   with_items:
     - podman.service
     - podman-auto-update.timer
+  tags: podman
 
 - name: Configure selinux modules
   ansible.builtin.include_tasks:
