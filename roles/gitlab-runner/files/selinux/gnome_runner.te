@@ -5,9 +5,13 @@ require {
 	type nsfs_t;
 	type container_t;
 	type sysctl_fs_t;
+	type sysfs_t;
+	type cgroup_t;
 	type devpts_t;
 	type binfmt_misc_fs_t;
 	type dma_device_t;
+	type usb_device_t;
+	type vfio_device_t;
 	type proc_t;
 	type user_tmp_t;
 	type device_t;
@@ -21,12 +25,16 @@ require {
 #============= container_t ==============
 allow container_t binfmt_misc_fs_t:file { open read write };
 allow container_t binfmt_misc_fs_t:filesystem { mount remount };
+allow container_t cgroup_t:filesystem remount;
 allow container_t device_t:filesystem remount;
 allow container_t devpts_t:chr_file open;
 
 allow container_t dma_device_t:chr_file { getattr ioctl open read write };
 allow container_t nsfs_t:filesystem remount;
 allow container_t proc_t:filesystem associate;
+allow container_t sysfs_t:filesystem remount;
+allow container_t usb_device_t:chr_file getattr;
+allow container_t vfio_device_t:chr_file getattr;
 
 allow container_t self:netlink_tcpdiag_socket nlmsg_read;
 allow container_t sysctl_fs_t:dir mounton;

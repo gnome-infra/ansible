@@ -76,13 +76,17 @@
     - podman-auto-update.timer
 
 - name: Configure selinux modules
-  ansible.builtin.include_tasks: selinux.yml
+  ansible.builtin.include_tasks:
+    file: selinux.yml
+    apply:
+      tags: selinux
   loop:
     - pydocuum
     - flatpak
     - podman
     - gnome_runner
   when: ansible_distribution in ["Fedora", "RedHat"]
+  tags: selinux
 
 - name: Ensure podman user service override directory exists
   ansible.builtin.file:
