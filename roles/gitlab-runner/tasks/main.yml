@@ -177,6 +177,12 @@
   become: true
   when: gitlab_runner_enable_pydocuum | default(true)
 
+- name: Check if pydocuum service exists
+  ansible.builtin.stat:
+    path: /etc/systemd/user/pydocuum.service
+  register: pydocuum_unit
+  when: not (gitlab_runner_enable_pydocuum | default(true))
+
 - name: Stop pydocuum
   ansible.builtin.systemd:
     name: pydocuum.service
@@ -185,7 +191,9 @@
     scope: user
   become_user: podman
   become: true
-  when: not (gitlab_runner_enable_pydocuum | default(true))
+  when:
+    - not (gitlab_runner_enable_pydocuum | default(true))
+    - pydocuum_unit.stat.exists
 
 - name: Create quadlet for buildbox-casd
   containers.podman.podman_container:
