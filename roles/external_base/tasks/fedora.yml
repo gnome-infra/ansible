@@ -37,11 +37,6 @@
     update_cache: true
   register: tailscale_pkg_result
 
-- name: Remind to configure tailscale
-  ansible.builtin.pause:
-    prompt: "ssh to the server and configure tailscale"
-  when: tailscale_pkg_result.changed
-
 - name: Start and enable services
   ansible.builtin.systemd:
     state: started
@@ -53,9 +48,27 @@
     - dnf-automatic.timer
     - node_exporter
 
+- name: Remind to configure tailscale
+  ansible.builtin.pause:
+    prompt: "ssh to the server and run tailscale login"
+  when: tailscale_pkg_result.changed
+
 - name: Configure chronyd
   ansible.builtin.include_role:
     name: chrony
+
+- name: Check if dnf-automatic.conf exists
+  ansible.builtin.stat:
+    path: /etc/dnf/automatic.conf
+  register: dnf_automatic_conf
+
+- name: Copy default automatic.conf from dnf5-plugins
+  ansible.builtin.copy:
+    src: /usr/share/dnf5/dnf5-plugins/automatic.conf
+    dest: /etc/dnf/automatic.conf
+    remote_src: true
+    mode: '0644'
+  when: not dnf_automatic_conf.stat.exists
 
 - name: Configure dnf-automatic.conf for automatic updates and reboot
   ansible.builtin.lineinfile:
