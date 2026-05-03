@@ -9,5 +9,6 @@ sshguard_whitelist:
   - comment: IPv6 localhost
     address: ::1
 
-sshguard_backend: /usr/libexec/sshguard/sshg-fw-iptables
+sshguard_firewall_backend: iptables
+sshguard_backend: "/usr/libexec/sshguard/sshg-fw-{{ sshguard_firewall_backend }}"
 sshguard_logreader: LANG=C /usr/bin/journalctl -afb -p info -n1 -t sshd -o cat

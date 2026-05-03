@@ -5,7 +5,7 @@
       ansible.builtin.package:
         name:
           - sshguard
-          - sshguard-iptables
+          - "sshguard-{{ sshguard_firewall_backend }}"
         state: present
 
     - name: Configure sshguard and whitelist from templates
@@ -30,4 +30,5 @@
       ansible.builtin.systemd:
         name: iptables
         masked: true
+      when: sshguard_firewall_backend == "iptables"
   when: sshguard_enabled | default(false)
