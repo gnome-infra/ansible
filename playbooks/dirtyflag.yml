@@ -1,0 +1,22 @@
+---
+- name: Blacklist esp4, esp6, rxrpc kernel modules
+  hosts: gitlab-runners
+  remote_user: root
+  tasks:
+    - name: Block esp4/esp6/rxrpc kernel modules
+      ansible.builtin.copy:
+        dest: /etc/modprobe.d/dirtyflag.conf
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          install esp4 /bin/false
+          install esp6 /bin/false
+          install rxrpc /bin/false
+
+    - name: Unload modules if currently loaded
+      community.general.modprobe:
+        name: "{{ item }}"
+        state: absent
+      loop: [esp4, esp6, rxrpc]
+      failed_when: false
