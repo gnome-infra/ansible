@@ -1,5 +1,5 @@
 
-module gnome_runner 1.1;
+module gnome_runner 1.2;
 
 require {
 	type nsfs_t;
@@ -14,6 +14,8 @@ require {
 	type vfio_device_t;
 	type sound_device_t;
 	type sysctl_irq_t;
+	type sysctl_t;
+	type tun_tap_device_t;
 	type proc_t;
 	type user_tmp_t;
 	type device_t;
@@ -36,10 +38,12 @@ allow container_t nsfs_t:filesystem remount;
 allow container_t proc_t:filesystem associate;
 allow container_t sysfs_t:filesystem remount;
 allow container_t sound_device_t:chr_file getattr;
+allow container_t tun_tap_device_t:chr_file getattr;
 allow container_t usb_device_t:chr_file getattr;
 allow container_t vfio_device_t:chr_file getattr;
 
 allow container_t self:netlink_tcpdiag_socket nlmsg_read;
 allow container_t sysctl_fs_t:dir mounton;
 allow container_t sysctl_irq_t:dir mounton;
+allow container_t sysctl_t:dir mounton;
 allow container_t user_tmp_t:dir mounton;
