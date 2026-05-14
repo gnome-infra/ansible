@@ -1,6 +1,9 @@
-require ["fileinto", "envelope", "subaddress"];
+require ["fileinto", "envelope", "subaddress", "variables"];
 
-if envelope :detail "to" "sent" {
+if anyof(
+    envelope :detail "to" "sent",
+    envelope :matches "to" "*+sent@*"
+) {
     fileinto "Sent";
     stop;
 }

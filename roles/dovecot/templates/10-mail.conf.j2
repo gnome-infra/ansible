@@ -78,6 +78,23 @@ namespace inbox {
   # Namespace handles its own subscriptions. If set to "no", the parent
   # namespace handles them (empty prefix should always have this as "yes")
   #subscriptions = yes
+
+  mailbox Sent {
+    auto = subscribe
+    special_use = \Sent
+  }
+  mailbox Drafts {
+    auto = subscribe
+    special_use = \Drafts
+  }
+  mailbox Trash {
+    auto = subscribe
+    special_use = \Trash
+  }
+  mailbox Junk {
+    auto = subscribe
+    special_use = \Junk
+  }
 }
 
 namespace shared {
@@ -87,6 +104,16 @@ namespace shared {
   location = maildir:{{ dovecot_maildir }}/%%u/Maildir:INDEX=~/Maildir/shared/%%u:INDEXPVT=~/Maildir/shared/%%u
   subscriptions = no
   list = children
+
+  mailbox Sent {
+    special_use = \Sent
+  }
+  mailbox Drafts {
+    special_use = \Drafts
+  }
+  mailbox Trash {
+    special_use = \Trash
+  }
 }
 # Should shared INBOX be visible as "shared/user" or "shared/user/INBOX"?
 #mail_shared_explicit_inbox = no
