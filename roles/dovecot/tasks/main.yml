@@ -82,6 +82,16 @@
     setype: mail_home_rw_t
   loop: "{{ dovecot_shared_mailboxes | default([]) }}"
 
+- name: Land shared mailbox Sent ACL files
+  template:
+    src: dovecot-acl.j2
+    dest: "{{ dovecot_maildir }}/{{ item.name }}/Maildir/.Sent/dovecot-acl"
+    owner: "{{ item.name }}"
+    group: "{{ dovecot_mail_privileged_group }}"
+    mode: '0660'
+    setype: mail_home_rw_t
+  loop: "{{ dovecot_shared_mailboxes | default([]) }}"
+
 - name: Subscribe users to shared mailboxes
   command: >
     doveadm mailbox subscribe -u {{ item.1 }}

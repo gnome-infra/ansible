@@ -4,6 +4,10 @@
 
 devnull@gnome.org discard:silently
 devnull@smtp.gnome.org discard:silently
+{% for mailbox in dovecot_shared_mailboxes | default([]) %}
+{{ mailbox.name }}+sent@{{ postfix_myhostname }} lmtp:unix:private/dovecot-lmtp
+{% endfor %}
+
 
 #######################
 ## MANAGED BY ANSIBLE ##
