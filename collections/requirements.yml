@@ -1,6 +1,7 @@
 collections:
   - name: freeipa.ansible_freeipa
   - name: community.general
+    version: ">=12.0.0,<13.0.0"
   - name: community.postgresql
   - name: containers.podman
   - name: openstack.cloud
