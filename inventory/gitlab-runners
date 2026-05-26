@@ -1,5 +1,4 @@
 [gitlab-runners]
-dh-aarch64-01 ansible_host=152.67.89.119
 dh-aarch64-02 ansible_host=144.24.251.95
 hetzner-1 ansible_host=46.4.40.27
 hetzner-2 ansible_host=46.4.33.43
