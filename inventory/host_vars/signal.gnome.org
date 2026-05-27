@@ -1,5 +1,7 @@
 firewall_additional_rules:
   - "iptables -A INPUT -i wg0 -j ACCEPT"
+  - "iptables -A INPUT -s 37.27.142.13/32 -p tcp --dport 6514 -j ACCEPT"
+  - "iptables -A INPUT -s 38.145.34.64/32 -p tcp --dport 6514 -j ACCEPT"
 firewall_allowed_tcp_ports:
   - 22
   - 80
@@ -8,6 +10,13 @@ nrpe_custom_plugins:
   - check_vpn
 enable_blackbox: false
 sshguard_enabled: true
+
+is_rsyslog_relay: true
+rsyslog_listen_port: "6514"
+rsyslog_relay_tls: true
+rsyslog_relay_target: "vpn.bastion02.gnome.org"
+rsyslog_relay_target_port: "1514"
+rsyslog_relay_forward_tls: false
 
 cachet_url: https://status.gnome.org
 cachet_db_host: !vault |

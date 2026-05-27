@@ -1,3 +1,9 @@
+- name: Install rsyslog-gnutls for TLS support
+  package:
+    name: rsyslog-gnutls
+    state: present
+  when: rsyslog_client_tls | default(false)
+
 - name: Configure remote logging
   template:
     src: remotelog.conf.j2

@@ -3,6 +3,14 @@ chrony_ntp_servers:
   - "ntp2.hetzner.com"
   - "ntp3.hetzner.net"
 
+is_rsyslog_relay: true
+rsyslog_listen_port: "1514"
+rsyslog_relay_target: "signal.gnome.org"
+rsyslog_relay_target_port: "6514"
+rsyslog_relay_forward_tls: true
+rsyslog_relay_tls: false
+rsyslog_relay_firewalld_zone: internal
+
 gitlab_runner_token_untagged: !vault |
     $ANSIBLE_VAULT;1.1;AES256
     37356262633537656565613236666135383466303233653465303366643235353137616264393630

@@ -1,6 +1,9 @@
 ---
 ansible_user: root
 
+rsyslog_remote_target: "{{ hostvars['hetzner-3'].ansible_facts.tailscale0.ipv4.address }}"
+rsyslog_remote_port: "1514"
+
 sshguard_enabled: true
 sshguard_firewall_backend: firewalld
 sshguard_whitelist:

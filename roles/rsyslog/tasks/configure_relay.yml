@@ -1,0 +1,39 @@
+---
+- name: Install rsyslog-gnutls for TLS support
+  package:
+    name: rsyslog-gnutls
+    state: present
+  when: rsyslog_relay_tls | default(false) or rsyslog_relay_forward_tls | default(false)
+
+- name: Configure rsyslog relay
+  template:
+    src: rsyslog-relay.conf.j2
+    dest: /etc/rsyslog.d/relay.conf
+  notify: restart rsyslog
+
+- name: Forward local logs to relay target
+  template:
+    src: remotelog.conf.j2
+    dest: /etc/rsyslog.d/remotelog.conf
+  vars:
+    rsyslog_remote_target: "{{ rsyslog_relay_target }}"
+    rsyslog_remote_port: "{{ rsyslog_relay_target_port | default('1514') }}"
+    rsyslog_client_tls: "{{ rsyslog_relay_forward_tls | default(false) }}"
+  notify: restart rsyslog
+
+- name: Allow rsyslog to bind to relay listen port in SELinux
+  community.general.seport:
+    ports: "{{ rsyslog_listen_port | default('1514') }}"
+    proto: tcp
+    setype: syslogd_port_t
+    state: present
+  when: rsyslog_listen_port | default('1514') != '1514'
+
+- name: Allow rsyslog relay port on firewalld internal zone
+  ansible.posix.firewalld:
+    zone: internal
+    port: "{{ rsyslog_listen_port | default('1514') }}/tcp"
+    permanent: true
+    immediate: true
+    state: enabled
+  when: rsyslog_relay_firewalld_zone | default('') == 'internal'

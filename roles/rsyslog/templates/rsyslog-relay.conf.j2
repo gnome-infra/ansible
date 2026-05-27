@@ -1,0 +1,31 @@
+module(load="imtcp")
+{% if rsyslog_relay_tls or rsyslog_relay_forward_tls | default(false) %}
+global(DefaultNetstreamDriver="gtls")
+{% endif %}
+
+input(type="imtcp" port="{{ rsyslog_listen_port | default('1514') }}"
+{% if rsyslog_relay_tls %}
+      StreamDriver.Name="gtls"
+      StreamDriver.Mode="1"
+      StreamDriver.AuthMode="anon"
+{% endif %}
+)
+
+*.* action(type="omfwd"
+      queue.type="linkedlist"
+      queue.filename="relay-queue"
+      action.resumeRetryCount="-1"
+      queue.saveOnShutdown="on"
+      queue.maxDiskSpace="{{ rsyslog_relay_queue_max_disk | default('2g') }}"
+      target="{{ rsyslog_relay_target }}"
+      port="{{ rsyslog_relay_target_port | default('1514') }}"
+      protocol="tcp"
+      Template="RSYSLOG_SyslogProtocol23Format"
+{% if rsyslog_relay_forward_tls | default(false) %}
+      StreamDriver="gtls"
+      StreamDriverMode="1"
+      StreamDriverAuthMode="anon"
+{% else %}
+      StreamDriverMode="0"
+{% endif %}
+)

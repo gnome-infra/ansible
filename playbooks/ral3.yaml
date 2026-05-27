@@ -22,4 +22,5 @@
    - iptables
    - bash
    - base_auth
+   - rsyslog
    - rh_insights

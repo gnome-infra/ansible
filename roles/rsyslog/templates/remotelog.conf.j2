@@ -3,6 +3,11 @@
       queue.filename="omfwd"
       action.resumeRetryCount="-1"
       queue.saveOnShutdown="on"
-      target="vpn.bastion02.gnome.org" port="1514" protocol="tcp"
+      target="{{ rsyslog_remote_target }}" port="{{ rsyslog_remote_port }}" protocol="tcp"
       Template="RSYSLOG_SyslogProtocol23Format"
+{% if rsyslog_client_tls %}
+      StreamDriver="gtls"
+      StreamDriverMode="1"
+      StreamDriverAuthMode="anon"
+{% endif %}
 )

@@ -8,10 +8,14 @@
     state: started
     enabled: true
 
+- name: Configure rsyslog relay
+  include_tasks: configure_relay.yml
+  when: is_rsyslog_relay | default(false)
+
 - name: Configure rsyslog client
   include_tasks: configure_client.yml
-  when: is_rsyslog_server is undefined
+  when: not (is_rsyslog_relay | default(false)) and is_rsyslog_server is undefined
 
 - name: Configure rsyslog server
   include_tasks: configure_server.yml
-  when: is_rsyslog_server is defined
+  when: not (is_rsyslog_relay | default(false)) and is_rsyslog_server is defined

@@ -34,3 +34,53 @@ scrape_configs:
 
       - source_labels: ['__syslog_message_proc_id']
         target_label: 'pid'
+
+      # Role classification
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'role'
+        regex: '(hetzner-[12]|dh-aarch64-.*|osuosl-.*|aws-aarch64-.*|redhat-runner-.*|postmarketos-.*)'
+        replacement: 'gitlab-runner'
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'role'
+        regex: '(idm0[34]|smtp|bastion02|signal|redhat-0[123])'
+        replacement: 'infra'
+
+      # Provider labels for runners
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'provider'
+        regex: '(hetzner-.*)'
+        replacement: 'hetzner'
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'provider'
+        regex: '(dh-aarch64-.*)'
+        replacement: 'oracle'
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'provider'
+        regex: '(osuosl-.*)'
+        replacement: 'osuosl'
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'provider'
+        regex: '(aws-aarch64-.*)'
+        replacement: 'aws'
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'provider'
+        regex: '(redhat-runner-.*)'
+        replacement: 'rdu3'
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'provider'
+        regex: '(postmarketos-.*)'
+        replacement: 'postmarketos'
+
+      # Datacenter labels for infra hosts
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'datacenter'
+        regex: '(idm0[34]|smtp|bastion02)'
+        replacement: 'aws'
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'datacenter'
+        regex: '(signal)'
+        replacement: 'osuosl'
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'datacenter'
+        regex: '(redhat-0[123])'
+        replacement: 'rdu3'
