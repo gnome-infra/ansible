@@ -1,6 +1,8 @@
 firewall_additional_rules:
   - "iptables -A INPUT -i wg0 -j ACCEPT"
   - "iptables -A INPUT -s 37.27.142.13/32 -p tcp --dport 6514 -j ACCEPT"
+  - "iptables -A INPUT -s 38.145.34.60/32 -p tcp --dport 6514 -j ACCEPT"
+  - "iptables -A INPUT -s 38.145.34.63/32 -p tcp --dport 6514 -j ACCEPT"
   - "iptables -A INPUT -s 38.145.34.64/32 -p tcp --dport 6514 -j ACCEPT"
 firewall_allowed_tcp_ports:
   - 22
