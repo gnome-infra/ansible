@@ -35,12 +35,22 @@ schema_config:
       object_store: s3
       schema: v13
       store: boltdb-shipper
+    - from: "2026-06-05"
+      index:
+        period: 24h
+        prefix: index_
+      object_store: s3
+      schema: v13
+      store: tsdb
 
 storage_config:
   boltdb_shipper:
     active_index_directory: {{ loki_base_dir }}/storage/boltdb-shipper-active
     cache_location: {{ loki_base_dir }}/storage/boltdb-shipper-cache
     cache_ttl: 24h
+  tsdb_shipper:
+    active_index_directory: {{ loki_base_dir }}/storage/tsdb-index
+    cache_location: {{ loki_base_dir }}/storage/tsdb-cache
 
 limits_config:
   retention_period: 90d
