@@ -4,4 +4,4 @@ loki_storage_dirs:
   - "{{ loki_base_dir }}/storage"
   - "{{ loki_base_dir }}/config"
 loki_service_name: loki
-loki_version: 3.2.1
+loki_version: 3.6.11

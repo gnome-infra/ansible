@@ -3,6 +3,7 @@
       queue.filename="omfwd"
       action.resumeRetryCount="-1"
       queue.saveOnShutdown="on"
+      queue.maxDiskSpace="{{ rsyslog_client_queue_max_disk | default('1g') }}"
       target="{{ rsyslog_remote_target }}" port="{{ rsyslog_remote_port }}" protocol="tcp"
       Template="RSYSLOG_SyslogProtocol23Format"
 {% if rsyslog_client_tls %}

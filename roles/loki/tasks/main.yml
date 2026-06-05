@@ -14,12 +14,14 @@
     src: loki-config.yaml.j2
     dest: "{{ loki_base_dir }}/config/loki-config.yaml"
     mode: '0644'
+  notify: Restart Loki
 
 - name: Copy systemd service file for Loki
   ansible.builtin.template:
     src: loki.service.j2
     dest: /etc/systemd/system/{{ loki_service_name }}.service
     mode: '0644'
+  notify: Restart Loki
 
 - name: Reload systemd to apply new service
   ansible.builtin.systemd:

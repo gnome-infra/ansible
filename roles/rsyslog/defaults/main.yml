@@ -2,3 +2,5 @@
 rsyslog_remote_target: "vpn.bastion02.gnome.org"
 rsyslog_remote_port: "1514"
 rsyslog_client_tls: false
+rsyslog_client_queue_max_disk: "1g"
+rsyslog_relay_queue_max_disk: "2g"
