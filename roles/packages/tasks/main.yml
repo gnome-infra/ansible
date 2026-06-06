@@ -18,6 +18,13 @@
     - /etc/yum.repos.d/epel-playground.repo
     - /etc/yum.repos.d/epel-testing-modular.repo
 
+- name: Limit installed kernels to 2
+  lineinfile:
+    path: /etc/dnf/dnf.conf
+    regexp: '^installonly_limit='
+    line: 'installonly_limit=2'
+    state: present
+
 - name: Install the default set of packages we need
   yum:
     name: "{{ item }}"
