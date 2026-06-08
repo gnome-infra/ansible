@@ -218,6 +218,7 @@ def generate_sender_login_maps(groups):
             "steven": "sdeobald",
             "ss": "ssyal",
             "deepa": "dvenkatraman",
+            "zana": "allanday",
             "exec": ["allan", "rob", "arun"],
             "accounting": ["allan", "rob", "arun", "akuci", "dvenkatraman"],
             "info": ["allan", "rob", "arun", "akuci", "bpiotrowski"],
