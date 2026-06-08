@@ -11,21 +11,24 @@ input(type="imtcp" port="{{ rsyslog_listen_port | default('1514') }}"
 {% endif %}
 )
 
-*.* action(type="omfwd"
-      queue.type="linkedlist"
-      queue.filename="relay-queue"
-      action.resumeRetryCount="-1"
-      queue.saveOnShutdown="on"
-      queue.maxDiskSpace="{{ rsyslog_relay_queue_max_disk | default('2g') }}"
-      target="{{ rsyslog_relay_target }}"
-      port="{{ rsyslog_relay_target_port | default('1514') }}"
-      protocol="tcp"
-      Template="RSYSLOG_SyslogProtocol23Format"
+if $fromhost-ip != "127.0.0.1" then {
+    action(type="omfwd"
+          queue.type="linkedlist"
+          queue.filename="relay-queue"
+          action.resumeRetryCount="-1"
+          queue.saveOnShutdown="on"
+          queue.maxDiskSpace="{{ rsyslog_relay_queue_max_disk | default('2g') }}"
+          target="{{ rsyslog_relay_target }}"
+          port="{{ rsyslog_relay_target_port | default('1514') }}"
+          protocol="tcp"
+          Template="RSYSLOG_SyslogProtocol23Format"
 {% if rsyslog_relay_forward_tls | default(false) %}
-      StreamDriver="gtls"
-      StreamDriverMode="1"
-      StreamDriverAuthMode="anon"
+          StreamDriver="gtls"
+          StreamDriverMode="1"
+          StreamDriverAuthMode="anon"
 {% else %}
-      StreamDriverMode="0"
+          StreamDriverMode="0"
 {% endif %}
-)
+    )
+    stop
+}
