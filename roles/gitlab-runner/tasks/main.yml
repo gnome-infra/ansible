@@ -226,6 +226,7 @@
           --cache-failures false --bind unix:/run/casd/casd.sock --quota-high 200G /srv/cas"
     quadlet_filename: buildbox-casd
     privileged: true
+    init: true
     volumes:
       - casd_socket:/run/casd
       - casd_storage:/srv/cas
