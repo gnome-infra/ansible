@@ -215,7 +215,7 @@
 - name: Create quadlet for buildbox-casd
   containers.podman.podman_container:
     name: buildbox-casd
-    image: registry.gitlab.com/freedesktop-sdk/infrastructure/freedesktop-sdk-docker-images/buildbox-casd:8fe67f04619da91755dc2bd923009e723678e24d
+    image: registry.gitlab.com/freedesktop-sdk/infrastructure/freedesktop-sdk-docker-images/buildbox-casd:ee8bcc0d9c6fc2d68a4d71bce10f88c0a4059d9c
     state: quadlet
     entrypoint: 'sh'
     command:
