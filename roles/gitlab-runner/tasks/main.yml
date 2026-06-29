@@ -223,7 +223,7 @@
       - >-
           "rm -rf /srv/cas/cas/tmp /srv/cas/cas/staging;
           exec buildbox-casd --buildbox-run buildbox-run-bubblewrap --jobs {{ gitlab_runner_buildbox_casd_jobs }}
-          --cache-failures false --bind unix:/run/casd/casd.sock --quota-high 200G /srv/cas"
+          --cache-failures false --bind unix:/run/casd/casd.sock --reserved {{ gitlab_runner_buildbox_casd_reserved }} /srv/cas"
     quadlet_filename: buildbox-casd
     privileged: true
     init: true
