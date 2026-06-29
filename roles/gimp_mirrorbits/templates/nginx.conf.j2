@@ -1,7 +1,5 @@
 worker_processes  2;
 
-load_module /usr/lib64/nginx/modules/ngx_http_fancyindex_module.so;
-
 events {
     worker_connections  1024;
 }
@@ -44,15 +42,15 @@ http {
 
         add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
 
-        fancyindex on;
+        autoindex on;
         absolute_redirect off;
 
         rewrite ^/pub/(.*) /$1 last;
         rewrite ^/mirror/pub/(.*) /$1 last;
 
         location @index {
-            fancyindex on;
-            fancyindex_exact_size off;
+            autoindex on;
+            autoindex_exact_size off;
         }
 
         location / {
