@@ -27,6 +27,12 @@
   become_user: podman
   become: true
 
+- name: restart statsd-exporter
+  ansible.builtin.systemd:
+    name: statsd-exporter.service
+    state: restarted
+    daemon_reload: true
+
 - name: reload udevadm
   ansible.builtin.command: udevadm control --reload-rules
 

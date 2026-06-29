@@ -1,0 +1,19 @@
+[Unit]
+Description=Prometheus StatsD Exporter
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+User=statsd_exporter
+Group=statsd_exporter
+Restart=on-failure
+ExecStart=/usr/local/bin/statsd_exporter \
+    --web.listen-address={{ gitlab_runner_statsd_exporter_web_listen_address }} \
+    --statsd.listen-udp={{ gitlab_runner_statsd_exporter_statsd_listen_udp }} \
+    --statsd.listen-tcp=
+NoNewPrivileges=true
+ProtectHome=true
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target

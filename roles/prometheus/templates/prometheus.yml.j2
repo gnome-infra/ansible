@@ -44,6 +44,7 @@ scrape_configs:
     params:
       'match[]':
       - '{job="node"}'
+      - '{job="buildbox_casd"}'
     static_configs:
     - targets:
       - 37.27.142.13:9090

@@ -1,0 +1,73 @@
+---
+- name: create statsd_exporter system group
+  ansible.builtin.group:
+    name: statsd_exporter
+    system: true
+    state: present
+
+- name: create statsd_exporter system user
+  ansible.builtin.user:
+    name: statsd_exporter
+    system: true
+    shell: "/sbin/nologin"
+    group: statsd_exporter
+    createhome: false
+
+- name: create statsd_exporter download directory
+  ansible.builtin.file:
+    path: /root/.ansible/tmp/statsd-exporter
+    state: directory
+
+- name: set statsd_exporter architecture
+  ansible.builtin.set_fact:
+    gitlab_runner_statsd_exporter_arch: "{{ {'x86_64': 'amd64', 'aarch64': 'arm64'}[ansible_architecture] | default(ansible_architecture) }}"
+
+- name: set statsd_exporter checksum
+  ansible.builtin.set_fact:
+    gitlab_runner_statsd_exporter_checksum: "{{ lookup('vars', 'gitlab_runner_statsd_exporter_checksum_' + gitlab_runner_statsd_exporter_arch) }}"
+
+- name: download statsd_exporter {{ gitlab_runner_statsd_exporter_version }} for {{ ansible_architecture }}
+  ansible.builtin.get_url:
+    url: "https://github.com/prometheus/statsd_exporter/releases/download/v{{ gitlab_runner_statsd_exporter_version }}/statsd_exporter-{{ gitlab_runner_statsd_exporter_version }}.linux-{{ gitlab_runner_statsd_exporter_arch }}.tar.gz"
+    dest: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ gitlab_runner_statsd_exporter_version }}.linux-{{ gitlab_runner_statsd_exporter_arch }}.tar.gz"
+    checksum: "{{ gitlab_runner_statsd_exporter_checksum }}"
+
+- name: unpack statsd_exporter binaries
+  ansible.builtin.unarchive:
+    src: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ gitlab_runner_statsd_exporter_version }}.linux-{{ gitlab_runner_statsd_exporter_arch }}.tar.gz"
+    dest: /root/.ansible/tmp/statsd-exporter/
+    creates: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ gitlab_runner_statsd_exporter_version }}.linux-{{ gitlab_runner_statsd_exporter_arch }}/statsd_exporter"
+    remote_src: true
+  check_mode: false
+
+- name: install statsd_exporter binary
+  ansible.builtin.copy:
+    src: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ gitlab_runner_statsd_exporter_version }}.linux-{{ gitlab_runner_statsd_exporter_arch }}/statsd_exporter"
+    dest: /usr/local/bin/statsd_exporter
+    mode: 0755
+    remote_src: true
+  notify: restart statsd-exporter
+
+- name: install statsd_exporter systemd unit
+  ansible.builtin.template:
+    src: statsd-exporter.service.j2
+    dest: /etc/systemd/system/statsd-exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart statsd-exporter
+
+- name: start and enable statsd_exporter systemd unit
+  ansible.builtin.systemd:
+    name: statsd-exporter
+    daemon_reload: true
+    state: started
+    enabled: true
+
+- name: allow statsd_exporter Prometheus access over tailscale
+  ansible.posix.firewalld:
+    zone: internal
+    port: 9102/tcp
+    permanent: true
+    immediate: true
+    state: enabled

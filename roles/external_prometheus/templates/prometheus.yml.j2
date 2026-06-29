@@ -60,3 +60,34 @@ scrape_configs:
         replacement: "{{ host }}"
 {%   endif %}
 {% endfor %}
+
+{% set buildbox_casd_targets = [] %}
+{% for host in groups['gitlab-runners'] %}
+{%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
+{%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
+{%   set ts_ip = ts_ipv4.get('address') %}
+{%   if hostvars[host].gitlab_runner_buildbox_casd | default(false) and ts_ip %}
+{%     set _ = buildbox_casd_targets.append(ts_ip ~ ':9102') %}
+{%   endif %}
+{% endfor %}
+{% if buildbox_casd_targets %}
+
+  - job_name: 'buildbox_casd'
+    static_configs:
+      - targets:
+{% for target in buildbox_casd_targets %}
+          - "{{ target }}"
+{% endfor %}
+    relabel_configs:
+{% for host in groups['gitlab-runners'] %}
+{%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
+{%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
+{%   set ts_ip = ts_ipv4.get('address') %}
+{%   if hostvars[host].gitlab_runner_buildbox_casd | default(false) and ts_ip %}
+      - source_labels: [ __address__ ]
+        target_label: instance
+        regex: "{{ ts_ip }}:9102"
+        replacement: "{{ host }}"
+{%   endif %}
+{% endfor %}
+{% endif %}

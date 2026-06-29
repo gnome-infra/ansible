@@ -212,6 +212,10 @@
     - not (gitlab_runner_enable_pydocuum | default(true))
     - pydocuum_unit.stat.exists
 
+- name: Include statsd_exporter tasks
+  ansible.builtin.include_tasks: statsd-exporter.yml
+  when: gitlab_runner_buildbox_casd | default(false)
+
 - name: Create quadlet for buildbox-casd
   containers.podman.podman_container:
     name: buildbox-casd
