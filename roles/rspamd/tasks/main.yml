@@ -55,7 +55,6 @@
     - surbl.conf
     - options.inc
     - gpt.conf
-    - url_redirector.conf
   notify: Restart rspamd
 
 - name: Create rspamd learn state directory
