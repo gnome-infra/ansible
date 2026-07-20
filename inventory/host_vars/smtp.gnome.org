@@ -37,7 +37,6 @@ dovecot_shared_mailboxes:
       - allan
       - rob
       - arun
-      - akuci
       - dvenkatraman
       - dmatlak
       - brigid
@@ -46,7 +45,6 @@ dovecot_shared_mailboxes:
       - allan
       - rob
       - arun
-      - akuci
       - dmatlak
       - bpiotrowski
       - freescout-sa
