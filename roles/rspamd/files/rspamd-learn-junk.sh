@@ -14,7 +14,7 @@ shopt -s nullglob
 maildirs=(/srv/dovecot/*/Maildir/.Junk/cur /srv/dovecot/*/Maildir/.Junk/new)
 
 if [ "${#maildirs[@]}" -gt 0 ]; then
-  find "${maildirs[@]}" -type f -newer "$STATE" -print0 \
+  find "${maildirs[@]}" -type f \( -newer "$STATE" -o -cnewer "$STATE" \) -print0 \
     | xargs -0 -r -n1 -P4 bash -c '
         file="$1"
         rspamc learn_spam < "$file" >/dev/null 2>&1 || true
