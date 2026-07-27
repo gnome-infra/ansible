@@ -32,6 +32,9 @@ dovecot_shared_mailboxes:
       - allan
       - rob
       - arun
+  - name: events
+    acl_users:
+      - freescout-sa
   - name: accounting
     acl_users:
       - allan

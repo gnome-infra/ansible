@@ -28,7 +28,7 @@ gl = gitlab.Gitlab("https://gitlab.gnome.org", private_token=GITLAB_TOKEN)
 
 GL_GROUP_ID = "178936"
 
-SHARED_ACCOUNTS = {"exec", "accounting", "info"}
+SHARED_ACCOUNTS = {"exec", "accounting", "info", "events"}
 
 ALIASES = [
     ("/etc/gnome.org/src-mail/virtual", "src.gnome.org", "gnomecvs"),
