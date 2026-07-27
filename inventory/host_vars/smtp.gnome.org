@@ -43,6 +43,7 @@ dovecot_shared_mailboxes:
       - dvenkatraman
       - dmatlak
       - brigid
+      - freescout-sa
   - name: info
     acl_users:
       - allan
