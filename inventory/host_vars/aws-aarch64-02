@@ -1,0 +1,48 @@
+---
+ansible_connection: ssh
+#ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@38.145.34.64 -o StrictHostKeyChecking=no"'
+
+gitlab_runner_gbm_token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34613630643935343733333462653837653061333336303933626136396336333465616664626161
+          6161313432303634393966623763663265353932316161370a643138316664363632333464333761
+          66303135366231346132383663353665626464643638653235633435633961343733383061393238
+          6166623938613163380a313038303132353938353562316263396130323731343465616536393563
+          31666331303532656237626631613831653262666563333534623137653538303562376235323730
+          65323966303534626636616636323035646435303034396561323135343865393364333838653366
+          373363396137396331366533333866333162
+
+gitlab_runner_config:
+  concurrent: 4
+  check_interval: 0
+  session_server:
+    session_timeout: 1800
+  runners:
+    - name: aws-aarch64-02
+      output_limit: 32768
+      url: https://gitlab.gnome.org
+      token: "{{ gitlab_runner_gbm_token }}"
+      executor: docker
+      environment:
+        - "FF_USE_GIT_NATIVE_CLONE=true"
+      docker:
+        tls_verify: false
+        image: fedora:latest
+        privileged: true
+        disable_entrypoint_overwrite: false
+        oom_kill_disable: false
+        disable_cache: true
+        volumes:
+          - /home/podman/cache:/cache
+          - casd_socket:/run/casd
+        shm_size: 0
+        security_opt:
+          - "label=level:s0:c100,c100"
+        tmpfs:
+          "/tmp": "rw,nosuid,nodev,exec,mode=1777"
+
+gitlab_runner_buildbox_casd: true
+gitlab_runner_buildbox_casd_jobs: 16
+gitlab_runner_buildbox_casd_reserved: 100G
+
+gitlab_runner_enable_pydocuum: false
