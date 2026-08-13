@@ -13,7 +13,7 @@
     name: ntpd
     state: restarted
 
-- name: Restart syslogd
+- name: Restart rsyslog
   ansible.builtin.service:
-    name: syslogd
+    name: rsyslogd
     state: restarted

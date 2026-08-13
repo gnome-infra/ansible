@@ -1,0 +1,11 @@
+global(workDirectory="/var/spool/rsyslog")
+
+*.* action(type="omfwd"
+      queue.type="linkedlist"
+      queue.filename="omfwd"
+      action.resumeRetryCount="-1"
+      queue.saveOnShutdown="on"
+      queue.maxDiskSpace="1g"
+      target="{{ freebsd_base_syslog_remote_target }}" port="{{ freebsd_base_syslog_remote_port }}" protocol="tcp"
+      Template="RSYSLOG_SyslogProtocol23Format"
+)

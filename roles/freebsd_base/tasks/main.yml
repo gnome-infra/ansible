@@ -101,21 +101,40 @@
     enabled: true
     state: started
 
-- name: Configure syslogd for remote forwarding
+- name: Install rsyslog
+  community.general.pkgng:
+    name: rsyslog
+    state: present
+
+- name: Disable default syslogd
+  ansible.builtin.service:
+    name: syslogd
+    enabled: false
+    state: stopped
+  failed_when: false
+
+- name: Ensure rsyslog work directory exists
+  ansible.builtin.file:
+    path: /var/spool/rsyslog
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0700"
+
+- name: Configure rsyslog remote forwarding
   ansible.builtin.template:
-    src: syslog.conf.j2
-    dest: /etc/syslog.conf
+    src: rsyslog-remotelog.conf.j2
+    dest: /usr/local/etc/rsyslog.d/remotelog.conf
     owner: root
     group: wheel
     mode: "0644"
-  notify: Restart syslogd
+  notify: Restart rsyslog
 
-- name: Enable syslogd remote flags
-  ansible.builtin.lineinfile:
-    path: /etc/rc.conf
-    regexp: '^syslogd_flags='
-    line: 'syslogd_flags="-s"'
-  notify: Restart syslogd
+- name: Enable and start rsyslog
+  ansible.builtin.service:
+    name: rsyslogd
+    enabled: true
+    state: started
 
 - name: Enable IP forwarding (required for pot NAT)
   ansible.posix.sysctl:
