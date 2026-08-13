@@ -87,6 +87,14 @@
   changed_when: false
   failed_when: false
 
+- name: Stop CI base pot for rebuild (flavour changed)
+  ansible.builtin.command: "pot stop -p {{ freebsd_pot_base_pot_name }}"
+  changed_when: true
+  failed_when: false
+  when:
+    - freebsd_pot_flavour_changed.changed
+    - freebsd_pot_base_pot_name in freebsd_pot_list.stdout
+
 - name: Destroy CI base pot for rebuild (flavour changed)
   ansible.builtin.command: "pot destroy -p {{ freebsd_pot_base_pot_name }}"
   changed_when: true
