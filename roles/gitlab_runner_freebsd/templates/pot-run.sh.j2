@@ -1,0 +1,12 @@
+#!/bin/sh
+# {{ ansible_managed }}
+# GitLab Runner custom executor: run stage
+# Executes the CI script inside the ephemeral pot jail.
+
+set -e
+
+POT_NAME="ci-job-${CUSTOM_ENV_CI_JOB_ID}"
+
+pot term \
+    -p "${POT_NAME}" \
+    -c "cd /builds && /bin/sh ${1}"

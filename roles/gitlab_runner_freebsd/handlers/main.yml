@@ -1,0 +1,5 @@
+---
+- name: Restart gitlab-runner freebsd
+  ansible.builtin.service:
+    name: gitlab_runner
+    state: restarted

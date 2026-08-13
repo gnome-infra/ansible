@@ -1,0 +1,37 @@
+# {{ ansible_managed }}
+
+concurrent = {{ gitlab_runner_freebsd_concurrent }}
+check_interval = 0
+shutdown_timeout = 0
+
+[session_server]
+  session_timeout = 1800
+
+{% for runner in gitlab_runner_freebsd_runners %}
+[[runners]]
+  name = "{{ runner.name }}"
+  url = "{{ runner.url }}"
+  id = {{ runner.id }}
+  token = "{{ runner.token }}"
+  executor = "custom"
+  builds_dir = "{{ gitlab_runner_freebsd_builds_dir }}"
+  cache_dir = "{{ gitlab_runner_freebsd_cache_dir }}"
+  environment = ["FF_USE_GIT_NATIVE_CLONE=true"]
+
+  [runners.custom]
+    prepare_exec = "{{ gitlab_runner_freebsd_scripts_dir }}/prepare.sh"
+    run_exec = "{{ gitlab_runner_freebsd_scripts_dir }}/run.sh"
+    cleanup_exec = "{{ gitlab_runner_freebsd_scripts_dir }}/cleanup.sh"
+
+{% if gitlab_runner_freebsd_cache_enabled | default(false) %}
+  [runners.cache]
+    MaxUploadedArchiveSize = 0
+    [runners.cache.s3]
+      ServerAddress = "{{ gitlab_runner_freebsd_cache_server_address }}"
+      AccessKey = "{{ gitlab_runner_freebsd_cache_access_key }}"
+      SecretKey = "{{ gitlab_runner_freebsd_cache_secret_key }}"
+      BucketName = "{{ gitlab_runner_freebsd_cache_bucket_name }}"
+      BucketLocation = "us-east-1"
+{% endif %}
+
+{% endfor %}

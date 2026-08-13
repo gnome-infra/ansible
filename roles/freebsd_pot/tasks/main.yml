@@ -1,0 +1,126 @@
+---
+- name: Install pot
+  community.general.pkgng:
+    name: pot
+    state: present
+
+- name: Ensure pot configuration directory exists
+  ansible.builtin.file:
+    path: /usr/local/etc/pot
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Configure pot
+  ansible.builtin.template:
+    src: pot.conf.j2
+    dest: /usr/local/etc/pot/pot.conf
+    owner: root
+    group: wheel
+    mode: "0644"
+
+- name: Enable pot in rc.conf
+  ansible.builtin.lineinfile:
+    path: /etc/rc.conf
+    regexp: '^pot_enable='
+    line: 'pot_enable="YES"'
+
+- name: Check if pot is already initialized
+  ansible.builtin.stat:
+    path: "{{ freebsd_pot_fs_root }}/jails"
+  register: freebsd_pot_jails_dir
+
+- name: Initialize pot ZFS layout
+  ansible.builtin.command: pot init
+  changed_when: true
+  when: not freebsd_pot_jails_dir.stat.exists
+
+- name: Check if base FreeBSD image exists
+  ansible.builtin.command: pot ls -b
+  register: freebsd_pot_base_list
+  changed_when: false
+  failed_when: false
+
+- name: Create base FreeBSD image
+  ansible.builtin.command: "pot create-base -r {{ freebsd_pot_base_release }}"
+  environment:
+    PAGER: cat
+    ASSUME_ALWAYS_YES: "YES"
+  changed_when: true
+  when: "freebsd_pot_base_release not in freebsd_pot_base_list.stdout"
+
+- name: Create pot private bridge
+  ansible.builtin.command: >
+    pot create-private-bridge
+    -B {{ freebsd_pot_bridge_name }}
+    -S {{ freebsd_pot_bridge_size }}
+  args:
+    creates: "{{ freebsd_pot_fs_root }}/bridges/{{ freebsd_pot_bridge_name }}"
+  register: freebsd_pot_bridge_created
+
+- name: Reload pf after bridge creation (enable NAT)
+  ansible.builtin.command: pfctl -f /etc/pf.conf
+  changed_when: true
+  when: freebsd_pot_bridge_created.changed
+
+- name: Ensure pot flavours directory exists
+  ansible.builtin.file:
+    path: /usr/local/etc/pot/flavours
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Deploy pot flavour script for CI base
+  ansible.builtin.template:
+    src: ci-base.sh.j2
+    dest: /usr/local/etc/pot/flavours/ci-base.sh
+    owner: root
+    group: wheel
+    mode: "0755"
+  register: freebsd_pot_flavour_changed
+
+- name: Check if CI base pot exists
+  ansible.builtin.command: pot ls -p
+  register: freebsd_pot_list
+  changed_when: false
+  failed_when: false
+
+- name: Destroy CI base pot for rebuild (flavour changed)
+  ansible.builtin.command: "pot destroy -p {{ freebsd_pot_base_pot_name }}"
+  changed_when: true
+  when:
+    - freebsd_pot_flavour_changed.changed
+    - freebsd_pot_base_pot_name in freebsd_pot_list.stdout
+
+- name: Create resolv.conf for pot DNS
+  ansible.builtin.copy:
+    content: |
+      nameserver 1.1.1.1
+      nameserver 8.8.8.8
+    dest: /usr/local/etc/pot/resolv.conf
+    owner: root
+    group: wheel
+    mode: "0644"
+
+- name: Create CI base pot with glib build dependencies
+  ansible.builtin.command: >
+    pot create
+    -p {{ freebsd_pot_base_pot_name }}
+    -b {{ freebsd_pot_base_release }}
+    -N private-bridge
+    -B {{ freebsd_pot_bridge_name }}
+    -i auto
+    -t single
+    -d custom:/usr/local/etc/pot/resolv.conf
+    -f ci-base
+  changed_when: true
+  when: "freebsd_pot_base_pot_name not in freebsd_pot_list.stdout or freebsd_pot_flavour_changed.changed"
+
+- name: Ensure pot vnet is started at boot
+  ansible.builtin.lineinfile:
+    path: /etc/rc.conf
+    regexp: '^pot_vnet_enable='
+    line: 'pot_vnet_enable="YES"'
+  notify: Start pot vnet

@@ -1,0 +1,33 @@
+# {{ ansible_managed }}
+
+ext_if = "{{ freebsd_base_ext_if }}"
+
+# --- options ---
+set skip on lo0
+set block-policy drop
+
+# --- normalization ---
+scrub in all
+
+# --- translation ---
+{% if freebsd_pot_bridge_if is defined %}
+nat on $ext_if from ({{ freebsd_pot_bridge_if }}:network) to any -> ($ext_if)
+{% endif %}
+
+# --- tables ---
+table <sshguard> persist
+
+# --- filtering ---
+block in all
+pass out all keep state
+
+# Block brute-force attackers flagged by sshguard
+block in quick on $ext_if from <sshguard>
+
+pass in on $ext_if inet proto icmp all
+pass in on $ext_if proto tcp from any to any port 22
+pass in on tailscale0 proto tcp from any to any port 9100
+
+{% if freebsd_pot_bridge_if is defined %}
+pass in on {{ freebsd_pot_bridge_if }} all
+{% endif %}

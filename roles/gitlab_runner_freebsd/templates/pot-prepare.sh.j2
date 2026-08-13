@@ -1,0 +1,33 @@
+#!/bin/sh
+# {{ ansible_managed }}
+# GitLab Runner custom executor: prepare stage
+# Clones the base pot into an ephemeral jail for this CI job.
+
+set -e
+
+POT_NAME="ci-job-${CUSTOM_ENV_CI_JOB_ID}"
+BASE_POT="{{ gitlab_runner_freebsd_pot_base }}"
+BRIDGE="{{ gitlab_runner_freebsd_pot_bridge }}"
+BUILDS_DIR="{{ gitlab_runner_freebsd_builds_dir }}"
+
+if pot show -p "${POT_NAME}" > /dev/null 2>&1; then
+    pot stop -p "${POT_NAME}" 2>/dev/null || true
+    pot destroy -p "${POT_NAME}"
+fi
+
+pot clone \
+    -p "${POT_NAME}" \
+    -P "${BASE_POT}" \
+    -N private-bridge \
+    -B "${BRIDGE}" \
+    -i auto
+
+JOB_DIR="${BUILDS_DIR}/${CUSTOM_ENV_CI_JOB_ID}"
+mkdir -p "${JOB_DIR}"
+
+pot mount-in \
+    -p "${POT_NAME}" \
+    -d "${JOB_DIR}" \
+    -m /builds
+
+pot start -p "${POT_NAME}"

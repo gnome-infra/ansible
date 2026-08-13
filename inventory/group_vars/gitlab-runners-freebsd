@@ -1,0 +1,11 @@
+---
+ansible_user: root
+
+freebsd_base_syslog_remote_target: "{{ hostvars['hetzner-3'].ansible_facts.tailscale0.ipv4.address }}"
+freebsd_base_syslog_remote_port: "1514"
+
+sshguard_block_time: 120
+sshguard_detection_time: 1800
+sshguard_threshold: 30
+
+freebsd_pot_base_release: "14.4"

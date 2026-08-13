@@ -1,0 +1,5 @@
+---
+- name: Start pot vnet
+  ansible.builtin.command: pot vnet-start
+  changed_when: true
+  failed_when: false

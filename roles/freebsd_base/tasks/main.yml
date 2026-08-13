@@ -1,0 +1,140 @@
+---
+- name: Set root SSH keys
+  ansible.builtin.copy:
+    src: "{{ role_path }}/../external_base/files/root_authorized_keys"
+    dest: /root/.ssh/authorized_keys
+    owner: root
+    group: wheel
+    mode: "0600"
+
+- name: Install base packages
+  community.general.pkgng:
+    name:
+      - htop
+      - sudo
+      - vim
+      - node_exporter
+      - curl
+      - ca_root_nss
+    state: present
+
+- name: Install tailscale
+  community.general.pkgng:
+    name: tailscale
+    state: present
+  register: freebsd_base_tailscale_installed
+
+- name: Enable and start tailscale
+  ansible.builtin.service:
+    name: tailscaled
+    enabled: true
+    state: started
+
+- name: Remind to configure tailscale
+  ansible.builtin.pause:
+    prompt: "ssh to the server and run: tailscale login"
+  when: freebsd_base_tailscale_installed.changed
+
+- name: Install sshguard
+  community.general.pkgng:
+    name: sshguard
+    state: present
+
+- name: Configure pf firewall
+  ansible.builtin.template:
+    src: pf.conf.j2
+    dest: /etc/pf.conf
+    owner: root
+    group: wheel
+    mode: "0600"
+    validate: "pfctl -n -f %s"
+  notify: Reload pf
+
+- name: Enable and start pf
+  ansible.builtin.service:
+    name: pf
+    enabled: true
+    state: started
+
+- name: Configure sshguard
+  ansible.builtin.template:
+    src: sshguard.conf.j2
+    dest: /usr/local/etc/sshguard.conf
+    owner: root
+    group: wheel
+    mode: "0644"
+  notify: Restart sshguard
+
+- name: Configure sshguard whitelist
+  ansible.builtin.template:
+    src: sshguard.whitelist.j2
+    dest: /usr/local/etc/sshguard.whitelist
+    owner: root
+    group: wheel
+    mode: "0644"
+  notify: Restart sshguard
+
+- name: Enable and start sshguard
+  ansible.builtin.service:
+    name: sshguard
+    enabled: true
+    state: started
+
+- name: Configure ntpd
+  ansible.builtin.template:
+    src: ntp.conf.j2
+    dest: /etc/ntp.conf
+    owner: root
+    group: wheel
+    mode: "0644"
+  notify: Restart ntpd
+
+- name: Enable and start ntpd
+  ansible.builtin.service:
+    name: ntpd
+    enabled: true
+    state: started
+
+- name: Enable and start node_exporter
+  ansible.builtin.service:
+    name: node_exporter
+    enabled: true
+    state: started
+
+- name: Configure syslogd for remote forwarding
+  ansible.builtin.template:
+    src: syslog.conf.j2
+    dest: /etc/syslog.conf
+    owner: root
+    group: wheel
+    mode: "0644"
+  notify: Restart syslogd
+
+- name: Enable syslogd remote flags
+  ansible.builtin.lineinfile:
+    path: /etc/rc.conf
+    regexp: '^syslogd_flags='
+    line: 'syslogd_flags="-ss"'
+  notify: Restart syslogd
+
+- name: Enable IP forwarding (required for pot NAT)
+  ansible.posix.sysctl:
+    name: net.inet.ip.forwarding
+    value: "1"
+    state: present
+    sysctl_set: true
+    reload: true
+
+- name: Persist IP forwarding across reboots
+  ansible.builtin.lineinfile:
+    path: /etc/rc.conf
+    regexp: '^gateway_enable='
+    line: 'gateway_enable="YES"'
+
+- name: Configure weekly pkg update via periodic.conf
+  ansible.builtin.template:
+    src: periodic.conf.j2
+    dest: /etc/periodic.conf
+    owner: root
+    group: wheel
+    mode: "0644"

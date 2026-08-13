@@ -13,3 +13,9 @@ redhat-runner-02 ansible_host=10.16.104.11
 redhat-runner-03 ansible_host=10.16.104.12
 redhat-runner-04 ansible_host=10.16.104.13
 postmarketos-aarch64-01 ansible_host=gnome-ci.rackspace.moe
+
+[gitlab-runners-freebsd]
+aws-x86_64-01 ansible_host=172.31.24.157
+
+[gitlab-runners-freebsd:vars]
+ansible_python_interpreter=/usr/local/bin/python3

@@ -1,0 +1,9 @@
+---
+- name: Configure FreeBSD GitLab runners
+  hosts: gitlab-runners-freebsd
+  gather_facts: true
+  remote_user: root
+  roles:
+    - freebsd_base
+    - freebsd_pot
+    - gitlab_runner_freebsd

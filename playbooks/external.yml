@@ -14,6 +14,14 @@
   gather_facts: true
   tasks: []
 
+- hosts: gitlab-runners-freebsd
+  gather_facts: true
+  remote_user: root
+  roles:
+   - freebsd_base
+   - freebsd_pot
+   - gitlab_runner_freebsd
+
 - hosts: hetzner-3
   gather_facts: true
   remote_user: root

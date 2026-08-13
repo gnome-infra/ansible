@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+
+BACKEND="/usr/local/libexec/sshguard/sshg-fw-pf"
+LOGREADER="LANG=C /usr/bin/tail -F -n0 /var/log/auth.log"
+
+THRESHOLD={{ sshguard_threshold | default(30) }}
+BLOCK_TIME={{ sshguard_block_time | default(120) }}
+DETECTION_TIME={{ sshguard_detection_time | default(1800) }}
+
+WHITELIST_FILE=/usr/local/etc/sshguard.whitelist

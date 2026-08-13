@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+
+# Standard local logging
+*.err                                           /dev/console
+*.notice;authpriv.none;kern.debug;mail.crit     /var/log/messages
+security.*                                      /var/log/security
+auth.info;authpriv.info                         /var/log/auth.log
+mail.info                                       /var/log/maillog
+cron.*                                          /var/log/cron
+!-devd
+*.=debug                                        /var/log/debug.log
+*.emerg                                         *
+console.info                                    /var/log/console.log
+
+# Forward all logs to central syslog over tailscale
+*.*                                             @{{ freebsd_base_syslog_remote_target }}:{{ freebsd_base_syslog_remote_port }}

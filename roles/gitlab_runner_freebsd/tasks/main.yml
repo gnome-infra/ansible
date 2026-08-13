@@ -1,0 +1,98 @@
+---
+- name: Install gitlab-runner
+  community.general.pkgng:
+    name: gitlab-runner
+    state: present
+
+- name: Create gitlab-runner service user
+  ansible.builtin.user:
+    name: "{{ gitlab_runner_freebsd_user }}"
+    shell: /usr/sbin/nologin
+    home: /var/lib/gitlab-runner
+    system: true
+    createhome: true
+
+- name: Ensure config directory exists
+  ansible.builtin.file:
+    path: "{{ gitlab_runner_freebsd_config_dir }}"
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Ensure scripts directory exists
+  ansible.builtin.file:
+    path: "{{ gitlab_runner_freebsd_scripts_dir }}"
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Ensure builds directory exists
+  ansible.builtin.file:
+    path: "{{ gitlab_runner_freebsd_builds_dir }}"
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Ensure cache directory exists
+  ansible.builtin.file:
+    path: "{{ gitlab_runner_freebsd_cache_dir }}"
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Deploy custom executor prepare script
+  ansible.builtin.template:
+    src: pot-prepare.sh.j2
+    dest: "{{ gitlab_runner_freebsd_scripts_dir }}/prepare.sh"
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Deploy custom executor run script
+  ansible.builtin.template:
+    src: pot-run.sh.j2
+    dest: "{{ gitlab_runner_freebsd_scripts_dir }}/run.sh"
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Deploy custom executor cleanup script
+  ansible.builtin.template:
+    src: pot-cleanup.sh.j2
+    dest: "{{ gitlab_runner_freebsd_scripts_dir }}/cleanup.sh"
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Configure gitlab-runner
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: "{{ gitlab_runner_freebsd_config_dir }}/config.toml"
+    owner: root
+    group: wheel
+    mode: "0600"
+  notify: Restart gitlab-runner freebsd
+
+- name: Deploy gitlab-runner rc.d script
+  ansible.builtin.template:
+    src: gitlab_runner_rc.j2
+    dest: /usr/local/etc/rc.d/gitlab_runner
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Enable gitlab-runner in rc.conf
+  ansible.builtin.lineinfile:
+    path: /etc/rc.conf
+    regexp: '^gitlab_runner_enable='
+    line: 'gitlab_runner_enable="YES"'
+
+- name: Start gitlab-runner
+  ansible.builtin.service:
+    name: gitlab_runner
+    state: started
+    enabled: true

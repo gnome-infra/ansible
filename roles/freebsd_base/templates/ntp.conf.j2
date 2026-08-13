@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+{% for server in freebsd_base_ntp_servers %}
+server {{ server }} iburst
+{% endfor %}
+
+restrict default limited kod nomodify notrap nopeer noquery
+restrict 127.0.0.1
+restrict ::1

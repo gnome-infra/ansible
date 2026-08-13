@@ -1,0 +1,52 @@
+#!/bin/sh
+# {{ ansible_managed }}
+# PROVIDE: gitlab_runner
+# REQUIRE: DAEMON NETWORKING pot
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name="gitlab_runner"
+rcvar="gitlab_runner_enable"
+
+load_rc_config $name
+
+: ${gitlab_runner_enable:="NO"}
+: ${gitlab_runner_config:="{{ gitlab_runner_freebsd_config_dir }}/config.toml"}
+
+pidfile="/var/run/${name}.pid"
+command="{{ gitlab_runner_freebsd_install_dir }}/gitlab-runner"
+command_args="run --config ${gitlab_runner_config} &"
+
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+status_cmd="${name}_status"
+
+gitlab_runner_start()
+{
+    echo "Starting ${name}."
+    /usr/sbin/daemon -p ${pidfile} -f ${command} run --config ${gitlab_runner_config}
+}
+
+gitlab_runner_stop()
+{
+    if [ -f ${pidfile} ]; then
+        echo "Stopping ${name}."
+        kill $(cat ${pidfile}) 2>/dev/null
+        rm -f ${pidfile}
+    else
+        echo "${name} is not running."
+    fi
+}
+
+gitlab_runner_status()
+{
+    if [ -f ${pidfile} ] && kill -0 $(cat ${pidfile}) 2>/dev/null; then
+        echo "${name} is running as pid $(cat ${pidfile})."
+    else
+        echo "${name} is not running."
+        return 1
+    fi
+}
+
+run_rc_command "$1"

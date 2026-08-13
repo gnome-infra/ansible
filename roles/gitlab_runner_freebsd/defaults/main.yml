@@ -1,0 +1,19 @@
+---
+gitlab_runner_freebsd_install_dir: /usr/local/bin
+gitlab_runner_freebsd_config_dir: /usr/local/etc/gitlab-runner
+gitlab_runner_freebsd_scripts_dir: /usr/local/libexec/gitlab-runner-pot
+gitlab_runner_freebsd_builds_dir: /var/tmp/gitlab-runner/builds
+gitlab_runner_freebsd_cache_dir: /var/tmp/gitlab-runner/cache
+
+gitlab_runner_freebsd_user: gitlab-runner
+
+gitlab_runner_freebsd_cache_enabled: false
+gitlab_runner_freebsd_cache_server_address: ""
+gitlab_runner_freebsd_cache_bucket_name: ""
+gitlab_runner_freebsd_cache_access_key: ""
+gitlab_runner_freebsd_cache_secret_key: ""
+
+gitlab_runner_freebsd_pot_base: freebsd-ci-base
+gitlab_runner_freebsd_pot_bridge: potbr0
+
+gitlab_runner_freebsd_concurrent: 2

@@ -1,0 +1,35 @@
+---
+ansible_connection: ssh
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@bastion02.gnome.org -o StrictHostKeyChecking=no"'
+
+freebsd_base_ext_if: "ena0"
+
+sshguard_whitelist:
+  - comment: IPv4 localhost
+    address: 127.0.0.0/8
+  - comment: IPv6 localhost
+    address: "::1"
+  - comment: bastion02.gnome.org
+    address: 98.83.131.224
+  - comment: AWS NAT 1
+    address: 35.153.15.118
+  - comment: AWS NAT 2
+    address: 54.165.53.199
+  - comment: AWS NAT 3
+    address: 34.234.151.67
+
+gitlab_runner_freebsd_token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          36646130383465326130343864393263343630393336663738353566663138336530643038356263
+          6530396263663430383630386164633430623030323330310a623333646663626435376430643962
+          66663264376438316335386532613464666466646239393564653134663730636630373738313062
+          3235363138663363370a386133613265643766373863643133623239626361646236386664636139
+          31666332303161353331643835393731393165313761383766623162343262393132366132373163
+          30636230333861626465626464373734653631323461396133303534373866623332323638303661
+          343030626633373564393763393735333336
+
+gitlab_runner_freebsd_runners:
+  - name: aws-x86_64-01-freebsd
+    url: https://gitlab.gnome.org
+    id: 0
+    token: "{{ gitlab_runner_freebsd_token }}"

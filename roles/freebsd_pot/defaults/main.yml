@@ -1,0 +1,31 @@
+---
+freebsd_pot_zfs_root: zroot/pot
+freebsd_pot_fs_root: /opt/pot
+freebsd_pot_cache: /opt/pot/cache
+
+freebsd_pot_base_release: "14.4"
+
+freebsd_pot_bridge_name: potbr0
+freebsd_pot_bridge_if: bridge0
+freebsd_pot_bridge_size: 254
+
+freebsd_pot_base_pot_name: freebsd-ci-base
+
+freebsd_pot_base_packages:
+  - git
+  - curl
+  - cmake
+  - meson
+  - ninja
+  - pkgconf
+  - gettext
+  - python3
+  - gcc
+  - gmake
+  - autoconf
+  - automake
+  - libtool
+  - glib
+  - gobject-introspection
+  - libffi
+  - pcre2

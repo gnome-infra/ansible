@@ -1,0 +1,10 @@
+#!/bin/sh
+# {{ ansible_managed }}
+# Pot flavour: install CI build dependencies for glib
+
+set -e
+
+pkg install -y \
+{% for pkg in freebsd_pot_base_packages %}
+  {{ pkg }}{{ '' if loop.last else ' \\' }}
+{% endfor %}
