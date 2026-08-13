@@ -20,7 +20,6 @@ freebsd_pot_base_packages:
   - pkgconf
   - gettext
   - python3
-  - gcc
   - gmake
   - autoconf
   - automake
