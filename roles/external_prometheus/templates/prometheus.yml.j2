@@ -6,6 +6,18 @@ global:
 rule_files:
   - rules/*.rules
 
+{# Macro to extract tailscale IPv4 from either Linux or FreeBSD facts #}
+{%- macro tailscale_ip(host) -%}
+{%-   set facts = hostvars[host].ansible_facts | default({}) -%}
+{%-   set ts = facts.get('tailscale0', facts.get('ansible_tailscale0', {})) -%}
+{%-   set ipv4 = ts.get('ipv4', {}) -%}
+{%-   if ipv4 is mapping -%}
+{{      ipv4.get('address', '') -}}
+{%-   elif ipv4 is iterable and ipv4 | length > 0 -%}
+{{      ipv4[0].get('address', '') -}}
+{%-   endif -%}
+{%- endmacro -%}
+
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
@@ -15,10 +27,8 @@ scrape_configs:
   - job_name: 'node'
     static_configs:
 {% set gitlab_runner_targets = [] %}
-{% for host in groups['gitlab-runners'] + groups.get('gitlab-runners-freebsd', []) %}
-{%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
-{%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
-{%   set ts_ip = ts_ipv4.get('address') %}
+{% for host in groups['gitlab-runners'] + (groups['gitlab-runners-freebsd'] | default([])) %}
+{%   set ts_ip = tailscale_ip(host) | trim %}
 {%   if ts_ip %}
 {%     set _ = gitlab_runner_targets.append(ts_ip ~ ':9100') %}
 {%   endif %}
@@ -32,27 +42,9 @@ scrape_configs:
           role: gitlab-runner
 {% endif %}
 
-{% set external_targets = [] %}
-{% for host in groups['external'] %}
-{%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
-{%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
-{%   set ts_ip = ts_ipv4.get('address') %}
-{%   if ts_ip %}
-{%     set _ = external_targets.append(ts_ip ~ ':9100') %}
-{%   endif %}
-{% endfor %}
-{% if external_targets %}
-      - targets:
-{% for target in external_targets %}
-          - "{{ target }}"
-{% endfor %}
-{% endif %}
-
     relabel_configs:
-{% for host in groups['gitlab-runners'] + groups.get('gitlab-runners-freebsd', []) + groups['external'] %}
-{%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
-{%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
-{%   set ts_ip = ts_ipv4.get('address') %}
+{% for host in groups['gitlab-runners'] + (groups['gitlab-runners-freebsd'] | default([])) %}
+{%   set ts_ip = tailscale_ip(host) | trim %}
 {%   if ts_ip %}
       - source_labels: [ __address__ ]
         target_label: instance
@@ -63,9 +55,7 @@ scrape_configs:
 
 {% set buildbox_casd_targets = [] %}
 {% for host in groups['gitlab-runners'] %}
-{%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
-{%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
-{%   set ts_ip = ts_ipv4.get('address') %}
+{%   set ts_ip = tailscale_ip(host) | trim %}
 {%   if hostvars[host].gitlab_runner_buildbox_casd | default(false) and ts_ip %}
 {%     set _ = buildbox_casd_targets.append(ts_ip ~ ':9102') %}
 {%   endif %}
@@ -80,9 +70,7 @@ scrape_configs:
 {% endfor %}
     relabel_configs:
 {% for host in groups['gitlab-runners'] %}
-{%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
-{%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
-{%   set ts_ip = ts_ipv4.get('address') %}
+{%   set ts_ip = tailscale_ip(host) | trim %}
 {%   if hostvars[host].gitlab_runner_buildbox_casd | default(false) and ts_ip %}
       - source_labels: [ __address__ ]
         target_label: instance

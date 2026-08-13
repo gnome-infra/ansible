@@ -9,7 +9,7 @@
    - gitlab-runner
 
 - name: gather facts
-  hosts: gitlab-runners,gitlab-runners-freebsd,external
+  hosts: gitlab-runners,gitlab-runners-freebsd
   remote_user: root
   gather_facts: true
   tasks: []
