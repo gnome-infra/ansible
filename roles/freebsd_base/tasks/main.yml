@@ -114,7 +114,7 @@
   ansible.builtin.lineinfile:
     path: /etc/rc.conf
     regexp: '^syslogd_flags='
-    line: 'syslogd_flags="-ss"'
+    line: 'syslogd_flags="-s"'
   notify: Restart syslogd
 
 - name: Enable IP forwarding (required for pot NAT)
