@@ -15,7 +15,7 @@ scrape_configs:
   - job_name: 'node'
     static_configs:
 {% set gitlab_runner_targets = [] %}
-{% for host in groups['gitlab-runners'] %}
+{% for host in groups['gitlab-runners'] + groups.get('gitlab-runners-freebsd', []) %}
 {%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
 {%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
 {%   set ts_ip = ts_ipv4.get('address') %}
@@ -49,7 +49,7 @@ scrape_configs:
 {% endif %}
 
     relabel_configs:
-{% for host in groups['gitlab-runners'] + groups['external'] %}
+{% for host in groups['gitlab-runners'] + groups.get('gitlab-runners-freebsd', []) + groups['external'] %}
 {%   set ts_interface = hostvars[host].ansible_facts.get('tailscale0', {}) %}
 {%   set ts_ipv4 = ts_interface.get('ipv4', {}) %}
 {%   set ts_ip = ts_ipv4.get('address') %}
