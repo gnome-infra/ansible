@@ -14,6 +14,8 @@ freebsd_pot_base_pot_name: freebsd-ci-base
 freebsd_pot_base_packages:
   - git
   - curl
+  - bash
+  - gitlab-runner
   - cmake
   - meson
   - ninja
