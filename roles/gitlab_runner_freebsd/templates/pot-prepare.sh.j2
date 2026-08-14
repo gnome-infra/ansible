@@ -5,6 +5,8 @@
 
 set -e
 
+PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
+
 POT_NAME="ci-job-${CUSTOM_ENV_CI_JOB_ID}"
 BASE_POT="{{ gitlab_runner_freebsd_pot_base }}"
 BRIDGE="{{ gitlab_runner_freebsd_pot_bridge }}"

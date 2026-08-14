@@ -3,6 +3,8 @@
 # GitLab Runner custom executor: cleanup stage
 # Destroys the ephemeral pot jail and cleans up build artifacts.
 
+PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
+
 POT_NAME="ci-job-${CUSTOM_ENV_CI_JOB_ID}"
 BUILDS_DIR="{{ gitlab_runner_freebsd_builds_dir }}"
 
