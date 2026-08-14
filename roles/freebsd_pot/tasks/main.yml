@@ -132,6 +132,12 @@
   changed_when: true
   when: freebsd_pot_base_created.changed
 
+- name: Purge old snapshots before taking new one
+  ansible.builtin.command: "pot purge-snapshots -p {{ freebsd_pot_base_pot_name }} -a"
+  changed_when: true
+  failed_when: false
+  when: freebsd_pot_base_created.changed
+
 - name: Snapshot CI base pot for cloning
   ansible.builtin.command: "pot snapshot -p {{ freebsd_pot_base_pot_name }}"
   changed_when: true
