@@ -30,3 +30,7 @@ freebsd_pot_base_packages:
   - gobject-introspection
   - libffi
   - pcre2
+  - dbus
+  - desktop-file-utils
+  - libiconv
+  - shared-mime-info
