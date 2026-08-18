@@ -1,12 +1,4 @@
 ---
-gitlab_runner_token_gbm: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          64643634623165353138653866666431373735373364353933336463643964333565626664373233
-          3831386135663836643534616537663938646132306232370a626634306439336365323639656563
-          38646531623230656131366538346261313462663064663034356139646139396332313939313637
-          3165663431373333640a303730656662333566303664623966396531313562633462653961363162
-          35636434643465396164363566623862313635313937316431373131343936646439
-
 gitlab_runner_token_flatpak: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           38313630386130373934396234306233653565633961653731333037666539383830376238386533
@@ -22,36 +14,10 @@ gitlab_runner_config:
   session_server:
     session_timeout: 1800
   runners:
-    - name: osuosl-arm1
-      output_limit: 16384
-      limit: 2
-      url: https://gitlab.gnome.org
-      id: 0
-      token: "{{ gitlab_runner_token_gbm }}"
-      token_obtained_at: 0001-01-01T00:00:00.000Z
-      token_expires_at: 0001-01-01T00:00:00.000Z
-      executor: docker
-      environment:
-        - "FF_USE_GIT_NATIVE_CLONE=true"
-      docker:
-        tls_verify: false
-        image: fedora:latest
-        privileged: true
-        disable_entrypoint_overwrite: false
-        oom_kill_disable: false
-        disable_cache: true
-        volumes:
-          - /home/podman/gnome-build-meta:/cache
-          - casd_socket:/run/casd
-        shm_size: 256000000
-        security_opt:
-          - "label=level:s0:c100,c100"
-        tmpfs:
-          "/tmp": "rw,nosuid,nodev,exec,mode=1777"
     - name: osuosl-arm1-flatpak
       output_limit: 16384
       url: https://gitlab.gnome.org/
-      limit: 4
+      limit: 6
       token: "{{ gitlab_runner_token_flatpak }}"
       token_obtained_at: 0001-01-01T00:00:00.000Z
       token_expires_at: 0001-01-01T00:00:00.000Z
@@ -75,9 +41,3 @@ gitlab_runner_config:
         shm_size: 0
         tmpfs:
           "/tmp": "rw,nosuid,nodev,exec,mode=1777"
-
-gitlab_runner_buildbox_casd: true
-gitlab_runner_buildbox_casd_jobs: 32
-gitlab_runner_buildbox_casd_reserved: 200G
-
-gitlab_runner_enable_pydocuum: false
