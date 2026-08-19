@@ -219,7 +219,7 @@ def generate_sender_login_maps(groups):
             "ss": "ssyal",
             "deepa": "dvenkatraman",
             "zana": "allanday",
-            "exec": ["allan", "sri", "arun"],
+            "exec": ["allan", "arun"],
             "accounting": ["freescout-sa"],
             "info": ["freescout-sa"],
             "treasurer": ["ssyal", "dvenkatraman"],

@@ -30,7 +30,6 @@ dovecot_shared_mailboxes:
   - name: exec
     acl_users:
       - allan
-      - sri
       - arun
   - name: events
     acl_users:
