@@ -8,3 +8,11 @@ pkg install -y \
 {% for pkg in freebsd_pot_base_packages %}
   {{ pkg }}{{ '' if loop.last else ' \\' }}
 {% endfor %}
+
+# Generate /etc/machine-id and /var/lib/dbus/machine-id for GLib/D-Bus tests.
+# Inside a jail, kern.hostuuid defaults to 00000000-0000-0000-0000-000000000000
+# and service hostid start cannot set the sysctl (Operation not permitted).
+# The prepare script regenerates a unique ID per job; this provides the base files.
+mkdir -p /var/lib/dbus
+/bin/uuidgen | tr -d '-' | tr 'A-F' 'a-f' > /etc/machine-id
+cp /etc/machine-id /var/lib/dbus/machine-id

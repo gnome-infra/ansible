@@ -25,7 +25,7 @@ status_cmd="${name}_status"
 gitlab_runner_start()
 {
     echo "Starting ${name}."
-    /usr/sbin/daemon -p ${pidfile} -f ${command} run --config ${gitlab_runner_config}
+    /usr/sbin/daemon -P ${pidfile} -u {{ gitlab_runner_freebsd_user }} -f ${command} run --config ${gitlab_runner_config}
 }
 
 gitlab_runner_stop()

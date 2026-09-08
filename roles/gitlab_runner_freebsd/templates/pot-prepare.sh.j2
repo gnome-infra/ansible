@@ -12,12 +12,12 @@ BASE_POT="{{ gitlab_runner_freebsd_pot_base }}"
 BRIDGE="{{ gitlab_runner_freebsd_pot_bridge }}"
 BUILDS_DIR="{{ gitlab_runner_freebsd_builds_dir }}"
 
-if pot show -p "${POT_NAME}" > /dev/null 2>&1; then
-    pot stop -p "${POT_NAME}" 2>/dev/null || true
-    pot destroy -p "${POT_NAME}"
+if sudo pot show -p "${POT_NAME}" > /dev/null 2>&1; then
+    sudo pot stop -p "${POT_NAME}" 2>/dev/null || true
+    sudo pot destroy -p "${POT_NAME}"
 fi
 
-pot clone \
+sudo pot clone \
     -p "${POT_NAME}" \
     -P "${BASE_POT}" \
     -N private-bridge \
@@ -27,10 +27,10 @@ pot clone \
 JOB_DIR="${BUILDS_DIR}/${CUSTOM_ENV_CI_JOB_ID}"
 mkdir -p "${JOB_DIR}"
 
-pot mount-in \
+sudo pot mount-in \
     -p "${POT_NAME}" \
     -d "${JOB_DIR}" \
     -m /builds
 
 unset TMPDIR
-pot start -p "${POT_NAME}"
+sudo pot start -p "${POT_NAME}"

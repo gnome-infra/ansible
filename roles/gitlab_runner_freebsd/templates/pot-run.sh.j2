@@ -10,5 +10,5 @@ PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 POT_NAME="ci-job-${CUSTOM_ENV_CI_JOB_ID}"
 SCRIPT_HOST="${1}"
 
-pot copy-in -F -p "${POT_NAME}" -s "${SCRIPT_HOST}" -d /tmp/job-script.sh
-pot exec -p "${POT_NAME}" /bin/sh /tmp/job-script.sh
+sudo pot copy-in -F -p "${POT_NAME}" -s "${SCRIPT_HOST}" -d /tmp/job-script.sh
+sudo pot exec -p "${POT_NAME}" /bin/sh /tmp/job-script.sh

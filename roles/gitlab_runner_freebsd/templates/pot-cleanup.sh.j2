@@ -8,8 +8,8 @@ PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 POT_NAME="ci-job-${CUSTOM_ENV_CI_JOB_ID}"
 BUILDS_DIR="{{ gitlab_runner_freebsd_builds_dir }}"
 
-pot stop -p "${POT_NAME}" 2>/dev/null || true
-pot destroy -p "${POT_NAME}" 2>/dev/null || true
+sudo pot stop -p "${POT_NAME}" 2>/dev/null || true
+sudo pot destroy -p "${POT_NAME}" 2>/dev/null || true
 
 JOB_DIR="${BUILDS_DIR}/${CUSTOM_ENV_CI_JOB_ID}"
 rm -rf "${JOB_DIR}" 2>/dev/null || true

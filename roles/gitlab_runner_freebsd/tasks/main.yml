@@ -7,16 +7,26 @@
 - name: Create gitlab-runner service user
   ansible.builtin.user:
     name: "{{ gitlab_runner_freebsd_user }}"
-    shell: /usr/sbin/nologin
+    shell: /bin/sh
     home: /var/lib/gitlab-runner
     system: true
     createhome: true
+
+- name: Configure sudo for gitlab-runner to manage pot jails
+  ansible.builtin.copy:
+    content: |
+      {{ gitlab_runner_freebsd_user }} ALL=(root) NOPASSWD: /usr/local/bin/pot
+    dest: /usr/local/etc/sudoers.d/gitlab-runner-pot
+    owner: root
+    group: wheel
+    mode: "0440"
+    validate: "visudo -cf %s"
 
 - name: Ensure config directory exists
   ansible.builtin.file:
     path: "{{ gitlab_runner_freebsd_config_dir }}"
     state: directory
-    owner: root
+    owner: "{{ gitlab_runner_freebsd_user }}"
     group: wheel
     mode: "0755"
 
@@ -32,7 +42,7 @@
   ansible.builtin.file:
     path: "{{ gitlab_runner_freebsd_builds_dir }}"
     state: directory
-    owner: root
+    owner: "{{ gitlab_runner_freebsd_user }}"
     group: wheel
     mode: "0755"
 
@@ -40,7 +50,7 @@
   ansible.builtin.file:
     path: "{{ gitlab_runner_freebsd_cache_dir }}"
     state: directory
-    owner: root
+    owner: "{{ gitlab_runner_freebsd_user }}"
     group: wheel
     mode: "0755"
 
@@ -72,7 +82,7 @@
   ansible.builtin.template:
     src: config.toml.j2
     dest: "{{ gitlab_runner_freebsd_config_dir }}/config.toml"
-    owner: root
+    owner: "{{ gitlab_runner_freebsd_user }}"
     group: wheel
     mode: "0600"
   notify: Restart gitlab-runner freebsd
