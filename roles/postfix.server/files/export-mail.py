@@ -223,8 +223,12 @@ def generate_sender_login_maps(groups):
             "accounting": ["freescout-sa"],
             "info": ["freescout-sa"],
             "treasurer": ["ssyal", "dvenkatraman"],
+            "asia": "saileshsingh",
         },
-        "gimp.org": {"jehan": "jehanp", "aryeom": "aryeomhan"},
+        "gimp.org": {
+            "jehan": "jehanp",
+            "aryeom": "aryeomhan"
+        },
     }
 
     for domain, mappings in custom_map.items():
