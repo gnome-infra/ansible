@@ -12,7 +12,7 @@ gitlab_runner_gbm_token: !vault |
 
 gitlab_runner_config:
   concurrent: 4
-  check_interval: 0
+  check_interval: 10
   session_server:
     session_timeout: 1800
   runners:

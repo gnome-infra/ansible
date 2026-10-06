@@ -11,7 +11,7 @@ gitlab_runner_instance_wide_token: !vault |
 
 gitlab_runner_config:
   concurrent: 4
-  check_interval: 0
+  check_interval: 10
   shutdown_timeout: 0
   session_server:
     session_timeout: 1800
