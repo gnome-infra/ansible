@@ -5,6 +5,7 @@
 set -euo pipefail
 
 MOUNTPOINT="{{ podman_user.home }}/.local/share/containers"
+{% raw %}
 
 if mountpoint -q "$MOUNTPOINT"; then
     exit 0
@@ -44,3 +45,4 @@ if [ "$FRESH" -eq 1 ]; then
         restorecon -F "$MOUNTPOINT"
     fi
 fi
+{% endraw %}
