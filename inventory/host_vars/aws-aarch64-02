@@ -46,3 +46,5 @@ gitlab_runner_buildbox_casd_jobs: 16
 gitlab_runner_buildbox_casd_reserved: 100G
 
 gitlab_runner_enable_pydocuum: false
+
+gitlab_runner_instance_store: true

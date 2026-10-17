@@ -75,3 +75,5 @@ gitlab_runner_config:
           - SYS_CHROOT
         tmpfs:
           "/tmp": "rw,nosuid,nodev,exec,mode=1777"
+
+gitlab_runner_instance_store: true

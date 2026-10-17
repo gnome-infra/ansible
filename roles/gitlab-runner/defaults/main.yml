@@ -21,3 +21,4 @@ gitlab_runner_statsd_exporter_checksum_amd64: sha256:df0c1b640384e0495b5127f3d92
 gitlab_runner_statsd_exporter_checksum_arm64: sha256:386f6808df1c0a8de1ddf79a1c25e13517f37a1c508b4a8bd53f3b5d02aed0df
 gitlab_runner_statsd_exporter_web_listen_address: "0.0.0.0:9102"
 gitlab_runner_statsd_exporter_statsd_listen_udp: "0.0.0.0:9125"
+gitlab_runner_instance_store: false

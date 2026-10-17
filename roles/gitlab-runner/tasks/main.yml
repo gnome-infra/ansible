@@ -49,6 +49,32 @@
     - /etc/subuid
   notify: podman system migrate
 
+- name: Configure EC2 instance store for container storage
+  when: gitlab_runner_instance_store | default(false)
+  block:
+    - name: Install instance store setup script
+      ansible.builtin.template:
+        src: instance-store-setup.sh.j2
+        dest: /usr/local/sbin/gitlab-runner-instance-store
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Install instance store setup unit
+      ansible.builtin.template:
+        src: instance-store.service.j2
+        dest: /etc/systemd/system/gitlab-runner-instance-store.service
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Enable instance store setup unit
+      ansible.builtin.systemd:
+        name: gitlab-runner-instance-store.service
+        enabled: true
+        state: started
+        daemon_reload: true
+
 - name: Enable linger for podman user
   ansible.builtin.command: loginctl enable-linger podman
   args:

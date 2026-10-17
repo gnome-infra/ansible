@@ -1,0 +1,12 @@
+[Unit]
+Description=Set up EC2 instance store for podman container storage
+After=local-fs.target
+Before=user@{{ podman_user.uid }}.service podman-cleanup.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/gitlab-runner-instance-store
+
+[Install]
+WantedBy=multi-user.target

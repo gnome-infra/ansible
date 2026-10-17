@@ -1,0 +1,46 @@
+#!/bin/bash
+# Formats (when blank) and mounts the EC2 instance store disk as podman's
+# container storage. Instance store is wiped on every stop/start, so this
+# runs at each boot instead of relying on a static fstab entry.
+set -euo pipefail
+
+MOUNTPOINT="{{ podman_user.home }}/.local/share/containers"
+
+if mountpoint -q "$MOUNTPOINT"; then
+    exit 0
+fi
+
+# NVMe devices may show up a little after local-fs.target
+for _ in $(seq 30); do
+    mapfile -t DEVICES < <(lsblk -dnpo NAME,MODEL | awk '/Amazon EC2 NVMe Instance Storage/ { print $1 }')
+    [ "${#DEVICES[@]}" -gt 0 ] && break
+    sleep 1
+done
+
+if [ "${#DEVICES[@]}" -eq 0 ]; then
+    echo "No EC2 instance store device found" >&2
+    exit 1
+fi
+
+DEVICE="${DEVICES[0]}"
+if [ "${#DEVICES[@]}" -gt 1 ]; then
+    echo "Multiple instance store devices found (${DEVICES[*]}), using $DEVICE"
+fi
+
+FRESH=0
+if [ -z "$(blkid -o value -s TYPE "$DEVICE" || true)" ]; then
+    echo "Creating XFS filesystem on $DEVICE"
+    mkfs.xfs -q "$DEVICE"
+    FRESH=1
+fi
+
+runuser -u podman -- mkdir -p "$MOUNTPOINT"
+mount -t xfs "$DEVICE" "$MOUNTPOINT"
+
+if [ "$FRESH" -eq 1 ]; then
+    chown podman:podman "$MOUNTPOINT"
+    chmod 0700 "$MOUNTPOINT"
+    if command -v selinuxenabled > /dev/null && selinuxenabled; then
+        restorecon -F "$MOUNTPOINT"
+    fi
+fi
