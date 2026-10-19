@@ -5,7 +5,7 @@ node_exporter_arch_map:
   armv7l: 'armv7'
   armv6l: 'armv6'
 
-node_exporter_arch: "{{ node_exporter_arch_map[ansible_architecture] | default(ansible_architecture) }}"
+node_exporter_arch: "{{ node_exporter_arch_map[ansible_facts['architecture']] | default(ansible_facts['architecture']) }}"
 
-node_exporter_old_service: "{{ (ansible_os_family == 'Debian') | ternary('prometheus-node-exporter.service', 'node_exporter.service') }}"
-node_exporter_old_package: "{{ (ansible_os_family == 'Debian') | ternary('prometheus-node-exporter', 'golang-github-prometheus-node_exporter') }}"
+node_exporter_old_service: "{{ (ansible_facts['os_family'] == 'Debian') | ternary('prometheus-node-exporter.service', 'node_exporter.service') }}"
+node_exporter_old_package: "{{ (ansible_facts['os_family'] == 'Debian') | ternary('prometheus-node-exporter', 'golang-github-prometheus-node_exporter') }}"

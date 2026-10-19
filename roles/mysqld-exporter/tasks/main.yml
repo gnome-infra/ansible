@@ -18,7 +18,7 @@
     path: /root/.ansible/tmp/mysqld-exporter
     state: directory
 
-- name: download {{ mysqld_exporter_version }} for {{ ansible_architecture }}
+- name: download {{ mysqld_exporter_version }} for {{ ansible_facts['architecture'] }}
   get_url:
     url: "https://github.com/prometheus/mysqld_exporter/releases/download/v{{ mysqld_exporter_version }}/mysqld_exporter-{{ mysqld_exporter_version }}.linux-{{ mysqld_exporter_arch }}.tar.gz"
     dest: "/root/.ansible/tmp/mysqld-exporter/mysqld_exporter-{{ mysqld_exporter_version }}.linux-{{ mysqld_exporter_arch }}.tar.gz"

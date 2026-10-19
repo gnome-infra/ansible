@@ -3,7 +3,7 @@
   ansible.posix.selinux:
     policy: targeted
     state: enforcing
-  when: ansible_distribution in ["Fedora", "RedHat"]
+  when: ansible_facts['distribution'] in ["Fedora", "RedHat"]
 
 - name: Install podman
   ansible.builtin.package:
@@ -21,14 +21,14 @@
     target: /usr/libexec/podman/catatonit
     setype: container_runtime_exec_t
     state: present
-  when: ansible_distribution in ["Fedora", "RedHat"]
+  when: ansible_facts['distribution'] in ["Fedora", "RedHat"]
   register: catatonit_fcontext
 
 - name: Apply SELinux context for catatonit
   ansible.builtin.command:
     cmd: restorecon -v /usr/libexec/podman/catatonit
   when:
-    - ansible_distribution in ["Fedora", "RedHat"]
+    - ansible_facts['distribution'] in ["Fedora", "RedHat"]
     - catatonit_fcontext is changed
   notify: restart podman service
 
@@ -124,7 +124,7 @@
     - flatpak
     - podman
     - gnome_runner
-  when: ansible_distribution in ["Fedora", "RedHat"]
+  when: ansible_facts['distribution'] in ["Fedora", "RedHat"]
   tags: selinux
 
 - name: Ensure podman user service override directory exists

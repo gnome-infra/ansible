@@ -23,7 +23,7 @@
     owner: root
     group: root
     mode: 0755
-  when: "ansible_service_mgr != 'systemd'"
+  when: "ansible_facts['service_mgr'] != 'systemd'"
 
 - name: Copy firewall systemd unit file into place (for systemd systems).
   template:
@@ -32,7 +32,7 @@
     owner: root
     group: root
     mode: 0644
-  when: "ansible_service_mgr == 'systemd'"
+  when: "ansible_facts['service_mgr'] == 'systemd'"
 
 - name: Configure the firewall service.
   service:

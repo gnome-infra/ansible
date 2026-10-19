@@ -3,7 +3,7 @@ Requires=
 After=
 
 [Service]
-{% if ansible_distribution in ["Fedora", "RedHat"] %}
+{% if ansible_facts['distribution'] in ["Fedora", "RedHat"] %}
 SELinuxContext=system_u:system_r:container_runtime_t:s0-s0:c0.c1023
 {% endif %}
 ExecStart=

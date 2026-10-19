@@ -23,15 +23,15 @@
 
     - name: Skip non-Fedora systems
       ansible.builtin.meta: end_host
-      when: ansible_distribution != "Fedora"
+      when: ansible_facts['distribution'] != "Fedora"
 
   tasks:
     - name: Check if system is already at the target release
-      when: ansible_distribution_major_version == fedora_release | string
+      when: ansible_facts['distribution_major_version'] == fedora_release | string
       block:
         - name: Report that the system is already at the target release
           ansible.builtin.debug:
-            msg: "System is already running Fedora {{ ansible_distribution_major_version }}, nothing to do."
+            msg: "System is already running Fedora {{ ansible_facts['distribution_major_version'] }}, nothing to do."
 
         - name: End play for this host
           ansible.builtin.meta: end_host
@@ -39,10 +39,10 @@
     - name: Abort if target release is older than current release
       ansible.builtin.assert:
         that:
-          - fedora_release | int > ansible_distribution_major_version | int
+          - fedora_release | int > ansible_facts['distribution_major_version'] | int
         fail_msg: >-
           Target release ({{ fedora_release }}) must be newer than the
-          current release ({{ ansible_distribution_major_version }}).
+          current release ({{ ansible_facts['distribution_major_version'] }}).
           Downgrades are not supported.
 
     - name: Install the dnf system-upgrade plugin
@@ -82,7 +82,7 @@
     - name: Verify the upgrade succeeded
       ansible.builtin.assert:
         that:
-          - ansible_distribution_major_version == fedora_release | string
+          - ansible_facts['distribution_major_version'] == fedora_release | string
         fail_msg: >-
           Upgrade verification failed. Expected Fedora {{ fedora_release }}
-          but found Fedora {{ ansible_distribution_major_version }}.
+          but found Fedora {{ ansible_facts['distribution_major_version'] }}.

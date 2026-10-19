@@ -2,16 +2,16 @@
 - name: Add tailscale repo
   ansible.builtin.command: >
     dnf config-manager
-    {% if ansible_distribution == 'Fedora' %}
-    {% if ansible_distribution_major_version == '40' %}
+    {% if ansible_facts['distribution'] == 'Fedora' %}
+    {% if ansible_facts['distribution_major_version'] == '40' %}
     --add-repo
     {% else %}
     addrepo --from-repofile
     {% endif %}
     https://pkgs.tailscale.com/stable/fedora/tailscale.repo
-    {% elif ansible_distribution == 'RedHat' %}
+    {% elif ansible_facts['distribution'] == 'RedHat' %}
     addrepo --from-repofile
-    https://pkgs.tailscale.com/stable/rhel/{{ ansible_distribution_major_version }}/tailscale.repo
+    https://pkgs.tailscale.com/stable/rhel/{{ ansible_facts['distribution_major_version'] }}/tailscale.repo
     {% endif %}
   args:
     creates: /etc/yum.repos.d/tailscale.repo
@@ -24,7 +24,7 @@
       - sudo
       - vnstat
       - dnf-automatic
-      - "{{ 'golang-github-prometheus-node-exporter' if ansible_distribution_major_version == '40' else 'node-exporter' }}"
+      - "{{ 'golang-github-prometheus-node-exporter' if ansible_facts['distribution_major_version'] == '40' else 'node-exporter' }}"
       - vim-minimal
     state: present
     update_cache: true

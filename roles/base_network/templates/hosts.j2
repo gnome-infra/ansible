@@ -5,9 +5,9 @@
 
 {% if datacenter == 'aws' %}
   {% set group = 'idm' %}
-  {% if group in groups and ansible_fqdn in groups[group] %}
+  {% if group in groups and ansible_facts['fqdn'] in groups[group] %}
     {% for host in groups[group] %}
-      {{ hostvars[host].ansible_eth0.ipv4.address }} {{ hostvars[host].ansible_fqdn }} {{ hostvars[host].ansible_hostname }}
+      {{ hostvars[host].ansible_facts.eth0.ipv4.address }} {{ hostvars[host].ansible_facts.fqdn }} {{ hostvars[host].ansible_facts.hostname }}
     {% endfor %}
   {% endif %}
 {% elif datacenter in ['osuosl'] %}

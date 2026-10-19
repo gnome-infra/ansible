@@ -44,7 +44,7 @@ zone:
 
 # Explicit to ns-master.g.o as that is where ACLs for various
 # abisource* domains point to.
-{% if ansible_fqdn == 'nsd01.gnome.org' %}
+{% if ansible_facts['fqdn'] == 'nsd01.gnome.org' %}
 {% for zone in abisource_zones %}
 zone:
   name: "{{ zone.zone_name }}"

@@ -6,7 +6,7 @@
         name: >-
           {{
             ['sshguard']
-            if ansible_os_family == 'Debian'
+            if ansible_facts['os_family'] == 'Debian'
             else ['sshguard', 'sshguard-' ~ sshguard_firewall_backend]
           }}
         state: present

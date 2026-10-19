@@ -16,9 +16,9 @@ This system is Ansible managed!  Local changes may be overwritten!
 
 ===============================================================================
 
- Machine name: {{ ansible_nodename }}, OS: {{ ansible_os_family }} {{ ansible_distribution_version }}
+ Machine name: {{ ansible_facts['nodename'] }}, OS: {{ ansible_facts['os_family'] }} {{ ansible_facts['distribution_version'] }}
 
- Kernel: {{ ansible_kernel }}, Processors: {{ ansible_processor_vcpus }}, RAM: {{ (ansible_memtotal_mb * 0.001)|int }} GB
+ Kernel: {{ ansible_facts['kernel'] }}, Processors: {{ ansible_facts['processor_vcpus'] }}, RAM: {{ (ansible_facts['memtotal_mb'] * 0.001)|int }} GB
 
  Sponsor: Red Hat
 
