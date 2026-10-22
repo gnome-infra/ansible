@@ -1,0 +1,64 @@
+# {{ ansible_managed }}
+
+# Rootless podman: root in the container is the unprivileged {{ gbm_cache_user }} user
+# on the host, so workers can read whatever buildbox-casd writes
+user root;
+worker_processes auto;
+error_log /dev/stderr warn;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 4096;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    # Requests are logged by traefik
+    access_log off;
+    # Misses are expected (clients probe for objects), don't flood the logs
+    log_not_found off;
+    server_tokens off;
+
+    sendfile on;
+    tcp_nopush on;
+    keepalive_timeout 65;
+    gzip off;
+
+    open_file_cache max=10000 inactive=60s;
+
+    # CAS objects are content addressed and never change, action cache entries can
+    map $request_uri $gbm_cache_control {
+        ~^/cas/  "public, max-age=31536000, immutable";
+        ~^/ac/   "public, max-age=60, s-maxage=60";
+        default  "no-store";
+    }
+
+    # Never cache misses, the object may be pushed later
+    map $status $gbm_cache_control_final {
+        404      "no-store";
+        default  $gbm_cache_control;
+    }
+
+    server {
+        listen 127.0.0.1:{{ gbm_cache_nginx_port }};
+        root /srv/cas;
+
+        add_header Cache-Control $gbm_cache_control_final always;
+
+        location /cas/ {
+            rewrite "^/cas/([0-9a-f]{2})([0-9a-f]+)$" /cas/objects/$1/$2 break;
+            return 404;
+        }
+
+        location /ac/ {
+            rewrite "^/ac/([0-9a-f]{2})([0-9a-f]+)$" /actioncache/objects/$1/$2 break;
+            return 404;
+        }
+
+        location / {
+            return 404;
+        }
+    }
+}

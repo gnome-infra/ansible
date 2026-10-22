@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+tls:
+  stores:
+    default:
+      defaultGeneratedCert:
+        resolver: certresolver
+        domain:
+          main: {{ traefik_default_cert_domain }}

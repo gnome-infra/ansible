@@ -1,0 +1,29 @@
+---
+traefik_user: "{{ podman_rootless_user | default('podman') }}"
+traefik_image: docker.io/library/traefik:v3.7.16
+traefik_base_dir: "{{ podman_rootless_home }}/traefik"
+traefik_config_dir: "{{ traefik_base_dir }}/config"
+traefik_dynamic_dir: "{{ traefik_config_dir }}/dynamic"
+
+traefik_acme_email: gnome-sysadmin@gnome.org
+# Certificate served by default, whatever the SNI
+traefik_default_cert_domain: "{{ inventory_hostname }}"
+
+traefik_metrics_port: 8082
+traefik_access_log_status_codes:
+  - "400-599"
+
+# Additional TLS entrypoints, e.g.
+#   - name: push
+#     port: 11004
+#     read_timeout: 0
+traefik_extra_entrypoints: []
+
+# Plugins are cloned at deploy time and loaded as local plugins, e.g.
+#   - name: jwt-middleware
+#     module: github.com/agilezebra/jwt-middleware
+#     version: v1.4.1
+traefik_plugins: []
+
+# Whether to (re)start the service; set to false to deploy without touching what is running
+traefik_start: true

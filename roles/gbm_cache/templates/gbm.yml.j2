@@ -1,0 +1,71 @@
+# {{ ansible_managed }}
+http:
+  routers:
+    pull:
+      service: casd
+      entryPoints:
+        - pull
+      rule: >-
+        Host(`{{ gbm_cache_host }}`) &&
+        (PathPrefix(`/build.bazel.remote.execution.v2.Capabilities`) ||
+         PathPrefix(`/build.bazel.remote.execution.v2.ActionCache/GetActionResult`) ||
+         PathPrefix(`/build.bazel.remote.execution.v2.ContentAddressableStorage/BatchReadBlobs`) ||
+         PathPrefix(`/google.bytestream.ByteStream/Read`) ||
+         PathPrefix(`/build.bazel.remote.asset.v1.Fetch`))
+      tls:
+        domains:
+          - main: {{ gbm_cache_host }}
+
+    push:
+      service: casd
+      entryPoints:
+        - push
+      rule: >-
+        Host(`{{ gbm_cache_host }}`) &&
+        (PathPrefix(`/build.bazel.remote.execution.v2.ActionCache`) ||
+         PathPrefix(`/build.bazel.remote.execution.v2.ContentAddressableStorage`) ||
+         PathPrefix(`/google.bytestream.ByteStream`) ||
+         PathPrefix(`/build.bazel.remote.asset.v1.Fetch`) ||
+         PathPrefix(`/build.bazel.remote.asset.v1.Push`))
+      middlewares:
+        - gitlab-jwt
+      tls:
+        domains:
+          - main: {{ gbm_cache_host }}
+
+    # CDN origin: only requests carrying the CDN77 custom origin header
+    http:
+      service: nginx
+      entryPoints:
+        - websecure
+      rule: >-
+        (Host(`{{ gbm_cache_host }}`) || Host(`{{ gbm_cache_cdn_host }}`)) &&
+        PathRegexp(`^/(cas|ac)/`) &&
+        Header(`X-Origin-Auth`, `{{ gbm_cache_origin_secret }}`)
+      # Only request a certificate for the origin name, the CDN serves its own
+      tls:
+        domains:
+          - main: {{ gbm_cache_host }}
+
+  services:
+    casd:
+      loadBalancer:
+        servers:
+          - url: h2c://127.0.0.1:{{ gbm_cache_casd_port }}
+    nginx:
+      loadBalancer:
+        servers:
+          - url: http://127.0.0.1:{{ gbm_cache_nginx_port }}
+
+  middlewares:
+    gitlab-jwt:
+      plugin:
+        jwt-middleware:
+          issuers:
+            - {{ gbm_cache_jwt_issuer }}
+          require:
+            aud: {{ gbm_cache_jwt_audience }}
+            project_path:
+{% for path in gbm_cache_jwt_project_paths %}
+              - {{ path }}
+{% endfor %}

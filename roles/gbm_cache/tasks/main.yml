@@ -1,0 +1,121 @@
+---
+- name: Check the CDN origin secret is set
+  ansible.builtin.assert:
+    that:
+      - gbm_cache_origin_secret is defined
+      - gbm_cache_origin_secret | length > 0
+    fail_msg: gbm_cache_origin_secret must be set (vault), it has to match the CDN77 custom origin header
+
+- name: Create CAS storage directory
+  ansible.builtin.file:
+    path: "{{ gbm_cache_storage_dir }}"
+    state: directory
+    owner: "{{ gbm_cache_user }}"
+    group: "{{ gbm_cache_user }}"
+    mode: '0755'
+
+# Shared by buildbox-casd and nginx, so it can't use a private :Z label, and
+# :z would relabel the whole CAS on every container start
+- name: Set SELinux context for CAS storage
+  community.general.sefcontext:
+    target: "{{ gbm_cache_storage_dir }}(/.*)?"
+    setype: container_file_t
+    state: present
+  register: gbm_cache_fcontext
+
+# -F also drops the per-container MCS categories left behind by a previous :Z mount
+- name: Apply SELinux context for CAS storage
+  ansible.builtin.command:
+    cmd: restorecon -RF {{ gbm_cache_storage_dir }}
+  when: gbm_cache_fcontext is changed
+
+- name: Create nginx config directory
+  ansible.builtin.file:
+    path: "{{ podman_rootless_home }}/nginx-cas"
+    state: directory
+    mode: '0700'
+  become_user: "{{ gbm_cache_user }}"
+  become: true
+
+- name: Configure nginx
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: "{{ podman_rootless_home }}/nginx-cas/nginx.conf"
+    mode: '0600'
+  become_user: "{{ gbm_cache_user }}"
+  become: true
+  notify: restart nginx-cas
+
+- name: Configure traefik routes
+  ansible.builtin.template:
+    src: gbm.yml.j2
+    dest: "{{ traefik_dynamic_dir }}/gbm.yml"
+    mode: '0600'
+  become_user: "{{ gbm_cache_user }}"
+  become: true
+
+- name: Create quadlet for buildbox-casd
+  containers.podman.podman_container:
+    name: buildbox-casd
+    image: "{{ gbm_cache_casd_image }}"
+    state: quadlet
+    quadlet_filename: buildbox-casd
+    command: >-
+      {{ ['buildbox-casd', '--bind', '127.0.0.1:' ~ gbm_cache_casd_port,
+          '--reserved', gbm_cache_casd_reserved,
+          '--metrics-mode', 'udp://' ~ gbm_cache_casd_metrics_udp]
+         + gbm_cache_casd_args + ['/data'] }}
+    init: true
+    network: host
+    volumes:
+      - "{{ gbm_cache_storage_dir }}:/data"
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Service]
+        Restart=always
+      - |
+        [Install]
+        WantedBy=default.target
+  environment: "{{ podman_rootless_environment }}"
+  become_user: "{{ gbm_cache_user }}"
+  become: true
+  notify: restart buildbox-casd
+
+- name: Create quadlet for nginx-cas
+  containers.podman.podman_container:
+    name: nginx-cas
+    image: "{{ gbm_cache_nginx_image }}"
+    state: quadlet
+    quadlet_filename: nginx-cas
+    network: host
+    volumes:
+      - "{{ gbm_cache_storage_dir }}:/srv/cas:ro"
+      - "{{ podman_rootless_home }}/nginx-cas/nginx.conf:/etc/nginx/nginx.conf:ro,Z"
+    quadlet_options:
+      - "AutoUpdate=registry"
+      - "Pull=newer"
+      - |
+        [Service]
+        Restart=always
+      - |
+        [Install]
+        WantedBy=default.target
+  environment: "{{ podman_rootless_environment }}"
+  become_user: "{{ gbm_cache_user }}"
+  become: true
+  notify: restart nginx-cas
+
+- name: Start gbm cache services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+    daemon_reload: true
+    scope: user
+  loop:
+    - buildbox-casd.service
+    - nginx-cas.service
+  environment: "{{ podman_rootless_environment }}"
+  become_user: "{{ gbm_cache_user }}"
+  become: true
+  when: gbm_cache_start | bool

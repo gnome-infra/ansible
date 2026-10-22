@@ -1,0 +1,62 @@
+---
+- name: Set SELinux to enforcing mode
+  ansible.posix.selinux:
+    policy: targeted
+    state: enforcing
+  when: ansible_facts['distribution'] in ["Fedora", "RedHat"]
+
+- name: Install podman
+  ansible.builtin.package:
+    name:
+      - podman
+      - systemd-container
+    state: present
+
+- name: Create {{ podman_rootless_user }} user
+  ansible.builtin.user:
+    name: "{{ podman_rootless_user }}"
+    shell: /bin/bash
+    system: true
+  register: podman_rootless_user_result
+
+- name: Expose {{ podman_rootless_user }} home and user session environment to other roles
+  ansible.builtin.set_fact:
+    podman_rootless_home: "{{ podman_rootless_user_result.home }}"
+    podman_rootless_environment:
+      XDG_RUNTIME_DIR: "/run/user/{{ podman_rootless_user_result.uid }}"
+      DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ podman_rootless_user_result.uid }}/bus"
+
+- name: Configure subuids and subgids for {{ podman_rootless_user }} user
+  ansible.builtin.lineinfile:
+    path: "{{ item }}"
+    regexp: '^{{ podman_rootless_user }}:'
+    line: "{{ podman_rootless_user }}:{{ podman_rootless_subid_range }}"
+  with_items:
+    - /etc/subgid
+    - /etc/subuid
+  notify: podman system migrate
+
+- name: Enable linger for {{ podman_rootless_user }} user
+  ansible.builtin.command: loginctl enable-linger {{ podman_rootless_user }}
+  args:
+    creates: /var/lib/systemd/linger/{{ podman_rootless_user }}
+
+- name: Enable systemctl --user as {{ podman_rootless_user }}
+  ansible.builtin.lineinfile:
+    path: "~/.bashrc"
+    line: "{{ item }}"
+  loop:
+    - 'export XDG_RUNTIME_DIR=/run/user/$(id -u)'
+    - 'export DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus'
+  become_user: "{{ podman_rootless_user }}"
+  become: true
+
+- name: Start podman auto-update timer
+  ansible.builtin.systemd:
+    name: podman-auto-update.timer
+    state: started
+    enabled: true
+    scope: user
+  environment: "{{ podman_rootless_environment }}"
+  become_user: "{{ podman_rootless_user }}"
+  become: true

@@ -55,3 +55,15 @@ groups:
     for: 5m
     annotations:
      summary: "{% raw %}At least one device in RAID array on {{ $labels.instance }} has failed {% endraw %}"
+- name: gbm
+  rules:
+  - alert: gbm traefik 5xx errors
+    expr: 'sum by (instance, service) (rate(traefik_service_requests_total{role="gbm",code=~"5.."}[5m])) / sum by (instance, service) (rate(traefik_service_requests_total{role="gbm"}[5m])) > 0.05'
+    for: 10m
+    annotations:
+      summary: "{% raw %}More than 5% of requests to {{ $labels.service }} on {{ $labels.instance }} fail with 5xx{% endraw %}"
+  - alert: gbm TLS certificate expiring
+    expr: 'traefik_tls_certs_not_after{role="gbm"} - time() < 86400 * 14'
+    for: 1h
+    annotations:
+      summary: "{% raw %}TLS certificate for {{ $labels.cn }} on {{ $labels.instance }} expires in less than 14 days{% endraw %}"

@@ -1,0 +1,6 @@
+---
+- name: podman system migrate
+  ansible.builtin.command: podman system migrate
+  environment: "{{ podman_rootless_environment }}"
+  become_user: "{{ podman_rootless_user }}"
+  become: true

@@ -1,0 +1,3 @@
+---
+podman_rootless_user: podman
+podman_rootless_subid_range: "524288:1100000000"

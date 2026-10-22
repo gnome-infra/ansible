@@ -1,0 +1,37 @@
+---
+ansible_user: root
+
+# Ansible-side site name, Loki labels this site rdu3
+datacenter: 'ral3'
+
+rsyslog_remote_target: "{{ hostvars['hetzner-3'].ansible_facts.tailscale0.ipv4.address }}"
+rsyslog_remote_port: "1514"
+
+sshguard_enabled: true
+sshguard_firewall_backend: firewalld
+sshguard_whitelist:
+  - comment: IPv4 localhost
+    address: 127.0.0.0/8
+  - comment: IPv6 localhost
+    address: ::1
+  - comment: Tailscale
+    address: 100.64.0.0/10
+  - comment: RDU3 bastion
+    address: 10.16.104.0/24
+  - comment: bastion02.gnome.org
+    address: 98.83.131.224
+
+# buildbox-casd runs on the host network
+statsd_exporter_statsd_listen_udp: "127.0.0.1:9125"
+
+traefik_default_cert_domain: gbm.gnome.org
+traefik_extra_entrypoints:
+  - name: pull
+    port: 11003
+  - name: push
+    port: 11004
+    read_timeout: 0
+traefik_plugins:
+  - name: jwt-middleware
+    module: github.com/agilezebra/jwt-middleware
+    version: v1.4.1

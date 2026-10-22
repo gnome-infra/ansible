@@ -1,0 +1,22 @@
+---
+- name: restart buildbox-casd
+  ansible.builtin.systemd:
+    name: buildbox-casd.service
+    state: restarted
+    daemon_reload: true
+    scope: user
+  environment: "{{ podman_rootless_environment }}"
+  become_user: "{{ gbm_cache_user }}"
+  become: true
+  when: gbm_cache_start | bool
+
+- name: restart nginx-cas
+  ansible.builtin.systemd:
+    name: nginx-cas.service
+    state: restarted
+    daemon_reload: true
+    scope: user
+  environment: "{{ podman_rootless_environment }}"
+  become_user: "{{ gbm_cache_user }}"
+  become: true
+  when: gbm_cache_start | bool

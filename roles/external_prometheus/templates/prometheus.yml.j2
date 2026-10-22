@@ -41,6 +41,21 @@ scrape_configs:
         labels:
           role: gitlab-runner
 {% endif %}
+{% set gbm_hosts = [] %}
+{% for host in groups['gbm'] | default([]) %}
+{%   set ts_ip = tailscale_ip(host) | trim %}
+{%   if ts_ip %}
+{%     set _ = gbm_hosts.append({'name': host, 'ip': ts_ip}) %}
+{%   endif %}
+{% endfor %}
+{% if gbm_hosts %}
+      - targets:
+{% for host in gbm_hosts %}
+          - "{{ host.ip }}:9100"
+{% endfor %}
+        labels:
+          role: gbm
+{% endif %}
 
     relabel_configs:
 {% for host in groups['gitlab-runners'] + (groups['gitlab-runners-freebsd'] | default([])) %}
@@ -51,6 +66,12 @@ scrape_configs:
         regex: "{{ ts_ip }}:9100"
         replacement: "{{ host }}"
 {%   endif %}
+{% endfor %}
+{% for host in gbm_hosts %}
+      - source_labels: [ __address__ ]
+        target_label: instance
+        regex: "{{ host.ip }}:9100"
+        replacement: "{{ host.name }}"
 {% endfor %}
 
 {% set buildbox_casd_targets = [] %}
@@ -79,3 +100,21 @@ scrape_configs:
 {%   endif %}
 {% endfor %}
 {% endif %}
+{% for job in [{'name': 'traefik', 'port': 8082}, {'name': 'gbm_casd', 'port': 9102}] if gbm_hosts %}
+
+  - job_name: '{{ job.name }}'
+    static_configs:
+      - targets:
+{%   for host in gbm_hosts %}
+          - "{{ host.ip }}:{{ job.port }}"
+{%   endfor %}
+        labels:
+          role: gbm
+    relabel_configs:
+{%   for host in gbm_hosts %}
+      - source_labels: [ __address__ ]
+        target_label: instance
+        regex: "{{ host.ip }}:{{ job.port }}"
+        replacement: "{{ host.name }}"
+{%   endfor %}
+{% endfor %}

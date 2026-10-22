@@ -1,0 +1,11 @@
+---
+- name: restart traefik
+  ansible.builtin.systemd:
+    name: traefik.service
+    state: restarted
+    daemon_reload: true
+    scope: user
+  environment: "{{ podman_rootless_environment }}"
+  become_user: "{{ traefik_user }}"
+  become: true
+  when: traefik_start | bool

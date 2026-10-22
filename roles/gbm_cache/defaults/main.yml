@@ -1,0 +1,29 @@
+---
+gbm_cache_user: "{{ podman_rootless_user | default('podman') }}"
+gbm_cache_host: gbm.gnome.org
+gbm_cache_cdn_host: cas.os.gnome.org
+gbm_cache_storage_dir: /var/lib/buildbox-casd
+
+# Same image the rootful deployment ran (buildbox:latest as of 2026-10-22)
+gbm_cache_casd_image: registry.gitlab.com/buildgrid/buildbox/buildbox@sha256:cadf8d46299f10271e5db48d2aaf1f64f8da064cde9a9ee175dc4b8e080de756
+gbm_cache_casd_port: 8394
+# Disk space left free; casd sizes its LRU quota from what's left
+gbm_cache_casd_reserved: 50G
+gbm_cache_casd_args:
+  - --log-level
+  - info
+gbm_cache_casd_metrics_udp: "127.0.0.1:9125"
+
+gbm_cache_nginx_image: docker.io/library/nginx:1.30-alpine
+gbm_cache_nginx_port: 8080
+
+gbm_cache_jwt_issuer: https://gitlab.gnome.org
+gbm_cache_jwt_audience: "{{ gbm_cache_host }}"
+gbm_cache_jwt_project_paths:
+  - GNOME/gnome-build-meta
+
+# Must match the "Custom origin headers" value configured in CDN77
+# gbm_cache_origin_secret:
+
+# Whether to (re)start the services; set to false to deploy without touching what is running
+gbm_cache_start: true

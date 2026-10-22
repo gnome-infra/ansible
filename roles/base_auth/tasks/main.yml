@@ -23,6 +23,7 @@
   when:
   - ('gimp' not in group_names)
   - ('ral3' not in group_names)
+  - ('gbm' not in group_names)
 
 - name: PermitRootLogin with without-password
   lineinfile:

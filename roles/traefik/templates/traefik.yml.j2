@@ -1,0 +1,78 @@
+# {{ ansible_managed }}
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+api:
+  dashboard: false
+
+log:
+  level: INFO
+  noColor: true
+
+accessLog:
+  format: json
+  filters:
+    statusCodes:
+{% for codes in traefik_access_log_status_codes %}
+      - "{{ codes }}"
+{% endfor %}
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+
+  websecure:
+    address: ":443"
+    http:
+      tls:
+        certResolver: certresolver
+
+{% for ep in traefik_extra_entrypoints %}
+  {{ ep.name }}:
+    address: ":{{ ep.port }}"
+    http:
+      tls:
+        certResolver: certresolver
+{% if ep.read_timeout is defined %}
+    transport:
+      respondingTimeouts:
+        readTimeout: {{ ep.read_timeout }}
+{% endif %}
+
+{% endfor %}
+  metrics:
+    address: ":{{ traefik_metrics_port }}"
+
+metrics:
+  prometheus:
+    entryPoint: metrics
+    addRoutersLabels: true
+
+certificatesResolvers:
+  certresolver:
+    acme:
+      email: {{ traefik_acme_email }}
+      storage: /letsencrypt/acme.json
+      httpChallenge:
+        entryPoint: web
+
+providers:
+  file:
+    directory: /etc/traefik/dynamic
+    watch: true
+{% if traefik_plugins %}
+
+experimental:
+  localPlugins:
+{% for plugin in traefik_plugins %}
+    {{ plugin.name }}:
+      moduleName: {{ plugin.module }}
+{% endfor %}
+{% endif %}

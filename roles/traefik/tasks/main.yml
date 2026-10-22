@@ -1,0 +1,119 @@
+---
+- name: Allow unprivileged users to bind ports 80 and up
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_unprivileged_port_start
+    value: "80"
+    sysctl_file: /etc/sysctl.d/90-unprivileged-ports.conf
+    state: present
+
+- name: Install git (local plugins)
+  ansible.builtin.package:
+    name: git
+    state: present
+  when: traefik_plugins | length > 0
+
+- name: Create traefik directories
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: "{{ item.mode }}"
+  loop:
+    - { path: "{{ traefik_base_dir }}", mode: '0700' }
+    - { path: "{{ traefik_config_dir }}", mode: '0700' }
+    - { path: "{{ traefik_dynamic_dir }}", mode: '0700' }
+    - { path: "{{ traefik_base_dir }}/letsencrypt", mode: '0700' }
+    - { path: "{{ traefik_base_dir }}/plugins-local/src", mode: '0700' }
+  become_user: "{{ traefik_user }}"
+  become: true
+
+# traefik disables the ACME resolver if this is readable by anyone else
+- name: Ensure acme.json is private
+  ansible.builtin.file:
+    path: "{{ traefik_base_dir }}/letsencrypt/acme.json"
+    state: touch
+    mode: '0600'
+    modification_time: preserve
+    access_time: preserve
+  become_user: "{{ traefik_user }}"
+  become: true
+  notify: restart traefik
+
+- name: Configure traefik
+  ansible.builtin.template:
+    src: traefik.yml.j2
+    dest: "{{ traefik_config_dir }}/traefik.yml"
+    mode: '0600'
+  become_user: "{{ traefik_user }}"
+  become: true
+  notify: restart traefik
+
+- name: Configure default TLS certificate
+  ansible.builtin.template:
+    src: tls.yml.j2
+    dest: "{{ traefik_dynamic_dir }}/00-tls.yml"
+    mode: '0600'
+  become_user: "{{ traefik_user }}"
+  become: true
+
+- name: Fetch traefik local plugins
+  ansible.builtin.git:
+    repo: "https://{{ item.module }}.git"
+    dest: "{{ traefik_base_dir }}/plugins-local/src/{{ item.module }}"
+    version: "{{ item.version }}"
+    depth: 1
+  loop: "{{ traefik_plugins }}"
+  become_user: "{{ traefik_user }}"
+  become: true
+  notify: restart traefik
+
+- name: Create quadlet for traefik
+  containers.podman.podman_container:
+    name: traefik
+    image: "{{ traefik_image }}"
+    state: quadlet
+    quadlet_filename: traefik
+    network: host
+    volumes:
+      - "{{ traefik_config_dir }}:/etc/traefik:ro,Z"
+      - "{{ traefik_base_dir }}/letsencrypt:/letsencrypt:Z"
+      - "{{ traefik_base_dir }}/plugins-local:/plugins-local:ro,Z"
+    quadlet_options:
+      - "Pull=newer"
+      - |
+        [Service]
+        Restart=always
+      - |
+        [Install]
+        WantedBy=default.target
+  environment: "{{ podman_rootless_environment }}"
+  become_user: "{{ traefik_user }}"
+  become: true
+  notify: restart traefik
+
+- name: Open traefik ports
+  ansible.posix.firewalld:
+    port: "{{ item }}/tcp"
+    zone: public
+    permanent: true
+    immediate: true
+    state: enabled
+  loop: "{{ [80, 443] + traefik_extra_entrypoints | map(attribute='port') | list }}"
+
+- name: Allow traefik Prometheus access over tailscale
+  ansible.posix.firewalld:
+    port: "{{ traefik_metrics_port }}/tcp"
+    zone: internal
+    permanent: true
+    immediate: true
+    state: enabled
+
+- name: Start traefik
+  ansible.builtin.systemd:
+    name: traefik.service
+    state: started
+    daemon_reload: true
+    scope: user
+  environment: "{{ podman_rootless_environment }}"
+  become_user: "{{ traefik_user }}"
+  become: true
+  when: traefik_start | bool
