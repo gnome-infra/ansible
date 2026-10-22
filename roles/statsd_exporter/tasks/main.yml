@@ -20,29 +20,29 @@
 
 - name: set statsd_exporter architecture
   ansible.builtin.set_fact:
-    gitlab_runner_statsd_exporter_arch: "{{ {'x86_64': 'amd64', 'aarch64': 'arm64'}[ansible_facts['architecture']] | default(ansible_facts['architecture']) }}"
+    statsd_exporter_arch: "{{ {'x86_64': 'amd64', 'aarch64': 'arm64'}[ansible_facts['architecture']] | default(ansible_facts['architecture']) }}"
 
 - name: set statsd_exporter checksum
   ansible.builtin.set_fact:
-    gitlab_runner_statsd_exporter_checksum: "{{ lookup('vars', 'gitlab_runner_statsd_exporter_checksum_' + gitlab_runner_statsd_exporter_arch) }}"
+    statsd_exporter_checksum: "{{ lookup('vars', 'statsd_exporter_checksum_' + statsd_exporter_arch) }}"
 
-- name: download statsd_exporter {{ gitlab_runner_statsd_exporter_version }} for {{ ansible_facts['architecture'] }}
+- name: download statsd_exporter {{ statsd_exporter_version }} for {{ ansible_facts['architecture'] }}
   ansible.builtin.get_url:
-    url: "https://github.com/prometheus/statsd_exporter/releases/download/v{{ gitlab_runner_statsd_exporter_version }}/statsd_exporter-{{ gitlab_runner_statsd_exporter_version }}.linux-{{ gitlab_runner_statsd_exporter_arch }}.tar.gz"
-    dest: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ gitlab_runner_statsd_exporter_version }}.linux-{{ gitlab_runner_statsd_exporter_arch }}.tar.gz"
-    checksum: "{{ gitlab_runner_statsd_exporter_checksum }}"
+    url: "https://github.com/prometheus/statsd_exporter/releases/download/v{{ statsd_exporter_version }}/statsd_exporter-{{ statsd_exporter_version }}.linux-{{ statsd_exporter_arch }}.tar.gz"
+    dest: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ statsd_exporter_version }}.linux-{{ statsd_exporter_arch }}.tar.gz"
+    checksum: "{{ statsd_exporter_checksum }}"
 
 - name: unpack statsd_exporter binaries
   ansible.builtin.unarchive:
-    src: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ gitlab_runner_statsd_exporter_version }}.linux-{{ gitlab_runner_statsd_exporter_arch }}.tar.gz"
+    src: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ statsd_exporter_version }}.linux-{{ statsd_exporter_arch }}.tar.gz"
     dest: /root/.ansible/tmp/statsd-exporter/
-    creates: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ gitlab_runner_statsd_exporter_version }}.linux-{{ gitlab_runner_statsd_exporter_arch }}/statsd_exporter"
+    creates: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ statsd_exporter_version }}.linux-{{ statsd_exporter_arch }}/statsd_exporter"
     remote_src: true
   check_mode: false
 
 - name: install statsd_exporter binary
   ansible.builtin.copy:
-    src: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ gitlab_runner_statsd_exporter_version }}.linux-{{ gitlab_runner_statsd_exporter_arch }}/statsd_exporter"
+    src: "/root/.ansible/tmp/statsd-exporter/statsd_exporter-{{ statsd_exporter_version }}.linux-{{ statsd_exporter_arch }}/statsd_exporter"
     dest: /usr/local/bin/statsd_exporter
     mode: 0755
     remote_src: true

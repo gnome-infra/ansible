@@ -1,0 +1,6 @@
+---
+statsd_exporter_version: 0.30.0
+statsd_exporter_checksum_amd64: sha256:df0c1b640384e0495b5127f3d92a012aea39add175320219b5818380421a863b
+statsd_exporter_checksum_arm64: sha256:386f6808df1c0a8de1ddf79a1c25e13517f37a1c508b4a8bd53f3b5d02aed0df
+statsd_exporter_web_listen_address: "0.0.0.0:9102"
+statsd_exporter_statsd_listen_udp: "0.0.0.0:9125"
