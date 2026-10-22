@@ -25,7 +25,8 @@ groups:
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} has less than 20% of RAM available{% endraw %}"
   - alert: High disk usage
-    expr: (node_filesystem_size_bytes - node_filesystem_avail_bytes) /  node_filesystem_size_bytes > 0.9
+    # gbm's root filesystem holds the CAS, which casd keeps full by design (see the gbm group)
+    expr: '(node_filesystem_size_bytes - node_filesystem_avail_bytes) /  node_filesystem_size_bytes > 0.9 unless on (instance, mountpoint) node_filesystem_size_bytes{role="gbm",mountpoint="/"}'
     for: 3h
     annotations:
       summary: "{% raw %}Instance {{ $labels.instance }} has less than 10% of free space available on {{ $labels.mountpoint }}{% endraw %}"
@@ -57,6 +58,12 @@ groups:
      summary: "{% raw %}At least one device in RAID array on {{ $labels.instance }} has failed {% endraw %}"
 - name: gbm
   rules:
+  - alert: gbm high disk usage
+    # casd fills the disk up to its --reserved headroom (50G, ~94% on gbm-01)
+    expr: '(node_filesystem_size_bytes{role="gbm",mountpoint="/"} - node_filesystem_avail_bytes{role="gbm",mountpoint="/"}) / node_filesystem_size_bytes{role="gbm",mountpoint="/"} > 0.95'
+    for: 1h
+    annotations:
+      summary: "{% raw %}Instance {{ $labels.instance }} has less than 5% of free space available on /, buildbox-casd is not keeping its reserved headroom{% endraw %}"
   - alert: gbm traefik 5xx errors
     expr: 'sum by (instance, service) (rate(traefik_service_requests_total{role="gbm",code=~"5.."}[5m])) / sum by (instance, service) (rate(traefik_service_requests_total{role="gbm"}[5m])) > 0.05'
     for: 10m
