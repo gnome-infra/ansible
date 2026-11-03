@@ -6,7 +6,7 @@
 
 - name: Check if a reboot is required
   ansible.builtin.command:
-    cmd: needs-restarting -r
+    cmd: "{{ 'dnf5 needs-restarting -r' if (ansible_facts['distribution'] | default('')) == 'Fedora' else 'needs-restarting -r' }}"
   register: reboot_check
   changed_when: false
   failed_when:
