@@ -255,7 +255,9 @@
           "rm -rf /srv/cas/cas/tmp /srv/cas/cas/staging;
           exec buildbox-casd --buildbox-run buildbox-run-bubblewrap --jobs {{ gitlab_runner_buildbox_casd_jobs }}
           --metrics-mode udp://host.containers.internal:9125 --cache-failures false
-          --bind unix:/run/casd/casd.sock --reserved {{ gitlab_runner_buildbox_casd_reserved }} /srv/cas"
+          --bind unix:/run/casd/casd.sock --reserved {{ gitlab_runner_buildbox_casd_reserved }}
+          --cas-remote https://gbm.gnome.org:11003 --ac-remote https://gbm.gnome.org:11003 --local-server-instance local
+          /srv/cas"
     quadlet_filename: buildbox-casd
     privileged: true
     init: true
