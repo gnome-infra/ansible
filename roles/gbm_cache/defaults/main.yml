@@ -28,6 +28,8 @@ gbm_cache_jwt_project_paths:
 # The client needs:
 #   - Client authentication on, only "Service accounts roles" enabled
 #   - an Audience mapper adding gbm_cache_sso_audience to the access token
+#   - Full scope allowed off: no roles in the token, so aud is only
+#     gbm_cache_sso_audience (otherwise Keycloak adds "account")
 #   - Access Token Lifespan raised (the master realm default is 1 minute)
 #     above gitlab_runner_buildbox_casd_token_refresh
 gbm_cache_sso_issuer: https://sso.gnome.org/realms/master
