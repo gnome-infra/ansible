@@ -1,2 +1,5 @@
+# The prometheus role scrapes the aws and osuosl groups
+# (prometheus_node_hostgroups); they are defined in inventory/aws and
+# inventory/osuosl, which AAP loads as sources alongside this file.
 [prometheus_servers]
 signal.gnome.org
