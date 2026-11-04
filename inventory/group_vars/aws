@@ -1,2 +1,19 @@
 datacenter: 'aws'
 alloy_loki_endpoint: 'vpn.bastion02.gnome.org'
+
+# Amazon Time Sync Service, reachable on the link-local address from any
+# instance without internet access; the public pool stays as a fallback.
+timesync_ntp_servers:
+  - hostname: 169.254.169.123
+    prefer: true
+    iburst: true
+    minpoll: 4
+    maxpoll: 4
+  - hostname: 0.rhel.pool.ntp.org
+    iburst: true
+  - hostname: 1.rhel.pool.ntp.org
+    iburst: true
+  - hostname: 2.rhel.pool.ntp.org
+    iburst: true
+  - hostname: 3.rhel.pool.ntp.org
+    iburst: true
