@@ -3,12 +3,9 @@
   block:
     - name: Install sshguard packages
       ansible.builtin.package:
-        name: >-
-          {{
-            ['sshguard']
-            if ansible_facts['os_family'] == 'Debian'
-            else ['sshguard', 'sshguard-' ~ sshguard_firewall_backend]
-          }}
+        name:
+          - sshguard
+          - "sshguard-{{ sshguard_firewall_backend }}"
         state: present
 
     - name: Configure sshguard and whitelist from templates
