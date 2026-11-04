@@ -26,6 +26,8 @@
       - dnf-automatic
       - "{{ 'golang-github-prometheus-node-exporter' if ansible_facts['distribution_major_version'] == '40' else 'node-exporter' }}"
       - vim-minimal
+      # package_facts in the timesync role needs it, dnf5 doesn't pull it in
+      - python3-rpm
     state: present
     update_cache: true
 
@@ -55,7 +57,7 @@
 
 - name: Configure chronyd
   ansible.builtin.include_role:
-    name: chrony
+    name: timesync
 
 - name: Check if dnf-automatic.conf exists
   ansible.builtin.stat:

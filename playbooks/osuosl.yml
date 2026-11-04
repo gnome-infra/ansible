@@ -25,7 +25,7 @@
   roles:
    - packages
    - motd
-   - chrony
+   - timesync
    - iptables
    - postfix.wrapper
    - bash
@@ -43,7 +43,7 @@
   roles:
    - packages
    - motd
-   - chrony
+   - timesync
    - sshguard
    - iptables
    - bash

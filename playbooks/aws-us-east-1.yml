@@ -18,7 +18,7 @@
   roles:
    - packages
    - motd
-   - chrony
+   - timesync
    - iptables
    - bash
    - base_auth
