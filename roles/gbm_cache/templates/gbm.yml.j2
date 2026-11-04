@@ -33,6 +33,26 @@ http:
         domains:
           - main: {{ gbm_cache_host }}
 
+    # Runner buildbox-casd proxies (--cas-remote/--ac-remote), they read
+    # through the same remote they push to, and ask for its capabilities
+    push-sso:
+      service: casd
+      entryPoints:
+        - push-sso
+      rule: >-
+        Host(`{{ gbm_cache_host }}`) &&
+        (PathPrefix(`/build.bazel.remote.execution.v2.Capabilities`) ||
+         PathPrefix(`/build.bazel.remote.execution.v2.ActionCache`) ||
+         PathPrefix(`/build.bazel.remote.execution.v2.ContentAddressableStorage`) ||
+         PathPrefix(`/google.bytestream.ByteStream`) ||
+         PathPrefix(`/build.bazel.remote.asset.v1.Fetch`) ||
+         PathPrefix(`/build.bazel.remote.asset.v1.Push`))
+      middlewares:
+        - sso-jwt
+      tls:
+        domains:
+          - main: {{ gbm_cache_host }}
+
     # CDN origin: only requests carrying the CDN77 custom origin header
     http:
       service: nginx
@@ -69,3 +89,13 @@ http:
 {% for path in gbm_cache_jwt_project_paths %}
               - {{ path }}
 {% endfor %}
+
+    # Keycloak client credentials tokens: azp is the client the token was issued to
+    sso-jwt:
+      plugin:
+        jwt-middleware:
+          issuers:
+            - {{ gbm_cache_sso_issuer }}
+          require:
+            aud: {{ gbm_cache_sso_audience }}
+            azp: {{ gbm_cache_sso_client_id }}

@@ -31,6 +31,10 @@ traefik_extra_entrypoints:
   - name: push
     port: 11004
     read_timeout: 0
+  # Same as push, authenticated with Keycloak instead of GitLab CI tokens
+  - name: push-sso
+    port: 11005
+    read_timeout: 0
 traefik_plugins:
   - name: jwt-middleware
     module: github.com/agilezebra/jwt-middleware

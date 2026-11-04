@@ -22,6 +22,18 @@ gbm_cache_jwt_audience: "{{ gbm_cache_host }}"
 gbm_cache_jwt_project_paths:
   - GNOME/gnome-build-meta
 
+# Machine-to-machine pushes (runner buildbox-casd proxies), on the push-sso
+# entrypoint. Tokens come from a Keycloak client using the client credentials
+# grant, checked against the realm's JWKS (found through OIDC discovery).
+# The client needs:
+#   - Client authentication on, only "Service accounts roles" enabled
+#   - an Audience mapper adding gbm_cache_sso_audience to the access token
+#   - Access Token Lifespan raised (the master realm default is 1 minute)
+#     above gitlab_runner_buildbox_casd_token_refresh
+gbm_cache_sso_issuer: https://sso.gnome.org/realms/master
+gbm_cache_sso_audience: "{{ gbm_cache_host }}"
+gbm_cache_sso_client_id: gbm-cache-push
+
 # Must match the "Custom origin headers" value configured in CDN77
 # gbm_cache_origin_secret:
 
