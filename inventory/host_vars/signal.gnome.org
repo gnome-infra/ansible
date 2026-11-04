@@ -8,8 +8,6 @@ firewall_allowed_tcp_ports:
   - 22
   - 80
   - 443
-nrpe_custom_plugins:
-  - check_vpn
 enable_blackbox: false
 sshguard_enabled: true
 
