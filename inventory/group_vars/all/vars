@@ -1,4 +1,3 @@
-rhsm_autosubscribe: true
 
 # IDM
 kerberos_realm: "GNOME.ORG"
