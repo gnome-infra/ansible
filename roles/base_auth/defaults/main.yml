@@ -1,1 +1,4 @@
 ---
+# Set root's password to root_password. Hosts where root has no password
+# (or it is managed elsewhere) turn this off in their group/host vars.
+base_auth_set_root_password: true

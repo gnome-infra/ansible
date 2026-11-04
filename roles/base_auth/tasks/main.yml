@@ -13,10 +13,7 @@
   user:
     name: root
     password: "{{ root_password }}"
-  when:
-  - ('gimp' not in group_names)
-  - ('rdu3' not in group_names)
-  - ('gbm' not in group_names)
+  when: base_auth_set_root_password | bool
 
 - name: PermitRootLogin with without-password
   lineinfile:
