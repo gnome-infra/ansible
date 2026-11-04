@@ -1,0 +1,9 @@
+---
+# Running guests are not restarted on host boot; guests that should come
+# back are expected to have libvirt autostart set.
+libvirt_guests_on_boot: ignore
+libvirt_guests_on_shutdown: shutdown
+# Shut down this many guests at once; SHUTDOWN_TIMEOUT then covers all
+# of them together rather than each guest in turn.
+libvirt_guests_parallel_shutdown: 10
+libvirt_guests_shutdown_timeout: 300

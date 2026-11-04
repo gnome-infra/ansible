@@ -1,8 +1,19 @@
 ---
-- name: configure libvirt-guests service
-  copy:
-    src: libvirt-guests
+# libvirt-guests.sh reads this file when it runs, so changes apply on the
+# next host shutdown without touching the service.
+- name: Configure libvirt-guests
+  ansible.builtin.template:
+    src: libvirt-guests.j2
     dest: /etc/sysconfig/libvirt-guests
     owner: root
     group: root
-    mode: 0640
+    mode: '0640'
+
+# Guests are only shut down cleanly on host reboot if libvirt-guests is
+# active, its stop action is what shuts them down. Never add a restart
+# handler here: stopping the service shuts down every guest on the host.
+- name: Enable and start libvirt-guests
+  ansible.builtin.systemd:
+    name: libvirt-guests
+    enabled: true
+    state: started
