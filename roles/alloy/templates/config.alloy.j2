@@ -47,7 +47,7 @@ loki.relabel "rsyslog" {
   rule {
     source_labels = ["__syslog_message_hostname"]
     target_label  = "role"
-    regex         = "(hetzner-[12]|osuosl-.*|aws-aarch64-.*|redhat-runner-.*|postmarketos-.*)"
+    regex         = "(hetzner-.*|osuosl-.*|aws-.*|redhat-runner-.*|postmarketos-.*)"
     replacement   = "gitlab-runner"
   }
 
@@ -65,62 +65,40 @@ loki.relabel "rsyslog" {
     replacement   = "gbm"
   }
 
-  // Provider labels for runners
+  // Datacenter labels for all hosts
   rule {
     source_labels = ["__syslog_message_hostname"]
-    target_label  = "provider"
+    target_label  = "datacenter"
+    regex         = "(idm0[34]|smtp|bastion02|aws-.*)"
+    replacement   = "aws"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "datacenter"
+    regex         = "(signal|osuosl-.*)"
+    replacement   = "osuosl"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "datacenter"
+    regex         = "(redhat-0[123]|redhat-runner-.*|gbm-[0-9]+)"
+    replacement   = "rdu3"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "datacenter"
     regex         = "(hetzner-.*)"
     replacement   = "hetzner"
   }
 
   rule {
     source_labels = ["__syslog_message_hostname"]
-    target_label  = "provider"
-    regex         = "(osuosl-.*)"
-    replacement   = "osuosl"
-  }
-
-  rule {
-    source_labels = ["__syslog_message_hostname"]
-    target_label  = "provider"
-    regex         = "(aws-aarch64-.*)"
-    replacement   = "aws"
-  }
-
-  rule {
-    source_labels = ["__syslog_message_hostname"]
-    target_label  = "provider"
-    regex         = "(redhat-runner-.*)"
-    replacement   = "rdu3"
-  }
-
-  rule {
-    source_labels = ["__syslog_message_hostname"]
-    target_label  = "provider"
+    target_label  = "datacenter"
     regex         = "(postmarketos-.*)"
-    replacement   = "postmarketos"
-  }
-
-  // Datacenter labels for infra hosts
-  rule {
-    source_labels = ["__syslog_message_hostname"]
-    target_label  = "datacenter"
-    regex         = "(idm0[34]|smtp|bastion02)"
-    replacement   = "aws"
-  }
-
-  rule {
-    source_labels = ["__syslog_message_hostname"]
-    target_label  = "datacenter"
-    regex         = "(signal)"
-    replacement   = "osuosl"
-  }
-
-  rule {
-    source_labels = ["__syslog_message_hostname"]
-    target_label  = "datacenter"
-    regex         = "(redhat-0[123]|gbm-[0-9]+)"
-    replacement   = "rdu3"
+    replacement   = "netcup"
   }
 }
 
