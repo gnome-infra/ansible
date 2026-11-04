@@ -1,4 +1,4 @@
-datacenter: 'ral3'
+datacenter: 'rdu3'
 firewall_allowed_tcp_ports:
   - 22
 firewall_additional_rules:
