@@ -7,6 +7,9 @@
     group: root
     mode: 0600
 
+- name: Harden sshd
+  ansible.builtin.include_tasks: sshd.yml
+
 - include_tasks: firewalld.yml
   when: skip_firewalld is undefined
 

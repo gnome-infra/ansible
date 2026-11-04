@@ -1,0 +1,6 @@
+---
+# sshd hardening, written as a drop-in that sorts before the distro and
+# cloud-init ones so these values win (sshd keeps the first value it reads).
+external_base_sshd_dropin: /etc/ssh/sshd_config.d/10-gnome.conf
+external_base_sshd_permit_root_login: prohibit-password
+external_base_sshd_password_authentication: false
