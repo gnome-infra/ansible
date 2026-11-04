@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Refresh the buildbox-casd access token
+ConditionUser=podman
+
+[Timer]
+OnStartupSec=0
+OnUnitActiveSec={{ gitlab_runner_buildbox_casd_token_refresh }}
+
+[Install]
+WantedBy=timers.target

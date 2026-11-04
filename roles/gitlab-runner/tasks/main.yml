@@ -243,7 +243,102 @@
     name: statsd_exporter
   when: gitlab_runner_buildbox_casd | default(false)
 
+- name: Configure buildbox-casd remote access token
+  when:
+    - gitlab_runner_buildbox_casd | default(false)
+    - gitlab_runner_buildbox_casd_remote | length > 0
+  block:
+    - name: Check the Keycloak client secret is set
+      ansible.builtin.assert:
+        that:
+          - gitlab_runner_buildbox_casd_client_secret is defined
+          - gitlab_runner_buildbox_casd_client_secret | length > 0
+        fail_msg: gitlab_runner_buildbox_casd_client_secret must be set (vault) to use a casd remote
+
+    - name: Create casd token directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0700'
+      loop:
+        - "{{ podman_user.home }}/.config/casd-token"
+        - "{{ podman_user.home }}/casd-token"
+      become_user: podman
+      become: true
+
+    - name: Store the Keycloak client secret
+      ansible.builtin.copy:
+        content: "{{ gitlab_runner_buildbox_casd_client_secret }}"
+        dest: "{{ podman_user.home }}/.config/casd-token/client_secret"
+        mode: '0600'
+      diff: false
+      become_user: podman
+      become: true
+      notify: refresh casd token
+
+    - name: Install casd token refresh script
+      ansible.builtin.copy:
+        src: casd-token-refresh
+        dest: /usr/local/libexec/casd-token-refresh
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Add units for casd token refresh
+      ansible.builtin.template:
+        src: "{{ item }}.j2"
+        dest: /etc/systemd/user/{{ item }}
+        mode: '0644'
+      loop:
+        - casd-token.service
+        - casd-token.timer
+      notify: refresh casd token
+
+    - name: Check for a casd token
+      ansible.builtin.stat:
+        path: "{{ podman_user.home }}/casd-token/token"
+      register: casd_token
+
+    # buildbox-casd needs the token file when it starts
+    - name: Fetch the first casd token
+      ansible.builtin.systemd:
+        name: casd-token.service
+        state: started
+        daemon_reload: true
+        scope: user
+      become_user: podman
+      become: true
+      when: not casd_token.stat.exists
+
+    - name: Start casd token refresh timer
+      ansible.builtin.systemd:
+        name: casd-token.timer
+        state: started
+        enabled: true
+        daemon_reload: true
+        scope: user
+      become_user: podman
+      become: true
+
 - name: Create quadlet for buildbox-casd
+  vars:
+    casd_remote: "{{ gitlab_runner_buildbox_casd_remote | default('') }}"
+    # The token directory is mounted, not the file: refreshes replace the file
+    casd_remote_args: >-
+      --cas-remote {{ casd_remote }} --ac-remote {{ casd_remote }}
+      --local-server-instance local
+      --access-token /run/casd-token/token
+      --token-reload-interval {{ gitlab_runner_buildbox_casd_token_reload_interval }}
+    casd_unit_options: |
+      [Unit]
+      Wants=casd-token.service
+      After=casd-token.service
+    casd_service_options: |
+      [Service]
+      Restart=always
+    casd_install_options: |
+      [Install]
+      WantedBy=default.target
   containers.podman.podman_container:
     name: buildbox-casd
     image: registry.gitlab.com/freedesktop-sdk/infrastructure/freedesktop-sdk-docker-images/buildbox-casd:532130dd64ebdf7a409bb28cef523d9cd6fbb65a
@@ -255,24 +350,21 @@
           "rm -rf /srv/cas/cas/tmp /srv/cas/cas/staging;
           exec buildbox-casd --buildbox-run buildbox-run-bubblewrap --jobs {{ gitlab_runner_buildbox_casd_jobs }}
           --metrics-mode udp://host.containers.internal:9125 --cache-failures false
-          --bind unix:/run/casd/casd.sock --reserved {{ gitlab_runner_buildbox_casd_reserved }} /srv/cas"
+          --bind unix:/run/casd/casd.sock --reserved {{ gitlab_runner_buildbox_casd_reserved }}
+          {{ casd_remote_args if casd_remote else '' }}
+          /srv/cas"
     quadlet_filename: buildbox-casd
     privileged: true
     init: true
-    volumes:
-      - casd_socket:/run/casd
-      - casd_storage:/srv/cas
+    volumes: >-
+      {{ ['casd_socket:/run/casd', 'casd_storage:/srv/cas']
+         + ([podman_user.home ~ '/casd-token:/run/casd-token:ro,Z'] if casd_remote else []) }}
     label:
       org.gnome.pydocuum.skip: "True"
-    quadlet_options:
-      - "AutoUpdate=registry"
-      - "Pull=newer"
-      - |
-        [Service]
-        Restart=always
-      - |
-        [Install]
-        WantedBy=default.target
+    quadlet_options: >-
+      {{ ['AutoUpdate=registry', 'Pull=newer']
+         + ([casd_unit_options] if casd_remote else [])
+         + [casd_service_options, casd_install_options] }}
   become_user: podman
   become: true
   when: gitlab_runner_buildbox_casd | default(false)

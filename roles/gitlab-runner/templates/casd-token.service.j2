@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Fetch the buildbox-casd access token from Keycloak
+ConditionUser=podman
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/libexec/casd-token-refresh \
+	{{ gitlab_runner_buildbox_casd_token_url }} \
+	{{ gitlab_runner_buildbox_casd_client_id }} \
+	%h/.config/casd-token/client_secret \
+	%h/casd-token/token
+# Keep retrying while Keycloak is unreachable, the current token is still valid
+Restart=on-failure
+RestartSec=30s

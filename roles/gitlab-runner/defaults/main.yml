@@ -17,3 +17,17 @@ gitlab_runner_cache_secret_key: !vault |
           39613861313662376465653562656432306331666164613135363237366361613433373137623461
           3866666630636662383330373265653237623635393764626236
 gitlab_runner_instance_store: false
+
+# Point the buildbox-casd proxy at a remote CAS/Action Cache, e.g.
+# https://gbm.gnome.org:11005 (push-sso entrypoint, see gbm_cache). Requests
+# are authenticated with a Keycloak access token (client credentials grant),
+# refreshed by the casd-token user timer.
+gitlab_runner_buildbox_casd_remote: ""
+gitlab_runner_buildbox_casd_token_url: https://sso.gnome.org/realms/master/protocol/openid-connect/token
+gitlab_runner_buildbox_casd_client_id: gbm-cache-push
+# Required when gitlab_runner_buildbox_casd_remote is set (vault)
+# gitlab_runner_buildbox_casd_client_secret:
+# Must stay well below the client's Access Token Lifespan in Keycloak
+gitlab_runner_buildbox_casd_token_refresh: 15min
+# How often buildbox-casd re-reads the token file
+gitlab_runner_buildbox_casd_token_reload_interval: 5

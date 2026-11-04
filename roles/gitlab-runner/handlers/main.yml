@@ -18,6 +18,17 @@
   become: true
   when: gitlab_runner_enable_pydocuum | default(true)
 
+# Before restart buildbox-casd (handlers run in file order), so that a new
+# client secret is used straight away; later refreshes are reloaded by casd
+- name: refresh casd token
+  ansible.builtin.systemd:
+    name: casd-token.service
+    state: restarted
+    daemon_reload: true
+    scope: user
+  become_user: podman
+  become: true
+
 - name: restart buildbox-casd
   ansible.builtin.systemd:
     name: buildbox-casd.service

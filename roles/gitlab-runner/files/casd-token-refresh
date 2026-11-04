@@ -1,0 +1,76 @@
+#!/usr/bin/python3
+"""Fetch a buildbox-casd access token from Keycloak (client credentials grant).
+
+The token is written atomically, so buildbox-casd never reads a partial file
+when it reloads it. On failure the previous token is left in place.
+"""
+
+import argparse
+import json
+import os
+import sys
+import tempfile
+import urllib.error
+import urllib.parse
+import urllib.request
+
+
+def fail(message):
+    print(f"casd-token-refresh: {message}", file=sys.stderr)
+    sys.exit(1)
+
+
+def fetch_token(token_url, client_id, client_secret):
+    data = urllib.parse.urlencode(
+        {
+            "grant_type": "client_credentials",
+            "client_id": client_id,
+            "client_secret": client_secret,
+        }
+    ).encode()
+    request = urllib.request.Request(token_url, data=data, method="POST")
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            payload = json.load(response)
+    except urllib.error.HTTPError as e:
+        fail(f"{token_url} returned HTTP {e.code}: {e.read().decode(errors='replace')}")
+    except (urllib.error.URLError, OSError, ValueError) as e:
+        fail(f"cannot fetch a token from {token_url}: {e}")
+
+    token = payload.get("access_token")
+    if not token:
+        fail(f"no access_token in the response from {token_url}")
+    return token
+
+
+def write_atomically(path, content):
+    directory = os.path.dirname(path)
+    fd, tmp = tempfile.mkstemp(dir=directory, prefix=".token.")
+    try:
+        with os.fdopen(fd, "w") as f:
+            f.write(content)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, path)
+    except BaseException:
+        os.unlink(tmp)
+        raise
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("token_url")
+    parser.add_argument("client_id")
+    parser.add_argument("secret_file")
+    parser.add_argument("token_file")
+    args = parser.parse_args()
+
+    with open(args.secret_file) as f:
+        client_secret = f.read().strip()
+
+    token = fetch_token(args.token_url, args.client_id, client_secret)
+    write_atomically(args.token_file, token)
+
+
+if __name__ == "__main__":
+    main()
