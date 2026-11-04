@@ -1,5 +1,0 @@
----
-- hosts: hypervisors
-  remote_user: root
-  roles:
-   - libvirt

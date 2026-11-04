@@ -1,6 +1,0 @@
----
-- hosts: rdu3_rhel8
-  gather_facts: true
-  remote_user: root
-  roles:
-   - node-exporter

@@ -1,6 +1,0 @@
----
-- name: restart mysqld-exporter
-  systemd:
-    name: mysqld-exporter
-    daemon-reload: yes
-    state: restarted
