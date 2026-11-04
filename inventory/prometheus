@@ -1,15 +1,2 @@
-[clients:children]
-osuosl
-aws
-
-[aws]
-bastion02.gnome.org
-idm03.gnome.org
-idm04.gnome.org
-smtp.gnome.org
-
-[osuosl]
-signal.gnome.org
-
 [prometheus_servers]
 signal.gnome.org
