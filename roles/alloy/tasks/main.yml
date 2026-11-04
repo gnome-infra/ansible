@@ -1,0 +1,33 @@
+---
+- name: Create Alloy directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    setype: container_file_t
+  loop: "{{ alloy_storage_dirs }}"
+
+- name: Copy Alloy configuration file
+  ansible.builtin.template:
+    src: config.alloy.j2
+    setype: container_file_t
+    dest: "{{ alloy_base_dir }}/config/config.alloy"
+    mode: '0644'
+  notify: Restart Alloy
+
+- name: Copy systemd service file for Alloy
+  ansible.builtin.template:
+    src: alloy.service.j2
+    dest: /etc/systemd/system/{{ alloy_service_name }}.service
+    mode: '0644'
+  notify: Restart Alloy
+
+- name: Reload systemd to apply new service
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable and start Alloy service
+  ansible.builtin.systemd:
+    name: "{{ alloy_service_name }}"
+    enabled: true
+    state: started

@@ -1,5 +1,5 @@
 [Unit]
-Description=Podman container-promtail.service
+Description=Podman container-alloy.service
 Documentation=man:podman-generate-systemd(1)
 Wants=network-online.target
 After=network-online.target
@@ -11,22 +11,26 @@ Restart=on-failure
 TimeoutStopSec=70
 ExecStart=/usr/bin/podman run \
 	--cgroups=no-conmon \
-        --cidfile=%t/%n.ctr-id \
+	--cidfile=%t/%n.ctr-id \
 	--rm \
 	--sdnotify=conmon \
 	--replace \
 	-d \
-	-p 1514:1514 \
-	--name promtail \
-	-v /mnt/promtail:/mnt/promtail docker.io/grafana/promtail:{{ promtail_version }} \
-	--config.file=/mnt/promtail/config/promtail-config.yaml
+	-p {{ alloy_syslog_port }}:{{ alloy_syslog_port }} \
+	--name alloy \
+	-v {{ alloy_base_dir }}:{{ alloy_base_dir }} \
+	docker.io/grafana/alloy:{{ alloy_version }} \
+	run {{ alloy_base_dir }}/config/config.alloy \
+	--storage.path={{ alloy_base_dir }}/data \
+	--server.http.listen-addr=127.0.0.1:12345 \
+	--disable-reporting
 ExecStop=/usr/bin/podman stop \
 	--ignore -t 10 \
-        --cidfile=%t/%n.ctr-id
+	--cidfile=%t/%n.ctr-id
 ExecStopPost=/usr/bin/podman rm \
 	-f \
 	--ignore -t 10 \
-        --cidfile=%t/%n.ctr-id
+	--cidfile=%t/%n.ctr-id
 Type=notify
 NotifyAccess=all
 

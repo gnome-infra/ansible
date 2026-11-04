@@ -44,11 +44,11 @@
   roles:
    - loki
 
-- hosts: promtail
+- hosts: alloy
   gather_facts: false
   remote_user: root
   roles:
-   - promtail
+   - alloy
 
 - hosts: all,!idm
   gather_facts: true

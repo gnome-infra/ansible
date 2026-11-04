@@ -1,0 +1,8 @@
+---
+alloy_base_dir: /mnt/alloy
+alloy_storage_dirs:
+  - "{{ alloy_base_dir }}/config"
+  - "{{ alloy_base_dir }}/data"
+alloy_service_name: alloy
+alloy_version: v1.21.3
+alloy_syslog_port: 1514

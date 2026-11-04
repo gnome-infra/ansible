@@ -1,2 +1,2 @@
 datacenter: 'aws'
-promtail_gateway_endpoint: 'vpn.bastion02.gnome.org'
+alloy_loki_endpoint: 'vpn.bastion02.gnome.org'

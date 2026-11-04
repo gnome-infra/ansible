@@ -17,7 +17,7 @@ idm04.gnome.org
 [loki]
 bastion02.gnome.org
 
-[promtail]
+[alloy]
 bastion02.gnome.org
 
 [smtp_servers]

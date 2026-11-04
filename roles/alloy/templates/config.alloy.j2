@@ -1,0 +1,142 @@
+// Receives RFC 5424 syslog from rsyslog (see roles/rsyslog) and ships it to Loki.
+
+loki.source.syslog "rsyslog" {
+  listener {
+    address                = "0.0.0.0:{{ alloy_syslog_port }}"
+    protocol               = "tcp"
+    use_incoming_timestamp = true
+    labels                 = { job = "rsyslog" }
+  }
+
+  relabel_rules = loki.relabel.rsyslog.rules
+  forward_to    = [loki.process.rsyslog.receiver]
+}
+
+// Only the rules are used (via relabel_rules above), nothing is forwarded here.
+loki.relabel "rsyslog" {
+  forward_to = []
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "host"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_severity"]
+    target_label  = "severity"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_app_name"]
+    target_label  = "application"
+  }
+
+  // facility and pid are moved to structured metadata in loki.process below,
+  // they are too high-cardinality to be stream labels.
+  rule {
+    source_labels = ["__syslog_message_facility"]
+    target_label  = "facility"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_proc_id"]
+    target_label  = "pid"
+  }
+
+  // Role classification
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "role"
+    regex         = "(hetzner-[12]|osuosl-.*|aws-aarch64-.*|redhat-runner-.*|postmarketos-.*)"
+    replacement   = "gitlab-runner"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "role"
+    regex         = "(idm0[34]|smtp|bastion02|signal|redhat-0[123])"
+    replacement   = "infra"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "role"
+    regex         = "(gbm-[0-9]+)"
+    replacement   = "gbm"
+  }
+
+  // Provider labels for runners
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "provider"
+    regex         = "(hetzner-.*)"
+    replacement   = "hetzner"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "provider"
+    regex         = "(osuosl-.*)"
+    replacement   = "osuosl"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "provider"
+    regex         = "(aws-aarch64-.*)"
+    replacement   = "aws"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "provider"
+    regex         = "(redhat-runner-.*)"
+    replacement   = "rdu3"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "provider"
+    regex         = "(postmarketos-.*)"
+    replacement   = "postmarketos"
+  }
+
+  // Datacenter labels for infra hosts
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "datacenter"
+    regex         = "(idm0[34]|smtp|bastion02)"
+    replacement   = "aws"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "datacenter"
+    regex         = "(signal)"
+    replacement   = "osuosl"
+  }
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "datacenter"
+    regex         = "(redhat-0[123]|gbm-[0-9]+)"
+    replacement   = "rdu3"
+  }
+}
+
+loki.process "rsyslog" {
+  forward_to = [loki.write.default.receiver]
+
+  stage.structured_metadata {
+    values = {
+      facility = "",
+      pid      = "",
+    }
+  }
+}
+
+loki.write "default" {
+  endpoint {
+    url = "http://{{ alloy_loki_endpoint }}:3100/loki/api/v1/push"
+  }
+}
