@@ -1,5 +1,5 @@
 ---
-- hosts: ral3_rhel8
+- hosts: rdu3_rhel8
   gather_facts: true
   remote_user: root
   roles:
