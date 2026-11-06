@@ -23,7 +23,7 @@ gitlab_runner_buildbox_casd_client_secret: !vault |
           3639
 
 gitlab_runner_config:
-  concurrent: 6
+  concurrent: 4
   check_interval: 10
   session_server:
     session_timeout: 1800
@@ -52,7 +52,7 @@ gitlab_runner_config:
           "/tmp": "rw,nosuid,nodev,exec,mode=1777"
 
 gitlab_runner_buildbox_casd: true
-gitlab_runner_buildbox_casd_jobs: 32
+gitlab_runner_buildbox_casd_jobs: 36
 gitlab_runner_buildbox_casd_reserved: 200G
 gitlab_runner_buildbox_casd_remote: https://gbm.gnome.org:11005
 
