@@ -326,6 +326,7 @@
     # The token directory is mounted, not the file: refreshes replace the file
     casd_remote_args: >-
       --cas-remote {{ casd_remote }} --ac-remote {{ casd_remote }}
+      --keepalive-time 60 --request-timeout 180
       --local-server-instance local
       --access-token /run/casd-token/token
       --token-reload-interval {{ gitlab_runner_buildbox_casd_token_reload_interval }}
