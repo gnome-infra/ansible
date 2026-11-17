@@ -60,9 +60,8 @@ See [Iptables Essentials: Common Firewall Rules and Commands](https://www.digita
 Whether to log dropped packets to syslog (messages will be prefixed with "Dropped by firewall: ").
 
     firewall_disable_firewalld: false
-    firewall_disable_ufw: false
 
-Set to `true` to disable firewalld (installed by default on RHEL/CentOS) or ufw (installed by default on Ubuntu), respectively.
+Set to `true` to stop and disable firewalld (installed by default on RHEL and Fedora).
 
     firewall_enable_ipv6: true
 
