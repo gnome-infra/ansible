@@ -1,0 +1,34 @@
+[Unit]
+Description=Rspamd Decisions Proxy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+User=rspamd-decisions-proxy
+StateDirectory=rspamd-decisions-proxy
+StateDirectoryMode=0700
+UMask=0077
+EnvironmentFile=/etc/rspamd-decisions-proxy/rspamd-decisions-proxy.env
+LoadCredential=proxy_api_key:/etc/rspamd-decisions-proxy/proxy_api_key
+LoadCredential=decisions_api_key:/etc/rspamd-decisions-proxy/decisions_api_key
+LoadCredential=cache_key_secret:/etc/rspamd-decisions-proxy/cache_key_secret
+Environment=PROXY_API_KEY_FILE=%d/proxy_api_key
+Environment=DECISIONS_API_KEY_FILE=%d/decisions_api_key
+Environment=CACHE_KEY_SECRET_FILE=%d/cache_key_secret
+ExecStart=/usr/local/libexec/rspamd-decisions-proxy
+Restart=on-failure
+RestartSec=2s
+TimeoutStopSec=15s
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+LimitCORE=0
+
+[Install]
+WantedBy=multi-user.target

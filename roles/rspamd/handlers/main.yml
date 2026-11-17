@@ -1,3 +1,9 @@
 ---
 - name: Restart rspamd
   service: name=rspamd state=restarted
+
+- name: Restart rspamd decisions proxy
+  systemd:
+    name: rspamd-decisions-proxy
+    daemon_reload: true
+    state: restarted

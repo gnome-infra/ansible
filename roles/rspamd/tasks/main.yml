@@ -57,6 +57,52 @@
     - gpt.conf
   notify: Restart rspamd
 
+- name: Create rspamd decisions proxy config directory
+  file:
+    path: /etc/rspamd-decisions-proxy
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Land rspamd decisions proxy credentials
+  copy:
+    content: "{{ item.value }}\n"
+    dest: "/etc/rspamd-decisions-proxy/{{ item.name }}"
+    owner: root
+    group: root
+    mode: 0600
+  loop:
+    - { name: proxy_api_key, value: "{{ rspamd_gpt_api_key }}" }
+    - { name: decisions_api_key, value: "{{ rspamd_decisions_api_key }}" }
+  no_log: true
+  notify: Restart rspamd decisions proxy
+
+- name: Land rspamd decisions proxy env file
+  copy:
+    src: rspamd-decisions-proxy.env
+    dest: /etc/rspamd-decisions-proxy/rspamd-decisions-proxy.env
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart rspamd decisions proxy
+
+- name: Land rspamd decisions proxy unit
+  copy:
+    src: rspamd-decisions-proxy.service
+    dest: /etc/systemd/system/rspamd-decisions-proxy.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart rspamd decisions proxy
+
+- name: Start and enable rspamd decisions proxy
+  systemd:
+    name: rspamd-decisions-proxy
+    daemon_reload: true
+    state: started
+    enabled: true
+
 - name: Create rspamd learn state directory
   file:
     path: /var/lib/rspamd-learn
