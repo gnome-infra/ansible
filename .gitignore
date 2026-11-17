@@ -1,7 +1,7 @@
 *.retry
 roles/ipaclient
 roles/redhat.subscription
-roles/chrony
+roles/timesync
 roles/geerlingguy.*
 roles/postfix
 collections/ansible_collections
