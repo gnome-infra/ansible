@@ -1,4 +1,9 @@
 ---
+- name: Install libvirt-guests
+  ansible.builtin.dnf:
+    name: libvirt-daemon-common
+    state: present
+
 # libvirt-guests.sh reads this file when it runs, so changes apply on the
 # next host shutdown without touching the service.
 - name: Configure libvirt-guests
