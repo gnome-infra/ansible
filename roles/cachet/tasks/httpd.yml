@@ -1,0 +1,38 @@
+---
+- name: Install httpd
+  ansible.builtin.dnf:
+    name:
+      - httpd
+      - mod_ssl
+      - certbot
+    state: present
+
+- name: Create the Cachet vhost log directory
+  ansible.builtin.file:
+    path: /var/log/httpd/{{ cachet_hostname }}
+    state: directory
+    mode: '0700'
+
+- name: Deploy httpd configuration
+  ansible.builtin.template:
+    src: httpd/{{ item.src }}
+    dest: /etc/httpd/conf.d/{{ item.dest }}
+    mode: '0644'
+  loop:
+    - { src: 00-hardening.conf.j2, dest: 00-hardening.conf }
+    - { src: 000-default.conf.j2, dest: 000-default.conf }
+    - { src: ssl.conf.j2, dest: ssl.conf }
+    - { src: cachet.conf.j2, dest: "{{ cachet_hostname }}.conf" }
+  notify: Reload httpd
+
+- name: Allow httpd to proxy to Cachet
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: true
+    persistent: true
+
+- name: Enable and start httpd
+  ansible.builtin.systemd:
+    name: httpd
+    enabled: true
+    state: started

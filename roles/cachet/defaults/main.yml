@@ -1,3 +1,5 @@
 ---
 cachet_base_dir: /etc/cachet
 cachet_service_name: cachet
+cachet_port: 8000
+cachet_hostname: "{{ cachet_url | urlsplit('hostname') }}"

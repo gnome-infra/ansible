@@ -1,0 +1,25 @@
+<VirtualHost *:80>
+  ServerName {{ cachet_hostname }}
+
+  RewriteEngine On
+
+  RewriteCond %{REQUEST_URI} !^/.well-known/acme-challenge/
+  RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [R=301,L]
+</VirtualHost>
+
+<VirtualHost *:443>
+  ServerName {{ cachet_hostname }}
+
+  ErrorLog /var/log/httpd/{{ cachet_hostname }}/ssl_error.log
+  CustomLog /var/log/httpd/{{ cachet_hostname }}/ssl_access.log combined
+
+  SSLEngine on
+  SSLCertificateFile /etc/letsencrypt/live/{{ cachet_hostname }}/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/{{ cachet_hostname }}/privkey.pem
+
+  Header always set Strict-Transport-Security "max-age=31536000"
+
+  ProxyPass / "http://127.0.0.1:{{ cachet_port }}/"
+  ProxyPassReverse / "http://127.0.0.1:{{ cachet_port }}/"
+  ProxyPreserveHost On
+</VirtualHost>

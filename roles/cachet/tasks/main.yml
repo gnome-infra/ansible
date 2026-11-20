@@ -30,3 +30,6 @@
     name: "{{ cachet_service_name }}"
     enabled: true
     state: started
+
+- name: Configure httpd in front of Cachet
+  ansible.builtin.include_tasks: httpd.yml

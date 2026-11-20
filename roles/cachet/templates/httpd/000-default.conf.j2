@@ -1,0 +1,23 @@
+# Loaded first, so it catches every request that doesn't match a named vhost
+# (the host's own name, its IP address, clients without SNI).
+<VirtualHost *:80>
+  ServerName {{ inventory_hostname }}
+
+  <Location />
+    Require all denied
+  </Location>
+</VirtualHost>
+
+<VirtualHost *:443>
+  ServerName {{ inventory_hostname }}
+
+  SSLEngine on
+  SSLCertificateFile /etc/letsencrypt/live/{{ cachet_hostname }}/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/{{ cachet_hostname }}/privkey.pem
+
+  Header always set Strict-Transport-Security "max-age=31536000"
+
+  <Location />
+    Require all denied
+  </Location>
+</VirtualHost>

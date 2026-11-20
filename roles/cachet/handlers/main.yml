@@ -3,3 +3,8 @@
   ansible.builtin.systemd:
     name: "{{ cachet_service_name }}"
     state: restarted
+
+- name: Reload httpd
+  ansible.builtin.systemd:
+    name: httpd
+    state: reloaded
