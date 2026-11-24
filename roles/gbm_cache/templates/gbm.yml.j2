@@ -85,7 +85,7 @@ http:
             - {{ gbm_cache_jwt_issuer }}
           require:
             aud: {{ gbm_cache_jwt_audience }}
-            project_path:
+            job_project_path:
 {% for path in gbm_cache_jwt_project_paths %}
               - {{ path }}
 {% endfor %}
